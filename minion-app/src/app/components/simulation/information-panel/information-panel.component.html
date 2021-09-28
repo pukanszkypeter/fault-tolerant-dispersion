@@ -1,0 +1,10 @@
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Robots
+  </div>
+  <ul *ngIf="graphState" class="list-group list-group-flush">
+    <li *ngFor="let robot of graphState.robots" class="list-group-item"><i style="float: left" class="bi bi-minecart"></i>
+      <span>ID: {{robot.id}}  Color: <span class="dot" [style.background-color]=robot.color ></span> Position: {{robot.on}} </span>
+    </li>
+  </ul>
+</div>

@@ -11,7 +11,7 @@
         </button>
     </div>
     <div id="info-panel-container">
-        <span>Information Panel</span>
+      <!-- <app-information-panel [graphState]="graphState"></app-information-panel> -->
     </div>
     <div id="vis-container" #graphNetwork>
     </div>
@@ -62,5 +62,11 @@
         <button mat-raised-button color="primary" [disabled]="!graphState" (click)="initGraph()">
             Init
         </button>
+      <div style="padding-left: 10px;">
+        <br>
+        <app-information-panel  [graphState]="graphState"></app-information-panel>
+      </div>
+
     </div>
+
 </div>
