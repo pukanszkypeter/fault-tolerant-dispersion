@@ -1,0 +1,11 @@
+div#page-not-found-container {
+    height: 94%;
+    text-align: center;
+}
+
+img#page-not-found-image {
+    position: absolute;
+    top: 50%;
+    margin-top: -220px;
+    margin-left: -250px;
+}
