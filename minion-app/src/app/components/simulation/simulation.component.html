@@ -1,0 +1,66 @@
+<div id="simulation-container">
+    <div id="control-panel-container">
+        <button [disabled]="!GRAPH_INIT" mat-raised-button color="primary" class="control-button" (click)="nextStep()">
+            Step
+        </button>
+        <button mat-raised-button color="primary" class="control-button">
+            Play
+        </button>
+        <button mat-raised-button color="primary" class="control-button">
+            Reset
+        </button>
+    </div>
+    <div id="info-panel-container">
+        <span>Information Panel</span>
+    </div>
+    <div id="vis-container" #graphNetwork>
+    </div>
+    <div id="settings-container">
+        <form [formGroup]="simulationSettings">
+        <mat-form-field appearance="fill">
+            <mat-label>Graph type</mat-label>
+            <mat-select name="graph" [formControl]="graph">
+                <mat-option *ngFor="let graph of graphs" [value]="graph.value">
+                    {{ graph.viewValue }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="graph.invalid">Graph type required!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Algorithm type</mat-label>
+            <mat-select name="algorithm" [formControl]="algorithm">
+                <mat-option *ngFor="let algorithm of algorithms" [value]="algorithm.value">
+                    {{ algorithm.viewValue }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="algorithm.invalid">Algorithm required!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of nodes</mat-label>
+            <input matInput type="number" [formControl]="nodes" min="1">
+            <mat-error *ngIf="nodes.invalid">Min nodes: 1</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of robots</mat-label>
+            <input matInput type="number" [formControl]="robots" min="1">
+            <mat-error *ngIf="robots.invalid">Min robots: 1</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of colors</mat-label>
+            <input matInput type="number" [formControl]="colors" min="1">
+            <mat-error *ngIf="colors.invalid">Min colors: 1</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Start Nodes</mat-label>
+            <input matInput type="text" [formControl]="start">
+            <mat-error *ngIf="start.invalid">Start nodes required.</mat-error>
+        </mat-form-field>
+        </form>
+        <button mat-raised-button color="primary" class="form-button" [disabled]="simulationSettings.invalid" (click)="createGraph()">
+            Graph
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!graphState" (click)="initGraph()">
+            Init
+        </button>
+    </div>
+</div>
