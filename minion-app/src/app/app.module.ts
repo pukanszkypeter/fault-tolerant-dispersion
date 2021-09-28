@@ -14,12 +14,14 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SimulationComponent } from './components/simulation/simulation.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { InformationPanelComponent } from './components/simulation/information-panel/information-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SimulationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    InformationPanelComponent
   ],
   imports: [
     BrowserModule,
