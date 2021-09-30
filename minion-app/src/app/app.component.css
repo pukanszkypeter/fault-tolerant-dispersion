@@ -1,3 +1,4 @@
-.mat-toolbar.mat-primary {
-    height: 6%;
+.sidebar-link:hover {
+    background-color: #D3D3D3;
+    color: black !important;
 }
