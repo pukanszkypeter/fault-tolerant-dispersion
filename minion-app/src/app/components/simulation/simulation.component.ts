@@ -4,6 +4,7 @@ import { GraphState, NodeState, RobotState } from 'src/app/models/GraphState';
 import * as vis from 'vis-network';
 import {GraphGeneratorService} from "../../services/graphs/graph-generator.service";
 import {AlgorithmEngineService} from "../../services/algorithms/algorithm-engine.service";
+import {timer} from "rxjs";
 
 interface Graph {
   value: string;
@@ -31,6 +32,8 @@ export class SimulationComponent implements OnInit {
 
   GRAPH_INIT = false;
 
+  stop: boolean;
+
   graphs: Graph[] = [
     { value: 'complete', viewValue: 'Complete'},
     { value: 'simpleLine', viewValue: 'Simple line'},
@@ -44,7 +47,8 @@ export class SimulationComponent implements OnInit {
   ];
 
   algorithms: Algorithm[] = [
-    { value: 'random_with_color_constraints', viewValue: 'Random with color constraints'}
+    { value: 'random_with_color_constraints', viewValue: 'Random with color constraints'},
+    { value: 'random_with_leader_with_color_constraints', viewValue: 'Leader with color constraints'}
   ];
 
   simulationSettings: FormGroup;
@@ -94,7 +98,7 @@ export class SimulationComponent implements OnInit {
         const duplicate = edges.find(edge => edge.from === Number(toValues[j]) && edge.to === Number(from))
         if (!duplicate) {
           edges.push({ from: Number(from), to: Number(toValues[j]), color: colors[this.randomIntFromInterval(0, colors.length - 1)]});
-        } 
+        }
       }
 
       if (splitLine.length === 3) {
@@ -155,7 +159,7 @@ export class SimulationComponent implements OnInit {
     };
     let options = {};
     this.tree = new vis.Network(container, data, options);
-    console.log(this.graphState);
+    //console.log(this.graphState);
   }
 
   nextStep(): void {
@@ -167,6 +171,44 @@ export class SimulationComponent implements OnInit {
       this.GRAPH_INIT = false;
     }
   }
+
+  play(): void {
+    this.stop = true;
+    console.log("wat")
+
+    let interval = setInterval(() => {
+        console.log("asd1");
+
+        this.nextStep();
+
+        if (!this.stop) {
+          clearInterval(interval);
+        }
+
+
+      }, 1000);
+
+
+    /*
+    while (this.stop) {
+
+
+     setTimeout(() => {
+       console.log("asd1");
+     }, 10000);
+
+    }
+
+     */
+  }
+
+
+
+
+  stopPlaying() {
+    this.stop = false;
+  }
+
 
   getRandomColor() {
     let letters = '0123456789ABCDEF';
