@@ -11,6 +11,11 @@ export enum RobotState {
 
 export class GraphState {
 
+  colorsWithLeaders: {
+    leaderId: number;
+    color: string;
+  }[] = [];
+
     nodes: {id: number, label: string, state?: NodeState}[];
     edges: {from: number, to: number, color: string}[];
     robots: {id: number, on: number, state: RobotState, color: string}[];

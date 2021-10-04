@@ -3,9 +3,14 @@
         <button [disabled]="!GRAPH_INIT" mat-raised-button color="primary" class="control-button" (click)="nextStep()">
             Step
         </button>
-        <button mat-raised-button color="primary" class="control-button">
+        <button [disabled]="!GRAPH_INIT" mat-raised-button color="primary" class="control-button" (click)="play()">
             Play
         </button>
+
+      <button [disabled]="!GRAPH_INIT" mat-raised-button color="primary" class="control-button" (click)="stopPlaying()">
+        Stop
+      </button>
+
         <button mat-raised-button color="primary" class="control-button">
             Reset
         </button>
