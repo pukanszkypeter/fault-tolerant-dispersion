@@ -4,6 +4,8 @@ import { GraphState, NodeState, RobotState } from 'src/app/models/GraphState';
 import * as vis from 'vis-network';
 import {GraphGeneratorService} from "../../services/graphs/graph-generator.service";
 import {AlgorithmEngineService} from "../../services/algorithms/algorithm-engine.service";
+import { Network } from "vis-network/peer/esm/vis-network";
+import { DataSet } from "vis-data/peer/esm/vis-data"
 import {timer} from "rxjs";
 
 interface Graph {
@@ -34,6 +36,11 @@ export class SimulationComponent implements OnInit {
 
   stop: boolean;
 
+  delay: number = 1000;
+
+  visDataNodes:any;
+  visDataEdges: any;
+
   graphs: Graph[] = [
     { value: 'complete', viewValue: 'Complete'},
     { value: 'simpleLine', viewValue: 'Simple line'},
@@ -58,6 +65,7 @@ export class SimulationComponent implements OnInit {
   robots = new FormControl(1, [Validators.min(1), Validators.required]);
   colors = new FormControl(1, [Validators.min(1), Validators.required]);
   start = new FormControl('', [Validators.required]);
+  delayControl = new FormControl(1000 );
 
   constructor(private graphGenerator: GraphGeneratorService, private algorithmEngine: AlgorithmEngineService, fb: FormBuilder) {
     this.simulationSettings = fb.group({
@@ -109,6 +117,7 @@ export class SimulationComponent implements OnInit {
       }
     }
 
+    console.log(edges);
     this.graphState = new GraphState(nodes, edges, robots);
 
     const container = this.graphContainer.nativeElement;
@@ -123,6 +132,8 @@ export class SimulationComponent implements OnInit {
       console.log(event);
     });
   }
+
+
 
   initGraph(): void {
     const robots = this.graphState.robots;
@@ -146,38 +157,54 @@ export class SimulationComponent implements OnInit {
 
   redrawGraphAfterGraphState(graphState: GraphState): void {
     let nodes = [];
-    let edges = graphState.edges;
+    let edges:any[] = graphState.edges;
 
     for (let node of graphState.nodes) {
       nodes.push({ id: node.id, label: node.label, color: node.state});
     }
 
     const container = this.graphContainer.nativeElement;
+
+    this.visDataNodes = new DataSet(nodes);
+    this.visDataEdges = new DataSet(edges);
+
     let data = {
-      nodes: nodes,
-      edges: edges,
+      nodes: this.visDataNodes,
+      edges: this.visDataEdges,
     };
+
     let options = {};
+
     this.tree = new vis.Network(container, data, options);
     //console.log(this.graphState);
+  }
+
+  updateGraph(graphState: GraphState) {
+
+
+    for (let node of graphState.nodes) {
+
+      this.visDataNodes.update({ id: node.id, label: node.label, color: node.state});
+    }
+
   }
 
   nextStep(): void {
     this.graphState = this.algorithmEngine.nextState(this.graphState, this.algorithm.value);
     if (this.graphState) {
-      this.redrawGraphAfterGraphState(this.graphState);
+
+      this.updateGraph(this.graphState);
     } else {
       alert('Finished!');
+      this.stop = false;
       this.GRAPH_INIT = false;
     }
   }
 
   play(): void {
-    this.stop = true;
-    console.log("wat")
 
+    this.stop = true;
     let interval = setInterval(() => {
-        console.log("asd1");
 
         this.nextStep();
 
@@ -186,21 +213,15 @@ export class SimulationComponent implements OnInit {
         }
 
 
-      }, 1000);
+      }, this.delay);
 
-
-    /*
-    while (this.stop) {
-
-
-     setTimeout(() => {
-       console.log("asd1");
-     }, 10000);
-
-    }
-
-     */
   }
+
+  scrolling(){
+    this.delay = this.delayControl.value;
+    this.play();
+  }
+
 
 
 
@@ -221,6 +242,14 @@ export class SimulationComponent implements OnInit {
 
   randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  dinamicEdge(network: Network){
+    network.on('click', (event: any) => {
+      const item = this.visDataEdges.get(event.edges)[0];
+      this.visDataEdges.update({from: item.from, to: item.to, color: 'white', id: item.id})
+
+    });
   }
 
 }

@@ -17,8 +17,12 @@
     </div>
     <div id="info-panel-container">
       <!-- <app-information-panel [graphState]="graphState"></app-information-panel> -->
+      <br>
+      <label for="customRange1" class="form-label">Delay</label>
+      <input type="range" min="200" max="6000" step="10" class="form-range" id="customRange1" (ngModelChange)="scrolling()" [formControl]="delayControl">
+      <span>Delay: {{delay}} ms</span>
     </div>
-    <div id="vis-container" #graphNetwork>
+    <div id="vis-container" #graphNetwork  (click)="dinamicEdge(tree)">
     </div>
     <div id="settings-container">
         <form [formGroup]="simulationSettings">
@@ -69,25 +73,22 @@
         </button>
       <div style="padding-left: 10px;">
         <br>
-        <app-information-panel  [graphState]="graphState"></app-information-panel>
+      <!--  <app-information-panel  [graphState]="graphState"></app-information-panel> -->
       </div>
 
+      <br>
+
+
+
     </div>
+<!--
+  <br>
+  <div>
+    <app-information-table *ngIf="graphState" [graphState]="graphState" ></app-information-table>
+  </div>
+  -->
 
 </div>
 
-<p>Alma</p>
-<br>
-<p>Alma</p>
-<br>
-<p>Alma</p>
-<br>
-<p>Alma</p>
-<br>
-<p>Alma</p>
-<br>
-<p>Alma</p>
-<br>
-<p>Alma</p>
-<br>
-<p>Alma</p>
+
+

@@ -30,18 +30,65 @@ export class AlgorithmEngineService {
             graphState.nodes.find(node => node.id === currentNode.id).state = NodeState.OCCUPIED;
 
           } else {
-            const options = graphState.edges.filter(edge => edge.from === currentNode.id && edge.color === graphState.robots[i].color || edge.to === currentNode.id && edge.color === graphState.robots[i].color);
-            if (options.length > 0) {
-              const random = Math.floor(Math.random() * options.length);
-              graphState.robots[i].on = options[random].to;
-              if (graphState.nodes.find(node => node.id === options[random].to).state !== NodeState.OCCUPIED) {
-                graphState.nodes.find(node => node.id === options[random].to).state = NodeState.PENDING;
-              };
+            //baj: csak to ba mentek a robotok, fromba nem., amint vissza lép a to nem lesz üres...
+            //random kell választania h to vagy from legyen
+            let direction = Math.floor(Math.random() * 10)+1;
+
+            if(direction % 2 === 0) {
+              const optionsTo = graphState.edges.filter(edge => (edge.to === currentNode.id && edge.color === graphState.robots[i].color));
+
+
+              if (optionsTo.length > 0) {
+                const random = Math.floor(Math.random() * optionsTo.length);
+                graphState.robots[i].on = optionsTo[random].from;
+                if (graphState.nodes.find(node => node.id === optionsTo[random].from).state !== NodeState.OCCUPIED) {
+                  graphState.nodes.find(node => node.id === optionsTo[random].from).state = NodeState.PENDING;
+                }
+
+              } else {
+                const optionsFrom = graphState.edges.filter(edge => (edge.from === currentNode.id && edge.color === graphState.robots[i].color));
+
+                if (optionsFrom.length > 0) {
+                  const randomFrom = Math.floor(Math.random() * optionsFrom.length);
+                  graphState.robots[i].on = optionsFrom[randomFrom].to;
+                  if (graphState.nodes.find(node => node.id === optionsFrom[randomFrom].to).state !== NodeState.OCCUPIED) {
+                    graphState.nodes.find(node => node.id === optionsFrom[randomFrom].to).state = NodeState.PENDING;
+                  }
+                }
+
+              }
+
+            }else{
+              const optionsFrom = graphState.edges.filter(edge => (edge.from === currentNode.id && edge.color === graphState.robots[i].color));
+
+              if (optionsFrom.length > 0) {
+                const randomFrom = Math.floor(Math.random() * optionsFrom.length);
+                graphState.robots[i].on = optionsFrom[randomFrom].to;
+                if (graphState.nodes.find(node => node.id === optionsFrom[randomFrom].to).state !== NodeState.OCCUPIED) {
+                  graphState.nodes.find(node => node.id === optionsFrom[randomFrom].to).state = NodeState.PENDING;
+                }
+              }else {
+
+                const optionsTo = graphState.edges.filter(edge => (edge.to === currentNode.id && edge.color === graphState.robots[i].color));
+
+
+                if (optionsTo.length > 0) {
+                  const random = Math.floor(Math.random() * optionsTo.length);
+                  graphState.robots[i].on = optionsTo[random].from;
+                  if (graphState.nodes.find(node => node.id === optionsTo[random].from).state !== NodeState.OCCUPIED) {
+                    graphState.nodes.find(node => node.id === optionsTo[random].from).state = NodeState.PENDING;
+                  }
+
+                }
+
+              }
             }
+
           }
 
         }
       }
+
       return graphState;
     } else {
       return null;
@@ -68,8 +115,6 @@ export class AlgorithmEngineService {
           const random = Math.floor(Math.random() * robotosWithoutLeader.length);
           graphState.colorsWithLeaders.push({leaderId: robotosWithoutLeader[random].id, color: colors[i] });
         }
-        console.log("init done");
-        console.log(graphState);
       } else {
         for (let i = 0; i < graphState.colorsWithLeaders.length; i++ ){
           // ha az első leader le tud itt telepedni meg teszi, új leadert választanak és várnak, mivel a leaderük nem vezette őket sehova hanem letelepedett
@@ -95,8 +140,8 @@ export class AlgorithmEngineService {
           } else {
             const rootOptions = graphState.edges.filter(edge => edge.from === currentNode.id && edge.color === currentLeader.color || edge.to === currentNode.id && edge.color === currentLeader.color);
 
-            console.log("root options");
             console.log(rootOptions);
+
             if (rootOptions.length > 0) {
               const random = Math.floor(Math.random() * rootOptions.length);
               //leader go to the new edge
