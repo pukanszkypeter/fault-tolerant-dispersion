@@ -105,7 +105,7 @@ export class SimulationComponent implements OnInit {
       for (let j = 0; j < toValues.length; j++) {
         const duplicate = edges.find(edge => edge.from === Number(toValues[j]) && edge.to === Number(from))
         if (!duplicate) {
-          edges.push({ from: Number(from), to: Number(toValues[j]), color: colors[this.randomIntFromInterval(0, colors.length - 1)]});
+          edges.push({ from: Number(from), to: Number(toValues[j]), color: colors[this.randomIntFromInterval(0, colors.length - 1)], oldColor: ''});
         }
       }
 
@@ -247,7 +247,12 @@ export class SimulationComponent implements OnInit {
   dinamicEdge(network: Network){
     network.on('click', (event: any) => {
       const item = this.visDataEdges.get(event.edges)[0];
-      this.visDataEdges.update({from: item.from, to: item.to, color: 'white', id: item.id})
+      if (item.color !== 'white') {
+        this.visDataEdges.update({from: item.from, to: item.to, color: 'white', id: item.id, oldColor: item.color})
+      }else {
+        this.visDataEdges.update({from: item.from, to: item.to, color: item.oldColor, id: item.id})
+      }
+
 
     });
   }
