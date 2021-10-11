@@ -140,8 +140,6 @@ export class AlgorithmEngineService {
           } else {
             const rootOptions = graphState.edges.filter(edge => edge.from === currentNode.id && edge.color === currentLeader.color || edge.to === currentNode.id && edge.color === currentLeader.color);
 
-            console.log(rootOptions);
-
             if (rootOptions.length > 0) {
               const random = Math.floor(Math.random() * rootOptions.length);
               //leader go to the new edge

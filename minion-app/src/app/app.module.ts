@@ -16,6 +16,7 @@ import { SimulationComponent } from './components/simulation/simulation.componen
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { InformationPanelComponent } from './components/simulation/information-panel/information-panel.component';
 import { InformationTableComponent } from './components/simulation/information-table/information-table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { InformationTableComponent } from './components/simulation/information-t
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
