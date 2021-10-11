@@ -17,11 +17,11 @@ export class GraphState {
   }[] = [];
 
     nodes: {id: number, label: string, state?: NodeState}[];
-    edges: {from: number, to: number, color: string}[];
+    edges: {from: number, to: number, color: string, oldColor: string}[];
     robots: {id: number, on: number, state: RobotState, color: string}[];
 
     constructor(nodes: {id: number, label: string, state?: NodeState}[],
-        edges: {from: number, to: number, color: string}[],
+        edges: {from: number, to: number, color: string, oldColor: string}[],
         robots: {id: number, on: number, state: RobotState, color: string}[]) {
         this.nodes = nodes;
         this.edges = edges;

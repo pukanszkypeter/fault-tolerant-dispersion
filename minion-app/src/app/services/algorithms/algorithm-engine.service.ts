@@ -95,7 +95,7 @@ export class AlgorithmEngineService {
     }
   }
 
-  //follow the leader. KÉRDÉS: hogyha leaderes verzió van, csak egy pontból indulhatnak az azonos színűek?!? hisz köbetniük kell a leadert.
+
   leaderWithColorConstraint(graphState: GraphState): GraphState {
 
     if ( !this.isAllNodeOccupied(graphState) ) {
