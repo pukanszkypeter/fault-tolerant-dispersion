@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <h1 mat-dialog-title>Playground configuration</h1>
+    </div>
+    <div class="col-4">
+      <h2 class="text-end">
+        <i matRipple [matRippleCentered]="true" [matRippleRadius]="20" class="bi bi-x-circle-fill" mat-dialog-close></i>
+      </h2>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>Graph type</mat-label>
+        <mat-select>
+        </mat-select>
+        <mat-error>Graph type required!</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Algorithm type</mat-label>
+        <mat-select>
+        </mat-select>
+        <mat-error>Algorithm required!</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Number of nodes</mat-label>
+        <input matInput type="number" min="1">
+        <mat-error>Min nodes: 1</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Number of robots</mat-label>
+        <input matInput type="number" min="1">
+        <mat-error>Min robots: 1</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Number of colors</mat-label>
+        <input matInput type="number" min="1">
+        <mat-error>Min colors: 1</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Start Nodes</mat-label>
+        <input matInput type="text">
+        <mat-error>Start nodes required.</mat-error>
+      </mat-form-field>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>
+      Close
+    </button>
+    <button mat-raised-button color="primary">
+      Save
+    </button>
+  </mat-dialog-actions>
+</div>

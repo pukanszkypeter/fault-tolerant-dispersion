@@ -17,6 +17,12 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { InformationPanelComponent } from './components/simulation/information-panel/information-panel.component';
 import { InformationTableComponent } from './components/simulation/information-table/information-table.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './components/minions/home/home.component';
+import { StaticComponent } from './components/playgrounds/static/static.component';
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatRippleModule } from "@angular/material/core";
+import { SettingsDialogComponent } from './components/playgrounds/static/settings-dialog/settings-dialog.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -24,7 +30,10 @@ import { HttpClientModule } from '@angular/common/http';
     SimulationComponent,
     PageNotFoundComponent,
     InformationPanelComponent,
-    InformationTableComponent
+    InformationTableComponent,
+    HomeComponent,
+    StaticComponent,
+    SettingsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +47,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule,
+    MatRippleModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

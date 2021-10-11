@@ -1,0 +1,26 @@
+div#vis-container {
+  width: 100%;
+  height: 500px;
+  outline: 1px solid black;
+}
+
+.bi-pause-fill:hover::before {
+  cursor: pointer;
+}
+
+.bi-play-fill:hover::before {
+  cursor: pointer;
+}
+
+.bi-gear-fill::before {
+  -webkit-transition: 0.8s ease-out;
+  -moz-transition:  0.8s ease-out;
+  transition:  0.8s ease-out;
+}
+
+.bi-gear-fill:hover::before {
+  -webkit-transform: rotateZ(180deg);
+  -moz-transform: rotateZ(180deg);
+  transform: rotateZ(180deg);
+  cursor: pointer;
+}

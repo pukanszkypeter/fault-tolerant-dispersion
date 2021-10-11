@@ -1,0 +1,9 @@
+.bi-x-circle:hover::before {
+  cursor: pointer;
+}
+
+mat-form-field {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10px;
+}
