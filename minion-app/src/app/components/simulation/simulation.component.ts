@@ -6,7 +6,7 @@ import {GraphGeneratorService} from "../../services/graphs/graph-generator.servi
 import {AlgorithmEngineService} from "../../services/algorithms/algorithm-engine.service";
 import { Network } from "vis-network/peer/esm/vis-network";
 import { DataSet } from "vis-data/peer/esm/vis-data"
-import {timer} from "rxjs";
+import { LoggerService } from 'src/app/services/logger/logger.service';
 
 interface Graph {
   value: string;
@@ -30,6 +30,8 @@ export class SimulationComponent implements OnInit {
 
   public tree: any;
 
+  steps: number = 0;
+
   graphState: GraphState;
 
   GRAPH_INIT = false;
@@ -37,6 +39,8 @@ export class SimulationComponent implements OnInit {
   stop: boolean;
 
   delay: number = 1000;
+
+  interval: any;
 
   visDataNodes:any;
   visDataEdges: any;
@@ -67,7 +71,7 @@ export class SimulationComponent implements OnInit {
   start = new FormControl('', [Validators.required]);
   delayControl = new FormControl(1000 );
 
-  constructor(private graphGenerator: GraphGeneratorService, private algorithmEngine: AlgorithmEngineService, fb: FormBuilder) {
+  constructor(private graphGenerator: GraphGeneratorService, private algorithmEngine: AlgorithmEngineService, private logger: LoggerService, fb: FormBuilder) {
     this.simulationSettings = fb.group({
       graph: this.graph,
       algorithm: this.algorithm,
@@ -88,7 +92,6 @@ export class SimulationComponent implements OnInit {
     }
 
     const result = this.graphGenerator.generateGraph(this.graph.value, this.nodes.value, this.robots.value, this.start.value);
-    console.log(result);
     let splitResult = result.split('\n');
     splitResult.pop();
 
@@ -117,7 +120,6 @@ export class SimulationComponent implements OnInit {
       }
     }
 
-    console.log(edges);
     this.graphState = new GraphState(nodes, edges, robots);
 
     const container = this.graphContainer.nativeElement;
@@ -127,6 +129,7 @@ export class SimulationComponent implements OnInit {
     };
     let options = {};
     this.tree = new vis.Network(container, data, options);
+    this.steps = 0;
 
     this.tree.on('click', (event: any) => {
       console.log(event);
@@ -176,7 +179,6 @@ export class SimulationComponent implements OnInit {
     let options = {};
 
     this.tree = new vis.Network(container, data, options);
-    //console.log(this.graphState);
   }
 
   updateGraph(graphState: GraphState) {
@@ -194,25 +196,44 @@ export class SimulationComponent implements OnInit {
     if (this.graphState) {
 
       this.updateGraph(this.graphState);
+      this.steps += 1;
+
     } else {
       alert('Finished!');
       this.stop = false;
       this.GRAPH_INIT = false;
+      switch(this.algorithm.value) {
+
+        case 'random_with_color_constraints':  
+          this.logger.addRandomWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
+            console.log(res);
+            this.steps = 0;
+          }, err => {
+            console.log(err);
+          });
+          break;
+        
+        case 'random_with_leader_with_color_constraints': 
+          this.logger.addLeaderWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
+            console.log(res);
+            this.steps = 0;
+          }, err => {
+            console.log(err);
+          });
+          break;
+
+      }
     }
   }
 
   play(): void {
 
     this.stop = true;
-    let interval = setInterval(() => {
-
+    this.interval = setInterval(() => {
         this.nextStep();
-
         if (!this.stop) {
-          clearInterval(interval);
+          clearInterval(this.interval);
         }
-
-
       }, this.delay);
 
   }
