@@ -40,7 +40,7 @@ export class SimulationComponent implements OnInit {
 
   delay: number = 1000;
 
-  interval: any;
+  //interval: any;
 
   visDataNodes:any;
   visDataEdges: any;
@@ -59,7 +59,8 @@ export class SimulationComponent implements OnInit {
 
   algorithms: Algorithm[] = [
     { value: 'random_with_color_constraints', viewValue: 'Random with color constraints'},
-    { value: 'random_with_leader_with_color_constraints', viewValue: 'Leader with color constraints'}
+    { value: 'random_with_leader_with_color_constraints', viewValue: 'Leader with color constraints'},
+    { value: 'rotor_router_with_color_constraints', viewValue: 'Rotor router with color constraints'}
   ];
 
   simulationSettings: FormGroup;
@@ -98,7 +99,7 @@ export class SimulationComponent implements OnInit {
     let nodes = [];
     let edges = [];
     let robots = [];
-
+    let id = 0;
     for (let i = 0; i < splitResult.length; i++) {
       const splitLine = splitResult[i].split(':');
       const from  = splitLine[0];
@@ -108,14 +109,15 @@ export class SimulationComponent implements OnInit {
       for (let j = 0; j < toValues.length; j++) {
         const duplicate = edges.find(edge => edge.from === Number(toValues[j]) && edge.to === Number(from))
         if (!duplicate) {
-          edges.push({ from: Number(from), to: Number(toValues[j]), color: colors[this.randomIntFromInterval(0, colors.length - 1)], oldColor: ''});
+          edges.push({id:  id, from: Number(from), to: Number(toValues[j]), color: colors[this.randomIntFromInterval(0, colors.length - 1)], oldColor: ''});
         }
+      id += 1;
       }
 
       if (splitLine.length === 3) {
         const robotsOnNode = splitLine[2].split(',');
         for (let robot of robotsOnNode) {
-          robots.push({ id: Number(robot), on: Number(from), state: RobotState.SEARCHING, color: colors[this.randomIntFromInterval(0, colors.length - 1)]});
+          robots.push({ id: Number(robot), on: Number(from), state: RobotState.SEARCHING, color: colors[this.randomIntFromInterval(0, colors.length - 1)], lastEdgeId: undefined});
         }
       }
     }
@@ -153,6 +155,9 @@ export class SimulationComponent implements OnInit {
         node.state = NodeState.PENDING;
       }
     });
+
+   // console.log(this.graphState.edges);
+   // console.log(this.graphState.nodes);
 
     this.GRAPH_INIT = true;
     this.redrawGraphAfterGraphState(this.graphState);
@@ -199,12 +204,12 @@ export class SimulationComponent implements OnInit {
       this.steps += 1;
 
     } else {
+      this.stopPlaying();
       alert('Finished!');
-      this.stop = false;
       this.GRAPH_INIT = false;
       switch(this.algorithm.value) {
 
-        case 'random_with_color_constraints':  
+        case 'random_with_color_constraints':
           this.logger.addRandomWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
             console.log(res);
             this.steps = 0;
@@ -212,8 +217,16 @@ export class SimulationComponent implements OnInit {
             console.log(err);
           });
           break;
-        
-        case 'random_with_leader_with_color_constraints': 
+
+        case 'random_with_leader_with_color_constraints':
+          this.logger.addLeaderWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
+            console.log(res);
+            this.steps = 0;
+          }, err => {
+            console.log(err);
+          });
+          break;
+        case 'rotor_router_with_color_constraints':
           this.logger.addLeaderWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
             console.log(res);
             this.steps = 0;
@@ -222,6 +235,7 @@ export class SimulationComponent implements OnInit {
           });
           break;
 
+
       }
     }
   }
@@ -229,23 +243,30 @@ export class SimulationComponent implements OnInit {
   play(): void {
 
     this.stop = true;
-    this.interval = setInterval(() => {
-        this.nextStep();
+
+    if(this.GRAPH_INIT && this.stop) {
+      const interval = setInterval(() => {
+        if(this.GRAPH_INIT) {
+          this.nextStep();
+        }else{
+          this.stop = false;
+          console.log(this.delay);
+        }
         if (!this.stop) {
-          clearInterval(this.interval);
+          clearInterval(interval);
         }
       }, this.delay);
+    }
+
+
 
   }
 
   scrolling(){
     this.delay = this.delayControl.value;
+    //this.stopPlaying();
     this.play();
   }
-
-
-
-
 
   stopPlaying() {
     this.stop = false;
@@ -266,16 +287,22 @@ export class SimulationComponent implements OnInit {
   }
 
   dinamicEdge(network: Network){
-    network.on('click', (event: any) => {
-      const item = this.visDataEdges.get(event.edges)[0];
-      if (item.color !== 'white') {
-        this.visDataEdges.update({from: item.from, to: item.to, color: 'white', id: item.id, oldColor: item.color})
-      }else {
-        this.visDataEdges.update({from: item.from, to: item.to, color: item.oldColor, id: item.id})
-      }
+    if(network) {
+      network.on('click', (event: any) => {
+        const item = this.visDataEdges.get(event.edges)[0];
+        if (item) {
+          if (item.color !== 'white') {
+            this.visDataEdges.update({from: item.from, to: item.to, color: 'white', id: item.id, oldColor: item.color})
+            this.graphState.edges.find(edge => edge.id === item.id).color = 'white';
+            this.graphState.edges.find(edge => edge.id === item.id).oldColor = item.color;
+          } else {
+            this.visDataEdges.update({from: item.from, to: item.to, color: item.oldColor, id: item.id})
+            this.graphState.edges.find(edge => edge.id === item.id).color = item.oldColor;
+          }
 
-
-    });
+        }
+      });
+    }
   }
 
 }
