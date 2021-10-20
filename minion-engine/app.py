@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request, render_template, send_from_directory
 import warnings
 import sqlite3
+import datetime
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # http://localhost:5000
@@ -23,13 +24,15 @@ def favicon():
 @app.route("/api/engine/logger/random-with-color-constraints", methods=['POST'])
 def addRandomWithColorConstraints():
     try:
-        connection = sqlite3.connect("data/memory.sqlite")
+        connection = sqlite3.connect("data/memory.sqlite", detect_types = sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         cursor = connection.cursor()
 
         parameters = request.get_json()
-        sql_insert_query = "insert into random_with_color_constraints (graph_type, nodes, robots, colors, steps) values ('" + parameters['graph_type'] + "', " + str(parameters['nodes']) + ", " + str(parameters['robots']) + ", " + str(parameters['colors']) + ", " + str(parameters['steps']) + ")"
-        
-        cursor.execute(sql_insert_query)
+        currentDateTime = datetime.datetime.now()
+        sql_insert_query = """insert into random_with_color_constraints
+                    (graph_type, nodes, robots, colors, steps, date) values (?, ?, ?, ?, ?, ?)"""
+
+        cursor.execute(sql_insert_query, (parameters['graph_type'], parameters['nodes'], parameters['robots'], parameters['colors'], parameters['steps'], currentDateTime))
         inserted_id = cursor.lastrowid
         connection.commit()
 
@@ -45,13 +48,15 @@ def addRandomWithColorConstraints():
 @app.route("/api/engine/logger/leader-with-color-constraints", methods=['POST'])
 def addLeaderWithColorConstraints():
     try:
-        connection = sqlite3.connect("data/memory.sqlite")
+        connection = sqlite3.connect("data/memory.sqlite", detect_types = sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         cursor = connection.cursor()
 
         parameters = request.get_json()
-        sql_insert_query = "insert into leader_with_color_constraints (graph_type, nodes, robots, colors, steps) values ('" + parameters['graph_type'] + "', " + str(parameters['nodes']) + ", " + str(parameters['robots']) + ", " + str(parameters['colors']) + ", " + str(parameters['steps']) + ")"
+        currentDateTime = datetime.datetime.now()
+        sql_insert_query = """insert into leader_with_color_constraints
+            (graph_type, nodes, robots, colors, steps, date) values (?, ?, ?, ?, ?, ?)"""
         
-        cursor.execute(sql_insert_query)
+        cursor.execute(sql_insert_query, (parameters['graph_type'], parameters['nodes'], parameters['robots'], parameters['colors'], parameters['steps'], currentDateTime))
         inserted_id = cursor.lastrowid
         connection.commit()
         
