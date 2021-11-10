@@ -1,0 +1,20 @@
+mat-form-field {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10px;
+}
+
+::ng-deep .mat-grid-tile-content {
+  display: unset !important;
+  overflow-y: auto !important;
+}
+
+mat-form-field#tests {
+  width: 50%;
+  margin-left: 25%;
+}
+
+button#run {
+  width: 8%;
+  margin-left: 46%;
+}

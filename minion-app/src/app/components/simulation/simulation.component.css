@@ -1,0 +1,40 @@
+div#simulation-container {
+    height: 94%;
+}
+
+div#control-panel-container {
+    float: left;
+    width: 80%;
+    height: 15%;
+    text-align: center;
+}
+
+div#info-panel-container {
+    float: right;
+    width: 20%;
+    height: 15%;
+    text-align: center;
+}
+
+div#vis-container {
+  float: left;
+  width: 80%;
+  height: 85%;
+  outline: 1px solid black;
+}
+
+div#settings-container {
+    float: right;
+    width: 20%;
+    height: 85%;
+    text-align: center;
+}
+
+button.control-button {
+    margin-right: 100px;
+    top: 40%;
+}
+
+button.form-button {
+    margin-right: 30px;
+}

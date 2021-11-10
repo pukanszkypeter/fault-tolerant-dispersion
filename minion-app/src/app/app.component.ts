@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import {MatIconRegistry} from "@angular/material/icon";
+import {DomSanitizer} from "@angular/platform-browser";
+import {icons} from "./models/others/Icons";
+import {LanguageService} from "./services/client-side/language.service";
+
+export const LANGUAGE_KEY = 'LANGUAGE';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +12,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'minion-app';
+
+
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private language: LanguageService) {
+    this.language.setDefaultLanguage();
+    for (let icon of icons) {
+      iconRegistry.addSvgIcon(icon.selector, sanitizer.bypassSecurityTrustResourceUrl(icon.path))
+    }
+  }
+
 }

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{ 'settingsComponent_title' | translate }}</h1>
+<p>{{ 'settingsComponent_version' | translate }}: 1.0.0</p>
+<mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'settingsComponent_language' | translate }}</mat-label>
+    <mat-select [formControl]="languageControl">
+      <mat-option *ngFor="let language of languages" [value]="language.code">{{ language.name | translate }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="save()">{{ 'SAVE' | translate }}</button>
+  <button mat-raised-button mat-dialog-close>{{ 'CLOSE' | translate }}</button>
+</mat-dialog-actions>
