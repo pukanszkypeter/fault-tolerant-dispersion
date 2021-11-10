@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ActiveLinkService} from "../../services/client-side/active-link/active-link.service";
 
 @Component({
   selector: 'app-page-not-found',
@@ -8,10 +7,9 @@ import {ActiveLinkService} from "../../services/client-side/active-link/active-l
 })
 export class PageNotFoundComponent implements OnInit {
 
-  constructor(private activeLinkService: ActiveLinkService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.activeLinkService.setActiveLink(null, true);
   }
 
 }

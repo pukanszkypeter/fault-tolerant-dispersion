@@ -5,3 +5,22 @@
 
 html, body { height: 100%; }
 body { margin: 0; }
+
+.success-snackbar {
+  background-color: green;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: red;
+  color: white;
+}
+
+.warning-snackbar {
+  background-color: orange;
+  color: white;
+}
+
+.mat-simple-snackbar {
+  justify-content: center !important;
+}

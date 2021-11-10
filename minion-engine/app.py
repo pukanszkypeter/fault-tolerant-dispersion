@@ -21,8 +21,8 @@ def index():
 def favicon(): 
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-@app.route("/api/engine/logger/random-with-color-constraints", methods=['POST'])
-def addRandomWithColorConstraints():
+@app.route("/api/engine/logger/random", methods=['POST'])
+def addRandom():
     try:
         connection = sqlite3.connect("data/memory.sqlite", detect_types = sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         cursor = connection.cursor()
@@ -45,8 +45,8 @@ def addRandomWithColorConstraints():
             connection.close()
             return jsonify(inserted_id)
 
-@app.route("/api/engine/logger/leader-with-color-constraints", methods=['POST'])
-def addLeaderWithColorConstraints():
+@app.route("/api/engine/logger/random-with-leader", methods=['POST'])
+def addRandomWithLeader():
     try:
         connection = sqlite3.connect("data/memory.sqlite", detect_types = sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         cursor = connection.cursor()
@@ -69,5 +69,57 @@ def addLeaderWithColorConstraints():
             connection.close()
             return jsonify(inserted_id)
 
+@app.route("/api/engine/logger/rotor-router", methods=['POST'])
+def addRotorRouter():
+    try:
+        connection = sqlite3.connect("data/memory.sqlite", detect_types = sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        cursor = connection.cursor()
+
+        parameters = request.get_json()
+        currentDateTime = datetime.datetime.now()
+        sql_insert_query = """insert into rotor_router_with_color_constraints
+            (graph_type, nodes, robots, colors, steps, date) values (?, ?, ?, ?, ?, ?)"""
+
+        cursor.execute(sql_insert_query, (parameters['graph_type'], parameters['nodes'], parameters['robots'], parameters['colors'], parameters['steps'], currentDateTime))
+        inserted_id = cursor.lastrowid
+        connection.commit()
+
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("Failed to insert data into SQLite table!", error)
+    finally:
+        if connection:
+            connection.close()
+            return jsonify(inserted_id)
+
+"""
+@app.route("/api/engine/tests/random", methods['POST'])
+def testRandom():
+    try:
+        connection = sqlite3.connect("data/memory.sqlite", detect_types = sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        cursor = connection.cursor()
+
+        parameters = request.get_json()
+        json_nodes = parameters['nodes']
+        json_edges = parameters['edges']
+        json_robots = parameters['robots']
+        currentDateTime = datetime.datetime.now()
+        sql_insert_query = insert into rotor_router_with_color_constraints
+            (graph_type, nodes, robots, colors, steps, date) values (?, ?, ?, ?, ?, ?)
+
+        cursor.execute(sql_insert_query, (parameters['graph_type'], parameters['nodes'], parameters['robots'], parameters['colors'], parameters['steps'], currentDateTime))
+        inserted_id = cursor.lastrowid
+        connection.commit()
+
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("Failed to insert data into SQLite table!", error)
+    finally:
+        if connection:
+            connection.close()
+            return jsonify(inserted_id)
+"""
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)

@@ -1,13 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GraphState, NodeState, RobotState } from 'src/app/models/GraphState';
+import { GraphState, NodeState, RobotState } from 'src/app/models/entities/graph/GraphState';
 import * as vis from 'vis-network';
-import {GraphGeneratorService} from "../../services/graphs/graph-generator.service";
-import {AlgorithmEngineService} from "../../services/algorithms/algorithm-engine.service";
+import {GraphGeneratorService} from "../../services/client-side/graphs/graph-generator.service";
+import {AlgorithmEngineService} from "../../services/client-side/algorithms/algorithm-engine.service";
 import { Network } from "vis-network/peer/esm/vis-network";
 import { DataSet } from "vis-data/peer/esm/vis-data"
-import { LoggerService } from 'src/app/services/logger/logger.service';
-import {ActiveLinkService} from "../../services/client-side/active-link/active-link.service";
+import { LoggerService } from 'src/app/services/server-side/logger/logger.service';
 
 interface Graph {
   value: string;
@@ -73,7 +72,7 @@ export class SimulationComponent implements OnInit {
   start = new FormControl('', [Validators.required]);
   delayControl = new FormControl(1000 );
 
-  constructor(private activeLinkService: ActiveLinkService, private graphGenerator: GraphGeneratorService, private algorithmEngine: AlgorithmEngineService, private logger: LoggerService, fb: FormBuilder) {
+  constructor(private graphGenerator: GraphGeneratorService, private algorithmEngine: AlgorithmEngineService, private logger: LoggerService, fb: FormBuilder) {
     this.simulationSettings = fb.group({
       graph: this.graph,
       algorithm: this.algorithm,
@@ -85,7 +84,6 @@ export class SimulationComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.activeLinkService.setActiveLink(4);
   }
 
   createGraph(): void {
@@ -230,7 +228,7 @@ export class SimulationComponent implements OnInit {
           break;
 
         case 'rotor_router_with_color_constraints':
-          this.logger.addLeaderWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
+          this.logger.addRotorRouterWithColorConstraints(`{ "graph_type": "${this.graph.value}", "nodes": ${this.nodes.value}, "robots": ${this.robots.value}, "colors": ${this.colors.value}, "steps": ${this.steps} }`).subscribe(res => {
             console.log(res);
             this.steps = 0;
           }, err => {
@@ -253,7 +251,6 @@ export class SimulationComponent implements OnInit {
           this.nextStep();
         }else{
           this.stop = false;
-          console.log(this.delay);
         }
         if (!this.stop) {
           clearInterval(interval);

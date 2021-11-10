@@ -1,0 +1,59 @@
+<div class="sidebar mat-elevation-z2">
+  <div class="top-menu">
+    <div class="top-menu-title">
+      <a [routerLink]="['/home']">
+        <img id="minion-logo" src="favicon.ico" alt="Minion logo">
+        <h4>
+          {{ 'layoutComponent_title' | translate }}
+        </h4>
+      </a>
+    </div>
+    <ul>
+      <li>
+        <button mat-raised-button [routerLink]="['/home']">
+          <mat-icon svgIcon="home"></mat-icon>
+          <span>{{ 'layoutComponent_home' | translate }}</span>
+        </button>
+      </li>
+      <li>
+        <button mat-raised-button [routerLink]="['/simulation/2.0']">
+          <mat-icon svgIcon="graph"></mat-icon>
+          <span>{{ 'layoutComponent_simulation' | translate }}</span>
+        </button>
+      </li>
+      <li>
+        <button mat-raised-button [routerLink]="['/simulation/1.0']">
+          <mat-icon svgIcon="graph"></mat-icon>
+          <span>{{ 'layoutComponent_oldSimulation' | translate }}</span>
+        </button>
+      </li>
+      <li>
+        <button mat-raised-button [routerLink]="['/test']">
+          <mat-icon svgIcon="auto-graph"></mat-icon>
+          <span>{{ 'layoutComponent_automatedTest' | translate }}</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div class="bottom-menu">
+    <ul>
+      <li>
+        <a target="_blank" href="https://github.com/pukanszkypeter/knowledge-lab/tree/develop">
+          <button mat-raised-button>
+            <mat-icon svgIcon="github"></mat-icon>
+            <span>{{ 'layoutComponent_github' | translate }}</span>
+          </button>
+        </a>
+      </li>
+      <li>
+        <button mat-raised-button (click)="openSettingsDialog()">
+          <mat-icon svgIcon="settings"></mat-icon>
+          <span>{{ 'layoutComponent_settings' | translate }}</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="content">
+  <ng-content></ng-content>
+</div>

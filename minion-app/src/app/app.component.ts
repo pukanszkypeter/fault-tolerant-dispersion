@@ -1,28 +1,24 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {MatIconRegistry} from "@angular/material/icon";
+import {DomSanitizer} from "@angular/platform-browser";
+import {icons} from "./models/others/Icons";
+import {LanguageService} from "./services/client-side/language.service";
+
+export const LANGUAGE_KEY = 'LANGUAGE';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.setCalculatedContainerHeight();
-  }
-
-  ngOnInit() {
-    this.setCalculatedContainerHeight();
-  }
-
-  setCalculatedContainerHeight(): void {
-    const headerHeight = document.getElementById('app-header').clientHeight;
-    const documentHeight = document.body.clientHeight;
-
-    let contentContainer = document.getElementById('content-container');
-    contentContainer.style.height = documentHeight - headerHeight + 'px';
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private language: LanguageService) {
+    this.language.setDefaultLanguage();
+    for (let icon of icons) {
+      iconRegistry.addSvgIcon(icon.selector, sanitizer.bypassSecurityTrustResourceUrl(icon.path))
+    }
   }
 
 }

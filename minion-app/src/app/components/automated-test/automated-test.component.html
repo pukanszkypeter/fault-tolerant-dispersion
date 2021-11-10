@@ -1,0 +1,11 @@
+<div class="container">
+  <mat-card class="animate__animated animate__fadeInDown">{{ 'automatedTestComponent_title' | translate }}</mat-card>
+  <h4 class="mb-4 mt-4">{{ 'automatedTestComponent_settings' | translate }}</h4>
+  <mat-card class="page-card">
+    <app-automated-test-settings (settingsEvent)="runTests($event)"></app-automated-test-settings>
+  </mat-card>
+  <h4 class="mb-4 mt-4">{{ 'automatedTestComponent_preview' | translate }}</h4>
+  <mat-card class="page-card" id="preview-container"></mat-card>
+  <h4 class="mb-4 mt-4">{{ 'automatedTestComponent_result' | translate }}</h4>
+  <mat-card class="page-card"></mat-card>
+</div>

@@ -1,0 +1,22 @@
+.simulation-title {
+  text-align: center;
+  font-size: larger;
+}
+
+.simulation-operators {
+  margin-right: 20px;
+  background-color: white;
+}
+
+mat-card#vis-container {
+  height: 500px;
+}
+
+mat-icon#speed-icon {
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+}

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GraphState} from "../../../models/GraphState";
+import {GraphState} from "../../../models/entities/graph/GraphState";
 
 @Component({
   selector: 'app-information-table',
