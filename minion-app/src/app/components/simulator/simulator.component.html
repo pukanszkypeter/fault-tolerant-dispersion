@@ -2,25 +2,28 @@
   <mat-card class="simulation-title animate__animated animate__fadeInDown">{{ 'simulationComponent_title' | translate }}</mat-card>
   <div class="row mt-4">
     <div class="col-8">
-      <button mat-mini-fab class="simulation-operators" [disabled]="!simulationConfiguration">
+      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
         <mat-icon svgIcon="play" matTooltip="{{ 'PLAY' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!simulationConfiguration">
-        <mat-icon svgIcon="next-step" matTooltip="{{ 'NEXT_STEP' | translate }}"></mat-icon>
-      </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!simulationConfiguration">
+      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
         <mat-icon svgIcon="pause" matTooltip="{{ 'PAUSE' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!simulationConfiguration">
-        <mat-icon svgIcon="reset" matTooltip="{{ 'RESET' | translate }}"></mat-icon>
+      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
+        <mat-icon svgIcon="next-step" matTooltip="{{ 'NEXT_STEP' | translate }}"></mat-icon>
+      </button>
+      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
+        <mat-icon svgIcon="reset" matTooltip="{{ 'STEP_BACK' | translate }}"></mat-icon>
       </button>
       <mat-icon svgIcon="speed" id="speed-icon" matTooltip="{{ 'SPEED' | translate }}"></mat-icon>
-      <mat-slider [disabled]="!simulationConfiguration"></mat-slider>
+      <mat-slider [disabled]="!graphConfiguration"></mat-slider>
       <span>1500 ms</span>
     </div>
     <div class="col-4 text-end">
-      <button mat-mini-fab style="background-color: white" (click)="openSettingsDialog()">
-        <mat-icon svgIcon="settings" matTooltip="{{ 'simulationComponent_simulationSettings' | translate }}"></mat-icon>
+      <button mat-mini-fab class="simulation-operators" style="background-color: white" (click)="openAlgorithmConfiguration()" [disabled]="!graphConfiguration">
+        <mat-icon svgIcon="robot" matTooltip="{{ 'simulationComponent_algorithmSettings' | translate }}"></mat-icon>
+      </button>
+      <button mat-mini-fab style="background-color: white" (click)="openGraphConfiguration()">
+        <mat-icon svgIcon="tree" matTooltip="{{ 'simulationComponent_simulationSettings' | translate }}"></mat-icon>
       </button>
     </div>
   </div>
@@ -33,7 +36,7 @@
     <h4 class="mb-4">{{ 'simulationComponent_informationPanel' | translate }}</h4>
     <div class="col-3">
       <mat-card id="information-panel">
-        <h5>{{ 'simulationComponent_informationPanelState' | translate }}: <span [style]="{ color: simulationState.color }">{{ simulationState.value | translate }}</span></h5>
+        <!--<h5>{{ 'simulationComponent_informationPanelState' | translate }}: <span [style]="{ color: simulationState.color }">{{ simulationState.value | translate }}</span></h5>
         <p><i style="color: grey">{{ 'simulationComponent_informationPanelModified' | translate }}: {{ simulationStateDate | date:'HH:mm:ss' }}</i></p>
         <mat-divider></mat-divider>
         <p class="mt-4">{{ 'simulationComponent_informationPanelAlgorithm' | translate }}: {{ simulationConfiguration ? (simulationConfiguration.algorithmType | translate) : '--' }}</p>
@@ -41,7 +44,7 @@
         <p>{{ 'simulationComponent_informationPanelNodes' | translate }}: {{ simulationConfiguration ? simulationConfiguration.nodes : '--' }}</p>
         <p>{{ 'simulationComponent_informationPanelRobots' | translate }}: {{ simulationConfiguration ? simulationConfiguration.robots : '--' }}</p>
         <p>{{ 'simulationComponent_informationPanelColors' | translate }}: {{ simulationConfiguration ? simulationConfiguration.colors : '--' }}</p>
-        <p>{{ 'simulationComponent_informationPanelStartNodes' | translate }}: {{ simulationConfiguration ? simulationConfiguration.startNodes : '--' }}</p>
+        <p>{{ 'simulationComponent_informationPanelStartNodes' | translate }}: {{ simulationConfiguration ? simulationConfiguration.startNodes : '--' }}</p>-->
       </mat-card>
     </div>
     <div class="col-9">

@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <h1 mat-dialog-title>{{ 'settingsDialogComponent_algorithmTitle' | translate }}</h1>
+    </div>
+    <div class="col-4 text-end">
+      <button mat-mini-fab style="background-color: white" mat-dialog-close>
+        <mat-icon svgIcon="close"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <form [formGroup]="settingsFormGroup">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'settingsDialogComponent_algorithmType' | translate }}</mat-label>
+        <mat-select [formControl]="algorithmType">
+          <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType.value">
+            {{ algorithmType.value | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="algorithmType.hasError('required')">{{ 'settingsDialogComponent_algorithmTypeRequired' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'settingsDialogComponent_robots' | translate }}</mat-label>
+        <input matInput type="number" [formControl]="robots" min="1" max="{{ data.robotLimit }}">
+        <mat-error *ngIf="robots.hasError('required')">{{ 'settingsDialogComponent_robotsRequired' | translate }}</mat-error>
+        <mat-error *ngIf="robots.hasError('min')">{{ 'settingsDialogComponent_robotsMin' | translate }}</mat-error>
+        <mat-error *ngIf="robots.hasError('max')">{{ 'settingsDialogComponent_robotsMax' | translate }} {{ data.robotLimit }}!</mat-error>
+      </mat-form-field>
+
+      <p>{{ 'settingsDialogComponent_startNodes' | translate }}</p>
+      <div *ngFor="let key of keys">
+        <mat-form-field appearance="outline">
+          <mat-label [ngStyle]="{'color': key}">{{ getColorByHex(key).text | translate }}</mat-label>
+          <mat-select [formControl]="getKey(key)" multiple>
+            <mat-option *ngFor="let value of map.get(key)" [value]="value">
+              {{ value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="getKey(key).hasError('required')">{{ 'settingsDialogComponent_startNodesRequired' | translate }}</mat-error>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" [disabled]="settingsFormGroup.invalid" (click)="save()">
+      {{ 'SAVE' | translate }}
+    </button>
+    <button mat-raised-button mat-dialog-close>
+      {{ 'CLOSE' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -3,8 +3,8 @@ import {FormControl} from "@angular/forms";
 import {languages} from "../../../models/others/Languages";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialogRef} from "@angular/material/dialog";
-import {LanguageService} from "../../../services/client-side/language.service";
-import {SnackbarService} from "../../../services/client-side/snackbar.service";
+import {LanguageService} from "../../../services/client-side/utils/language.service";
+import {SnackbarService} from "../../../services/client-side/utils/snackbar.service";
 
 @Component({
   selector: 'app-settings-dialog',

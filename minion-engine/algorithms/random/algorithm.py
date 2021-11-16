@@ -3,62 +3,80 @@ from model import *
 
 def runRandom(graphState):
     steps = 0
-    state = graphState
-
-    while True:
-        oldState = state
-        newState = stepRandom(state)
+    while graphState.counter != 0:
+        graphState = stepRandom(graphState)
         steps += 1
 
-        if newState == True:
-            return {'steps': steps - 1, 'result': 'FINISHED'}
-        elif newState == False:
-            return {'steps': steps - 1, 'result': 'FAILED'}
-
-        state = newState
+    return {'steps': steps}
 
 def stepRandom(graphState):
-    if not isAllNodeOccupied(graphState):
+    # L
+    look(graphState)
+    # C
+    compute(graphState)
+    # M
+    move(graphState)
 
-        searchingRobots = list(filter(lambda x: x.state == RobotState.SEARCHING, graphState.robots))
-        
-        for robot in searchingRobots:
-            currentNode = list(filter(lambda x: x.id == robot.onID, graphState.nodes))[0]
+    return graphState
 
-            # Occupy first available node (greedy)
+def look(graphState):
+    for robot in graphState.robots:
+        if robot.state == RobotState.SEARCHING:
+            currentNode = graphState.getNode(robot.onID)
             if currentNode.state != NodeState.OCCUPIED:
-                robot.state = RobotState.FINISHED
-                currentNode.state = NodeState.OCCUPIED
+                robot.state = RobotState.LEADER
 
-            else:
-                options = list(map(lambda x: x.fromID if currentNode.id == x.toID else x.toID, 
-                            list(filter(lambda x: (x.color == robot.color) and (x.toID == currentNode.id or x.fromID == currentNode.id), graphState.edges))))
+def compute(graphState):
+    # case: more robots on one node
+    leaderElection(graphState.robots)
 
-                # check if robot can move
-                if len(options) > 0:
-                    route = options[randint(0, len(options) - 1)]
-                    robot.onID = route
+    for robot in graphState.robots:
+        if robot.state == RobotState.LEADER:
+            robot.destinationID = robot.onID
+        elif robot.state == RobotState.SEARCHING:
+            options = graphState.getEdgeOptions(robot, GraphState.COLOR_CONSTRAINT)
+            if len(options) > 0:
+                random = randint(0, len(options) - 1)
+            robot.destinationID = options[random] if len(options) > 0 else robot.onID
 
-                    # old node
-                    onNode = len(list(filter(lambda x: x.id != robot.id and robot.onID == currentNode.id, graphState.robots)))
-                    if currentNode.state != NodeState.OCCUPIED and onNode == 0:
-                        currentNode.state = NodeState.VISITED
+def move(graphState):
+    for robot in graphState.robots:
+        if robot.state == RobotState.LEADER:
+            currentNode = graphState.getNode(robot.onID)
+            currentNode.state = NodeState.OCCUPIED
+            robot.state = RobotState.FINISHED
+            graphState.counter -= 1
 
-                    # new node
-                    newNode = list(filter(lambda x: x.id == route, graphState.nodes))[0]
-                    if newNode.state != NodeState.OCCUPIED:
-                        newNode.state = NodeState.PENDING
-                else:
-                    return False
+        elif robot.state == RobotState.SEARCHING:
+            robot.onID = robot.destinationID
+            nextNode = graphState.getNode(robot.onID)
+            if nextNode.state != NodeState.OCCUPIED:
+                nextNode.state = NodeState.PENDING
 
-        return graphState
+def leaderElection(robots):
+    for robot in robots:
+        if robot.state == RobotState.LEADER:
+            nominees = list(filter(lambda x: x.state == RobotState.LEADER and x.onID == robot.onID, robots))
+            if len(nominees) > 1:
+                leader = localLeaderElection(nominees)
+                nominees.remove(leader)
+                for nominee in nominees:
+                    nominee.state = RobotState.SEARCHING
 
+def localLeaderElection(candidates):
+    if len(candidates) == 0:
+        raise ValueError("Can not elect leader with 0 candidates!")
+    
+    elif len(candidates) == 1:
+        return candidates[0]
+    
     else:
-        return True
-
-
-def isAllNodeOccupied(graphState):
-    return len(list(filter(lambda x: x.state == NodeState.OCCUPIED, graphState.nodes))) == len(graphState.nodes)
+        nominees = []
+        for candidate in candidates:
+            vote = randint(0, 1)
+            if vote == 1:
+                nominees.append(candidate)
+        return localLeaderElection(nominees) if len(nominees) > 0 else localLeaderElection(candidates)
 
 """
 # EXAMPLE
@@ -66,17 +84,16 @@ def isAllNodeOccupied(graphState):
 nodes = [Node(1, NodeState.PENDING), Node(2, NodeState.DEFAULT), 
         Node(3, NodeState.DEFAULT), Node(4, NodeState.DEFAULT), Node(5, NodeState.DEFAULT)]
 
-edges = [Edge(1, 1, 2, 'brown'), Edge(2, 1, 3, 'brown'), Edge(3, 1, 4, 'blue'), Edge(4, 1, 5, 'blue'),
-        Edge(5, 2, 3, 'blue'), Edge(6, 2, 4, 'blue'), Edge(7, 2, 5, 'blue'),
-        Edge(8, 3, 4, 'blue'), Edge(9, 3, 5, 'brown'),
+edges = [Edge(1, 1, 2, 'red'), Edge(2, 1, 3, 'red'), Edge(3, 1, 4, 'red'), Edge(4, 1, 5, 'red'),
+        Edge(5, 2, 3, 'red'), Edge(6, 2, 4, 'blue'), Edge(7, 2, 5, 'blue'),
+        Edge(8, 3, 4, 'blue'), Edge(9, 3, 5, 'blue'),
         Edge(10, 4, 5, 'blue')]
 
-robots = [Robot(1, 1, 'blue', RobotState.SEARCHING), Robot(2, 1, 'blue', RobotState.SEARCHING),
-        Robot(3, 1, 'brown', RobotState.SEARCHING), Robot(4, 1, 'brown', RobotState.SEARCHING),
-        Robot(5, 1, 'blue', RobotState.SEARCHING)]
+robots = [Robot(1, 1, RobotState.SEARCHING, 'red'), Robot(2, 1, RobotState.SEARCHING, 'red'),
+        Robot(3, 1, RobotState.SEARCHING, 'red'), Robot(4, 1, RobotState.SEARCHING, 'red'),
+        Robot(5, 1, RobotState.SEARCHING, 'blue')]
 
 graphState = GraphState(nodes, edges, robots)
 
-result = runRandom(graphState)
-print(result)
+print(runRandom(graphState))
 """

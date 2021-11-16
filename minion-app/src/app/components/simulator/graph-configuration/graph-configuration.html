@@ -13,16 +13,6 @@
     <form [formGroup]="settingsFormGroup">
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'settingsDialogComponent_algorithmType' | translate }}</mat-label>
-        <mat-select [formControl]="algorithmType">
-          <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType.value">
-            {{ algorithmType.value | translate }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="algorithmType.hasError('required')">{{ 'settingsDialogComponent_algorithmTypeRequired' | translate }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
         <mat-label>{{ 'settingsDialogComponent_graphType' | translate }}</mat-label>
         <mat-select [formControl]="graphType">
           <mat-option *ngFor="let graphType of graphTypes" [value]="graphType.value">
@@ -44,27 +34,17 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'settingsDialogComponent_robots' | translate }}</mat-label>
-        <input matInput type="number" [formControl]="robots" min="1" max="50">
-        <mat-error *ngIf="robots.hasError('required')">{{ 'settingsDialogComponent_robotsRequired' | translate }}</mat-error>
-        <mat-error *ngIf="robots.hasError('min')">{{ 'settingsDialogComponent_robotsMin' | translate }}</mat-error>
-        <mat-error *ngIf="robots.hasError('max')">{{ 'settingsDialogComponent_robotsMax' | translate }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
         <mat-label>{{ 'settingsDialogComponent_colors' | translate }}</mat-label>
-        <input matInput type="number" [formControl]="colors" min="1" max="10">
-        <mat-error *ngIf="colors.hasError('required')">{{ 'settingsDialogComponent_colorsRequired' | translate }}</mat-error>
-        <mat-error *ngIf="colors.hasError('min')">{{ 'settingsDialogComponent_colorsMin' | translate }}</mat-error>
-        <mat-error *ngIf="colors.hasError('max')">{{ 'settingsDialogComponent_colorsMax' | translate }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'settingsDialogComponent_startNodes' | translate }}</mat-label>
-        <mat-select [formControl]="startNodes" multiple>
-          <mat-option *ngFor="let number of numberOfNodes" [value]="number">{{ number }}</mat-option>
+        <mat-select [formControl]="colors" multiple>
+          <mat-chip-list>
+          <mat-option *ngFor="let color of colorTypes" [value]="color.hex" #option>
+            <mat-chip [disableRipple]="true" [ngStyle]="{'background-color': color.hex, 'color': color.fontColor}" (click)="option.selected ? option.deselect() : option.select()">
+              {{ color.text | translate }}
+            </mat-chip>
+          </mat-option>
+          </mat-chip-list>
         </mat-select>
-        <mat-error *ngIf="startNodes.hasError('required')">{{ 'settingsDialogComponent_startNodesRequired' | translate }}</mat-error>
+        <mat-error *ngIf="colors.hasError('required')">{{ 'settingsDialogComponent_colorsRequired' | translate }}</mat-error>
       </mat-form-field>
 
     </form>

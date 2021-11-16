@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InformationPanelComponent } from './information-panel.component';
+import { SimulatorComponent } from './simulator.component';
 
-describe('InformationPanelComponent', () => {
-  let component: InformationPanelComponent;
-  let fixture: ComponentFixture<InformationPanelComponent>;
+describe('StaticComponent', () => {
+  let component: SimulatorComponent;
+  let fixture: ComponentFixture<SimulatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InformationPanelComponent ]
+      declarations: [ SimulatorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InformationPanelComponent);
+    fixture = TestBed.createComponent(SimulatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
