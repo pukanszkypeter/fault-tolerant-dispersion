@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutomatedTestComponent } from './automated-test.component';
+import { GraphConfigurationComponent } from './graph-configuration.component';
 
-describe('AutomatedTestComponent', () => {
-  let component: AutomatedTestComponent;
-  let fixture: ComponentFixture<AutomatedTestComponent>;
+describe('SettingsDialogComponent', () => {
+  let component: GraphConfigurationComponent;
+  let fixture: ComponentFixture<GraphConfigurationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutomatedTestComponent ]
+      declarations: [ GraphConfigurationComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutomatedTestComponent);
+    fixture = TestBed.createComponent(GraphConfigurationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

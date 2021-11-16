@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {VisService} from "../../services/client-side/vis.service";
-import {SimulationConfiguration} from "../../models/entities/simulation/SimulationConfiguration";
+import {GraphConfiguration} from "../../models/entities/simulator/GraphConfiguration";
 
 @Component({
   selector: 'app-automated-test',
-  templateUrl: './automated-test.component.html',
-  styleUrls: ['./automated-test.component.css']
+  templateUrl: './automated-tester.component.html',
+  styleUrls: ['./automated-tester.component.css']
 })
-export class AutomatedTestComponent implements OnInit {
+export class AutomatedTesterComponent implements OnInit {
 
   // Vis.js
   network: any;
@@ -20,8 +20,8 @@ export class AutomatedTestComponent implements OnInit {
   runTests(event: any): void {
     const container = document.getElementById('preview-container');
 
-    let configuration: SimulationConfiguration = event.simulationConfiguration;
-    configuration.startNodes = [];
+    let configuration: GraphConfiguration = event.simulationConfiguration;
+    // configuration.startNodes = [];
     this.network = this.visService.initGraphFromConfig(configuration, container, {});
   }
 

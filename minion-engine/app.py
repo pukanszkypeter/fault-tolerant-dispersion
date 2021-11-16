@@ -130,6 +130,8 @@ def testRandom():
 
         parameters = request.get_json()
         json_nodes = parameters['nodes']
+        for (node in json_nodes):
+            Node(node['id'], )
         json_edges = parameters['edges']
         json_robots = parameters['robots']
         currentDateTime = datetime.datetime.now()

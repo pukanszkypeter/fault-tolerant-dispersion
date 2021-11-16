@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {graphTypes, hasNodeValueConstraint} from "../../../models/types/GraphType";
 import {algorithmTypes} from "../../../models/types/AlgorithmType";
-import {MatDialogRef} from "@angular/material/dialog";
+import { Output, EventEmitter } from '@angular/core';
+import {GraphConfiguration} from "../../../models/entities/simulator/GraphConfiguration";
 
 @Component({
-  selector: 'app-settings-dialog',
-  templateUrl: './settings-dialog.component.html',
-  styleUrls: ['./settings-dialog.component.css']
+  selector: 'app-automated-test-settings',
+  templateUrl: './automated-tester-settings.component.html',
+  styleUrls: ['./automated-tester-settings.component.css']
 })
-export class SettingsDialogComponent implements OnInit {
+export class AutomatedTesterSettingsComponent implements OnInit {
+
+  @Output() settingsEvent = new EventEmitter<{simulationConfiguration: GraphConfiguration, tests: number}>();
 
   graphTypes = graphTypes;
   algorithmTypes = algorithmTypes;
@@ -18,14 +21,15 @@ export class SettingsDialogComponent implements OnInit {
 
   settingsFormGroup: FormGroup;
 
-  constructor(fb: FormBuilder, public dialogRef: MatDialogRef<SettingsDialogComponent>) {
+  constructor(fb: FormBuilder) {
     this.settingsFormGroup = fb.group({
       algorithmType: new FormControl('', Validators.required),
       graphType: new FormControl('', Validators.required),
       nodes: new FormControl(1, [Validators.min(1), Validators.max(50), Validators.required]),
       robots: new FormControl(1, [Validators.min(1), Validators.max(50), Validators.required]),
       colors: new FormControl(1, [Validators.min(1), Validators.max(10), Validators.required]),
-      startNodes: new FormControl([1], Validators.required)
+      startNodes: new FormControl([1], Validators.required),
+      tests: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(1000)])
     });
 
     this.nodes.valueChanges.subscribe(res => {
@@ -42,20 +46,22 @@ export class SettingsDialogComponent implements OnInit {
     this.graphType.valueChanges.subscribe(res => {
       hasNodeValueConstraint(res, this.nodes);
     });
-
   }
 
   ngOnInit(): void {
   }
 
-  save() {
-    this.dialogRef.close({
-      algorithmType: this.algorithmType.value,
-      graphType: this.graphType.value,
-      nodes: this.nodes.value,
-      robots: this.robots.value,
-      colors: this.colors.value,
-      startNodes: this.startNodes.value
+  run(): void {
+    this.settingsEvent.emit({
+      simulationConfiguration: new GraphConfiguration(
+        this.algorithmType.value,
+        this.graphType.value,
+        this.nodes.value,
+        //this.robots.value,
+        //this.colors.value,
+        //this.startNodes.value
+      ),
+      tests: this.tests.value
     });
   }
 
@@ -83,6 +89,10 @@ export class SettingsDialogComponent implements OnInit {
 
   get startNodes(): FormControl {
     return this.settingsFormGroup.controls['startNodes'] as FormControl;
+  }
+
+  get tests(): FormControl {
+    return this.settingsFormGroup.controls['tests'] as FormControl;
   }
 
 }

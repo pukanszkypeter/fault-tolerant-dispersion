@@ -12,16 +12,13 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { SimulationComponent } from './components/simulation/simulation.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { InformationPanelComponent } from './components/simulation/information-panel/information-panel.component';
-import { InformationTableComponent } from './components/simulation/information-table/information-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
-import { StaticComponent } from './components/static/static.component';
+import { SimulatorComponent } from './components/simulator/simulator.component';
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatRippleModule } from "@angular/material/core";
-import { SettingsDialogComponent } from './components/static/settings-dialog/settings-dialog.component';
+import { GraphConfigurationComponent } from './components/simulator/graph-configuration/graph-configuration.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatCardModule } from "@angular/material/card";
@@ -34,24 +31,24 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import {MatTableModule} from "@angular/material/table";
 import {MatDividerModule} from "@angular/material/divider";
-import { AutomatedTestComponent } from './components/automated-test/automated-test.component';
-import { AutomatedTestSettingsComponent } from './components/automated-test/automated-test-settings/automated-test-settings.component';
+import { AutomatedTesterComponent } from './components/automated-tester/automated-tester.component';
+import { AutomatedTesterSettingsComponent } from './components/automated-tester/automated-tester-settings/automated-tester-settings.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatChipsModule} from "@angular/material/chips";
+import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SimulationComponent,
     PageNotFoundComponent,
-    InformationPanelComponent,
-    InformationTableComponent,
     HomeComponent,
-    StaticComponent,
-    SettingsDialogComponent,
+    SimulatorComponent,
+    GraphConfigurationComponent,
     LayoutComponent,
     SettingsComponent,
-    AutomatedTestComponent,
-    AutomatedTestSettingsComponent
+    AutomatedTesterComponent,
+    AutomatedTesterSettingsComponent,
+    AlgorithmConfigurationComponent
   ],
     imports: [
         BrowserModule,
@@ -81,7 +78,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
         MatSliderModule,
         MatTableModule,
         MatDividerModule,
-        MatGridListModule
+        MatGridListModule,
+        MatChipsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

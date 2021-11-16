@@ -9,7 +9,7 @@
   "PLAY": "Spielen",
   "NEXT_STEP": "Nächster Schritt",
   "PAUSE": "Pause",
-  "RESET": "Zurückstellen",
+  "STEP_BACK": "Vorheriger Schritt",
   "SPEED": "Geschwindigkeit",
   "RUN": "Run",
 
@@ -18,8 +18,9 @@
   "FORM_ERROR": "Formularfehler!",
 
   "random": "Zufällig",
-  "random_with_leader": "Zufällig mint Anführer",
+  "random_with_leader": "Zufällig mit Anführer",
   "rotor_router": "Roto-Rooter",
+  "rotor_router_with_leader": "Roto-Rooter mit Anführer",
 
   "complete": "Komplett",
   "simpleLine": "Einfache Linie",
@@ -31,6 +32,17 @@
   "hypercube": "Hyperwürfel",
   "er_random": "ER Zufällig",
 
+  "black": "Schwarz",
+  "dark_green": "Dunkel grün",
+  "grey": "Grau",
+  "brown": "Braun",
+  "orange": "Orange",
+  "yellow": "Gelb",
+  "pink": "Rosa",
+  "purple": "Lila",
+  "dark_blue": "Dunkel blau",
+  "aqua": "Wasser",
+
   "not_configured": "Nicht konfiguriert",
   "configured": "Konfiguriert",
   "running": "Laufende",
@@ -38,9 +50,8 @@
 
   "layoutComponent_title": "Minions",
   "layoutComponent_home": "Startseite",
-  "layoutComponent_simulation": "Simulation 2.0",
-  "layoutComponent_oldSimulation": "Simulation 1.0",
-  "layoutComponent_automatedTest": "Automatisierter Test",
+  "layoutComponent_simulation": "Simulator",
+  "layoutComponent_automatedTest": "Automatisierter Tester",
   "layoutComponent_github": "GitHub",
   "layoutComponent_settings": "Einstellungen",
 
@@ -50,8 +61,9 @@
 
   "homeComponent_title": "Willkommen bei der Minions Applikation!",
 
-  "simulationComponent_title": "Simulation 2.0",
-  "simulationComponent_simulationSettings": "Simulation Einstellungen",
+  "simulationComponent_title": "Simulator",
+  "simulationComponent_simulationSettings": "Graph Konfiguration",
+  "simulationComponent_algorithmSettings": "Algorithmus Konfiguration",
   "simulationComponent_informationPanel": "Informationstafel",
   "simulationComponent_tableIDColumn": "No.",
   "simulationComponent_tableColorColumn": "Farbe",
@@ -66,7 +78,8 @@
   "simulationComponent_informationPanelColors": "Farben",
   "simulationComponent_informationPanelStartNodes": "Startknoten",
 
-  "settingsDialogComponent_title": "Simulationskonfiguration",
+  "settingsDialogComponent_title": "Graph Konfiguration",
+  "settingsDialogComponent_algorithmTitle": "Algorithmus Konfiguration",
   "settingsDialogComponent_graphType": "Graph Typ",
   "settingsDialogComponent_graphTypeRequired": "Graph typ ist erforderlich!",
   "settingsDialogComponent_algorithmType": "Algorithmus Typ",
@@ -81,15 +94,13 @@
   "settingsDialogComponent_robots": "Anzahl Roboter",
   "settingsDialogComponent_robotsRequired": "Die Anzahl der Roboter ist erforderlich!",
   "settingsDialogComponent_robotsMin": "Die Anzahl der Roboter muss min.: 1 sein!",
-  "settingsDialogComponent_robotsMax": "Die Anzahl der Roboter muss max.: 50 sein!",
-  "settingsDialogComponent_colors": "Anzahl der Farben",
-  "settingsDialogComponent_colorsRequired": "Die Anzahl der Farben ist erforderlich!",
-  "settingsDialogComponent_colorsMin": "Die Anzahl der Farben muss min.: 1 sein!",
-  "settingsDialogComponent_colorsMax": "Die Anzahl der Farben muss max.: 10 sein!",
-  "settingsDialogComponent_startNodes": "Startknoten",
-  "settingsDialogComponent_startNodesRequired": "Startknoten ist erforderlich!",
+  "settingsDialogComponent_robotsMax": "Die Anzahl der Roboter muss max.: ",
+  "settingsDialogComponent_colors": "Diagrammkomponenten",
+  "settingsDialogComponent_colorsRequired": "Diagrammkomponenten ist erforderlich!",
+  "settingsDialogComponent_startNodes": "Bitte wählen Sie die Anfangspunkte der Komponenten aus!",
+  "settingsDialogComponent_startNodesRequired": "Anfangspunkte für Komponenten sind erforderlich!",
 
-  "automatedTestComponent_title": "Automatisierter Test",
+  "automatedTestComponent_title": "Automatisierter Tester",
   "automatedTestComponent_settings": "Simulation Einstellungen",
   "automatedTestComponent_preview": "Vorschau Graph",
   "automatedTestComponent_result": "Ergebnis",
