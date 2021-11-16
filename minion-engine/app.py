@@ -3,6 +3,10 @@ from flask import Flask, jsonify, request, render_template, send_from_directory
 import warnings
 import sqlite3
 import datetime
+from algorithms.rotor_router.generateGraphModel import *
+from algorithms.rotor_router.algorithm import *
+from algorithms.rotor_router_with_leader.generateRotorRouterWithLeaderModel import *
+
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # http://localhost:5000
@@ -20,6 +24,30 @@ def index():
 @app.route('/favicon.ico') 
 def favicon(): 
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+# Rotor router for frontend simulation
+@app.route("/api/engine/simulation/rotor-router", methods=['POST'])
+def simulateRotorRouterStep():
+    parameters = request.get_json()
+    return rotorRouterStep(parameters['graphParam'])
+
+@app.route("/api/engine/simulation/rotor-router-with-leader", methods=['POST'])
+def simulateRotorRouterWithLeaderStep():
+    parameters = request.get_json()
+    return rotorRouterWithLeaderStep(parameters['graphParam'])
+
+@app.route("/api/engine/measurement/rotor-router", methods=['POST'])
+def measurementRotorRouter():
+    parameters = request.get_json()
+    return RunRotorRouterMeasurement(parameters['graphState'], parameters['numberOfTest'])
+
+@app.route("/api/engine/measurement/rotor-router-with-leader", methods=['POST'])
+def measurementRotorRouterWithLeader():
+    parameters = request.get_json()
+    return RunRotorRouterWithLeaderMeasurement(parameters['graphState'], parameters['numberOfTest'])
+
+
 
 @app.route("/api/engine/logger/random", methods=['POST'])
 def addRandom():
