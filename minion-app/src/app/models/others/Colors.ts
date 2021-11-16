@@ -1,19 +1,25 @@
 export interface Color {
-  hex: string
+  hex: string,
+  text: string,
+  fontColor: string
 }
 
 export const colors: Color[] = [
-  {hex: '#ff0000'},
-  {hex: '#ff9900'},
-  {hex: '#ff0066'},
-  {hex: '#990099'},
-  {hex: '#0000ff'},
-  {hex: '#00ffff'},
-  {hex: '#003300'},
-  {hex: '#00cc00'},
-  {hex: '#663300'},
-  {hex: '#ffff00'}
+  {hex: '#000000', text: 'black', fontColor: '#ffffff'},
+  {hex: '#003300', text: 'dark_green', fontColor: '#ffffff'},
+  {hex: '#666666', text: 'grey', fontColor: '#ffffff'},
+  {hex: '#663300', text: 'brown', fontColor: '#ffffff'},
+  {hex: '#ff9900', text: 'orange', fontColor: '#ffffff'},
+  {hex: '#ffff00', text: 'yellow', fontColor: '#000000'},
+  {hex: '#ff33cc', text: 'pink', fontColor: '#ffffff'},
+  {hex: '#9900cc', text: 'purple', fontColor: '#ffffff'},
+  {hex: '#0000ff', text: 'dark_blue', fontColor: '#ffffff'},
+  {hex: '#00ffff', text: 'aqua', fontColor: '#000000'}
 ];
+
+export function getColorByHex(hex: string): Color {
+  return colors.find(color => color.hex === hex);
+}
 
 export function getRandomColors(quantity: number): Color[] {
   if (quantity <= 10) {
