@@ -18,7 +18,90 @@ export class VisService {
   constructor(private graphGenerator: GraphGeneratorService) { }
 
   initGraphFromConfig(configuration: GraphConfiguration, container: HTMLElement, options: any): vis.Network {
-    return new vis.Network(container, this.initDataFromConfig(configuration), options);
+    return new vis.Network(container, this.initDataFromConfigInANewWay(configuration), options);
+  }
+
+  initDataFromConfigInANewWay(configuration: GraphConfiguration): any {
+    const colors = configuration.colors;
+
+    let nodes: Node[] = [];
+    let edges: Edge[] = [];
+    let edgeID = 1;
+    for (let color of colors) {
+      const graph = this.graphGenerator.generateGraph(configuration.graphType, configuration.nodes, 0, '');
+
+      const lines = graph.split('\n');
+      for (let line of lines) {
+        const chunk = line.split(':');
+
+        // Node
+        if (!this.idExist(nodes,Number(chunk[0]))){
+          nodes.push(new Node(Number(chunk[0]), chunk[0], chunk.length === 3 ? NodeState.PENDING : NodeState.DEFAULT));
+        }
+
+        // Edges
+        const toValues = chunk[1].split(',');
+        for (let to of toValues) {
+          if(!this.isDuplicatedEdge(chunk[0], to, edges)) {
+            edges.push(new Edge(edgeID, Number(chunk[0]), Number(to)));
+            edgeID++;
+          }
+        }
+      }
+
+      edges.concat(this.colorEdges(edges, color));
+    }
+
+    edges = this.dropRandomEdges(edges, colors);
+    console.log(edges.length)
+    this.nodes = nodes;
+    this.edges = edges
+    console.log(this.edges.length)
+    return {nodes: new DataSet(nodes), edges: new DataSet(edges)};
+
+  }
+
+  /** otlet, dobjunk el random 100%nyi élt az egyes színekből, úgy hogy az induló csúcsokból minden robot legalább eltudjuon indulni. **/
+
+  dropRandomEdges(edges: Edge[], colors: string[]): Edge[] {
+    let fixEdges: Edge[] = [];
+
+    for (let i of colors){
+      const edgesWithCurrentColor = edges.filter(edge => edge.color === i);
+      //TODO eldobjuk az élek 60-100%-t elölről vagy hátulról
+
+      let percentAge = edgesWithCurrentColor.length * 0.6;
+
+      let dropElementsAfter = Math.floor(Math.random() * (edgesWithCurrentColor.length - percentAge + 1)) + percentAge;
+
+      let front = Math.floor(Math.random() * (1 + 1));
+      if (front === 1){
+        for (let j = 0; j < edgesWithCurrentColor.length-1; j++ ) {
+          if (j <= dropElementsAfter) {
+            fixEdges.push(edgesWithCurrentColor[j])
+          }
+        }
+      }else {
+        let counter = 0;
+        for (let j = edgesWithCurrentColor.length-1; j > 0; j-- ) {
+          if (counter <= dropElementsAfter) {
+            fixEdges.push(edgesWithCurrentColor[j])
+          }
+          counter++;
+        }
+      }
+    }
+
+    return fixEdges;
+  }
+
+  idExist(nodes: Node[], id: number): boolean{
+    for (let i of nodes){
+      if (i.id === id){
+        return true;
+      }
+    }
+    return false;
   }
 
   initDataFromConfig(configuration: GraphConfiguration): any {
@@ -60,6 +143,21 @@ export class VisService {
   isDuplicatedEdge(from: string, to: string, edges: Edge[]): boolean {
     return !!edges.find(value => value.from === Number(to) && value.to === Number(from));
   }
+
+  colorEdges(edges: Edge[], color:string): Edge[]{
+    let edgesWithNewColor: Edge[] = [];
+
+    for (let edge of edges){
+      if (edge.color === undefined ) {
+        edge.color = color;
+        edgesWithNewColor.push(edge);
+      }
+    }
+
+    return edgesWithNewColor;
+  }
+
+
 
   colorEdgesEqually(edges: Edge[], colors: string[]): Edge[] {
     const distribution = this.balance(edges.length, colors.length);
