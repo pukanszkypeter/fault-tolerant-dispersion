@@ -1,4 +1,4 @@
-from algorithm import *
+from algorithms.rotor_router_with_leader.algorithm import *
 
 class RunRotorRouterWithLeaderMeasurement:
     def __init__(self, graphState, testNumber):

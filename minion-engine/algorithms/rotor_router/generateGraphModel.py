@@ -1,4 +1,4 @@
-from algorithm import *
+from algorithms.rotor_router.algorithm import rotorRouterPlay
 
 class RunRotorRouterMeasurement:
     def __init__(self, graphState, testNumber):

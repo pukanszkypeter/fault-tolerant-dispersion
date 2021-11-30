@@ -1,6 +1,6 @@
 # POWERED BY BENCUS
 import random
-from model import *
+from algorithms.rotor_router.model import *
 
 
 def look(robot, graphState):
@@ -87,7 +87,7 @@ def isAllNodeOccupied(counter):
 
 
 # EXAMPLE
-
+'''
 nodes = [Node(1, NodeState.PENDING), Node(2, NodeState.DEFAULT), 
         Node(3, NodeState.DEFAULT), Node(4, NodeState.DEFAULT), Node(5, NodeState.DEFAULT)]
 
@@ -101,15 +101,15 @@ robots = [Robot(1, 1, 'blue', RobotState.SEARCHING), Robot(2, 1, 'blue', RobotSt
         Robot(5, 1, 'blue', RobotState.SEARCHING)]
 
 graphState = GraphState(nodes, edges, robots)
-'''
+
 for i in graphState.robots:
     print(i.onID)
 
 for i in rotorRouterStep(graphState).robots:
     print(i.onID)
-'''
-rotorRouterPlay(graphState)
 
+rotorRouterPlay(graphState)
+'''
 
 #for robot in graphState.robots:
 #    graphState.robots[graphState.robots.index(robot)] = look(robot, graphState)
