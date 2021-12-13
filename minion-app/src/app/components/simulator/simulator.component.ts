@@ -8,6 +8,7 @@ import {AlgorithmConfigurationComponent} from "./algorithm-configuration/algorit
 import {AlgorithmConfiguration} from "./algorithm-configuration/AlgorithmConfiguration";
 import {SimulationState} from "../../models/entities/SimulationState";
 import {AlgorithmService} from "../../services/server-side/algorithms/algorithm.service";
+import {RobotState} from "../../models/entities/Robot";
 
 
 @Component({
@@ -21,6 +22,13 @@ export class SimulatorComponent implements OnInit {
   algorithmConfiguration: AlgorithmConfiguration;
 
   simulationState: SimulationState;
+
+  speed: number = 750;
+  steps: number;
+
+  STOPPED = false;
+
+  displayedColumns = ['ID', 'onID', 'color', 'state', 'stateIcon'];
 
   constructor(private snackBarService: SnackbarService,
               private visService: VisService,
@@ -60,6 +68,7 @@ export class SimulatorComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.algorithmConfiguration = new AlgorithmConfiguration().initialize(res);
+        this.steps = 0;
         this.simulationState = new SimulationState().initialize(
           this.visService.nodes,
           this.visService.edges,
@@ -82,17 +91,25 @@ export class SimulatorComponent implements OnInit {
   }
 
   resetSimulator(): void {
+    this.steps = 0;
     this.algorithmConfiguration = null;
     this.graphConfiguration = null;
     this.visService.network.destroy();
   }
 
-  stepSimulator(): void {
+  async stepSimulator(): Promise<void> {
     this.algorithmService
       .step(this.algorithmConfiguration.algorithmType, this.simulationState)
       .subscribe(res => {
+        this.steps++;
         this.simulationState = new SimulationState().init(res);
+        console.log(this.simulationState.counter);
         this.visService.update(this.simulationState.nodes);
+        if (this.simulationState.counter === 0) {
+          this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 5000);
+        } else if (this.simulationState.robots.filter(r => r.state === RobotState.FINISHED).length === this.simulationState.robots.length) {
+          this.snackBarService.openSnackBar('SIMULATION_STUCK', 'warning-snackbar', null, null, null, 5000);
+        }
       }, err => {
         console.log(err);
         this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');

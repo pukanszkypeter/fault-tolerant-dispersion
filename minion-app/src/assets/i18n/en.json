@@ -23,6 +23,13 @@
   "rotor_router": "Rotor router",
   "rotor_router_with_leader": "Rotor router with leader",
 
+  "SEARCHING": "Searching",
+  "LEADER": "Leader",
+  "FINISHED": "Finished",
+
+  "SIMULATION_FINISHED": "The robots could successfully occupy all nodes!",
+  "SIMULATION_STUCK": "Oops! It looks like all robots finished before occupation!",
+
   "complete": "Complete",
   "simpleLine": "Simple Line",
   "circle": "Circle",
@@ -78,7 +85,7 @@
   "simulationComponent_informationPanelRobots": "Robots",
   "simulationComponent_informationPanelColors": "Colors",
   "simulationComponent_informationPanelStartNodes": "Start nodes",
-  "simulationComponent_instructions": "Instructions for the usage of the simulator",
+  "simulationComponent_instructions": "Instructions",
   "simulationComponent_graphConfiguration": "Configure the graph",
   "simulationComponent_algorithmConfiguration": "Configure the algorithm with robots",
   "simulationComponent_runAlgorithm": "Run and play the algorithm",

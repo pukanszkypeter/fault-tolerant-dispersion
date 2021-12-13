@@ -45,7 +45,7 @@ class SimulationState:
         self.robots = []
         for robot in json['robots']:
             self.robots.append(Robot(robot['id'], robot['onID'], RobotState(robot['state']), robot['color'], robot['lastEdgeID']))
-        self.counter = len(self.nodes)
+        self.counter = json['counter']
 
     def jsonify(self):
         nodes = []

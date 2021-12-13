@@ -23,6 +23,13 @@
   "rotor_router": "Roto-Rooter",
   "rotor_router_with_leader": "Roto-Rooter mit Anführer",
 
+  "SEARCHING": "Suche",
+  "LEADER": "Leader",
+  "FINISHED": "Fertig",
+
+  "SIMULATION_FINISHED": "Die Roboter konnten alle Knoten erfolgreich besetzen!",
+  "SIMULATION_STUCK": "Hoppla! Es sieht so aus, als ob alle Roboter vor der Besetzung fertig waren!",
+
   "complete": "Komplett",
   "simpleLine": "Einfache Linie",
   "circle": "Kreis",
@@ -78,7 +85,7 @@
   "simulationComponent_informationPanelRobots": "Roboter",
   "simulationComponent_informationPanelColors": "Farben",
   "simulationComponent_informationPanelStartNodes": "Startknoten",
-  "simulationComponent_instructions": "Anleitung zur Nutzung der Simulation",
+  "simulationComponent_instructions": "Gebrauchsanweisung",
   "simulationComponent_graphConfiguration": "Konfigurieren Sie die Graph",
   "simulationComponent_algorithmConfiguration": "Konfigurieren Sie den Algorithmus mit Robotern",
   "simulationComponent_runAlgorithm": "Spielen Sie den Algorithmus ab",

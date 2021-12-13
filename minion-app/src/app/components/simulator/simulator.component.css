@@ -20,3 +20,8 @@ mat-icon#speed-icon {
 table {
   width: 100%;
 }
+
+.robot-table {
+  overflow: auto;
+  max-height: 500px;
+}

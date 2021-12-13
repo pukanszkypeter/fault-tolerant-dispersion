@@ -23,6 +23,13 @@
   "rotor_router": "Rotor router",
   "rotor_router_with_leader": "Rotor router - vezetővel",
 
+  "SEARCHING": "Keres",
+  "LEADER": "Vezető",
+  "FINISHED": "Végzett",
+
+  "SIMULATION_FINISHED": "A robotok sikeresen el tudták foglalni az összes csomópontot!",
+  "SIMULATION_STUCK": "Hoppá! Úgy tűnik, minden robot végzett a megszállás előtt!",
+
   "complete": "Teljes",
   "simpleLine": "Egyszerű vonal",
   "circle": "Kör",
@@ -78,7 +85,7 @@
   "simulationComponent_informationPanelRobots": "Robotok",
   "simulationComponent_informationPanelColors": "Színek",
   "simulationComponent_informationPanelStartNodes": "Kezdő csúcsok",
-  "simulationComponent_instructions": "Használati utasítás a szimulátor használatához",
+  "simulationComponent_instructions": "Használati utasítás",
   "simulationComponent_graphConfiguration": "Konfigurálja a gráfot",
   "simulationComponent_algorithmConfiguration": "Konfigurálja az algoritmust robotokkal",
   "simulationComponent_runAlgorithm": "Futassa le az algoritmust",

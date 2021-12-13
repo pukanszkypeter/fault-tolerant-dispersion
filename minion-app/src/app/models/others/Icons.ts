@@ -17,6 +17,8 @@ export const icons: Icon[] = [
   {selector: 'auto-graph', path: 'assets/icons/auto-graph-icon.svg'},
   {selector: 'tree', path: 'assets/icons/tree-icon.svg'},
   {selector: 'robot', path: 'assets/icons/robot-icon.svg'},
-  {selector: 'emoji', path: 'assets/icons/emoji-icon.svg'}
-
+  {selector: 'emoji', path: 'assets/icons/emoji-icon.svg'},
+  {selector: 'search', path: 'assets/icons/search-icon.svg'},
+  {selector: 'start', path: 'assets/icons/start-icon.svg'},
+  {selector: 'check', path: 'assets/icons/check-icon.svg'}
 ];
