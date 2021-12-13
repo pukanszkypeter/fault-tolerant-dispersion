@@ -1,7 +1,7 @@
 # Webserver
 from flask import Flask, jsonify, request, render_template, send_from_directory
 import warnings
-from algorithms import model, random_algorithm
+from algorithms import model, random_algorithm, random_with_leader_algorithm, rotor_router, rotor_router_with_leader
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
@@ -25,6 +25,19 @@ def favicon():
 @app.route('/api/engine/random/step', methods=['POST'])
 def stepRandom():
     return random_algorithm.stepRandom(model.SimulationState(request.get_json())).jsonify()
+
+@app.route('/api/engine/random/leader/step', methods=['POST'])
+def stepRandomWithLeader():
+    return random_with_leader_algorithm.stepRandomWithLeader(model.SimulationState(request.get_json())).jsonify()
+
+@app.route('/api/engine/rotor/step', methods=['POST'])
+def stepRotor():
+    return rotor_router.rotorRouterStep(model.SimulationState(request.get_json())).jsonify()
+
+
+@app.route('/api/engine/rotor/leader/step', methods=['POST'])
+def stepRotorWithLeader():
+    return rotor_router_with_leader.rotorRouterWithLeaderStep(model.SimulationState(request.get_json())).jsonify()
 
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)

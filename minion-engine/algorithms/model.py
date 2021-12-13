@@ -11,6 +11,11 @@ class RobotState(Enum):
     LEADER = 'LEADER'
     FINISHED = 'FINISHED'
 
+class ColorWithLeader:
+    def __init__(self, color):
+        self.color = color
+        self.leaders = []
+
 class Node:
     def __init__(self, id, state):
         self.id = id
@@ -45,7 +50,7 @@ class SimulationState:
         self.robots = []
         for robot in json['robots']:
             self.robots.append(Robot(robot['id'], robot['onID'], RobotState(robot['state']), robot['color'], robot['lastEdgeID']))
-        self.counter = len(self.nodes)
+        self.counter = json['counter']
 
     def jsonify(self):
         nodes = []
