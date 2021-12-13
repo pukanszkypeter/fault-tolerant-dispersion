@@ -26,16 +26,16 @@ def favicon():
 def stepRandom():
     return random_algorithm.stepRandom(model.SimulationState(request.get_json())).jsonify()
 
-@app.route('/api/engine/random/leader/step', methods=['POST'])
+@app.route('/api/engine/random-with-leader/step', methods=['POST'])
 def stepRandomWithLeader():
     return random_with_leader_algorithm.stepRandomWithLeader(model.SimulationState(request.get_json())).jsonify()
 
-@app.route('/api/engine/rotor/step', methods=['POST'])
+@app.route('/api/engine/rotor-router/step', methods=['POST'])
 def stepRotor():
     return rotor_router.rotorRouterStep(model.SimulationState(request.get_json())).jsonify()
 
 
-@app.route('/api/engine/rotor/leader/step', methods=['POST'])
+@app.route('/api/engine/rotor-router-with-leader/step', methods=['POST'])
 def stepRotorWithLeader():
     return rotor_router_with_leader.rotorRouterWithLeaderStep(model.SimulationState(request.get_json())).jsonify()
 
