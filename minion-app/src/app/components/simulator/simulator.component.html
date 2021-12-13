@@ -1,82 +1,51 @@
 <div class="container">
+  <!-- TITLE -->
   <mat-card class="simulation-title animate__animated animate__fadeInDown">{{ 'simulationComponent_title' | translate }}</mat-card>
+  <!-- INSTRUCTION SECTION -->
+  <div class="row mt-4">
+    <div class="col-12">
+      {{ 'simulationComponent_instructions' | translate }}:
+      <ol class="mt-2">
+        <li>{{ 'simulationComponent_graphConfiguration' | translate }}</li>
+        <li>{{ 'simulationComponent_algorithmConfiguration' | translate }}</li>
+        <li>{{ 'simulationComponent_runAlgorithm' | translate }}</li>
+        <li>{{ 'simulationComponent_resetSimulation' | translate }} <mat-icon svgIcon="emoji" style="height: 20px;width: 20px;"></mat-icon></li>
+      </ol>
+    </div>
+  </div>
+  <!-- OPERATORS SECTION -->
   <div class="row mt-4">
     <div class="col-8">
-      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
+      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration || !algorithmConfiguration">
         <mat-icon svgIcon="play" matTooltip="{{ 'PLAY' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
+      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration || !algorithmConfiguration">
         <mat-icon svgIcon="pause" matTooltip="{{ 'PAUSE' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
+      <button mat-mini-fab class="simulation-operators" (click)="stepSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
         <mat-icon svgIcon="next-step" matTooltip="{{ 'NEXT_STEP' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration">
-        <mat-icon svgIcon="reset" matTooltip="{{ 'STEP_BACK' | translate }}"></mat-icon>
-      </button>
       <mat-icon svgIcon="speed" id="speed-icon" matTooltip="{{ 'SPEED' | translate }}"></mat-icon>
-      <mat-slider [disabled]="!graphConfiguration"></mat-slider>
+      <mat-slider [disabled]="!graphConfiguration && !algorithmConfiguration"></mat-slider>
       <span>1500 ms</span>
     </div>
     <div class="col-4 text-end">
-      <button mat-mini-fab class="simulation-operators" style="background-color: white" (click)="openAlgorithmConfiguration()" [disabled]="!graphConfiguration">
+      <button mat-mini-fab class="simulation-operators" (click)="resetSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
+        <mat-icon svgIcon="reset" matTooltip="{{ 'RESET' | translate }}"></mat-icon>
+      </button>
+      <button mat-mini-fab class="simulation-operators" (click)="openAlgorithmConfiguration()" [disabled]="!graphConfiguration || !!algorithmConfiguration">
         <mat-icon svgIcon="robot" matTooltip="{{ 'simulationComponent_algorithmSettings' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab style="background-color: white" (click)="openGraphConfiguration()">
+      <button mat-mini-fab class="simulation-operators" (click)="openGraphConfiguration()" [disabled]="!!graphConfiguration">
         <mat-icon svgIcon="tree" matTooltip="{{ 'simulationComponent_simulationSettings' | translate }}"></mat-icon>
       </button>
     </div>
   </div>
+  <!-- SIMULATOR SECTION -->
   <div class="row mt-4">
     <div class="col-12">
       <mat-card id="vis-container"></mat-card>
     </div>
   </div>
-  <div class="row mt-4">
-    <h4 class="mb-4">{{ 'simulationComponent_informationPanel' | translate }}</h4>
-    <div class="col-3">
-      <mat-card id="information-panel">
-        <!--<h5>{{ 'simulationComponent_informationPanelState' | translate }}: <span [style]="{ color: simulationState.color }">{{ simulationState.value | translate }}</span></h5>
-        <p><i style="color: grey">{{ 'simulationComponent_informationPanelModified' | translate }}: {{ simulationStateDate | date:'HH:mm:ss' }}</i></p>
-        <mat-divider></mat-divider>
-        <p class="mt-4">{{ 'simulationComponent_informationPanelAlgorithm' | translate }}: {{ simulationConfiguration ? (simulationConfiguration.algorithmType | translate) : '--' }}</p>
-        <p>{{ 'simulationComponent_informationPanelGraph' | translate }}: {{ simulationConfiguration ? (simulationConfiguration.graphType | translate) : '--' }}</p>
-        <p>{{ 'simulationComponent_informationPanelNodes' | translate }}: {{ simulationConfiguration ? simulationConfiguration.nodes : '--' }}</p>
-        <p>{{ 'simulationComponent_informationPanelRobots' | translate }}: {{ simulationConfiguration ? simulationConfiguration.robots : '--' }}</p>
-        <p>{{ 'simulationComponent_informationPanelColors' | translate }}: {{ simulationConfiguration ? simulationConfiguration.colors : '--' }}</p>
-        <p>{{ 'simulationComponent_informationPanelStartNodes' | translate }}: {{ simulationConfiguration ? simulationConfiguration.startNodes : '--' }}</p>-->
-      </mat-card>
-    </div>
-    <div class="col-9">
-      <table mat-table class="mat-elevation-z8">
-
-        <!-- ID Column -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableIDColumn' | translate }} </th>
-          <td mat-cell >  </td>
-        </ng-container>
-
-        <!-- Color Column -->
-        <ng-container matColumnDef="color">
-          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableColorColumn' | translate }} </th>
-          <td mat-cell >  </td>
-        </ng-container>
-
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tablePositionColumn' | translate }} </th>
-          <td mat-cell >  </td>
-        </ng-container>
-
-        <!-- State Column -->
-        <ng-container matColumnDef="state">
-          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableStateColumn' | translate }} </th>
-          <td mat-cell >  </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
-  </div>
+  <!-- INFORMATION PANEL SECTION -->
 </div>

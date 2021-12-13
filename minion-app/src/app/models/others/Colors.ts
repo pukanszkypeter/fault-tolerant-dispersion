@@ -20,23 +20,3 @@ export const colors: Color[] = [
 export function getColorByHex(hex: string): Color {
   return colors.find(color => color.hex === hex);
 }
-
-export function getRandomColors(quantity: number): Color[] {
-  if (quantity <= 10) {
-    const tempColors = [...colors];
-    let resultColors: Color[] = [];
-
-    for (let i = 0; i < quantity; i++) {
-      let random = tempColors[Math.floor(Math.random()*tempColors.length)];
-      resultColors.push(random);
-      const index = tempColors.indexOf(random);
-      if (index > -1) {
-        tempColors.splice(index, 1);
-      }
-    }
-
-    return resultColors;
-  } else {
-    return [];
-  }
-}

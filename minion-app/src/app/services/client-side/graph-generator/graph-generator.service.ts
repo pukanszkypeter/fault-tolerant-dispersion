@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {DisjointSet} from "../../../models/entities/graph/generator/DisjointSet";
-import {SimpleGraph} from "../../../models/entities/graph/generator/SimpleGraph";
+import {DisjointSet} from "./entities/DisjointSet";
+import {SimpleGraph} from "./entities/SimpleGraph";
 
 @Injectable({
   providedIn: 'root'

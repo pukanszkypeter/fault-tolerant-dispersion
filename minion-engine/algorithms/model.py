@@ -1,4 +1,5 @@
 from enum import Enum
+import json
 
 class NodeState(Enum):
     DEFAULT = '#ffffff'
@@ -23,22 +24,43 @@ class Edge:
         self.color = color
 
 class Robot:
-    def __init__(self, id, onID, state, color):
+    def __init__(self, id, onID, state, color, lastEdgeID):
         self.id = id
         self.onID = onID
         self.destinationID = 0
         self.state = state
         self.color = color
+        self.lastEdgeID = lastEdgeID
 
-class GraphState:
+class SimulationState:
     COLOR_CONSTRAINT = True
 
-    def __init__(self, nodes, edges, robots):
-        self.nodes = nodes
-        self.edges = edges
-        self.robots = robots
-        self.counter = len(nodes)
+    def __init__(self, json):
+        self.nodes = []
+        for node in json['nodes']:
+            self.nodes.append(Node(node['id'], NodeState(node['state'])))
+        self.edges = []
+        for edge in json['edges']:
+            self.edges.append(Edge(edge['id'], edge['fromID'], edge['toID'], edge['color']))
+        self.robots = []
+        for robot in json['robots']:
+            self.robots.append(Robot(robot['id'], robot['onID'], RobotState(robot['state']), robot['color'], robot['lastEdgeID']))
+        self.counter = len(self.nodes)
 
+    def jsonify(self):
+        nodes = []
+        for node in self.nodes:
+            nodes.append({'id': node.id, 'state': node.state.value})
+        edges = []
+        for edge in self.edges:
+            edges.append({'id': edge.id, 'fromID': edge.fromID, 'toID': edge.toID, 'color': edge.color})
+        robots = []
+        for robot in self.robots:
+            robots.append({'id': robot.id, 'onID': robot.onID, 'state': robot.state.value, 'color': robot.color, 'lastEdgeID': robot.lastEdgeID})
+        
+        return json.dumps({'nodes': nodes, 'edges': edges, 'robots': robots, 'counter': self.counter})
+
+    # Helper Methods
     def getNode(self, nodeID):
         for node in self.nodes:
             if node.id == nodeID:

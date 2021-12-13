@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {GraphConfigurationComponent} from "./graph-configuration/graph-configuration.component";
 import {SnackbarService} from "../../services/client-side/utils/snackbar.service";
-import {GraphConfiguration} from "../../models/entities/simulator/GraphConfiguration";
-import {SimulationState, simulationStates} from "../../models/entities/simulator/SimulationState";
-import {VisService} from "../../services/client-side/vis.service";
+import {GraphConfiguration} from "./graph-configuration/GraphConfiguration";
+import {VisService} from "../../services/client-side/vis/vis.service";
 import {AlgorithmConfigurationComponent} from "./algorithm-configuration/algorithm-configuration.component";
-import {Edge} from "../../models/entities/vis/Edge";
-import {Node} from "../../models/entities/vis/Node";
+import {AlgorithmConfiguration} from "./algorithm-configuration/AlgorithmConfiguration";
+import {SimulationState} from "../../models/entities/SimulationState";
+import {AlgorithmService} from "../../services/server-side/algorithms/algorithm.service";
+
 
 @Component({
   selector: 'app-static',
@@ -16,23 +17,15 @@ import {Node} from "../../models/entities/vis/Node";
 })
 export class SimulatorComponent implements OnInit {
 
-  // states = simulationStates;
-
-  // simulationState: SimulationState;
-  // simulationStateDate: Date;
-
   graphConfiguration: GraphConfiguration;
+  algorithmConfiguration: AlgorithmConfiguration;
 
-  displayedColumns = ['id', 'color', 'position', 'state'];
-
-  // Vis.js
-  network: any;
+  simulationState: SimulationState;
 
   constructor(private snackBarService: SnackbarService,
               private visService: VisService,
+              private algorithmService: AlgorithmService,
               public dialog: MatDialog) {
-
-    // this.changeState(0);
   }
 
   ngOnInit(): void {
@@ -45,7 +38,6 @@ export class SimulatorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        // this.changeState(1);
         this.graphConfiguration = new GraphConfiguration().initialize(res);
         this.initSimulator(this.graphConfiguration);
         this.snackBarService.openSnackBar('SUCCESSFUL_SAVE', 'success-snackbar');
@@ -59,7 +51,7 @@ export class SimulatorComponent implements OnInit {
   openAlgorithmConfiguration(): void {
     const dialogRef = this.dialog.open(AlgorithmConfigurationComponent,
       {
-        data: {startNodes: this.visService.getStartNodes(), robotLimit: this.graphConfiguration.nodes},
+        data: {startNodes: this.visService.getStartNodes()},
         height: "70%",
         width: "40%",
         disableClose: true
@@ -67,10 +59,13 @@ export class SimulatorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        console.log(res);
-        // this.changeState(1);
-        // this.graphConfiguration = new GraphConfiguration().initialize(res);
-        // this.initSimulation(this.simulationConfiguration);
+        this.algorithmConfiguration = new AlgorithmConfiguration().initialize(res);
+        this.simulationState = new SimulationState().initialize(
+          this.visService.nodes,
+          this.visService.edges,
+          this.algorithmConfiguration.robots
+        );
+        this.visService.update(this.simulationState.nodes);
         this.snackBarService.openSnackBar('SUCCESSFUL_SAVE', 'success-snackbar');
       }
     }, err => {
@@ -83,15 +78,25 @@ export class SimulatorComponent implements OnInit {
 
   initSimulator(configuration: GraphConfiguration): void {
     const container = document.getElementById('vis-container');
-
-    this.network = this.visService.initGraphFromConfig(configuration, container, {});
+    this.visService.initGraphFromConfig(configuration, container, {});
   }
 
-  /** Helper Methods */
+  resetSimulator(): void {
+    this.algorithmConfiguration = null;
+    this.graphConfiguration = null;
+    this.visService.network.destroy();
+  }
 
-  /*changeState(state: number): void {
-    this.simulationState = this.states[state];
-    this.simulationStateDate = new Date();
-  }*/
+  stepSimulator(): void {
+    this.algorithmService
+      .step(this.algorithmConfiguration.algorithmType, this.simulationState)
+      .subscribe(res => {
+        this.simulationState = new SimulationState().init(res);
+        this.visService.update(this.simulationState.nodes);
+      }, err => {
+        console.log(err);
+        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+      });
+  }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {VisService} from "../../services/client-side/vis.service";
-import {GraphConfiguration} from "../../models/entities/simulator/GraphConfiguration";
+import {VisService} from "../../services/client-side/vis/vis.service";
+import {GraphConfiguration} from "../simulator/graph-configuration/GraphConfiguration";
 
 @Component({
   selector: 'app-automated-test',
