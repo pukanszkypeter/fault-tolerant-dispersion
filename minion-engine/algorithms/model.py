@@ -11,6 +11,11 @@ class RobotState(Enum):
     LEADER = 'LEADER'
     FINISHED = 'FINISHED'
 
+class ColorWithLeader:
+    def __init__(self, color):
+        self.color = color
+        self.leaders = []
+
 class Node:
     def __init__(self, id, state):
         self.id = id
