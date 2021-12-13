@@ -5,9 +5,6 @@ from algorithms.model import *
 
 
 def look(robot, simulationState):
-    if simulationState.colorsWithLeader is None:
-        simulationState = chooseLeaderRobot(simulationState)
-
     # Szét nézünk hogy mik az opciók ha a robot még nem finishelt
     if robot.state != RobotState.FINISHED:
         #CurrentNode
@@ -45,10 +42,10 @@ def look(robot, simulationState):
                                    list(filter(lambda x: (x.color == robot.color) and (x.toID == node.id or x.fromID == node.id), simulationState.edges))))
 
                 if len(options) > 1:
-                    # Megnézzük, ha van robot a jelenlegi node-on akkor kizárjuk a lastEdgeId lehetőséget.
+                    # Megnézzük, ha van robot a jelenlegi node-on akkor kizárjuk a lastEdgeID lehetőséget.
                     setledRobotAtCurrentNode = list(filter(lambda x: x.onID == node.id, simulationState.robots))
-                    if len(setledRobotAtCurrentNode) > 0:
-                        options = list(filter(lambda x: x != setledRobotAtCurrentNode[0].lastEdgeId, options))
+                    if len(setledRobotAtCurrentNode) > 0 and hasattr(setledRobotAtCurrentNode[0], 'lastEdgeID'):
+                        options = list(filter(lambda x: x != setledRobotAtCurrentNode[0].lastEdgeID, options))
                 robot.options = list(options)
 
     return robot
@@ -67,7 +64,7 @@ def move(robot, simulationState):
 
         setledRobot = list(filter(lambda x: x.state == RobotState.FINISHED and x.onID == robot.onID , simulationState.robots))
         if len(setledRobot) > 0:
-            simulationState.robots[simulationState.robots.index(setledRobot[0])].lastEdgeId = robot.options[0]
+            simulationState.robots[simulationState.robots.index(setledRobot[0])].lastEdgeID = robot.options[0]
 
         if robot.options is None:
             simulationState.robots[simulationState.robots.index(robot)].state = RobotState.FINISHED
@@ -124,6 +121,7 @@ def rotorRouterWithLeaderPlay(simulationState):
 
 
 def rotorRouterWithLeaderStep(simulationState):
+    simulationState = chooseLeaderRobot(simulationState)
 
     for leaderRobots in simulationState.colorsWithLeader:
         for ldRobot in leaderRobots.leaders:

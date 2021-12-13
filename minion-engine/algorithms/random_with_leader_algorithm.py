@@ -20,48 +20,87 @@ def stepRandomWithLeader(simulationState):
     return simulationState
 
 def look(simulationState):
-    for robot in simulationState.robots:
-        if robot.state == RobotState.SEARCHING:
-            currentNode = simulationState.getNode(robot.onID)
-            if currentNode.state != NodeState.OCCUPIED:
-                robot.state = RobotState.LEADER
+
+    if not allColorHasLeader(simulationState):
+        print("hello")
+        alreadyHasLeader = False
+        for robot in simulationState.robots:
+            if robot.state == RobotState.SEARCHING:
+                currentNode = simulationState.getNode(robot.onID)
+                if currentNode.state != NodeState.OCCUPIED:
+                    robot.state = RobotState.LEADER
+            elif robot.state == RobotState.LEADER:
+                alreadyHasLeader = True
+
+        if not alreadyHasLeader:
+            leaderElection(simulationState.robots)
 
 def compute(simulationState):
     # case: more robots on one node
-    leaderElection(simulationState.robots)
+    leaders = list(filter(lambda x: x.state == RobotState.LEADER, simulationState.robots))
+    for robot in leaders:
+            options = simulationState.getEdgeOptions(robot, True)
+            random = randint(0, len(options) - 1)
+            print("aasd")
 
-    for robot in simulationState.robots:
-        if robot.state == RobotState.LEADER:
-            robot.destinationID = robot.onID
-        elif robot.state == RobotState.SEARCHING:
-            # a person who carries them on
-            messiah = list(filter(lambda x: x.state == RobotState.SEARCHING and x.onID == robot.onID and x.destinationID != 0, simulationState.robots))
-            if len(messiah) > 0:
-                robot.destinationID = messiah[0].destinationID
-            else:
-                options = simulationState.getEdgeOptions(robot, True)
-                random = randint(0, len(options) - 1)
-                robot.destinationID = options[random]
+            robot.destinationID = options[random]
+            print(robot.destinationID)
+            #If there is no one who can settle down, the leader will
+
+            robotsOnNode = list(filter(lambda x: (x.state == RobotState.SEARCHING or x.state == RobotState.SETLER) and x.onID == robot.onID and x.color == robot.color, simulationState.robots))
+            if len(robotsOnNode) == 0:
+                print("why i am here")
+                if simulationState.getNode(robot.onID).state != NodeState.OCCUPIED:
+                    robot.destinationID = robot.onID
+                    robot.state = RobotState.SETLER
+
+    for node in simulationState.nodes:
+        robotsHere = list(filter(lambda x: x.onID == node.id, simulationState.robots))
+        colors = set(list(map(lambda x: x.color, robotsHere)))
+        if len(colors) > 0:
+            gotMessias = False
+            for color in colors:
+                messiah = list(filter(lambda x: x.state == RobotState.SEARCHING and x.onID == node.id and x.color == color, simulationState.robots))
+                if len(messiah) > 0:
+                    otherRobots = list(filter(lambda x: x.state == RobotState.SEARCHING and x.onID == node.id and x.color == color, simulationState.robots))
+                    if not gotMessias:
+                        if simulationState.getNode(node.id).state != NodeState.OCCUPIED:
+                            messiah[0].destinationID = node.id
+                            messiah[0].state = RobotState.SETLER
+                            gotMessias = True
+                    if not gotMessias:
+                        if simulationState.getNode(node.id).state != NodeState.OCCUPIED:
+                            otherRobots = list(filter(lambda x: x.state == RobotState.SEARCHING and x.onID == node.id and x.color == color and x.id != messiah[0].id, simulationState.robots))
+
+                    leaderForThatColor = list(filter(lambda x: x.color == color and x.state == RobotState.LEADER and x.onID == node.id, simulationState.robots))
+                    if len(leaderForThatColor) > 0:
+                        for rob in otherRobots:
+                            print(leaderForThatColor[0].destinationID)
+                            rob.destinationID = simulationState.getRobot(leaderForThatColor[0].id).destinationID
 
 def move(simulationState):
     for robot in simulationState.robots:
-        if robot.state == RobotState.LEADER:
+
+        if robot.state == RobotState.SETLER:
             currentNode = simulationState.getNode(robot.onID)
             currentNode.state = NodeState.OCCUPIED
             robot.state = RobotState.FINISHED
             simulationState.counter -= 1
 
-        elif robot.state == RobotState.SEARCHING:
+        elif robot.state != RobotState.FINISHED:
             robot.onID = robot.destinationID
-            robot.destinationID = 0 # should clear for new messiah
+            #robot.destinationID = 0 # should clear for new messiah
             nextNode = simulationState.getNode(robot.onID)
             if nextNode.state != NodeState.OCCUPIED:
                 nextNode.state = NodeState.PENDING
 
 def leaderElection(robots):
-    for robot in robots:
-        if robot.state == RobotState.LEADER:
-            nominees = list(filter(lambda x: x.state == RobotState.LEADER and x.onID == robot.onID and x.color == robot.color, robots))
+    #Minden színhez kell külön leader
+    colors = set(list(map(lambda x: x.color, robots)))
+    for color in colors:
+        robs = list(filter(lambda x: x.color == color, robots))
+        for robot in robs:
+            nominees = list(filter(lambda x: x.state == RobotState.LEADER and x.onID == robot.onID, robots))
             if len(nominees) > 1:
                 leader = localLeaderElection(nominees)
                 nominees.remove(leader)
@@ -83,3 +122,19 @@ def localLeaderElection(candidates):
                 nominees.append(candidate)
         return localLeaderElection(nominees) if len(nominees) > 0 else localLeaderElection(candidates)
 
+def allColorHasLeader(simulationState):
+    colors = set(list(map(lambda x: x.color, simulationState.robots)))
+    counter = 0
+    for color in colors:
+        robotsWithThatColorL = list(filter(lambda x: x.color == color and x.state == RobotState.LEADER, simulationState.robots))
+        robotsWithThatColorS = list(filter(lambda x: x.color == color and x.state == RobotState.SEARCHING, simulationState.robots))
+        if len(robotsWithThatColorS) > 0 and len(robotsWithThatColorL) > 0:
+            counter += 1
+        elif len(robotsWithThatColorS) == 0 and len(robotsWithThatColorL) > 0:
+            counter += 1
+        else:
+            counter -= 1
+    if counter != len(colors):
+        return False
+    else:
+        return True

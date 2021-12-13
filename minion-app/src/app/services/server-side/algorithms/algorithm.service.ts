@@ -35,6 +35,7 @@ export class AlgorithmService {
   }
 
   stepRandomWithLeader(simulationState: SimulationState): Observable<SimulationState> {
+    console.log(simulationState.nodes);
     return this.http.post<SimulationState>(
       ServerRoute + AlgorithmRoutes.RANDOM_WITH_LEADER + AlgorithmRoutes.STEP, simulationState
     );
