@@ -1,8 +1,11 @@
 # Webserver
 from flask import Flask, jsonify, request, render_template, send_from_directory
 import warnings
+
+import visulaziation.visualization
 from algorithms import model, random_algorithm, random_with_leader_algorithm, rotor_router_algorithm, rotor_router_with_leader_algorithm
 from logger import logger
+from visulaziation import visualization
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
@@ -62,6 +65,10 @@ def testRotorRouterWithLeader():
 @app.route('/api/engine/logger', methods=['POST'])
 def log():
     return jsonify(logger.Logger(request.get_json()).log())
+
+@app.route('/api/engine/visualization', methods=['POST'])
+def getVisualization():
+    return visualization.executeQuery(request.get_json()['algorithmType'], request.get_json()['graphType'], request.get_json()['groupBy'])
 
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)
