@@ -1,7 +1,8 @@
 export enum RobotState {
   SEARCHING = 'SEARCHING',
   LEADER = 'LEADER',
-  FINISHED = 'FINISHED'
+  FINISHED = 'FINISHED',
+  SETLER = 'SETLER'
 }
 
 export class Robot {

@@ -10,6 +10,7 @@ class RobotState(Enum):
     SEARCHING = 'SEARCHING'
     LEADER = 'LEADER'
     FINISHED = 'FINISHED'
+    SETLER = 'SETLER'
 
 class ColorWithLeader:
     def __init__(self, color):
@@ -36,6 +37,7 @@ class Robot:
         self.state = state
         self.color = color
         self.lastEdgeID = lastEdgeID
+        self.options = []
 
 class SimulationState:
     COLOR_CONSTRAINT = True
@@ -71,6 +73,11 @@ class SimulationState:
             if node.id == nodeID:
                 return node
 
+    def getRobot(self, robotId):
+        for robot in self.robots:
+            if robot.id == robotId:
+                return robot
+
     def getEdgeOptions(self, robot, isColorConstraint):
         if not isColorConstraint:
             return list(map(lambda x: x.fromID if robot.onID == x.toID else x.toID, 
@@ -78,6 +85,19 @@ class SimulationState:
         else:
             return list(map(lambda x: x.fromID if robot.onID == x.toID else x.toID, 
                     list(filter(lambda x: (x.fromID == robot.onID and x.color == robot.color) or (x.toID == robot.onID and x.color == robot.color), self.edges))))
+
+    def getEdgeOptionsWithRotor(self, robot):
+        setledRobot = list(filter(lambda x: x.onID == robot.onID, self.robots))
+        if len(setledRobot) == 0:
+            return list(map(lambda x: x.fromID if robot.onID == x.toID else x.toID,
+                                list(filter(lambda x: (x.fromID == robot.onID and x.color == robot.color) or (x.toID == robot.onID and x.color == robot.color), self.edges))))
+        else:
+            options = list(filter(lambda x: (x.fromID == robot.onID and x.color == robot.color) or (x.toID == robot.onID and x.color == robot.color), self.edges))
+            if len(options) > 1:
+                options = list(filter(lambda x: ((x.fromID == robot.onID and x.color == robot.color) or (x.toID == robot.onID and x.color == robot.color)) and x.id != setledRobot[0].lastEdgeID, self.edges))
+                return list(map(lambda x: x.fromID if robot.onID == x.toID else x.toID, options))
+            else:
+                return list(map(lambda x: x.fromID if robot.onID == x.toID else x.toID, options))
 
     def printCurrentState(self):
         print("NODES")
