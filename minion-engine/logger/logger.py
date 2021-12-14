@@ -1,4 +1,5 @@
 import sqlite3
+from colorama import Fore, Style
 
 class Logger:
 
@@ -19,9 +20,15 @@ class Logger:
                 connection.execute(sql_insert_query, (self.algorithmType, self.graphType, self.nodes, self.robots, self.components, self.steps))
                 connection.commit()
                 result = True
+                print(Fore.GREEN + "Successfuly logged the test with parameters: {algorithmType: " 
+                + self.algorithmType + ", graphType: " + self.graphType + ", nodes: " + str(self.nodes) + 
+                ", robots: " + str(self.robots) + ", components: " + str(self.components) + ", steps: " + str(self.steps) + "}" + Style.RESET_ALL)
         except:
             connection.rollback()
             result = False
+            print(Fore.RED + "Unsuccessfuly logged the test with parameters: {algorithmType: " 
+            + self.algorithmType + ", graphType: " + self.graphType + ", nodes: " + str(self.nodes) + 
+            ", robots: " + str(self.robots) + ", components: " + str(self.components) + ", steps: " + str(self.steps) + "}" + Style.RESET_ALL)
         finally:
             return result
             cursor.close()

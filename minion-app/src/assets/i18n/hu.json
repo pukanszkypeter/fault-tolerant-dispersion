@@ -131,6 +131,11 @@
   "automatedTestComponent_result": "Eredmények",
   "automatedTestComponent_init": "Inicializálási fázis",
   "automatedTestComponent_configure": "Konfiguráció",
+  "automatedTesterComponent_testsColumn": "Tesztek száma",
+  "automatedTesterComponent_successColumn": "Sikeres tesztek",
+  "automatedTesterComponent_failedColumn": "Sikertelen tesztek",
+  "automatedTesterComponent_stepsColumn": "Átlagos lépés",
+  "automatedTesterComponent_serverColumn": "Átlagos szerver válaszidő",
 
   "automatedTestSettingsComponent_tests": "Tesztek száma",
   "automatedTestSettingsComponent_testsRequired": "Tesztek számának megadása kötelező!",

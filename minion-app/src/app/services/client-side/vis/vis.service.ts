@@ -54,7 +54,9 @@ export class VisService {
       edges.concat(this.colorEdges(edges, color));
     }
 
-    edges = this.dropRandomEdges(edges, colors);
+    if (colors.length > 1) {
+      edges = this.dropRandomEdges(edges, colors);
+    }
     this.nodes = nodes;
     this.edges = edges
 
@@ -64,29 +66,31 @@ export class VisService {
   dropRandomEdges(edges: VisEdge[], colors: string[]): VisEdge[] {
     let fixEdges: VisEdge[] = [];
 
-    for (let i of colors){
+    let cutFrom = 0;
+    for (let i of colors) {
       const edgesWithCurrentColor = edges.filter(edge => edge.color === i);
 
-      // Drop 60-100% of edges from front and back
+      // Drop 60-100% of edges from front or back
       let percentAge = edgesWithCurrentColor.length * 0.6;
 
       let dropElementsAfter = Math.floor(Math.random() * (edgesWithCurrentColor.length - percentAge + 1)) + percentAge;
 
-      let front = Math.floor(Math.random() * (1 + 1));
-      if (front === 1){
-        for (let j = 0; j < edgesWithCurrentColor.length-1; j++ ) {
+      if (cutFrom === 0) {
+        for (let j = 0; j < edgesWithCurrentColor.length-1; j++) {
           if (j <= dropElementsAfter) {
             fixEdges.push(edgesWithCurrentColor[j])
           }
         }
-      }else {
+        cutFrom = 1;
+      } else if (cutFrom === 1) {
         let counter = 0;
-        for (let j = edgesWithCurrentColor.length-1; j > 0; j-- ) {
+        for (let j = edgesWithCurrentColor.length-1; j > 0; j--) {
           if (counter <= dropElementsAfter) {
             fixEdges.push(edgesWithCurrentColor[j])
           }
           counter++;
         }
+        cutFrom = 0;
       }
     }
 

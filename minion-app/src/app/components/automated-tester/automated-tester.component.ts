@@ -22,7 +22,14 @@ export class AutomatedTesterComponent implements OnInit {
 
   simulationState: SimulationState;
 
+  testsInProgress = false;
   tests: FormControl = new FormControl(1, [Validators.required, Validators.min(1), Validators.max(1000)]);
+
+  testRatio: number = 0;
+  stepsList: number[] = [];
+  serverList: number[] = [];
+  summary =  [{tests: 0, success: 0, failed: 0, steps: 0, server: 0}];
+  summaryColumns = ['tests', 'success', 'failed', 'steps', 'server'];
 
   constructor(private snackBarService: SnackbarService,
               private visService: VisService,
@@ -78,20 +85,62 @@ export class AutomatedTesterComponent implements OnInit {
    this.graphConfiguration = null;
    this.algorithmConfiguration = null;
    this.simulationState = null;
+   this.stepsList = [];
+   this.serverList = [];
+   this.summary = [{tests: 0, success: 0, failed: 0, steps: 0, server: 0}];
+   this.testRatio = 0;
   }
 
   resetAlgorithm(): void {
     this.algorithmConfiguration = null;
     this.simulationState = null;
+    this.stepsList = [];
+    this.serverList = [];
+    this.summary = [{tests: 0, success: 0, failed: 0, steps: 0, server: 0}];
+    this.testRatio = 0;
   }
 
-  run(): void {
-    this.algorithmService.test(this.algorithmConfiguration.algorithmType, this.wrapTestData())
-      .subscribe(res => {
-        console.log(res);
-      }, err => {
-        console.log(err);
-      })
+  run(tests: number): void {
+    this.testsInProgress = true;
+    if (tests > 0) {
+      const start = new Date();
+      this.algorithmService.test(this.algorithmConfiguration.algorithmType, this.wrapTestData())
+        .subscribe(res => {
+          const end = new Date();
+          if (res) {
+            tests--;
+            this.summary[0].tests++;
+            this.summary[0].success++;
+            this.stepsList.push(res);
+            this.summary[0].steps = this.stepsList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
+            this.serverList.push(end.valueOf() - start.valueOf());
+            this.summary[0].server = this.serverList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
+            this.testRatio = Math.ceil((this.summary[0].tests / (tests + this.summary[0].tests)) * 100);
+            setTimeout(() => this.run(tests), 500);
+          } else {
+            tests--;
+            this.summary[0].tests++;
+            this.summary[0].failed++;
+            this.serverList.push(end.valueOf() - start.valueOf());
+            this.summary[0].server = this.serverList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
+            this.testRatio = Math.ceil((this.summary[0].tests / (tests + this.summary[0].tests)) * 100);
+            setTimeout(() => this.run(tests), 500);
+          }
+        }, err => {
+          const end = new Date();
+          console.log(err);
+          tests--;
+          this.summary[0].tests++;
+          this.summary[0].failed++;
+          this.serverList.push(end.valueOf() - start.valueOf());
+          this.summary[0].server = this.serverList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
+          this.testRatio = Math.ceil((this.summary[0].tests / (tests + this.summary[0].tests)) * 100);
+          setTimeout(() => this.run(tests), 500);
+        });
+    } else {
+      this.testsInProgress = false;
+      this.snackBarService.openSnackBar('SUCCESSFUL_SAVE', 'success-snackbar')
+    }
   }
 
   wrapTestData(): any {
@@ -101,7 +150,6 @@ export class AutomatedTesterComponent implements OnInit {
       nodes: this.graphConfiguration.nodes,
       robots: this.algorithmConfiguration.robots.length,
       components: this.graphConfiguration.colors.length,
-      tests: this.tests.value,
       simulationState: this.simulationState
     }
   }

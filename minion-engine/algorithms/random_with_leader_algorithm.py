@@ -1,15 +1,28 @@
 from random import randint
 from algorithms.model import *
+from logger.logger import *
 
-def runRandomWithLeader(simulationState):
+def test(json):
+    steps = run(SimulationState(json['simulationState']))
+    result = Logger({
+        'algorithmType': json['algorithmType'], 
+        'graphType': json['graphType'], 
+        'nodes': json['nodes'], 
+        'robots': json['robots'], 
+        'components': json['components'], 
+        'steps': steps
+        }).log()
+    return steps if result else None
+
+def run(simulationState):
     steps = 0
     while simulationState.counter != 0:
-        simulationState = stepRandomWithLeader(simulationState)
+        simulationState = step(simulationState)
         steps += 1
 
-    return {'steps': steps}
+    return steps
 
-def stepRandomWithLeader(simulationState):
+def step(simulationState):
     # L
     look(simulationState)
     # C

@@ -37,6 +37,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
 import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
 import { LogFormComponent } from './components/simulator/log-form/log-form.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { LogFormComponent } from './components/simulator/log-form/log-form.compo
         MatTableModule,
         MatDividerModule,
         MatGridListModule,
-        MatChipsModule
+        MatChipsModule,
+        MatProgressBarModule
     ],
   providers: [],
   bootstrap: [AppComponent]

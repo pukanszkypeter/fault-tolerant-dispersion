@@ -5,7 +5,6 @@ import {HttpClient} from "@angular/common/http";
 import {ServerRoute} from "../ServerRoute";
 import {AlgorithmRoutes} from "./AlgorithmRoutes";
 import {algorithmTypes} from "../../../models/types/AlgorithmType";
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class AlgorithmService {
     }
   }
 
-  test(algorithmType: string, data: any): Observable<any> {
+  test(algorithmType: string, data: any): Observable<number> {
     switch (algorithmType) {
       case algorithmTypes[0].value:
         return this.testRandom(data);
@@ -48,10 +47,10 @@ export class AlgorithmService {
     );
   }
 
-  testRandom(data: any): Observable<any> {
-    return this.http.post<any>(
+  testRandom(data: any): Observable<number> {
+    return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.RANDOM + AlgorithmRoutes.TEST, data
-    ).pipe(map(result => console.log(result)));
+    );
   }
 
   stepRandomWithLeader(simulationState: SimulationState): Observable<SimulationState> {
@@ -60,8 +59,8 @@ export class AlgorithmService {
     );
   }
 
-  testRandomWithLeader(data: any): Observable<boolean> {
-    return this.http.post<boolean>(
+  testRandomWithLeader(data: any): Observable<number> {
+    return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.RANDOM_WITH_LEADER + AlgorithmRoutes.TEST, data
     );
   }
@@ -72,8 +71,8 @@ export class AlgorithmService {
     );
   }
 
-  testRotorRouter(data: any): Observable<boolean> {
-    return this.http.post<boolean>(
+  testRotorRouter(data: any): Observable<number> {
+    return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER + AlgorithmRoutes.TEST, data
     );
   }
@@ -84,8 +83,8 @@ export class AlgorithmService {
     );
   }
 
-  testRotorRouterWithLeader(data: any): Observable<boolean> {
-    return this.http.post<boolean>(
+  testRotorRouterWithLeader(data: any): Observable<number> {
+    return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmRoutes.TEST, data
     );
   }

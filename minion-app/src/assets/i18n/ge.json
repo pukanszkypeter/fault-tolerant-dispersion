@@ -131,6 +131,11 @@
   "automatedTestComponent_result": "Ergebnise",
   "automatedTestComponent_init": "Initialisierungsphase",
   "automatedTestComponent_configure": "Konfiguration",
+  "automatedTesterComponent_testsColumn": "Anzahl der Tests",
+  "automatedTesterComponent_successColumn": "Erfolgreiche Tests",
+  "automatedTesterComponent_failedColumn": "Fehlgeschlagene Tests",
+  "automatedTesterComponent_stepsColumn": "Durchschnittliche Schritte ",
+  "automatedTesterComponent_serverColumn": "Durchschnittliche Serverantwortzeit",
 
   "automatedTestSettingsComponent_tests": "Anzahl der Tests",
   "automatedTestSettingsComponent_testsRequired": "Die Anzahl der Tests ist erforderlich!",

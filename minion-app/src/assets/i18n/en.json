@@ -131,6 +131,11 @@
   "automatedTestComponent_result": "Results",
   "automatedTestComponent_init": "Initialization phase",
   "automatedTestComponent_configure": "Configure",
+  "automatedTesterComponent_testsColumn": "Number of tests",
+  "automatedTesterComponent_successColumn": "Successful tests",
+  "automatedTesterComponent_failedColumn": "Failed tests",
+  "automatedTesterComponent_stepsColumn": "Average steps",
+  "automatedTesterComponent_serverColumn": "Average server response time",
 
   "automatedTestSettingsComponent_tests": "Number of tests",
   "automatedTestSettingsComponent_testsRequired": "The number of tests is required!",
