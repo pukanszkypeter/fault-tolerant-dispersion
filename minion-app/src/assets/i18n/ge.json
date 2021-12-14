@@ -65,6 +65,7 @@
   "layoutComponent_home": "Startseite",
   "layoutComponent_simulation": "Simulator",
   "layoutComponent_automatedTest": "Automatisierter Tester",
+  "layoutComponent_visualization": "Visualisierung",
   "layoutComponent_github": "GitHub",
   "layoutComponent_settings": "Einstellungen",
 
@@ -142,5 +143,9 @@
   "automatedTestSettingsComponent_testsMin": "Die Anzahl der Tests muss min.: 1 sein!",
   "automatedTestSettingsComponent_testsMax": "Die Anzahl der Tests muss max.: 1000 sein!",
 
-  "logFormComponent_title": "Möchten Sie das folgende Ergebnis speichern?"
+  "logFormComponent_title": "Möchten Sie das folgende Ergebnis speichern?",
+
+  "visualizationComponent_title": "Visualisierung",
+  "visualizationComponent_groupByChart": "Group By Diagramm",
+  "visualizationComponent_query": "Anfrage"
 }

@@ -65,6 +65,7 @@
   "layoutComponent_home": "Kezőoldal",
   "layoutComponent_simulation": "Szimulátor",
   "layoutComponent_automatedTest": "Automatizált tesztelő",
+  "layoutComponent_visualization": "Vizualizáció",
   "layoutComponent_github": "GitHub",
   "layoutComponent_settings": "Beállítások",
 
@@ -142,5 +143,9 @@
   "automatedTestSettingsComponent_testsMin": "A tesztek száma min.: 1 lehet!",
   "automatedTestSettingsComponent_testsMax": "A tesztek száma max.: 1000 lehet!",
 
-  "logFormComponent_title": "Szeretné az alábbi eredményeket elmenteni?"
+  "logFormComponent_title": "Szeretné az alábbi eredményeket elmenteni?",
+
+  "visualizationComponent_title": "Vizualizáció",
+  "visualizationComponent_groupByChart": "Group By Diagram",
+  "visualizationComponent_query": "Lekérdezés"
 }
