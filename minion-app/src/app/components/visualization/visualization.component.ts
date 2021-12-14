@@ -22,7 +22,7 @@ export class VisualizationComponent implements OnInit {
 
   LOADING = false;
 
-  custom = [{x: 1, y: 5},{x: 2, y: 4},{x: 3, y: 6}];
+  result: any;
 
   constructor(private visualizationService: VisualizationService,
               private snackBarService: SnackbarService) { }
@@ -34,7 +34,9 @@ export class VisualizationComponent implements OnInit {
     this.LOADING = true;
     this.visualizationService.groupBy(this.algorithmType.value, this.graphType.value, this.groupBy.value)
       .subscribe(res => {
-        console.log(res);
+        this.result = Object(JSON.stringify(res));
+        console.log(this.result);
+        setTimeout(() => this.LOADING = false, 1000);
       }, err => {
         console.log(err);
         this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');

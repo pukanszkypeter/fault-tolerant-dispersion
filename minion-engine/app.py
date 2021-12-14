@@ -66,9 +66,10 @@ def testRotorRouterWithLeader():
 def log():
     return jsonify(logger.Logger(request.get_json()).log())
 
-@app.route('/api/engine/visualization', methods=['POST'])
-def getVisualization():
-    return visualization.executeQuery(request.get_json()['algorithmType'], request.get_json()['graphType'], request.get_json()['groupBy'])
+# Visualization
+@app.route('/api/engine/visualization/group-by', methods=['POST'])
+def groupBy():
+    return jsonify(visualization.executeQuery(request.get_json()['algorithmType'], request.get_json()['graphType'], request.get_json()['groupBy']))
 
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)

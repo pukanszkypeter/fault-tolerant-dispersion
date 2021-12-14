@@ -11,10 +11,10 @@ export class VisualizationService {
 
   constructor(private http: HttpClient) { }
 
-  groupBy(algorithmType: string, graphType: string, groupBy: string): Observable<{x: number[], y: number[]}> {
-    return this.http.post<{x: number[], y: number[]}>(
+  groupBy(algorithmType: string, graphType: string, groupBy: string): Observable<any> {
+    return this.http.post<any>(
       ServerRoute + VisualizationRoutes.VISUALIZATION + VisualizationRoutes.GROUP_BY,
-      {algorithmType: algorithmType, graphType: graphType, groupBy: groupBy}
+      {algorithmType: algorithmType, graphType: graphType, groupBy: groupBy},
     );
   }
 

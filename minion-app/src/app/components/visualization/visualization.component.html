@@ -39,11 +39,22 @@
             </button>
           </div>
         </div>
-        <ngx-charts-line-chart
-          [view]="[700,300]"
-          [results]="custom"
-        >
-        </ngx-charts-line-chart>
+        <div class="row">
+          <div class="col-12">
+            <ngx-charts-line-chart *ngIf="result"
+              [view]="[700,300]"
+              [results]="result"
+              [gradient]="false"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'asd'"
+              [yAxisLabel]="'asd'">
+            </ngx-charts-line-chart>
+          </div>
+        </div>
       </mat-card>
     </div>
   </div>
