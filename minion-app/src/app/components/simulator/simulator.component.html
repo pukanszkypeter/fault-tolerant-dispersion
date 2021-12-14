@@ -15,11 +15,11 @@
   </div>
   <!-- OPERATORS SECTION -->
   <div class="row mt-4">
-    <div class="col-8">
-      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration || !algorithmConfiguration">
+    <div class="col-6">
+      <button mat-mini-fab class="simulation-operators" (click)="playSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
         <mat-icon svgIcon="play" matTooltip="{{ 'PLAY' | translate }}"></mat-icon>
       </button>
-      <button mat-mini-fab class="simulation-operators" [disabled]="!graphConfiguration || !algorithmConfiguration">
+      <button mat-mini-fab class="simulation-operators" (click)="stopSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
         <mat-icon svgIcon="pause" matTooltip="{{ 'PAUSE' | translate }}"></mat-icon>
       </button>
       <button mat-mini-fab class="simulation-operators" (click)="stepSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
@@ -33,11 +33,16 @@
                   [thumbLabel]="true"
                   [(ngModel)]="speed"
                   [disabled]="!graphConfiguration || !algorithmConfiguration"></mat-slider>
-      <span class="">{{ speed }} ms</span>
+      <span>{{ speed }} ms</span>
     </div>
-    <div class="col-4 text-end">
+    <div class="col-6 text-end">
+      <span class="server-response-time">{{ 'simulationComponent_steps' | translate }}: {{ steps }}</span>
+      <span class="server-response-time">{{ 'simulationComponent_serverResponseTime' | translate }}: {{ RTT }} ms</span>
       <button mat-mini-fab class="simulation-operators" (click)="resetSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
         <mat-icon svgIcon="reset" matTooltip="{{ 'RESET' | translate }}"></mat-icon>
+      </button>
+      <button mat-mini-fab class="simulation-operators" (click)="save()" [disabled]="!this.simulationState || this.simulationState.counter !== 0">
+        <mat-icon svgIcon="save" matTooltip="{{ 'simulationComponent_save' | translate }}"></mat-icon>
       </button>
       <button mat-mini-fab class="simulation-operators" (click)="openAlgorithmConfiguration()" [disabled]="!graphConfiguration || !!algorithmConfiguration">
         <mat-icon svgIcon="robot" matTooltip="{{ 'simulationComponent_algorithmSettings' | translate }}"></mat-icon>
@@ -94,7 +99,7 @@
           <td mat-cell *matCellDef="let element">
             <mat-icon svgIcon="search" *ngIf="element.state === 'SEARCHING'"></mat-icon>
             <mat-icon svgIcon="check" *ngIf="element.state === 'FINISHED'"></mat-icon>
-            <mat-icon svgIcon="start" *ngIf="element.state === 'LEADER'"></mat-icon>
+            <mat-icon svgIcon="star" *ngIf="element.state === 'LEADER'"></mat-icon>
           </td>
         </ng-container>
 

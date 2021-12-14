@@ -4,7 +4,12 @@
   "ENGLISH": "Angol",
 
   "SAVE": "Mentés",
+  "SAVE_AND_RESET": "Mentés és Visszaállítás",
+  "ONLY_RESET": "Csak visszaállítás",
   "CLOSE": "Bezárás",
+
+  "READY": "Kész",
+  "NOT_READY": "Nincs kész",
 
   "PLAY": "Indítás",
   "NEXT_STEP": "Következő lépés",
@@ -71,6 +76,7 @@
 
   "simulationComponent_title": "Szimulátor",
   "simulationComponent_simulationSettings": "Gráf konfiguráció",
+  "simulationComponent_save": "Mentés",
   "simulationComponent_algorithmSettings": "Algoritmus konfiguráció",
   "simulationComponent_informationPanel": "Információs Panel",
   "simulationComponent_tableIDColumn": "No.",
@@ -90,6 +96,8 @@
   "simulationComponent_algorithmConfiguration": "Konfigurálja az algoritmust robotokkal",
   "simulationComponent_runAlgorithm": "Futassa le az algoritmust",
   "simulationComponent_resetSimulation": "Állítsa vissza és kezdje előről",
+  "simulationComponent_serverResponseTime": "Szerver válasz idő",
+  "simulationComponent_steps": "Lépések",
 
   "settingsDialogComponent_title": "Gráf konfiguráció",
   "settingsDialogComponent_algorithmTitle": "Algoritmus konfiguráció",
@@ -120,10 +128,14 @@
   "automatedTestComponent_title": "Automatizált tesztelő",
   "automatedTestComponent_settings": "Szimuláció beállítások",
   "automatedTestComponent_preview": "Gráf előnézet",
-  "automatedTestComponent_result": "Eredmény",
+  "automatedTestComponent_result": "Eredmények",
+  "automatedTestComponent_init": "Inicializálási fázis",
+  "automatedTestComponent_configure": "Konfiguráció",
 
   "automatedTestSettingsComponent_tests": "Tesztek száma",
   "automatedTestSettingsComponent_testsRequired": "Tesztek számának megadása kötelező!",
   "automatedTestSettingsComponent_testsMin": "A tesztek száma min.: 1 lehet!",
-  "automatedTestSettingsComponent_testsMax": "A tesztek száma max.: 1000 lehet!"
+  "automatedTestSettingsComponent_testsMax": "A tesztek száma max.: 1000 lehet!",
+
+  "logFormComponent_title": "Szeretné az alábbi eredményeket elmenteni?"
 }

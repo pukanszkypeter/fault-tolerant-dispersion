@@ -4,7 +4,12 @@
   "ENGLISH": "English",
 
   "SAVE": "Save",
+  "SAVE_AND_RESET": "Save and Reset",
+  "ONLY_RESET": "Reset only",
   "CLOSE": "Close",
+
+  "READY": "Ready",
+  "NOT_READY": "Not ready",
 
   "PLAY": "Play",
   "NEXT_STEP": "Next step",
@@ -71,6 +76,7 @@
 
   "simulationComponent_title": "Simulator",
   "simulationComponent_simulationSettings": "Graph configuration",
+  "simulationComponent_save": "Save",
   "simulationComponent_algorithmSettings": "Algorithm configuration",
   "simulationComponent_informationPanel": "Information Panel",
   "simulationComponent_tableIDColumn": "No.",
@@ -90,6 +96,8 @@
   "simulationComponent_algorithmConfiguration": "Configure the algorithm with robots",
   "simulationComponent_runAlgorithm": "Run and play the algorithm",
   "simulationComponent_resetSimulation": "Reset and start again",
+  "simulationComponent_serverResponseTime": "Server response time",
+  "simulationComponent_steps": "Steps",
 
   "settingsDialogComponent_title": "Graph configuration",
   "settingsDialogComponent_algorithmTitle": "Algorithm configuration",
@@ -120,10 +128,14 @@
   "automatedTestComponent_title": "Automated tester",
   "automatedTestComponent_settings": "Simulation settings",
   "automatedTestComponent_preview": "Preview graph",
-  "automatedTestComponent_result": "Result",
+  "automatedTestComponent_result": "Results",
+  "automatedTestComponent_init": "Initialization phase",
+  "automatedTestComponent_configure": "Configure",
 
   "automatedTestSettingsComponent_tests": "Number of tests",
   "automatedTestSettingsComponent_testsRequired": "The number of tests is required!",
   "automatedTestSettingsComponent_testsMin": "The number of tests must be min.: 1!",
-  "automatedTestSettingsComponent_testsMax": "The number of tests can be max.: 1000!"
+  "automatedTestSettingsComponent_testsMax": "The number of tests can be max.: 1000!",
+
+  "logFormComponent_title": "Would you like to save the following result?"
 }

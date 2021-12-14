@@ -4,7 +4,12 @@
   "ENGLISH": "Englisch",
 
   "SAVE": "Speichern",
+  "SAVE_AND_RESET": "Speichern und Zurücksetzen",
+  "ONLY_RESET": "Nur Zurücksetzen",
   "CLOSE": "Schließen",
+
+  "READY": "Fertig",
+  "NOT_READY": "Nicht fertig",
 
   "PLAY": "Spielen",
   "NEXT_STEP": "Nächster Schritt",
@@ -71,6 +76,7 @@
 
   "simulationComponent_title": "Simulator",
   "simulationComponent_simulationSettings": "Graph Konfiguration",
+  "simulationComponent_save": "Speichern",
   "simulationComponent_algorithmSettings": "Algorithmus Konfiguration",
   "simulationComponent_informationPanel": "Informationstafel",
   "simulationComponent_tableIDColumn": "No.",
@@ -90,6 +96,8 @@
   "simulationComponent_algorithmConfiguration": "Konfigurieren Sie den Algorithmus mit Robotern",
   "simulationComponent_runAlgorithm": "Spielen Sie den Algorithmus ab",
   "simulationComponent_resetSimulation": "Zurücksetzen und neu starten",
+  "simulationComponent_serverResponseTime": "Antwortzeit des Servers",
+  "simulationComponent_steps": "Schritte",
 
   "settingsDialogComponent_title": "Graph Konfiguration",
   "settingsDialogComponent_algorithmTitle": "Algorithmus Konfiguration",
@@ -120,10 +128,14 @@
   "automatedTestComponent_title": "Automatisierter Tester",
   "automatedTestComponent_settings": "Simulation Einstellungen",
   "automatedTestComponent_preview": "Vorschau Graph",
-  "automatedTestComponent_result": "Ergebnis",
+  "automatedTestComponent_result": "Ergebnise",
+  "automatedTestComponent_init": "Initialisierungsphase",
+  "automatedTestComponent_configure": "Konfiguration",
 
   "automatedTestSettingsComponent_tests": "Anzahl der Tests",
   "automatedTestSettingsComponent_testsRequired": "Die Anzahl der Tests ist erforderlich!",
   "automatedTestSettingsComponent_testsMin": "Die Anzahl der Tests muss min.: 1 sein!",
-  "automatedTestSettingsComponent_testsMax": "Die Anzahl der Tests muss max.: 1000 sein!"
+  "automatedTestSettingsComponent_testsMax": "Die Anzahl der Tests muss max.: 1000 sein!",
+
+  "logFormComponent_title": "Möchten Sie das folgende Ergebnis speichern?"
 }

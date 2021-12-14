@@ -9,6 +9,7 @@ import {AlgorithmConfiguration} from "./algorithm-configuration/AlgorithmConfigu
 import {SimulationState} from "../../models/entities/SimulationState";
 import {AlgorithmService} from "../../services/server-side/algorithms/algorithm.service";
 import {RobotState} from "../../models/entities/Robot";
+import {LogFormComponent} from "./log-form/log-form.component";
 
 
 @Component({
@@ -24,8 +25,8 @@ export class SimulatorComponent implements OnInit {
   simulationState: SimulationState;
 
   speed: number = 750;
-  steps: number;
-
+  steps: number = 0;
+  RTT: number = 0;
   STOPPED = false;
 
   displayedColumns = ['ID', 'onID', 'color', 'state', 'stateIcon'];
@@ -42,7 +43,7 @@ export class SimulatorComponent implements OnInit {
   /** Settings */
 
   openGraphConfiguration(): void {
-    const dialogRef = this.dialog.open(GraphConfigurationComponent, {height: "50%", width: "30%", disableClose: true});
+    const dialogRef = this.dialog.open(GraphConfigurationComponent, {data: {automatedMode: false}, height: "50%", width: "30%", disableClose: true});
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
@@ -68,7 +69,6 @@ export class SimulatorComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.algorithmConfiguration = new AlgorithmConfiguration().initialize(res);
-        this.steps = 0;
         this.simulationState = new SimulationState().initialize(
           this.visService.nodes,
           this.visService.edges,
@@ -91,29 +91,83 @@ export class SimulatorComponent implements OnInit {
   }
 
   resetSimulator(): void {
+    this.speed = 750;
     this.steps = 0;
+    this.RTT = 0;
+    this.STOPPED = false;
     this.algorithmConfiguration = null;
     this.graphConfiguration = null;
+    this.simulationState = null;
     this.visService.network.destroy();
   }
 
+  async playSimulator(): Promise<void> {
+    this.STOPPED = false;
+    while (!this.STOPPED && this.simulationState.counter !== 0 && !this.allRobotFinished()) {
+      await this.stepSimulator();
+      await this.sleep(this.speed);
+    }
+  }
+
+  stopSimulator(): void {
+    this.STOPPED = true;
+  }
+
   async stepSimulator(): Promise<void> {
-    this.algorithmService
-      .step(this.algorithmConfiguration.algorithmType, this.simulationState)
-      .subscribe(res => {
-        this.steps++;
-        this.simulationState = new SimulationState().init(res);
-        console.log(this.simulationState.counter);
-        this.visService.update(this.simulationState.nodes);
-        if (this.simulationState.counter === 0) {
-          this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 5000);
-        } else if (this.simulationState.robots.filter(r => r.state === RobotState.FINISHED).length === this.simulationState.robots.length) {
-          this.snackBarService.openSnackBar('SIMULATION_STUCK', 'warning-snackbar', null, null, null, 5000);
-        }
-      }, err => {
-        console.log(err);
-        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
-      });
+    if (this.simulationState.counter !== 0 && !this.allRobotFinished()) {
+      const start = new Date();
+      this.algorithmService
+        .step(this.algorithmConfiguration.algorithmType, this.simulationState)
+        .subscribe(res => {
+          this.steps++;
+          const end = new Date();
+          this.RTT = end.valueOf() - start.valueOf();
+          this.simulationState = new SimulationState().init(res);
+          this.visService.update(this.simulationState.nodes);
+          if (this.simulationState.counter === 0) {
+            this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
+          } else if (this.allRobotFinished()) {
+            this.snackBarService.openSnackBar('SIMULATION_STUCK', 'warning-snackbar', null, null, null, 10000);
+          }
+        }, err => {
+          console.log(err);
+          this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+        });
+    }
+  }
+
+  /** Helper Methods */
+
+  save(): void {
+    const dialogRef = this.dialog.open(LogFormComponent, {
+      data: {
+        graphType: this.graphConfiguration.graphType,
+        algorithmType: this.algorithmConfiguration.algorithmType,
+        nodes: this.graphConfiguration.nodes,
+        robots: this.simulationState.robots.length,
+        components: this.graphConfiguration.colors.length,
+        steps: this.steps
+      },
+      height: "45%",
+      width: "40%",
+      disableClose: true});
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+          this.resetSimulator();
+      }
+    }, err => {
+      console.log(err);
+      this.snackBarService.openSnackBar('FORM_ERROR', 'error-snackbar');
+    });
+  }
+
+  allRobotFinished(): boolean {
+    return this.simulationState.robots.filter(r => r.state === RobotState.FINISHED).length === this.simulationState.robots.length;
+  }
+
+  sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }

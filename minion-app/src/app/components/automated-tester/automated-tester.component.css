@@ -1,13 +1,13 @@
-mat-card {
+.config-card {
+  max-height: 400px;
+}
+
+.header-image {
+  background-size: cover;
+}
+
+.tests-card {
+  margin-left: 30%;
+  width: 40%;
   text-align: center;
-  font-size: larger;
-}
-
-.page-card {
-  text-align: unset;
-  font-size: unset;
-}
-
-mat-card#preview-container {
-  height: 500px;
 }

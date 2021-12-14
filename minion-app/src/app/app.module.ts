@@ -36,6 +36,7 @@ import { AutomatedTesterSettingsComponent } from './components/automated-tester/
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
 import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
+import { LogFormComponent } from './components/simulator/log-form/log-form.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AlgorithmConfigurationComponent } from './components/simulator/algorith
     SettingsComponent,
     AutomatedTesterComponent,
     AutomatedTesterSettingsComponent,
-    AlgorithmConfigurationComponent
+    AlgorithmConfigurationComponent,
+    LogFormComponent
   ],
     imports: [
         BrowserModule,

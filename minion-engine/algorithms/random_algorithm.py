@@ -1,5 +1,45 @@
 from random import randint
 from algorithms.model import *
+from logger.logger import *
+
+def testRandomAsStream(json):
+    for i in range(json['tests']):
+        steps = runRandom(SimulationState(json['simulationState']))
+        Logger({
+            'algorithmType': json['algorithmType'], 
+            'graphType': json['graphType'], 
+            'nodes': json['nodes'], 
+            'robots': json['robots'], 
+            'components': json['components'], 
+            'steps': steps
+            }).log()
+        yield str(steps)
+
+def testRandom(json):
+    counter = 0
+
+    for i in range(json['tests']):
+        steps = runRandom(SimulationState(json['simulationState']))
+        result = Logger({
+            'algorithmType': json['algorithmType'], 
+            'graphType': json['graphType'], 
+            'nodes': json['nodes'], 
+            'robots': json['robots'], 
+            'components': json['components'], 
+            'steps': steps
+            }).log()
+        if result:
+            counter += 1
+
+    return counter == json['tests']
+
+def runRandom(simulationState):
+    steps = 0
+    while simulationState.counter != 0:
+        simulationState = stepRandom(simulationState)
+        steps += 1
+
+    return steps
 
 def stepRandom(simulationState):
     # L
