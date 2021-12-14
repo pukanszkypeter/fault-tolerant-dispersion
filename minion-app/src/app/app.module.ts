@@ -36,6 +36,11 @@ import { AutomatedTesterSettingsComponent } from './components/automated-tester/
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
 import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
+import { LogFormComponent } from './components/simulator/log-form/log-form.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { VisualizationComponent } from './components/visualization/visualization.component';
+import {MatRadioModule} from "@angular/material/radio";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
@@ -48,39 +53,44 @@ import { AlgorithmConfigurationComponent } from './components/simulator/algorith
     SettingsComponent,
     AutomatedTesterComponent,
     AutomatedTesterSettingsComponent,
-    AlgorithmConfigurationComponent
+    AlgorithmConfigurationComponent,
+    LogFormComponent,
+    VisualizationComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatFormFieldModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatTooltipModule,
-        MatRippleModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        MatCardModule,
-        MatSliderModule,
-        MatTableModule,
-        MatDividerModule,
-        MatGridListModule,
-        MatChipsModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatRippleModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatSliderModule,
+    MatTableModule,
+    MatDividerModule,
+    MatGridListModule,
+    MatChipsModule,
+    MatProgressBarModule,
+    MatRadioModule,
+    NgxChartsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

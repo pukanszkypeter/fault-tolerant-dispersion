@@ -1,13 +1,33 @@
-mat-card {
+.automated-title {
   text-align: center;
   font-size: larger;
 }
 
-.page-card {
-  text-align: unset;
-  font-size: unset;
+.config-card {
+  max-height: 400px;
 }
 
-mat-card#preview-container {
-  height: 500px;
+.header-image {
+  background-size: cover;
+}
+
+.tests-card {
+  margin-left: 30%;
+  width: 40%;
+  text-align: center;
+}
+
+.test-ratio {
+  text-align: center;
+}
+
+.test-progress-bar {
+  margin-left: 5%;
+  width: 90%;
+}
+
+.summary-table {
+  margin-top: 20px;
+  margin-left: 5%;
+  width: 90%;
 }
