@@ -22,7 +22,6 @@ def stepRandomWithLeader(simulationState):
 def look(simulationState):
 
     if not allColorHasLeader(simulationState):
-        print("hello")
         alreadyHasLeader = False
         for robot in simulationState.robots:
             if robot.state == RobotState.SEARCHING:
@@ -41,15 +40,12 @@ def compute(simulationState):
     for robot in leaders:
             options = simulationState.getEdgeOptions(robot, True)
             random = randint(0, len(options) - 1)
-            print("aasd")
 
             robot.destinationID = options[random]
-            print(robot.destinationID)
             #If there is no one who can settle down, the leader will
 
             robotsOnNode = list(filter(lambda x: (x.state == RobotState.SEARCHING or x.state == RobotState.SETLER) and x.onID == robot.onID and x.color == robot.color, simulationState.robots))
             if len(robotsOnNode) == 0:
-                print("why i am here")
                 if simulationState.getNode(robot.onID).state != NodeState.OCCUPIED:
                     robot.destinationID = robot.onID
                     robot.state = RobotState.SETLER
@@ -74,8 +70,16 @@ def compute(simulationState):
 
                     leaderForThatColor = list(filter(lambda x: x.color == color and x.state == RobotState.LEADER and x.onID == node.id, simulationState.robots))
                     if len(leaderForThatColor) > 0:
+                        if len(leaderForThatColor) > 1:
+                            #select only one leader
+                            randomNum = randint(0, len(leaderForThatColor) - 1)
+                            choosenLeader = leaderForThatColor[randomNum]
+                            for j in leaderForThatColor:
+                                if j.id != choosenLeader.id:
+                                    j.state = RobotState.SEARCHING
+                                    leaderForThatColor.remove(j)
+                                    otherRobots.append(j)
                         for rob in otherRobots:
-                            print(leaderForThatColor[0].destinationID)
                             rob.destinationID = simulationState.getRobot(leaderForThatColor[0].id).destinationID
 
 def move(simulationState):
@@ -89,7 +93,6 @@ def move(simulationState):
 
         elif robot.state != RobotState.FINISHED:
             robot.onID = robot.destinationID
-            #robot.destinationID = 0 # should clear for new messiah
             nextNode = simulationState.getNode(robot.onID)
             if nextNode.state != NodeState.OCCUPIED:
                 nextNode.state = NodeState.PENDING

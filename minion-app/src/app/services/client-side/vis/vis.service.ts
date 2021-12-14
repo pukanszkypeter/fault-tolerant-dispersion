@@ -68,7 +68,7 @@ export class VisService {
       const edgesWithCurrentColor = edges.filter(edge => edge.color === i);
 
       // Drop 60-100% of edges from front and back
-      let percentAge = edgesWithCurrentColor.length * 0.7;
+      let percentAge = edgesWithCurrentColor.length * 0.6;
 
       let dropElementsAfter = Math.floor(Math.random() * (edgesWithCurrentColor.length - percentAge + 1)) + percentAge;
 
