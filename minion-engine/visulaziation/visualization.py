@@ -21,3 +21,23 @@ def executeQuery(algorithmType, graphType, groupBy):
         object_list.append({'name': str(result[0]), 'value': result[1]})
 
     return {'name': 'Group By', 'series': object_list}
+
+
+def summaryQuery(summaryBy):
+    connection = sqlite3.Connection("db/memory.sqlite")
+    result = []
+
+    if summaryBy == 'max':
+        sqlQuery = "Select MAX(steps), algorithm_type, graph_type from algorithm_results group by algorithm_type, graph_type"
+        result = pd.read_sql(sqlQuery, connection)
+    elif summaryBy == 'min':
+        sqlQuery = "Select MIN(steps), algorithm_type, graph_type from algorithm_results group by algorithm_type, graph_type"
+        result = pd.read_sql(sqlQuery, connection)
+    elif summaryBy == 'tests':
+        sqlQuery = "Select COUNT(*), algorithm_type, graph_type from algorithm_results group by algorithm_type, graph_type"
+        result = pd.read_sql(sqlQuery, connection)
+    elif summaryBy == 'average':
+        sqlQuery = "Select AVG(steps), algorithm_type, graph_type from algorithm_results group by algorithm_type, graph_type"
+        result = pd.read_sql(sqlQuery, connection)
+
+    return result.values.tolist()

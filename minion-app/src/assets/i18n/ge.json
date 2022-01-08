@@ -147,5 +147,16 @@
 
   "visualizationComponent_title": "Visualisierung",
   "visualizationComponent_groupByChart": "Group By Diagramm",
-  "visualizationComponent_query": "Anfrage"
+  "visualizationComponent_query": "Anfrage",
+  "visualizationComponent_graphComponents": "Die Anzahl den Graph Komponenten",
+  "visualizationComponent_averageSteps": "Anzahl der durchschnittlichen Schritte",
+  "visualizationComponent_noTestFound": "Keine Testdaten gefunden!",
+  "visualizationComponent_averageStepsChart": "Diagramm der Zusammenfassung",
+  "visualizationComponent_summaryByCaption": "Zusammenfassung von",
+  "visualizationComponent_summaryByRequired": "Zusammenfassung von ist erforderlich!",
+  "visualizationComponent_max": "Maximum Schritte",
+  "visualizationComponent_min": "Minimum Schritte",
+  "visualizationComponent_average": "Durchschnittlichen Schritte",
+  "visualizationComponent_tests": "Dia Anzahl der Tests",
+  "visualizationComponent_xAxis": "X-Achse"
 }

@@ -33,7 +33,6 @@ def step(simulationState):
     return simulationState
 
 def look(simulationState):
-
     if not allColorHasLeader(simulationState):
         alreadyHasLeader = False
         for robot in simulationState.robots:
@@ -43,7 +42,6 @@ def look(simulationState):
                     robot.state = RobotState.LEADER
             elif robot.state == RobotState.LEADER:
                 alreadyHasLeader = True
-
         if not alreadyHasLeader:
             leaderElection(simulationState.robots)
 
@@ -60,8 +58,9 @@ def compute(simulationState):
             robotsOnNode = list(filter(lambda x: (x.state == RobotState.SEARCHING or x.state == RobotState.SETLER) and x.onID == robot.onID and x.color == robot.color, simulationState.robots))
             if len(robotsOnNode) == 0:
                 if simulationState.getNode(robot.onID).state != NodeState.OCCUPIED:
-                    robot.destinationID = robot.onID
-                    robot.state = RobotState.SETLER
+                    if len(list(filter(lambda x: x.state == RobotState.SETLER, leaders))) == 0:
+                        robot.destinationID = robot.onID
+                        robot.state = RobotState.SETLER
 
     for node in simulationState.nodes:
         robotsHere = list(filter(lambda x: x.onID == node.id, simulationState.robots))

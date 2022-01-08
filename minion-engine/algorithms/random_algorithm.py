@@ -4,6 +4,7 @@ from logger.logger import *
 
 def test(json):
     steps = run(SimulationState(json['simulationState']))
+    print('LOG')
     result = Logger({
         'algorithmType': json['algorithmType'], 
         'graphType': json['graphType'], 

@@ -11,6 +11,13 @@ export class VisualizationService {
 
   constructor(private http: HttpClient) { }
 
+  summarize(summaryBy: string): Observable<any> {
+    return this.http.post<any>(
+      ServerRoute + VisualizationRoutes.VISUALIZATION + VisualizationRoutes.SUMMARY,
+      {summaryBy: summaryBy}
+    );
+  }
+
   groupBy(algorithmType: string, graphType: string, groupBy: string): Observable<any> {
     return this.http.post<any>(
       ServerRoute + VisualizationRoutes.VISUALIZATION + VisualizationRoutes.GROUP_BY,

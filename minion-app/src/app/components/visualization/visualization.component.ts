@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {graphTypes} from "../../models/types/GraphType";
 import {FormControl, Validators} from "@angular/forms";
 import {algorithmTypes} from "../../models/types/AlgorithmType";
 import {VisualizationService} from "../../services/server-side/visualization/visualization.service";
 import {SnackbarService} from "../../services/client-side/utils/snackbar.service";
+import {LanguageService} from "../../services/client-side/utils/language.service";
+import {MatRadioChange} from "@angular/material/radio";
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-visualization',
@@ -12,6 +15,19 @@ import {SnackbarService} from "../../services/client-side/utils/snackbar.service
 })
 export class VisualizationComponent implements OnInit {
 
+  /** Summary Chart */
+
+  summaryOptions = ['average', 'max', 'min', 'tests'];
+  summaryBy = new FormControl('', [Validators.required]);
+
+  xAxis = new FormControl('algorithm', [Validators.required])
+
+  SUMMARY_LOADING = false;
+
+  plainSummary: any[] = [];
+  summary: any[] = [];
+
+  /** Group By Chart */
   graphTypes = graphTypes;
   graphType = new FormControl('', [Validators.required]);
 
@@ -21,25 +37,76 @@ export class VisualizationComponent implements OnInit {
   groupBy = new FormControl('nodes', [Validators.required]);
 
   LOADING = false;
+  NO_TEST_FOUND = false;
 
-  result: any;
+  result: any[] = [];
 
   constructor(private visualizationService: VisualizationService,
-              private snackBarService: SnackbarService) { }
+              private snackBarService: SnackbarService,
+              private languageService: LanguageService) { }
 
   ngOnInit(): void {
   }
 
+  summarize(): void {
+    this.SUMMARY_LOADING = true;
+    this.summary = [];
+    this.visualizationService.summarize(this.summaryBy.value)
+      .subscribe(res => {
+        this.plainSummary = res;
+        this.summary = this.createSummary(this.plainSummary, this.xAxis.value !== 'algorithm');
+        setTimeout(() => this.SUMMARY_LOADING = false, 1000);
+      }, err => {
+        console.log(err);
+        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+        setTimeout(() => this.SUMMARY_LOADING = false, 1000);
+      });
+  }
+
+  createSummary(steps: any[], afterGraph: boolean): any[] {
+    let result = [];
+    for (let custom_type_one of afterGraph ? graphTypes : algorithmTypes) {
+      let series = [];
+      let values = steps.filter(step => afterGraph ? step[2] === custom_type_one.value : step[1] === custom_type_one.value);
+      for (let custom_type_two of afterGraph ? algorithmTypes : graphTypes) {
+        let value = values.filter(value => afterGraph ? value[1] === custom_type_two.value : value[2] === custom_type_two.value);
+        if (value.length === 1) {
+          series.push({name: this.languageService.getTranslatedText(custom_type_two.value), value: value[0][0]});
+        } else {
+          series.push({name: this.languageService.getTranslatedText(custom_type_two.value), value: 0});
+        }
+      }
+      result.push({name: this.languageService.getTranslatedText(custom_type_one.value), series: series});
+    }
+    return result;
+  }
+
+  switchView(event: MatRadioChange | MatSelectChange): void {
+    if (this.plainSummary.length) {
+      if (event instanceof MatRadioChange) {
+        this.summary = this.createSummary(this.plainSummary, event.value !== 'algorithm');
+      } else {
+        this.summarize();
+      }
+    }
+  }
+
   query(): void {
     this.LOADING = true;
+    this.NO_TEST_FOUND = false;
+    this.result = [];
     this.visualizationService.groupBy(this.algorithmType.value, this.graphType.value, this.groupBy.value)
       .subscribe(res => {
-        this.result = Object(JSON.stringify(res));
-        console.log(this.result);
+        if (res.series.length > 0) {
+          this.result.push(res);
+        } else {
+          this.NO_TEST_FOUND = true;
+        }
         setTimeout(() => this.LOADING = false, 1000);
       }, err => {
         console.log(err);
         this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+        setTimeout(() => this.LOADING = false, 1000);
       });
   }
 

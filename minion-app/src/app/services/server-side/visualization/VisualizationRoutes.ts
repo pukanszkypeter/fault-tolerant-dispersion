@@ -4,5 +4,6 @@ export class  VisualizationRoutes {
 
   /** Types */
   public static GROUP_BY = "/group-by";
+  public static SUMMARY = "/summary";
 
 }
