@@ -41,6 +41,18 @@ export class VisualizationComponent implements OnInit {
 
   result: any[] = [];
 
+  /** Detail By Chart */
+
+  detailBy = new FormControl('', [Validators.required]);
+  graphTypeDetail = new FormControl('', [Validators.required]);
+  algorithmTypeDetail = new FormControl('', [Validators.required]);
+
+  DETAIL_LOADING = false;
+  NO_DETAIL_FOUND = false;
+
+  detail: {custom: number, nodes: number, robots: number, components: number}[] = [];
+  detailColumns = ['custom', 'nodes', 'robots', 'components'];
+
   constructor(private visualizationService: VisualizationService,
               private snackBarService: SnackbarService,
               private languageService: LanguageService) { }
@@ -108,6 +120,33 @@ export class VisualizationComponent implements OnInit {
         this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
         setTimeout(() => this.LOADING = false, 1000);
       });
+  }
+
+  detailByQuery(): void {
+    this.DETAIL_LOADING = true;
+    this.NO_DETAIL_FOUND = false;
+    this.detail = [];
+    this.visualizationService.detailBy(this.detailBy.value, this.algorithmTypeDetail.value, this.graphTypeDetail.value)
+      .subscribe(res => {
+        if (res.length > 0) {
+          for (let list of res) {
+            this.detail.push({custom: list[0], nodes: list[1], robots: list[2], components: list[3]});
+          }
+        } else {
+          this.NO_DETAIL_FOUND = true;
+        }
+        setTimeout(() => this.DETAIL_LOADING = false, 1000);
+      }, err => {
+        console.log(err);
+        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+        setTimeout(() => this.DETAIL_LOADING = false, 1000);
+      });
+  }
+
+  detailByQueryChange(): void {
+    if (this.detail.length > 0) {
+      this.detailByQuery();
+    }
   }
 
 }

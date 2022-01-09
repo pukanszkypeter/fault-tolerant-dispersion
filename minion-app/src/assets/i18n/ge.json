@@ -158,5 +158,7 @@
   "visualizationComponent_min": "Minimum Schritte",
   "visualizationComponent_average": "Durchschnittlichen Schritte",
   "visualizationComponent_tests": "Dia Anzahl der Tests",
-  "visualizationComponent_xAxis": "X-Achse"
+  "visualizationComponent_xAxis": "X-Achse",
+  "visualizationComponent_detailByChart": "Detail By Diagramm",
+  "visualizationComponent_detailByCaption": "Detail By"
 }

@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 
-def executeQuery(algorithmType, graphType, groupBy):
+def groupByQuery(algorithmType, graphType, groupBy):
     connection = sqlite3.Connection("db/memory.sqlite")
     result = []
     
@@ -23,7 +23,7 @@ def executeQuery(algorithmType, graphType, groupBy):
     return {'name': 'Group By', 'series': object_list}
 
 
-def summaryQuery(summaryBy):
+def summaryByQuery(summaryBy):
     connection = sqlite3.Connection("db/memory.sqlite")
     result = []
 
@@ -39,5 +39,24 @@ def summaryQuery(summaryBy):
     elif summaryBy == 'average':
         sqlQuery = "Select AVG(steps), algorithm_type, graph_type from algorithm_results group by algorithm_type, graph_type"
         result = pd.read_sql(sqlQuery, connection)
+
+    return result.values.tolist()
+
+def detailByQuery(detailBy,  algorithmType, graphType):
+    connection = sqlite3.Connection("db/memory.sqlite")
+    result = []
+
+    if detailBy == 'max':
+        sqlQuery = "Select MAX(steps), nodes, robots, components from algorithm_results where algorithm_type = :1 and graph_type = :2 group by nodes, robots, components"
+        result = pd.read_sql(sqlQuery, connection, params={"1": algorithmType, "2": graphType})
+    elif detailBy == 'min':
+        sqlQuery = "Select MIN(steps), nodes, robots, components from algorithm_results where algorithm_type = :1 and graph_type = :2 group by nodes, robots, components"
+        result = pd.read_sql(sqlQuery, connection, params={"1": algorithmType, "2": graphType})
+    elif detailBy == 'tests':
+        sqlQuery = "Select COUNT(*), nodes, robots, components from algorithm_results where algorithm_type = :1 and graph_type = :2 group by nodes, robots, components"
+        result = pd.read_sql(sqlQuery, connection, params={"1": algorithmType, "2": graphType})
+    elif detailBy == 'average':
+        sqlQuery = "Select AVG(steps), nodes, robots, components from algorithm_results where algorithm_type = :1 and graph_type = :2 group by nodes, robots, components"
+        result = pd.read_sql(sqlQuery, connection, params={"1": algorithmType, "2": graphType})
 
     return result.values.tolist()

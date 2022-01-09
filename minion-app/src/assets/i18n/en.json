@@ -158,5 +158,7 @@
   "visualizationComponent_min": "Min steps",
   "visualizationComponent_average": "Average steps",
   "visualizationComponent_tests": "Number of tests",
-  "visualizationComponent_xAxis": "X-axis"
+  "visualizationComponent_xAxis": "X-axis",
+  "visualizationComponent_detailByChart": "Detail By Chart",
+  "visualizationComponent_detailByCaption": "Detail By"
 }

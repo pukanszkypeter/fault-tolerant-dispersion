@@ -158,5 +158,7 @@
   "visualizationComponent_min": "Minimum lépés",
   "visualizationComponent_average": "Átlagos lépés",
   "visualizationComponent_tests": "Tesztek száma",
-  "visualizationComponent_xAxis": "X-tengely"
+  "visualizationComponent_xAxis": "X-tengely",
+  "visualizationComponent_detailByChart": "Részlet Diagram",
+  "visualizationComponent_detailByCaption": "Részlet"
 }
