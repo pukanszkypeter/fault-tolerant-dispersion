@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {graphTypes, hasNodeValueConstraint} from "../../../models/types/GraphType";
 import {algorithmTypes} from "../../../models/types/AlgorithmType";
 import { Output, EventEmitter } from '@angular/core';
-import {GraphConfiguration} from "../../../models/entities/simulator/GraphConfiguration";
+import {GraphConfiguration} from "../../simulator/graph-configuration/GraphConfiguration";
 
 @Component({
   selector: 'app-automated-test-settings',

@@ -1,0 +1,17 @@
+.visualization-title {
+  text-align: center;
+  font-size: larger;
+}
+
+.visualization-select {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.visualization-radio {
+  margin-right: 10px;
+}
+
+.detail-table {
+  width: 90%;
+}

@@ -17,6 +17,15 @@ mat-icon#speed-icon {
   margin-right: 10px;
 }
 
+.server-response-time {
+  margin-right: 20px;
+}
+
 table {
   width: 100%;
+}
+
+.robot-table {
+  overflow: auto;
+  max-height: 500px;
 }

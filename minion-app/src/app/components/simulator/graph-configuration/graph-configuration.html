@@ -24,10 +24,13 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'settingsDialogComponent_nodes' | translate }}</mat-label>
-        <input matInput type="number" [formControl]="nodes" min="1" max="50">
+        <input matInput type="number" [formControl]="nodes" min="1" max="1000" *ngIf="this.data.automatedMode">
+        <input matInput type="number" [formControl]="nodes" min="1" max="50" *ngIf="!this.data.automatedMode">
         <mat-error *ngIf="nodes.hasError('required')">{{ 'settingsDialogComponent_nodesRequired' | translate }}</mat-error>
         <mat-error *ngIf="nodes.hasError('min')">{{ 'settingsDialogComponent_nodesMin' | translate }}</mat-error>
-        <mat-error *ngIf="nodes.hasError('max')">{{ 'settingsDialogComponent_nodesMax' | translate }}</mat-error>
+        <mat-error *ngIf="nodes.hasError('max')">
+          <span *ngIf="!this.data.automatedMode">{{ 'settingsDialogComponent_nodesMax' | translate }}</span>
+        </mat-error>
         <mat-error *ngIf="nodes.hasError('barbellConstraintError')">{{ 'settingsDialogComponent_barbellConstraintError' | translate }}</mat-error>
         <mat-error *ngIf="nodes.hasError('lollipopConstraintError')"> {{ 'settingsDialogComponent_lollipopConstraintError' | translate }}</mat-error>
         <mat-error *ngIf="nodes.hasError('hypercubeConstraintError')">{{ 'settingsDialogComponent_hypercubeConstraintError' | translate }}</mat-error>

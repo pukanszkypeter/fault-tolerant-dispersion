@@ -4,23 +4,36 @@
   "ENGLISH": "Angol",
 
   "SAVE": "Mentés",
+  "SAVE_AND_RESET": "Mentés és Visszaállítás",
+  "ONLY_RESET": "Csak visszaállítás",
   "CLOSE": "Bezárás",
+
+  "READY": "Kész",
+  "NOT_READY": "Nincs kész",
 
   "PLAY": "Indítás",
   "NEXT_STEP": "Következő lépés",
   "PAUSE": "Megállít",
-  "STEP_BACK": "Előző lépés",
+  "RESET": "Visszaállítás",
   "SPEED": "Sebesség",
   "RUN": "Indítás",
 
   "SUCCESSFUL_SAVE": "Sikeres mentés!",
   "UNSUCCESSFUL_SAVE": "Sikertelen mentés!",
   "FORM_ERROR": "Űrlap hiba!",
+  "SERVER_ERROR": "Nem sikerült betölteni az adatokat a szerverről!",
 
   "random": "Véletlen",
   "random_with_leader": "Véletlen - vezetővel",
   "rotor_router": "Rotor router",
   "rotor_router_with_leader": "Rotor router - vezetővel",
+
+  "SEARCHING": "Keres",
+  "LEADER": "Vezető",
+  "FINISHED": "Végzett",
+
+  "SIMULATION_FINISHED": "A robotok sikeresen el tudták foglalni az összes csomópontot!",
+  "SIMULATION_STUCK": "Hoppá! Úgy tűnik, minden robot végzett a megszállás előtt!",
 
   "complete": "Teljes",
   "simpleLine": "Egyszerű vonal",
@@ -52,6 +65,7 @@
   "layoutComponent_home": "Kezőoldal",
   "layoutComponent_simulation": "Szimulátor",
   "layoutComponent_automatedTest": "Automatizált tesztelő",
+  "layoutComponent_visualization": "Vizualizáció",
   "layoutComponent_github": "GitHub",
   "layoutComponent_settings": "Beállítások",
 
@@ -63,6 +77,7 @@
 
   "simulationComponent_title": "Szimulátor",
   "simulationComponent_simulationSettings": "Gráf konfiguráció",
+  "simulationComponent_save": "Mentés",
   "simulationComponent_algorithmSettings": "Algoritmus konfiguráció",
   "simulationComponent_informationPanel": "Információs Panel",
   "simulationComponent_tableIDColumn": "No.",
@@ -77,6 +92,13 @@
   "simulationComponent_informationPanelRobots": "Robotok",
   "simulationComponent_informationPanelColors": "Színek",
   "simulationComponent_informationPanelStartNodes": "Kezdő csúcsok",
+  "simulationComponent_instructions": "Használati utasítás",
+  "simulationComponent_graphConfiguration": "Konfigurálja a gráfot",
+  "simulationComponent_algorithmConfiguration": "Konfigurálja az algoritmust robotokkal",
+  "simulationComponent_runAlgorithm": "Futassa le az algoritmust",
+  "simulationComponent_resetSimulation": "Állítsa vissza és kezdje előről",
+  "simulationComponent_serverResponseTime": "Szerver válasz idő",
+  "simulationComponent_steps": "Lépések",
 
   "settingsDialogComponent_title": "Gráf konfiguráció",
   "settingsDialogComponent_algorithmTitle": "Algoritmus konfiguráció",
@@ -97,16 +119,46 @@
   "settingsDialogComponent_robotsMax": "A robotok száma max.: ",
   "settingsDialogComponent_colors": "Gráf komponensek",
   "settingsDialogComponent_colorsRequired": "Gráf komponensek megadása kötelező!",
-  "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait!",
+  "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait és a robotok számait!",
   "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező a komponensek számára!",
+  "settingsDialogComponent_robotLimitRequired": "Robotok számának megadása kötelező!",
+  "settingsDialogComponent_robotLimitMin": "Robotok száma min.: 1 lehet!",
+  "settingsDialogComponent_robotLimitMax": "Robotok száma max.: ",
+  "settingsDialogComponent_robotLimitMaxEnd": " lehet!",
 
   "automatedTestComponent_title": "Automatizált tesztelő",
   "automatedTestComponent_settings": "Szimuláció beállítások",
   "automatedTestComponent_preview": "Gráf előnézet",
-  "automatedTestComponent_result": "Eredmény",
+  "automatedTestComponent_result": "Eredmények",
+  "automatedTestComponent_init": "Inicializálási fázis",
+  "automatedTestComponent_configure": "Konfiguráció",
+  "automatedTesterComponent_testsColumn": "Tesztek száma",
+  "automatedTesterComponent_successColumn": "Sikeres tesztek",
+  "automatedTesterComponent_failedColumn": "Sikertelen tesztek",
+  "automatedTesterComponent_stepsColumn": "Átlagos lépés",
+  "automatedTesterComponent_serverColumn": "Átlagos szerver válaszidő",
 
   "automatedTestSettingsComponent_tests": "Tesztek száma",
   "automatedTestSettingsComponent_testsRequired": "Tesztek számának megadása kötelező!",
   "automatedTestSettingsComponent_testsMin": "A tesztek száma min.: 1 lehet!",
-  "automatedTestSettingsComponent_testsMax": "A tesztek száma max.: 1000 lehet!"
+  "automatedTestSettingsComponent_testsMax": "A tesztek száma max.: 1000 lehet!",
+
+  "logFormComponent_title": "Szeretné az alábbi eredményeket elmenteni?",
+
+  "visualizationComponent_title": "Vizualizáció",
+  "visualizationComponent_groupByChart": "Group By Diagram",
+  "visualizationComponent_query": "Lekérdezés",
+  "visualizationComponent_graphComponents": "Gráf komponensek száma",
+  "visualizationComponent_averageSteps": "Átlagos lépések száma",
+  "visualizationComponent_noTestFound": "Nem található teszt adat!",
+  "visualizationComponent_averageStepsChart": "Összegző Diagram",
+  "visualizationComponent_summaryByCaption": "Összegzés",
+  "visualizationComponent_summaryByRequired": "Az összegzés megadása kötelező!",
+  "visualizationComponent_max": "Maximum lépés",
+  "visualizationComponent_min": "Minimum lépés",
+  "visualizationComponent_average": "Átlagos lépés",
+  "visualizationComponent_tests": "Tesztek száma",
+  "visualizationComponent_xAxis": "X-tengely",
+  "visualizationComponent_detailByChart": "Részlet Diagram",
+  "visualizationComponent_detailByCaption": "Részlet"
 }

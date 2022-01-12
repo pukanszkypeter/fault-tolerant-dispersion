@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {ServerRoute} from "../ServerRoute";
+import {LoggerRoutes} from "./LoggerRoutes";
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +11,8 @@ export class LoggerService {
 
   constructor(private http: HttpClient) { }
 
-  addRandomWithColorConstraints(input: string): Observable<any> {
-    console.log(input);
-    return this.http.post<any>('http://localhost:4200/api/engine/logger/random-with-color-constraints', JSON.parse(input));
+  log(data: any): Observable<boolean> {
+    return this.http.post<boolean>(ServerRoute + LoggerRoutes.LOGGER, data);
   }
-
-  addLeaderWithColorConstraints(input: string): Observable<any> {
-    console.log(input);
-    return this.http.post<any>('http://localhost:4200/api/engine/logger/leader-with-color-constraints', JSON.parse(input));
-  }
-
-  addRotorRouterWithColorConstraints(input: string): Observable<any> {
-    console.log(input);
-    return this.http.post<any>('http://localhost:4200/api/engine/logger/rotor-router-with-color-constraints', JSON.parse(input));
-  }
-
 
 }

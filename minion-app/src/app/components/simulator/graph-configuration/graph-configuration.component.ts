@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {graphTypes, hasNodeValueConstraint} from "../../../models/types/GraphType";
 import {colors} from "../../../models/others/Colors";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-settings-dialog',
@@ -16,10 +16,12 @@ export class GraphConfigurationComponent implements OnInit {
 
   settingsFormGroup: FormGroup;
 
-  constructor(fb: FormBuilder, public dialogRef: MatDialogRef<GraphConfigurationComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              fb: FormBuilder,
+              public dialogRef: MatDialogRef<GraphConfigurationComponent>) {
     this.settingsFormGroup = fb.group({
       graphType: new FormControl('', Validators.required),
-      nodes: new FormControl(1, [Validators.min(1), Validators.max(50), Validators.required]),
+      nodes: new FormControl(1, [Validators.min(1), this.data.automatedMode ? Validators.max(1000) : Validators.max(50), Validators.required]),
       colors: new FormControl('', Validators.required)
     });
 
