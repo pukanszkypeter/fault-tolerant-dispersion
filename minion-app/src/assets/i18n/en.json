@@ -147,5 +147,18 @@
 
   "visualizationComponent_title": "Visualization",
   "visualizationComponent_groupByChart": "Group By Chart",
-  "visualizationComponent_query": "Query"
+  "visualizationComponent_query": "Query",
+  "visualizationComponent_graphComponents": "Number of graph components",
+  "visualizationComponent_averageSteps": "Number of average steps",
+  "visualizationComponent_noTestFound": "No test data found!",
+  "visualizationComponent_averageStepsChart": "Summary By Chart",
+  "visualizationComponent_summaryByCaption": "Summary By",
+  "visualizationComponent_summaryByRequired": "Summary by is required!",
+  "visualizationComponent_max": "Max steps",
+  "visualizationComponent_min": "Min steps",
+  "visualizationComponent_average": "Average steps",
+  "visualizationComponent_tests": "Number of tests",
+  "visualizationComponent_xAxis": "X-axis",
+  "visualizationComponent_detailByChart": "Detail By Chart",
+  "visualizationComponent_detailByCaption": "Detail By"
 }

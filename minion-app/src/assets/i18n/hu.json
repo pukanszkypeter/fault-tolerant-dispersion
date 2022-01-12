@@ -147,5 +147,18 @@
 
   "visualizationComponent_title": "Vizualizáció",
   "visualizationComponent_groupByChart": "Group By Diagram",
-  "visualizationComponent_query": "Lekérdezés"
+  "visualizationComponent_query": "Lekérdezés",
+  "visualizationComponent_graphComponents": "Gráf komponensek száma",
+  "visualizationComponent_averageSteps": "Átlagos lépések száma",
+  "visualizationComponent_noTestFound": "Nem található teszt adat!",
+  "visualizationComponent_averageStepsChart": "Összegző Diagram",
+  "visualizationComponent_summaryByCaption": "Összegzés",
+  "visualizationComponent_summaryByRequired": "Az összegzés megadása kötelező!",
+  "visualizationComponent_max": "Maximum lépés",
+  "visualizationComponent_min": "Minimum lépés",
+  "visualizationComponent_average": "Átlagos lépés",
+  "visualizationComponent_tests": "Tesztek száma",
+  "visualizationComponent_xAxis": "X-tengely",
+  "visualizationComponent_detailByChart": "Részlet Diagram",
+  "visualizationComponent_detailByCaption": "Részlet"
 }

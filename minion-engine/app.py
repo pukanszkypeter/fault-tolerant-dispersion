@@ -39,7 +39,7 @@ def testRandom():
 def stepRandomWithLeader():
     return random_with_leader_algorithm.step(model.SimulationState(request.get_json())).jsonify()
 
-@app.route('/api/engine/random-with-leader/step', methods=['POST'])
+@app.route('/api/engine/random-with-leader/test', methods=['POST'])
 def testRandomWithLeader():
     return jsonify(random_with_leader_algorithm.test(request.get_json()))
 
@@ -67,9 +67,17 @@ def log():
     return jsonify(logger.Logger(request.get_json()).log())
 
 # Visualization
+@app.route('/api/engine/visualization/summary-by', methods=['POST'])
+def summary():
+    return jsonify(visualization.summaryByQuery(request.get_json()['summaryBy']))
+
 @app.route('/api/engine/visualization/group-by', methods=['POST'])
 def groupBy():
-    return jsonify(visualization.executeQuery(request.get_json()['algorithmType'], request.get_json()['graphType'], request.get_json()['groupBy']))
+    return jsonify(visualization.groupByQuery(request.get_json()['algorithmType'], request.get_json()['graphType'], request.get_json()['groupBy']))
+
+@app.route('/api/engine/visualization/detail-by', methods=['POST'])
+def detailBy():
+    return jsonify(visualization.detailByQuery(request.get_json()['detailBy'], request.get_json()['algorithmType'], request.get_json()['graphType']))
 
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)
