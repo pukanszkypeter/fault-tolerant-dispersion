@@ -1,0 +1,39 @@
+.navbar-logo {
+  color: rgba(255,255,255,0.90);
+  font-weight: 600;
+}
+
+.navbar-logo:hover {
+  color: yellow;
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.90);
+}
+
+.nav-link:hover {
+  color: yellow;
+}
+
+.active {
+  color: yellow;
+  font-weight: 600;
+}
+
+.navbar-toggler:focus {
+  text-decoration: 0;
+  box-shadow: unset;
+}
+
+.navbar-toggler svg {
+  vertical-align: 0;
+}
+
+#settings-button:hover {
+  animation: rotateIn;
+  animation-duration: 1s;
+}
+
+#github-icon {
+  color: white;
+}
