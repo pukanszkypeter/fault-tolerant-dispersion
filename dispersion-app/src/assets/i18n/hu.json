@@ -68,6 +68,7 @@
   "layoutComponent_visualization": "Vizualizáció",
   "layoutComponent_github": "GitHub",
   "layoutComponent_settings": "Beállítások",
+  "layoutComponent_openStreetMap": "Open Street Map",
 
   "settingsComponent_title": "Alkalmazás beállítások",
   "settingsComponent_version": "Verzió",
@@ -160,5 +161,8 @@
   "visualizationComponent_tests": "Tesztek száma",
   "visualizationComponent_xAxis": "X-tengely",
   "visualizationComponent_detailByChart": "Részlet Diagram",
-  "visualizationComponent_detailByCaption": "Részlet"
+  "visualizationComponent_detailByCaption": "Részlet",
+
+  "openStreetMapComponent_selectedLocations": "Kiválasztott helyek",
+  "openStreetMapComponent_newLocation": "Új hely..."
 }

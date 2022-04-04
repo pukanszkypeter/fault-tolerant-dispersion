@@ -53,6 +53,11 @@ export class LayoutComponent implements OnInit {
         links[3].classList.add('active');
         break;
 
+      case 'open-street-map':
+        Array.from(links).forEach(link => link.classList.remove('active'));
+        links[4].classList.add('active');
+        break;
+
       default:
         Array.from(links).forEach(link => link.classList.remove('active'));
         break;

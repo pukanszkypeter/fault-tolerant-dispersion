@@ -41,6 +41,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { VisualizationComponent } from './components/visualization/visualization.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import { OpenStreetMapComponent } from './components/open-street-map/open-street-map.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
     AutomatedTesterSettingsComponent,
     AlgorithmConfigurationComponent,
     LogFormComponent,
-    VisualizationComponent
+    VisualizationComponent,
+    OpenStreetMapComponent
   ],
   imports: [
     BrowserModule,
