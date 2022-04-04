@@ -68,6 +68,7 @@
   "layoutComponent_visualization": "Visualization",
   "layoutComponent_github": "GitHub",
   "layoutComponent_settings": "Settings",
+  "layoutComponent_openStreetMap": "Open Street Map",
 
   "settingsComponent_title": "Application settings",
   "settingsComponent_version": "Version",
@@ -160,5 +161,8 @@
   "visualizationComponent_tests": "Number of tests",
   "visualizationComponent_xAxis": "X-axis",
   "visualizationComponent_detailByChart": "Detail By Chart",
-  "visualizationComponent_detailByCaption": "Detail By"
+  "visualizationComponent_detailByCaption": "Detail By",
+
+  "openStreetMapComponent_selectedLocations": "Selected locations",
+  "openStreetMapComponent_newLocation": "New location..."
 }

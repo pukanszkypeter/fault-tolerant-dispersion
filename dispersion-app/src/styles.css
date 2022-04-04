@@ -2,6 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import "~animate.css";
+@import "~leaflet/dist/leaflet.css";
 
 html, body { height: 100%; }
 body { margin: 0; background: #F5F5F5; }

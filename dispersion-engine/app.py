@@ -7,6 +7,7 @@ import visulaziation.visualization
 from algorithms import model, random_algorithm, random_with_leader_algorithm, rotor_router_algorithm, rotor_router_with_leader_algorithm
 from logger import logger
 from visulaziation import visualization
+from map import location
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
@@ -79,6 +80,16 @@ def groupBy():
 @app.route('/api/engine/visualization/detail-by', methods=['POST'])
 def detailBy():
     return jsonify(visualization.detailByQuery(request.get_json()['detailBy'], request.get_json()['algorithmType'], request.get_json()['graphType']))
+
+
+# Open Street Map
+@app.route('/api/engine/open-street-map/location', methods=['POST'])
+def findLocation():
+    return jsonify(location.findLocation(request.get_json()['lat'], request.get_json()['lng']))
+
+@app.route('/api/engine/open-street-map/city', methods=['POST'])
+def findCity():
+    return jsonify(location.findCity(request.get_json()['city']))
 
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)
