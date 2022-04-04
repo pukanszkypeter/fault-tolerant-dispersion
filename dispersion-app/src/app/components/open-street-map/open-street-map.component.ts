@@ -4,7 +4,8 @@ import * as L from 'leaflet';
 import { SnackbarService } from 'src/app/services/client-side/utils/snackbar.service';
 import { OpenStreetMapService } from 'src/app/services/server-side/open-street-map/open-street-map.service';
 import { icon, Marker } from 'leaflet';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
+import { LocationFormComponent } from './location-form/location-form.component';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -40,7 +41,8 @@ export class OpenStreetMapComponent implements OnInit {
 
   constructor(
               private openStreetMapService: OpenStreetMapService,
-              private snackBarService: SnackbarService
+              private snackBarService: SnackbarService,
+              public dialog: MatDialog
               ) { }
 
   ngOnInit(): void {
@@ -62,17 +64,22 @@ export class OpenStreetMapComponent implements OnInit {
     const onMapClick = (event: any) => {
       this.loading = true;
       this.openStreetMapService.findLocation(event.latlng).subscribe(res => {
-        if (res === null) {
-          this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
-        } else {
-          if (!this.containsLocation(this.locations, res)) {
+        this.loading = false;
+        const dialogRef = this.dialog.open(LocationFormComponent, {
+          data: res,
+          height: "50%",
+          width: "30%",
+          disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe(res => {
+          if (res && Object.keys(res).length !== 0) {
             this.locations.push(res);
-            var marker = L.marker([res.lat, res.lng], {title: res.location});
+            var marker = L.marker([event.latlng.lat, event.latlng.lng], {title: this.getLocationTitle(res)});
             marker.addTo(this.map);
             this.markers.push(marker);
           }
-        }
-        this.loading = false;
+        });
       }, err => {
         console.log(err);
         this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
@@ -84,43 +91,15 @@ export class OpenStreetMapComponent implements OnInit {
   
   }
 
-  containsLocation(locations: any[], location: any): boolean {
-    var i;
-    for (i = 0; i < locations.length; i++) {
-      if (locations[i].location === location.location) {
-        return true;
-      }
+  getLocationTitle(location: any): string {
+    let values = Object.values(location);
+    let result = '';
+    for (let i = 0; i < values.length; i++) {
+      result = result + values[i] + ', ';
     }
+    result = result.slice(0, -2);
 
-    return false;
-  }
-
-  addLocation(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    if (value !== '') {
-      this.loading = true;
-      this.openStreetMapService.findCity(value).subscribe(res => {
-        if (res == null) {
-          this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
-        } else {
-          if (!this.containsLocation(this.locations, res)) {
-            this.locations.push(res);
-            var marker = L.marker([res.lat, res.lng], {title: res.location});
-            marker.addTo(this.map);
-            this.markers.push(marker);
-          }
-        }
-        this.loading = false;
-      }, err => {
-        console.log(err);
-        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
-        this.loading = false;
-      })
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
+    return result;
   }
 
   removeLocation(location: any): void {

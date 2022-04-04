@@ -11,20 +11,7 @@ def findLocation(lat, lng):
 
     location = geolocator.reverse(str(lat) + "," + str(lng))
 
-    address = location.raw['address']
-    # print(address)
-
-    country = address.get('country', '')
-    city = address.get('city', '')
-
-    if (country != '' and city != ''):
-        exactLocation = geolocator.geocode(city)
-        if exactLocation != None:
-            return {'location': country + ', ' + city, 'lat': exactLocation.latitude, 'lng': exactLocation.longitude}
-        else:
-            return None
-    else:
-        return None
+    return location.raw['address']
 
 def findCity(city):
 

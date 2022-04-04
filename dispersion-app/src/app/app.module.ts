@@ -38,10 +38,12 @@ import {MatChipsModule} from "@angular/material/chips";
 import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
 import { LogFormComponent } from './components/simulator/log-form/log-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { VisualizationComponent } from './components/visualization/visualization.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { OpenStreetMapComponent } from './components/open-street-map/open-street-map.component';
+import { LocationFormComponent } from './components/open-street-map/location-form/location-form.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { OpenStreetMapComponent } from './components/open-street-map/open-street
     AlgorithmConfigurationComponent,
     LogFormComponent,
     VisualizationComponent,
-    OpenStreetMapComponent
+    OpenStreetMapComponent,
+    LocationFormComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +94,7 @@ import { OpenStreetMapComponent } from './components/open-street-map/open-street
     MatChipsModule,
     MatProgressBarModule,
     MatRadioModule,
+    MatCheckboxModule,
     NgxChartsModule
   ],
   providers: [],

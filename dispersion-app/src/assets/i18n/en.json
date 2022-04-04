@@ -164,5 +164,9 @@
   "visualizationComponent_detailByCaption": "Detail By",
 
   "openStreetMapComponent_selectedLocations": "Selected locations",
-  "openStreetMapComponent_newLocation": "New location..."
+  "openStreetMapComponent_newLocation": "New location...",
+  "openStreetMapComponent_locations": "Marked nodes",
+
+  "locationFormComponent_title": "Location configuration",
+  "locationFormComponent_selectLocationData": "Select the node data"
 }

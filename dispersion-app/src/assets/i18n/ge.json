@@ -164,5 +164,9 @@
   "visualizationComponent_detailByCaption": "Detail By",
 
   "openStreetMapComponent_selectedLocations": "Ausgewählte Standorte",
-  "openStreetMapComponent_newLocation": "Neuer Standort..."
+  "openStreetMapComponent_newLocation": "Neuer Standort...",
+  "openStreetMapComponent_locations": "Markierte Knoten",
+
+  "locationFormComponent_title": "Standortkonfiguration",
+  "locationFormComponent_selectLocationData": "Wählen Sie die Knotendaten aus"
 }

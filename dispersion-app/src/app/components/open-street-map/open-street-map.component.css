@@ -2,10 +2,6 @@
     height: 600px;
 }
 
-.location-input {
-    width: 100%;
-}
-
 mat-chip {
     background-color: #4CAF50 !important;
     color: white !important;

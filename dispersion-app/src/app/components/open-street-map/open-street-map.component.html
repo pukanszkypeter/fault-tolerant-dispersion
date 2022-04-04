@@ -1,18 +1,12 @@
 <mat-progress-bar mode="query" *ngIf="loading"></mat-progress-bar>
 <div id="map" class="shadow"></div>
-<mat-form-field class="location-input mt-4 mb-4" appearance="outline">
-    <mat-label>{{ 'openStreetMapComponent_selectedLocations' | translate }}</mat-label>
-    <mat-chip-list #locationList>
-        <mat-chip *ngFor="let location of locations" (removed)="removeLocation(location)">
-          {{location.location}}
-          <button matChipRemove>
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip>
-        <input placeholder="{{ 'openStreetMapComponent_newLocation' | translate }}"
-             [matChipInputFor]="locationList"
-             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-             [matChipInputAddOnBlur]="addOnBlur"
-             (matChipInputTokenEnd)="addLocation($event)">
-    </mat-chip-list>
-</mat-form-field>
+<h5 class="mt-3" *ngIf="this.locations.length > 0">{{'openStreetMapComponent_locations' | translate}}</h5>
+<mat-chip-list>
+  <mat-chip
+    *ngFor="let location of locations">
+    {{getLocationTitle(location)}}
+    <button matChipRemove (click)="removeLocation(location)">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip>
+</mat-chip-list>
