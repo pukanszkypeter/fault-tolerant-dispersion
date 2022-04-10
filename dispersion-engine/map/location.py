@@ -1,5 +1,20 @@
 from geopy.exc import GeocoderTimedOut
 from geopy.geocoders import Nominatim
+import osmnx as ox
+from shapely import geometry
+import json
+
+# PLS help me with fuckin moduling
+class MapNode:
+    def __init__(self, id, X, Y):
+        self.id = id
+        self.X = X
+        self.Y = Y
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
+
 
 def findCityByLocation(lat, lng):
     
@@ -44,8 +59,18 @@ def findCityByName(cityName):
         return None
 
 def createNetwork(polygon):
-    
-    # To-Do
-    print(polygon)
+    polypoints = []
+    for point in polygon:
+        polypoints.append([point['lng'], point['lat']])
 
-    return polygon
+    polygonShape = geometry.Polygon(polypoints)
+
+    G = ox.graph_from_polygon(polygon = polygonShape, network_type='drive')
+
+    nodes = []
+    index = 0
+    for node in G.nodes:
+        index += 1   
+        nodes.append(MapNode(index, G.nodes[node]['y'], G.nodes[node]['x']))
+
+    return list(map(lambda x: x.toJSON(), nodes))

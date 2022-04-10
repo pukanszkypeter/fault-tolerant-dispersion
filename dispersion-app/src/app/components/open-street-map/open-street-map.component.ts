@@ -5,6 +5,7 @@ import { OpenStreetMapService } from 'src/app/services/server-side/open-street-m
 import { icon, Marker } from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
+import {MapNode} from "../../models/entities/MapNode";
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -53,11 +54,13 @@ export class OpenStreetMapComponent implements OnInit {
   polygonCoordinates: any[] = [];
   polygonMarkers: any[] = [];
 
+  nodes: MapNode[] = [];
+
   constructor(
               private openStreetMapService: OpenStreetMapService,
               private snackBarService: SnackbarService,
               public dialog: MatDialog
-              ) 
+              )
   {
     this.cityControl = new FormControl('');
   }
@@ -71,7 +74,7 @@ export class OpenStreetMapComponent implements OnInit {
 
     this.defaultLayer.addTo(this.map);
     this.polygon.addTo(this.map);
-  
+
     const onMapClick = (event: any) => {
       if (this.selectedCity === undefined) {
         this.findCity(event.latlng);
@@ -86,7 +89,7 @@ export class OpenStreetMapComponent implements OnInit {
         this.polygon.addLatLng(event.latlng);
       }
     }
-    
+
     this.map.on('click', onMapClick);
   }
 
@@ -99,9 +102,9 @@ export class OpenStreetMapComponent implements OnInit {
   }
 
   findCity(params: string | any): void {
-    const findCityFn = 
-      typeof params === 'string' ? 
-        this.openStreetMapService.findCityByName(params) : 
+    const findCityFn =
+      typeof params === 'string' ?
+        this.openStreetMapService.findCityByName(params) :
         this.openStreetMapService.findCityByLocation(params.lat, params.lng);
 
     this.loading = true;
@@ -155,8 +158,14 @@ export class OpenStreetMapComponent implements OnInit {
     this.loading = true;
     this.openStreetMapService.createNetwork(this.polygonCoordinates).subscribe(res => {
       this.loading = false;
+      for (let i in res){
+        this.nodes.push(new MapNode().init(JSON.parse(res[i])));
+        let marker = L.marker([JSON.parse(res[i]).X, JSON.parse(res[i]).Y])
+        marker.addTo(this.map);
+      }
       // To-Do
-      console.log(res);
+      //console.log(res);
+      console.log(this.nodes);
     }, err => {
       console.log(err);
       this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
