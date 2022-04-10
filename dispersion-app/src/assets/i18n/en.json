@@ -163,10 +163,8 @@
   "visualizationComponent_detailByChart": "Detail By Chart",
   "visualizationComponent_detailByCaption": "Detail By",
 
-  "openStreetMapComponent_selectedLocations": "Selected locations",
-  "openStreetMapComponent_newLocation": "New location...",
-  "openStreetMapComponent_locations": "Marked nodes",
-
-  "locationFormComponent_title": "Location configuration",
-  "locationFormComponent_selectLocationData": "Select the node data"
+  "openStreetMapComponent_title": "Open Street Map",
+  "openStreetMapComponent_searchCity": "Search for a city...",
+  "openStreetMapComponent_cityNotFound": "City not found!",
+  "openStreetMapComponent_createNetwork": "Create network"
 }

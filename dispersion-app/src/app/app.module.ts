@@ -35,6 +35,7 @@ import { AutomatedTesterComponent } from './components/automated-tester/automate
 import { AutomatedTesterSettingsComponent } from './components/automated-tester/automated-tester-settings/automated-tester-settings.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
 import { LogFormComponent } from './components/simulator/log-form/log-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -43,7 +44,6 @@ import { VisualizationComponent } from './components/visualization/visualization
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { OpenStreetMapComponent } from './components/open-street-map/open-street-map.component';
-import { LocationFormComponent } from './components/open-street-map/location-form/location-form.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +59,7 @@ import { LocationFormComponent } from './components/open-street-map/location-for
     AlgorithmConfigurationComponent,
     LogFormComponent,
     VisualizationComponent,
-    OpenStreetMapComponent,
-    LocationFormComponent
+    OpenStreetMapComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +94,7 @@ import { LocationFormComponent } from './components/open-street-map/location-for
     MatProgressBarModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatButtonToggleModule,
     NgxChartsModule
   ],
   providers: [],

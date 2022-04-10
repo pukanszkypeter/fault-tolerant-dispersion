@@ -1,8 +1,28 @@
+mat-card {
+    text-align: center;
+    font-size: larger;
+}
+
 #map {
     height: 600px;
 }
 
 mat-chip {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+::ng-deep .mat-form-field-suffix {
+    top: 5px;
+}
+
+::ng-deep .mat-raised-button {
+    width: 20%;
+    height: 120%;
     background-color: #4CAF50 !important;
     color: white !important;
 }
