@@ -134,6 +134,7 @@ export class OpenStreetMapComponent implements OnInit {
     // reset polygons and markers
     this.polygon.setLatLngs([]);
     this.polygonCoordinates = [];
+    this.polygonMarkers.forEach(marker => marker.remove(this.map));
     this.polygonMarkers = [];
   }
 
