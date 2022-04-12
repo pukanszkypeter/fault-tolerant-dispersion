@@ -6,6 +6,7 @@ import { icon, Marker } from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import {MapNode} from "../../models/entities/MapNode";
+import {MapEdge} from "../../models/entities/MapEdge";
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -54,7 +55,8 @@ export class OpenStreetMapComponent implements OnInit {
   polygonCoordinates: any[] = [];
   polygonMarkers: any[] = [];
 
-  nodes: MapNode[] = [];
+  nodes: any[] = [];
+  edges: MapEdge[] = [];
 
   constructor(
               private openStreetMapService: OpenStreetMapService,
@@ -158,14 +160,62 @@ export class OpenStreetMapComponent implements OnInit {
     this.loading = true;
     this.openStreetMapService.createNetwork(this.polygonCoordinates).subscribe(res => {
       this.loading = false;
+
+      const graph = JSON.parse(res);
+
+      for (let i in graph.nodes){
+        let node = JSON.parse(graph.nodes[JSON.parse(i)]);
+         this.nodes.push(new MapNode(node.id, node.X, node.Y));
+      }
+
+      for (let i in graph.edges){
+
+        let edge = JSON.parse(graph.edges[JSON.parse(i)]);
+        this.edges.push(new MapEdge(edge.id, edge.fromID, edge.toID));
+
+      }
+
+      for (let node in this.nodes){
+          let marker = L.marker([this.nodes[node].X, this.nodes[node].Y])
+          marker.addTo(this.map);
+      }
+
+      for (let edge in this.edges){
+
+        let polyPoints = []
+
+        let currentFromNode = this.nodes.find(node => node.id === this.edges[edge].fromID )
+        let currentToNode = this.nodes.find(node => node.id === this.edges[edge].toID )
+        if (currentFromNode !== undefined && currentToNode !== undefined){
+          polyPoints.push([currentFromNode.X, currentFromNode.Y]);
+          polyPoints.push([currentToNode.X, currentToNode.Y]);
+
+          let polyline = L.polyline(polyPoints).addTo(this.map);
+        }
+
+
+
+      }
+
+
+
+      /*
       for (let i in res){
         this.nodes.push(new MapNode().init(JSON.parse(res[i])));
         let marker = L.marker([JSON.parse(res[i]).X, JSON.parse(res[i]).Y])
+        polyPoints.push([JSON.parse(res[i]).X, JSON.parse(res[i]).Y]);
         marker.addTo(this.map);
       }
+
+      let polyline = L.polyline(polyPoints).addTo(this.map);
+
+
+       */
+
       // To-Do
       //console.log(res);
       console.log(this.nodes);
+      console.log(this.edges);
     }, err => {
       console.log(err);
       this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');

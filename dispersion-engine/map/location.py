@@ -6,14 +6,36 @@ import json
 
 # PLS help me with fuckin moduling
 class MapNode:
-    def __init__(self, id, X, Y):
+    def __init__(self, id, X, Y, osmID):
         self.id = id
         self.X = X
         self.Y = Y
+        self.osmID = osmID
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
+            
+
+class MapGraph:
+    def __init__(self, nodes, edges):
+        self.nodes = nodes
+        self.edges = edges
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
+
+
+class MapEdge:
+    def __init__(self, id, fromID, toID):
+         self.id = id
+         self.fromID = fromID
+         self.toID = toID
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)           
 
 
 def findCityByLocation(lat, lng):
@@ -70,7 +92,19 @@ def createNetwork(polygon):
     nodes = []
     index = 0
     for node in G.nodes:
-        index += 1   
-        nodes.append(MapNode(index, G.nodes[node]['y'], G.nodes[node]['x']))
+        index += 1
+        nodes.append(MapNode(index, G.nodes[node]['y'], G.nodes[node]['x'], node))
 
-    return list(map(lambda x: x.toJSON(), nodes))
+    edges = []
+    index = 0
+    for edge in G.edges(data = True):   
+        currentFrom = list(filter(lambda x : x.osmID == edge[0], nodes))[0]
+        currentTo = list(filter(lambda x : x.osmID == edge[1], nodes))[0]
+
+        #Oda vissza el ellenörzese
+        checkEdgeAlreadyIn = list(filter(lambda x: x.fromID == currentTo.id and x.toID == currentFrom.id ,edges))
+        if len(checkEdgeAlreadyIn) == 0:
+            index += 1
+            edges.append(MapEdge(index, currentFrom.id, currentTo.id))
+
+    return  MapGraph(list(map(lambda x: x.toJSON(), nodes)), list(map(lambda x: x.toJSON(), edges))).toJSON()
