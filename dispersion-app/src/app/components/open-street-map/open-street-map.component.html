@@ -28,10 +28,63 @@
     </mat-form-field>
   </div>
 </div>
+<div class="row mt-2 mb-4 align-items-center" *ngIf="algorithmType !== ''">
+  <div class="col-6">
+    <button mat-mini-fab class="simulation-operators" (click)="playSimulator()">
+      <mat-icon svgIcon="play" matTooltip="{{ 'PLAY' | translate }}"></mat-icon>
+    </button>
+    <button mat-mini-fab class="simulation-operators" (click)="stopSimulator()">
+      <mat-icon svgIcon="pause" matTooltip="{{ 'PAUSE' | translate }}"></mat-icon>
+    </button>
+    <button mat-mini-fab class="simulation-operators" (click)="stepSimulator()">
+      <mat-icon svgIcon="next-step" matTooltip="{{ 'NEXT_STEP' | translate }}"></mat-icon>
+    </button>
+    <mat-icon svgIcon="speed" id="speed-icon" matTooltip="{{ 'SPEED' | translate }}"></mat-icon>
+    <mat-slider color="primary"
+                [max]="2000"
+                [min]="200"
+                [step]="50"
+                [thumbLabel]="true"
+                [(ngModel)]="speed"
+                ></mat-slider>
+    <span>{{ speed }} ms</span>
+  </div>
+  <div class="col-6 text-end">
+    <span class="server-response-time">{{ 'simulationComponent_steps' | translate }}: {{ steps }}</span>
+    <span class="server-response-time">{{ 'simulationComponent_serverResponseTime' | translate }}: {{ RTT }} ms</span>
+    <button mat-mini-fab class="simulation-operators" (click)="save()" [disabled]="!this.simulationState || this.simulationState.counter !== 0">
+      <mat-icon svgIcon="save" matTooltip="{{ 'simulationComponent_save' | translate }}"></mat-icon>
+    </button>
+  </div>
+</div>
 <mat-progress-bar mode="query" *ngIf="loading"></mat-progress-bar>
 <div id="map" class="shadow"></div>
 <div class="row text-center mt-4" *ngIf="polygonCoordinates.length > 2">
   <div class="col-12">
     <button mat-raised-button (click)="createNetwork()">{{'openStreetMapComponent_createNetwork' | translate}}</button>
+  </div>
+</div>
+<div class="row text-center mt-4 mb-4 align-items-center" *ngIf="nodes.length > 0 && algorithmType === ''">
+  <div class="col-4">
+    {{'settingsDialogComponent_robots' | translate}}: {{robots.length}} / {{nodes.length}}
+  </div>
+  <div class="col-4">
+    <button mat-raised-button [class.disabled]="robots.length < nodes.length" [disabled]="robots.length < nodes.length" (click)="selectAlgorithmType()">{{'openStreetMapComponent_selectAlgorithmType' | translate}}</button>
+  </div>
+  <div class="col-4">
+    <div *ngIf="selectedNodeID !== 0">
+      <div class="row align-items-center">
+        <div class="col-4">
+          {{'openStreetMapComponent_nodeID' | translate}}: {{this.selectedNodeID}}
+        </div>
+        <div class="col-4">
+          {{'simulationComponent_informationPanelRobots' | translate}}: {{getRobots()}}
+        </div>
+        <div class="col-4">
+          <button mat-icon-button><mat-icon svgIcon="add" (click)="addRobot()"></mat-icon></button> |
+          <button mat-icon-button [disabled]="getRobots() === 0"><mat-icon svgIcon="remove" (click)="removeRobot()"></mat-icon></button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

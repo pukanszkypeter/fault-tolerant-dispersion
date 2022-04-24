@@ -21,8 +21,25 @@ mat-form-field {
 }
 
 ::ng-deep .mat-raised-button {
-    width: 20%;
-    height: 120%;
     background-color: #4CAF50 !important;
     color: white !important;
+}
+
+.disabled {
+    background-color: #4CAF50 !important;
+    opacity: 50%;
+}
+
+.simulation-operators {
+    margin-right: 20px;
+    background-color: white;
+}
+
+mat-icon#speed-icon {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.server-response-time {
+    margin-right: 20px;
 }

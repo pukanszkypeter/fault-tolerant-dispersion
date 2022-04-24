@@ -44,6 +44,7 @@ import { VisualizationComponent } from './components/visualization/visualization
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { OpenStreetMapComponent } from './components/open-street-map/open-street-map.component';
+import { AlgorithmSelectDialogComponent } from './components/open-street-map/algorithm-select-dialog/algorithm-select-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { OpenStreetMapComponent } from './components/open-street-map/open-street
     AlgorithmConfigurationComponent,
     LogFormComponent,
     VisualizationComponent,
-    OpenStreetMapComponent
+    OpenStreetMapComponent,
+    AlgorithmSelectDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -23,5 +23,7 @@ export const icons: Icon[] = [
   {selector: 'check', path: 'assets/icons/check-icon.svg'},
   {selector: 'save', path: 'assets/icons/save-icon.svg'},
   {selector: 'chart', path: 'assets/icons/chart-icon.svg'},
-  {selector: 'menu', path: 'assets/icons/menu-icon.svg'}
+  {selector: 'menu', path: 'assets/icons/menu-icon.svg'},
+  {selector: 'add', path: 'assets/icons/add-icon.svg'},
+  {selector: 'remove', path: 'assets/icons/remove-icon.svg'}
 ];

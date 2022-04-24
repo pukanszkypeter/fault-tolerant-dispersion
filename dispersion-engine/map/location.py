@@ -101,7 +101,7 @@ def createNetwork(polygon):
         currentFrom = list(filter(lambda x : x.osmID == edge[0], nodes))[0]
         currentTo = list(filter(lambda x : x.osmID == edge[1], nodes))[0]
 
-        #Oda vissza el ellenörzese
+        # Check edge duplicates
         checkEdgeAlreadyIn = list(filter(lambda x: x.fromID == currentTo.id and x.toID == currentFrom.id ,edges))
         if len(checkEdgeAlreadyIn) == 0:
             index += 1
