@@ -210,9 +210,10 @@ export class OpenStreetMapComponent implements OnInit {
       for (let i in graph.nodes) {
         let node = JSON.parse(graph.nodes[JSON.parse(i)]);
 
-        var defaultIcon = L.icon({
-          iconUrl: 'assets/images/blue-dot.png',
+        var defaultIcon = L.divIcon({
           iconSize: [25, 25],
+          html:'<div style="border-radius: 50%; background-color: dodgerblue; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + node.id + ' </div>',
+          className: 'custom-marker-icon'
         });
 
         var marker = L.marker([node.X, node.Y], {icon: defaultIcon});
@@ -279,9 +280,10 @@ export class OpenStreetMapComponent implements OnInit {
     
     const robots = this.getRobots();
     if (robots === 1) {
-      var pendingIcon = L.icon({
-        iconUrl: 'assets/images/red-dot.png',
+      var pendingIcon = L.divIcon({
         iconSize: [25, 25],
+        html:'<div style="border-radius: 50%; background-color: red; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + this.selectedNodeID + ' </div>',
+        className: 'custom-marker-icon'
       });
       this.nodeMarkers[this.selectedNodeID - 1].setIcon(pendingIcon);
     }
@@ -295,9 +297,10 @@ export class OpenStreetMapComponent implements OnInit {
     }
     const robots = this.getRobots();
     if (robots === 0) {
-      var defaultIcon = L.icon({
-        iconUrl: 'assets/images/blue-dot.png',
+      var defaultIcon = L.divIcon({
         iconSize: [25, 25],
+        html:'<div style="border-radius: 50%; background-color: dodgerblue; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + this.selectedNodeID + ' </div>',
+        className: 'custom-marker-icon'
       });
       this.nodeMarkers[this.selectedNodeID - 1].setIcon(defaultIcon);
     }
@@ -325,7 +328,6 @@ export class OpenStreetMapComponent implements OnInit {
           const end = new Date();
           this.RTT = end.valueOf() - start.valueOf();
           this.simulationState = new SimulationState().init(res);
-          // TO-DO
           this.updateMarkers(this.simulationState.nodes);
           if (this.simulationState.counter === 0) {
             this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
@@ -343,19 +345,22 @@ export class OpenStreetMapComponent implements OnInit {
     for (let i = 0; i < nodes.length; i++) {
       var icon;
       if (nodes[i].state === NodeState.DEFAULT) {
-        icon = L.icon({
-          iconUrl: 'assets/images/blue-dot.png',
+        icon = L.divIcon({
           iconSize: [25, 25],
+          html:'<div style="border-radius: 50%; background-color: dodgerblue; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + nodes[i].id + ' </div>',
+          className: 'custom-marker-icon'
         });
       } else if (nodes[i].state === NodeState.PENDING) {
-        icon = L.icon({
-          iconUrl: 'assets/images/red-dot.png',
+        icon = L.divIcon({
           iconSize: [25, 25],
+          html:'<div style="border-radius: 50%; background-color: red; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + nodes[i].id + ' </div>',
+          className: 'custom-marker-icon'
         });
       } else if (nodes[i].state === NodeState.OCCUPIED) {
-        icon = L.icon({
-          iconUrl: 'assets/images/green-dot.png',
+        icon = L.divIcon({
           iconSize: [25, 25],
+          html:'<div style="border-radius: 50%; background-color: green; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + nodes[i].id + ' </div>',
+          className: 'custom-marker-icon'
         });
       }
       this.nodeMarkers[i].setIcon(icon);
