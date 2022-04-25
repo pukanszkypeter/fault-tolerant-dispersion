@@ -163,6 +163,10 @@
   "visualizationComponent_detailByChart": "Részlet Diagram",
   "visualizationComponent_detailByCaption": "Részlet",
 
-  "openStreetMapComponent_selectedLocations": "Kiválasztott helyek",
-  "openStreetMapComponent_newLocation": "Új hely..."
+  "openStreetMapComponent_title": "Open Street Map",
+  "openStreetMapComponent_searchCity": "Keress egy várost...",
+  "openStreetMapComponent_cityNotFound": "A város nem található!",
+  "openStreetMapComponent_createNetwork": "Hálózat létrehozása",
+  "openStreetMapComponent_selectAlgorithmType": "Algoritmus kiválasztása",
+  "openStreetMapComponent_nodeID": "Csúcs azonosító"
 }

@@ -83,13 +83,17 @@ def detailBy():
 
 
 # Open Street Map
-@app.route('/api/engine/open-street-map/location', methods=['POST'])
-def findLocation():
-    return jsonify(location.findLocation(request.get_json()['lat'], request.get_json()['lng']))
+@app.route('/api/engine/open-street-map/city/location', methods=['GET'])
+def findCityByLocation():
+    return jsonify(location.findCityByLocation(request.args.get('lat'), request.args.get('lng')))
 
-@app.route('/api/engine/open-street-map/city', methods=['POST'])
-def findCity():
-    return jsonify(location.findCity(request.get_json()['city']))
+@app.route('/api/engine/open-street-map/city/name', methods=['GET'])
+def findCityByName():
+    return jsonify(location.findCityByName(request.args.get('cityName')))
+
+@app.route('/api/engine/open-street-map/network', methods=['POST'])
+def createNetwork():
+    return jsonify(location.createNetwork(request.get_json()))
 
 if __name__ == '__main__':
     app.run(host=HOST,debug=True,port=PORT)

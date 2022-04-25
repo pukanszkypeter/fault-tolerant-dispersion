@@ -163,6 +163,10 @@
   "visualizationComponent_detailByChart": "Detail By Diagramm",
   "visualizationComponent_detailByCaption": "Detail By",
 
-  "openStreetMapComponent_selectedLocations": "Ausgewählte Standorte",
-  "openStreetMapComponent_newLocation": "Neuer Standort..."
+  "openStreetMapComponent_title": "Open Street Map",
+  "openStreetMapComponent_searchCity": "Suche nach einer Stadt...",
+  "openStreetMapComponent_cityNotFound": "Stadt nicht gefunden!",
+  "openStreetMapComponent_createNetwork": "Netzwerk erstellen",
+  "openStreetMapComponent_selectAlgorithmType": "Auswahl des Algorithmus",
+  "openStreetMapComponent_nodeID": "Knoten-ID"
 }

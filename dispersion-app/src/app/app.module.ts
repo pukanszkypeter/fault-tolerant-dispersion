@@ -35,13 +35,16 @@ import { AutomatedTesterComponent } from './components/automated-tester/automate
 import { AutomatedTesterSettingsComponent } from './components/automated-tester/automated-tester-settings/automated-tester-settings.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { AlgorithmConfigurationComponent } from './components/simulator/algorithm-configuration/algorithm-configuration.component';
 import { LogFormComponent } from './components/simulator/log-form/log-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { VisualizationComponent } from './components/visualization/visualization.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { OpenStreetMapComponent } from './components/open-street-map/open-street-map.component';
+import { AlgorithmSelectDialogComponent } from './components/open-street-map/algorithm-select-dialog/algorithm-select-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,8 @@ import { OpenStreetMapComponent } from './components/open-street-map/open-street
     AlgorithmConfigurationComponent,
     LogFormComponent,
     VisualizationComponent,
-    OpenStreetMapComponent
+    OpenStreetMapComponent,
+    AlgorithmSelectDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +95,8 @@ import { OpenStreetMapComponent } from './components/open-street-map/open-street
     MatChipsModule,
     MatProgressBarModule,
     MatRadioModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
     NgxChartsModule
   ],
   providers: [],

@@ -163,6 +163,10 @@
   "visualizationComponent_detailByChart": "Detail By Chart",
   "visualizationComponent_detailByCaption": "Detail By",
 
-  "openStreetMapComponent_selectedLocations": "Selected locations",
-  "openStreetMapComponent_newLocation": "New location..."
+  "openStreetMapComponent_title": "Open Street Map",
+  "openStreetMapComponent_searchCity": "Search for a city...",
+  "openStreetMapComponent_cityNotFound": "City not found!",
+  "openStreetMapComponent_createNetwork": "Create network",
+  "openStreetMapComponent_selectAlgorithmType": "Algorithm selection",
+  "openStreetMapComponent_nodeID": "Node ID"
 }
