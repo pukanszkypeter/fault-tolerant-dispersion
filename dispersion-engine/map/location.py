@@ -4,7 +4,7 @@ import osmnx as ox
 from shapely import geometry
 import json
 
-# PLS help me with fuckin moduling
+
 class MapNode:
     def __init__(self, id, X, Y, osmID):
         self.id = id
