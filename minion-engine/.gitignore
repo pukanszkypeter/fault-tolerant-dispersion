@@ -1,8 +1,0 @@
-# IDEs and editors
-/.idea
-
-# Database file
-*.sqlite
-
-# Pycache files
-*.pyc

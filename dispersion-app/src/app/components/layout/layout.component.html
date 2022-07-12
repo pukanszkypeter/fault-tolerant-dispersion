@@ -1,0 +1,58 @@
+<header>
+  <nav class="navbar navbar-expand-lg primary-color shadow">
+    <div class="container-xl pt-1 pb-1">
+      <!-- Logo -->
+      <a 
+        class="navbar-brand navbar-logo"
+        (click)="handleActiveState('home')"
+        [routerLink]="['/home']">
+        <img src="assets/images/navbar-logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+        {{ 'layoutComponent_title' | translate }}
+      </a>
+      <!-- Toggler -->
+      <button mat-icon-button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#toggler">
+        <mat-icon svgIcon="menu"></mat-icon>
+      </button>
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="toggler">
+        <!-- Left side links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" (click)="handleActiveState('simulator')" [routerLink]="['/simulator']">{{ 'layoutComponent_simulation' | translate }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="handleActiveState('automated-tester')" [routerLink]="['/automated-tester']">{{ 'layoutComponent_automatedTest' | translate }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="handleActiveState('visualization')" [routerLink]="['/visualization']">{{ 'layoutComponent_visualization' | translate }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="handleActiveState('open-street-map')" [routerLink]="['/open-street-map']">{{ 'layoutComponent_openStreetMap' | translate }}</a>
+          </li>
+        </ul>
+        <!-- Right side links -->
+        <ul class="navbar-nav d-flex">
+          <li class="nav-item">
+            <a target="_blank" href="https://github.com/pukanszkypeter/knowledge-lab/tree/develop">
+              <button mat-icon-button>
+                <mat-icon id="github-icon" matTooltip="{{'layoutComponent_github' | translate }}" svgIcon="github">
+                </mat-icon>
+              </button>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button id="settings-button" mat-icon-button (click)="openSettingsDialog()"><mat-icon matTooltip="{{ 'layoutComponent_settings' | translate }}" svgIcon="settings"></mat-icon></button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="container-xl mt-4">
+    <ng-content></ng-content>
+  </div>
+</main>
+<footer>
+
+</footer>
