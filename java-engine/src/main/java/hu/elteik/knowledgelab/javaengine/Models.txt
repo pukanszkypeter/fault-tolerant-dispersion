@@ -1,0 +1,9 @@
+Lokális kommunikáció, szinkron algoritmusok:
+	- Random
+	- Random vezetős
+	- Rotor Router
+	- Rotor Router vezetős
+
+Globális kommunikáció, szinkron algoritmusok:
+	- Mélységi bejárásos egy induló pontból
+	- Mélységi bejárásos több induló pontból (KELL!)
