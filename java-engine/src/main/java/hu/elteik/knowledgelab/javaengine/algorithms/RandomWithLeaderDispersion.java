@@ -5,56 +5,97 @@ import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
 import hu.elteik.knowledgelab.javaengine.core.models.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class RandomWithLeaderDispersion {
 
     public void step(Graph graph, List<Robot> robotList) {
-        if (!isLeaderAlive(robotList)){
-            // Choose leader
 
+        handleLeadersForEveryGroup(robotList);
 
-            //Choose settler and occupie the first node
-
-
-            //Find the next node
-        }
-
-        if (isLeaderAlive(robotList)) {
+        if (isEveryGroupHasLeader(robotList)) {
             //Check the node is occupied
-            Robot leaderRobot = getCurrentLeader(robotList);
-            if (!isNodeOccupied(graph, leaderRobot.getOnID())) {
-                //Check the leader is the only one here
-                if (robotList.stream().noneMatch(robot -> robot.getOnID().equals(leaderRobot.getOnID()))) {
-                    // Leader is settling down
-                    getCurrentLeader(robotList).setState(RobotState.SETTLED);
-                    settleOnNode(leaderRobot.getOnID(), graph);
+            List<Robot> leaderRobots = getCurrentLeaders(robotList);
+            //Look through
 
+            for (Robot leader: leaderRobots) {
+                if (!isNodeOccupied(graph, leader.getOnID())){
+                    if (robotList.stream().noneMatch(robot -> robot.getOnID().equals(leader.getOnID()))) {
+                        // Leader is settling down
+                        getCurrentLeader(robotList).setState(RobotState.SETTLED);
+                        settleOnNode(leader.getOnID(), graph);
+                    } else {
+                        // Choose someone to settle down
+                        new LocalLeaderElection().run(robotList).setState(RobotState.SETTLED);
+                        settleOnNode(leader.getOnID(), graph);
+                    }
                 } else {
-                    // Choose someone to settle down
-                    new LocalLeaderElection().run(robotList).setState(RobotState.SETTLED);
-                    settleOnNode(leaderRobot.getOnID(), graph);
+                    // Every leader have to find a new route
+                    //Follow the leader
+                    long newPath = chooseNewRandomPath(graph, leader.getOnID());
+                    followTheLeader(robotList, leader.getOnID(), newPath);
+                    leader.setOnID(newPath);
                 }
-            } else {
-                // Find a new route
-                getCurrentLeader(robotList).setOnID(chooseNewRandomPath(graph, leaderRobot.getOnID()));
             }
-
-            // Follow the leader
-
-            /*robotList.stream()
-                    .filter()
-                    
-             */
+        } else {
+            handleLeadersForEveryGroup(robotList);
         }
 
     }
 
-    public boolean isLeaderAlive(List<Robot> robotList) {
-        for (Robot robot : robotList) {
-            if (robot.getState().equals(RobotState.LEADER)) return true;
+    public void handleLeadersForEveryGroup(List<Robot> robotList) {
+        //get robots by onID
+        Map<Long, List<Robot>> robotsOnDifferentNodes = robotList.stream()
+                .collect(groupingBy(Robot::getOnID));
+
+        for (Map.Entry<Long, List<Robot>> entry : robotsOnDifferentNodes.entrySet()) {
+            //There is at least two leader on this node
+            if (leaderCountOnNode(entry.getValue()) > 1) {
+                List<Robot> currentLeadersInOneNode = getCurrentLeaders(entry.getValue());
+                //Recalculate the winner leader
+                Robot winnerLeader = new LocalLeaderElection().run(currentLeadersInOneNode);
+                for (Robot robot : entry.getValue()){
+                    //If there is more leader robot on one node, we set them back to explore state
+                    if ((robot.getState().equals(RobotState.LEADER)
+                            && robot.getOnID().equals(winnerLeader.getOnID())
+                            && !robot.getID().equals(winnerLeader.getID()))) {
+
+                        robot.setState(RobotState.EXPLORE);
+                    }
+                }
+            } else { // => leader count = 0 => need to choose a new one
+                new LocalLeaderElection().run(entry.getValue()).setState(RobotState.LEADER);
+            }
+
         }
-        return false;
+
+    }
+
+    public void followTheLeader(List<Robot> robotList, long oldOnId, long newOnId) {
+        robotList.stream().filter(robot ->
+            robot.getOnID().equals(oldOnId) && robot.getState().equals(RobotState.EXPLORE)
+        ).forEach(robot -> robot.setOnID(newOnId));
+    }
+
+    public boolean isEveryGroupHasLeader(List<Robot> robotList){
+        //get robots by onID
+        Map<Long, List<Robot>> robotsOnDifferentNodes = robotList.stream()
+                .collect(groupingBy(Robot::getOnID));
+
+        // Check if every robot group has his own leader
+        for (Map.Entry<Long, List<Robot>> entry : robotsOnDifferentNodes.entrySet()) {
+            if (leaderCountOnNode(entry.getValue()) == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public long leaderCountOnNode(List<Robot> robotList){
+        return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).count();
     }
 
     public boolean isNodeOccupied(Graph graph, long nodeId){
@@ -66,6 +107,10 @@ public class RandomWithLeaderDispersion {
 
     public Robot getCurrentLeader(List<Robot> robotList){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).findFirst().get();
+    }
+
+    public List<Robot> getCurrentLeaders(List<Robot> robotList){
+        return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).collect(Collectors.toList());
     }
 
     public long chooseNewRandomPath(Graph graph, long nodeId){
