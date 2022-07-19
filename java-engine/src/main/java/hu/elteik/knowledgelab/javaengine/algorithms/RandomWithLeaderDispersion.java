@@ -25,11 +25,15 @@ public class RandomWithLeaderDispersion {
                 if (!isNodeOccupied(graph, leader.getOnID())){
                     if (robotList.stream().noneMatch(robot -> robot.getOnID().equals(leader.getOnID()))) {
                         // Leader is settling down
-                        getCurrentLeader(robotList).setState(RobotState.SETTLED);
+                        leader.setState(RobotState.SETTLED);
                         settleOnNode(leader.getOnID(), graph);
                     } else {
-                        // Choose someone to settle down
-                        new LocalLeaderElection().run(robotList).setState(RobotState.SETTLED);
+                        // Choose someone to settle down from current robot group
+
+                        List<Robot> currentLeaderSGroup = robotList.stream().filter(robot ->
+                                robot.getOnID().equals(leader.getOnID()) && robot.getState().equals(RobotState.EXPLORE)).collect(Collectors.toList());
+                        
+                        new LocalLeaderElection().run(currentLeaderSGroup).setState(RobotState.SETTLED);
                         settleOnNode(leader.getOnID(), graph);
                     }
                 } else {
