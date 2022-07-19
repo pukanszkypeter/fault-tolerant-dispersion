@@ -13,5 +13,6 @@ public class Robot {
     private RobotState state;
     private Color color;
     private Long onID;
+    private Long destinationID;
 
 }

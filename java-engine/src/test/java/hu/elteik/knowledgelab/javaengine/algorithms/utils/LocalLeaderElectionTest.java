@@ -18,18 +18,18 @@ class LocalLeaderElectionTest {
 
     @Test
     public void shouldReturnLeaderWithOneCandidate() {
-        List<Robot> candidates = List.of(new Robot(1L, RobotState.START, Color.BLACK, 1L));
-        assertEquals(new LocalLeaderElection().run(candidates), new Robot(1L, RobotState.START, Color.BLACK, 1L));
+        List<Robot> candidates = List.of(new Robot(1L, RobotState.START, Color.BLACK, 1L, null));
+        assertEquals(new LocalLeaderElection().run(candidates), new Robot(1L, RobotState.START, Color.BLACK, 1L, null));
     }
 
     @Test
     public void shouldReturnLeaderWithMoreCandidate() {
         List<Robot> candidates = List.of(
-                new Robot(1L, RobotState.START, Color.BLACK, 1L),
-                new Robot(2L, RobotState.START, Color.BLACK, 1L),
-                new Robot(3L, RobotState.START, Color.BLACK, 1L),
-                new Robot(4L, RobotState.START, Color.BLACK, 1L),
-                new Robot(5L, RobotState.START, Color.BLACK, 1L)
+                new Robot(1L, RobotState.START, Color.BLACK, 1L, null),
+                new Robot(2L, RobotState.START, Color.BLACK, 1L, null),
+                new Robot(3L, RobotState.START, Color.BLACK, 1L, null),
+                new Robot(4L, RobotState.START, Color.BLACK, 1L, null),
+                new Robot(5L, RobotState.START, Color.BLACK, 1L, null)
         );
         Long leaderID = new LocalLeaderElection().run(candidates).getID();
         assertTrue(1L <= leaderID && leaderID <= 5L);

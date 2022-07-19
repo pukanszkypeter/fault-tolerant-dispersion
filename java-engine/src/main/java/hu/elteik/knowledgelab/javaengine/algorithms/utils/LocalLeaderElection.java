@@ -25,4 +25,5 @@ public class LocalLeaderElection {
             return nominees.size() > 0 ? run(nominees) : run(candidates);
         }
     }
+
 }
