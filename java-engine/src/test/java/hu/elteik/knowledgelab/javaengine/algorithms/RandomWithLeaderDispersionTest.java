@@ -49,11 +49,12 @@ public class RandomWithLeaderDispersionTest {
                 new Robot(8L, RobotState.START, Color.BLUE, 5L, null),
                 new Robot(9L, RobotState.START, Color.BLUE, 5L, null)
         );
-
-        while (graph.getNodeList().stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count() != graph.getNodeList().size()) {
-            new RandomWithLeaderDispersion().step(graph, robotList);
+        int i = 0;
+        while (i < 10) {
+            new RandomWithLeaderDispersionTwo().step(graph, robotList);
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
+            i++;
         }
         assertTrue(true);
 
