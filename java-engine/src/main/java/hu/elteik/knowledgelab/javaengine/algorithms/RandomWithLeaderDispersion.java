@@ -23,7 +23,9 @@ public class RandomWithLeaderDispersion {
 
             for (Robot leader: leaderRobots) {
                 if (!isNodeOccupied(graph, leader.getOnID())){
-                    if (robotList.stream().noneMatch(robot -> robot.getOnID().equals(leader.getOnID()))) {
+
+                    if (robotList.stream().filter(robot ->  !robot.getState().equals(RobotState.START)
+                            && !robot.getState().equals(RobotState.EXPLORE) && !robot.getState().equals(RobotState.SETTLED)).anyMatch(robot -> robot.getOnID().equals(leader.getOnID()))) {
                         // Leader is settling down
                         leader.setState(RobotState.SETTLED);
                         settleOnNode(leader.getOnID(), graph);
@@ -31,10 +33,12 @@ public class RandomWithLeaderDispersion {
                         // Choose someone to settle down from current robot group
 
                         List<Robot> currentLeaderSGroup = robotList.stream().filter(robot ->
-                                robot.getOnID().equals(leader.getOnID()) && robot.getState().equals(RobotState.EXPLORE)).collect(Collectors.toList());
-                        
-                        new LocalLeaderElection().run(currentLeaderSGroup).setState(RobotState.SETTLED);
-                        settleOnNode(leader.getOnID(), graph);
+                                robot.getOnID().equals(leader.getOnID()) && robot.getState().equals(RobotState.START) || robot.getState().equals(RobotState.EXPLORE)).collect(Collectors.toList());
+
+                        if (currentLeaderSGroup.size() > 0) {
+                            new LocalLeaderElection().run(currentLeaderSGroup).setState(RobotState.SETTLED);
+                            settleOnNode(leader.getOnID(), graph);
+                        }
                     }
                 } else {
                     // Every leader have to find a new route
@@ -53,6 +57,7 @@ public class RandomWithLeaderDispersion {
     public void handleLeadersForEveryGroup(List<Robot> robotList) {
         //get robots by onID
         Map<Long, List<Robot>> robotsOnDifferentNodes = robotList.stream()
+                .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
                 .collect(groupingBy(Robot::getOnID));
 
         for (Map.Entry<Long, List<Robot>> entry : robotsOnDifferentNodes.entrySet()) {
@@ -61,15 +66,14 @@ public class RandomWithLeaderDispersion {
                 List<Robot> currentLeadersInOneNode = getCurrentLeaders(entry.getValue());
                 //Recalculate the winner leader
                 Robot winnerLeader = new LocalLeaderElection().run(currentLeadersInOneNode);
-                for (Robot robot : entry.getValue()){
+                for (Robot robot : currentLeadersInOneNode){
                     //If there is more leader robot on one node, we set them back to explore state
-                    if ((robot.getState().equals(RobotState.LEADER)
-                            && robot.getOnID().equals(winnerLeader.getOnID())
-                            && !robot.getID().equals(winnerLeader.getID()))) {
-
+                    if (!robot.getID().equals(winnerLeader.getID())) {
                         robot.setState(RobotState.EXPLORE);
                     }
                 }
+            } else if (leaderCountOnNode(entry.getValue()) == 1) {
+                System.out.println("We have one leader on node:" + entry.getKey());
             } else { // => leader count = 0 => need to choose a new one
                 new LocalLeaderElection().run(entry.getValue()).setState(RobotState.LEADER);
             }
@@ -79,14 +83,18 @@ public class RandomWithLeaderDispersion {
     }
 
     public void followTheLeader(List<Robot> robotList, long oldOnId, long newOnId) {
+        // I
         robotList.stream().filter(robot ->
             robot.getOnID().equals(oldOnId) && robot.getState().equals(RobotState.EXPLORE)
+                    || robot.getState().equals(RobotState.START)
         ).forEach(robot -> robot.setOnID(newOnId));
     }
 
     public boolean isEveryGroupHasLeader(List<Robot> robotList){
         //get robots by onID
+        //We do not care about whose are settled
         Map<Long, List<Robot>> robotsOnDifferentNodes = robotList.stream()
+                .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
                 .collect(groupingBy(Robot::getOnID));
 
         // Check if every robot group has his own leader
@@ -109,10 +117,6 @@ public class RandomWithLeaderDispersion {
         return false;
     }
 
-    public Robot getCurrentLeader(List<Robot> robotList){
-        return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).findFirst().get();
-    }
-
     public List<Robot> getCurrentLeaders(List<Robot> robotList){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).collect(Collectors.toList());
     }
@@ -120,10 +124,10 @@ public class RandomWithLeaderDispersion {
     public long chooseNewRandomPath(Graph graph, long nodeId){
         int edgeCount = (int) graph.getEdgeList().stream().filter(edge -> edge.getToID() == nodeId || edge.getFromID() == nodeId).count();
 
-        int choosenPath = new RandomNumber().get(0, edgeCount);
+        int choosenPath = new RandomNumber().get(0, edgeCount - 1);
         return graph.getEdgeList().stream()
                 .filter(edge -> edge.getToID() == nodeId || edge.getFromID() == nodeId)
-                .map(edge -> (edge.getToID().equals(nodeId)) ? edge.getFromID() : edge.getFromID())
+                .map(edge -> (edge.getToID().equals(nodeId)) ? edge.getFromID() : edge.getToID())
                 .collect(Collectors.toList()).get(choosenPath);
 
     }
