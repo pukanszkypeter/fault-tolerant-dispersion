@@ -1,6 +1,5 @@
 package hu.elteik.knowledgelab.javaengine.algorithms;
 
-import hu.elteik.knowledgelab.javaengine.algorithms.utils.ComponentProblemBreakPoint;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
 import hu.elteik.knowledgelab.javaengine.core.models.*;
@@ -15,7 +14,6 @@ public class RandomDispersion {
         look(graph, robotList);
         compute(graph, robotList);
         move(graph, robotList);
-        // new ComponentProblemBreakPoint().check(graph, robotList);
     }
 
     private void look(Graph graph, List<Robot> robotList) {
