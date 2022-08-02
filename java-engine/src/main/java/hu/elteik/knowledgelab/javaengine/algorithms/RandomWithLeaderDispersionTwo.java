@@ -43,6 +43,7 @@ public class RandomWithLeaderDispersionTwo {
                 } else if (leaderCount(robotsByColor.getValue()) == 1) {
                     System.out.println("We have one leader on node:" + robotsByNode.getKey() + " with color: " + robotsByColor.getKey());
                 } else { // => leader count = 0 => need to choose a new one
+                    System.out.println("new leader choosing is hapening!");
                     Robot winnerRobot = new LocalLeaderElection().run(robotsByColor.getValue());
                     robotsByColor.getValue().forEach(robot -> robot.setState(robot.getID().equals(winnerRobot.getID()) ? RobotState.LEADER : RobotState.EXPLORE));
                 }
@@ -65,7 +66,6 @@ public class RandomWithLeaderDispersionTwo {
                 for (Robot leaderRobot: leadersByNode.getValue()) {
                     // Need to find a new path
                     List<Long> edgeOptions = getNewRandomPath(graph, leaderRobot.getOnID(), leaderRobot.getColor());
-
                     if (edgeOptions.size() > 0) {
                         int random = new RandomNumber().get(0, edgeOptions.size() - 1);
                         leaderRobot.setDestinationID(edgeOptions.get(random));
@@ -76,7 +76,7 @@ public class RandomWithLeaderDispersionTwo {
             } else {
 
                     // Check if the leader is the only robot here and able to settle down
-                    if (leaderCountOnNode(robotList, leadersByNode.getKey()) == 1) {
+                    if (robotCountOnNode(robotList, leadersByNode.getKey()) == 1) {
                         leadersByNode.getValue().get(0).setDestinationID(leadersByNode.getKey()); // if the destination is the same as the on id it will settle there
 
                     } else { // Check if any other group is here IN DIFFERENT COLOR and have election together for settling down
@@ -107,6 +107,7 @@ public class RandomWithLeaderDispersionTwo {
                         } else {
                             //if 1 < leader and someone has followers
                             // Choose a random settler and every other robots move
+
                             new LocalLeaderElection().run(followersInEveryColor).setDestinationID(leadersByNode.getKey());
                             for (Robot otherLeader : leadersByNode.getValue()) {
                                 List<Long> edgeOptions = getNewRandomPath(graph, otherLeader.getOnID(), otherLeader.getColor());
@@ -148,12 +149,13 @@ public class RandomWithLeaderDispersionTwo {
             for (Map.Entry<Color, List<Robot>> robotsByColor : robotsGroupedByColorOnNode.entrySet()) {
                 Robot leader = robotsByColor.getValue().stream().filter(robot -> robot.getState().equals(RobotState.LEADER))
                         .collect(Collectors.toList()).get(0);
-                if (leader.getID().equals(leader.getDestinationID())) {
+                if (leader.getOnID().equals(leader.getDestinationID())) {
+
                     leader.setState(RobotState.SETTLED);
                     settleOnNode(leader.getOnID(), graph);
                 } else {
                     leader.setOnID(leader.getDestinationID());
-                    for (Robot follower : robotsByColor.getValue()) {
+                    for (Robot follower : robotsByColor.getValue().stream().filter(robot -> robot.getState().equals(RobotState.EXPLORE)).collect(Collectors.toList())) {
                         if (follower.getDestinationID() != null){
                             follower.setState(RobotState.SETTLED);
                             settleOnNode(follower.getOnID(), graph);
@@ -161,6 +163,8 @@ public class RandomWithLeaderDispersionTwo {
                             follower.setOnID(leader.getDestinationID());
                         }
                     }
+                    //set back to default after move
+                    leader.setDestinationID(null);
                 }
             }
 
@@ -176,7 +180,11 @@ public class RandomWithLeaderDispersionTwo {
     }
 
     public long leaderCountOnNode(List<Robot> robotList, long nodeID){
-        return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER) && robot.getID().equals(nodeID)).count();
+        return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER) && robot.getOnID().equals(nodeID)).count();
+    }
+
+    public long robotCountOnNode(List<Robot> robotList, long nodeID){
+        return robotList.stream().filter(robot -> robot.getOnID().equals(nodeID)).count();
     }
 
     public List<Robot> getCurrentLeaders(List<Robot> robotList){
