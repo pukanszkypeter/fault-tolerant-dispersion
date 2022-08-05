@@ -51,7 +51,7 @@ public class RandomWithLeaderDispersionTest {
         );
         int i = 0;
         while (graph.getNodeList().stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count() != graph.getNodeList().size()) {
-            new RandomWithLeaderDispersionTwo().step(graph, robotList);
+            new RandomWithLeaderDispersion().step(graph, robotList);
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
@@ -97,7 +97,7 @@ public class RandomWithLeaderDispersionTest {
         );
         int i = 0;
         while (graph.getNodeList().stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count() != graph.getNodeList().size()) {
-            new RandomWithLeaderDispersionTwo().step(graph, robotList);
+            new RandomWithLeaderDispersion().step(graph, robotList);
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
@@ -141,8 +141,8 @@ public class RandomWithLeaderDispersionTest {
                 new Robot(7L, RobotState.START, Color.BLACK, 2L, null)
         );
         int i = 0;
-        while (i < 30) {
-            new RandomWithLeaderDispersionTwo().step(graph, robotList);
+        while (graph.getNodeList().stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count() != graph.getNodeList().size()) {
+            new RandomWithLeaderDispersion().step(graph, robotList);
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
@@ -152,7 +152,7 @@ public class RandomWithLeaderDispersionTest {
     }
 
     @Test
-    public void gridWithTwoColorAndThreeLeader() {
+    public void gridWithSomeUnfinishableSet() {
 
         Graph graph = new Graph(
                 List.of(
@@ -192,8 +192,8 @@ public class RandomWithLeaderDispersionTest {
                 new Robot(13L, RobotState.START, Color.BLUE, 6L, null)
         );
         int i = 0;
-        while (i < 5) {
-            new RandomWithLeaderDispersionTwo().step(graph, robotList);
+        while (graph.getNodeList().stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count() != graph.getNodeList().size()) {
+            new RandomWithLeaderDispersion().step(graph, robotList);
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
