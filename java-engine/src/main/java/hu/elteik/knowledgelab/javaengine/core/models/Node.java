@@ -11,5 +11,10 @@ public class Node {
 
     private Long ID;
     private NodeState state;
+    private Long lastPortIndex;
 
+    public Node(Long ID, NodeState state) {
+        this.ID = ID;
+        this.state = state;
+    }
 }
