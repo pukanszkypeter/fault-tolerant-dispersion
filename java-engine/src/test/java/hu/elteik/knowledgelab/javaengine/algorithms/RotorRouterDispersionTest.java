@@ -7,8 +7,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RandomDispersionTest {
-
+public class RotorRouterDispersionTest {
+    
     @Test
     public void shouldBehaveAsExpected() {
         Graph graph = new Graph(
@@ -49,15 +49,16 @@ public class RandomDispersionTest {
                 new Robot(8L, RobotState.START, Color.BLUE, 5L, null),
                 new Robot(9L, RobotState.START, Color.BLUE, 5L, null)
         );
-
+ 
         int i = 0;
         while (robotList.size() != robotList.stream().filter(robot -> robot.getState().equals(RobotState.SETTLED) || robot.getState().equals(RobotState.TERMINATED)).count()) {
-            new RandomDispersion().step(graph, robotList);
+            new RotorRouterDispersion().step(graph, robotList);
             i++;
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
         }
-        System.out.println(i);
+        System.out.println(i);     
+        
         assertTrue(true);
     }
 

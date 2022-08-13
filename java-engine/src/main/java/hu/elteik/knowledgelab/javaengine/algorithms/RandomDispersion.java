@@ -1,6 +1,7 @@
 package hu.elteik.knowledgelab.javaengine.algorithms;
 
-import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
+import hu.elteik.knowledgelab.javaengine.algorithms.utils.GlobalLeaderElection;
+import hu.elteik.knowledgelab.javaengine.algorithms.utils.OccupiedComponentChecker;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
 import hu.elteik.knowledgelab.javaengine.core.models.*;
 
@@ -29,6 +30,9 @@ public class RandomDispersion {
                     if (robot.getState().equals(RobotState.START)) {
                         robot.setState(RobotState.EXPLORE);
                     }
+                    if (new OccupiedComponentChecker().run(graph, robot.getColor())) {
+                        robot.setState(RobotState.TERMINATED);
+                    }
                 }
             }
         }
@@ -36,7 +40,7 @@ public class RandomDispersion {
 
     private void compute(Graph graph, List<Robot> robotList) {
 
-        globalLeaderElection(robotList);
+        new GlobalLeaderElection().run(robotList);
 
         for (Robot robot : robotList) {
             if (robot.getState().equals(RobotState.LEADER)) {
@@ -77,25 +81,6 @@ public class RandomDispersion {
                         .orElseThrow(() -> new RuntimeException("Node with ID " + robot.getOnID() + " not found!"));
                 if (!pendingNode.getState().equals(NodeState.OCCUPIED)) {
                     pendingNode.setState(NodeState.PENDING);
-                }
-            }
-        }
-    }
-
-    private void globalLeaderElection(List<Robot> robotList) {
-        List<Robot> leaders = robotList.stream()
-                .filter(robot -> robot.getState().equals(RobotState.LEADER))
-                .collect(Collectors.toList());
-
-        for (Robot robot : leaders) {
-            List<Robot> nominees = robotList.stream()
-                    .filter(nominee -> nominee.getState().equals(RobotState.LEADER) && Objects.equals(nominee.getOnID(), robot.getOnID()))
-                    .collect(Collectors.toList());
-            if (nominees.size() > 1) {
-                Robot leader = new LocalLeaderElection().run(nominees);
-                nominees.remove(leader);
-                for (Robot nominee : nominees) {
-                    nominee.setState(RobotState.EXPLORE);
                 }
             }
         }
