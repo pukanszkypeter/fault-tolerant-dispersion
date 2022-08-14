@@ -13,6 +13,7 @@ public class Node {
 
     private Long ID;
     private NodeState state;
+    private Long lastPortIndex;
     private Map<Color, Long> currentComponentPointer;
 
     public Node(Long ID, NodeState state) {

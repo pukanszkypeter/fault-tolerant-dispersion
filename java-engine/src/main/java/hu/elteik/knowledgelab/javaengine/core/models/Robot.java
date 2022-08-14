@@ -14,5 +14,13 @@ public class Robot {
     private Color color;
     private Long onID;
     private Long destinationID;
+    private Long lastUsedEdgeID; // For the rotor router model
 
+    public Robot(Long ID, RobotState state, Color color, Long onID, Long destinationID) {
+        this.ID = ID;
+        this.state = state;
+        this.color = color;
+        this.onID = onID;
+        this.destinationID = destinationID;
+    }
 }
