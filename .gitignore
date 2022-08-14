@@ -1,3 +1,6 @@
 # IDEs and editors
 /.idea
 /.vscode
+
+# Mac Finder
+**/.DS_Store

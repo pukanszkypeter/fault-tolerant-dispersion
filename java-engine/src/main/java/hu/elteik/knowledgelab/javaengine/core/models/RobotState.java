@@ -4,5 +4,6 @@ public enum RobotState {
     START,
     EXPLORE,
     LEADER,
-    SETTLED
+    SETTLED,
+    TERMINATED
 }

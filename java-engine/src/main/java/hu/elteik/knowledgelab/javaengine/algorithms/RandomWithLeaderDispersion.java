@@ -119,6 +119,7 @@ public class RandomWithLeaderDispersion {
                             }
                         }
                     }
+
             }
         }
     }
@@ -159,12 +160,18 @@ public class RandomWithLeaderDispersion {
             }
 
         }
+
     }
 
 
     public long leaderCount(List<Robot> robotList){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).count();
     }
+
+    public long leaderCountOnNode(List<Robot> robotList, long nodeID){
+        return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER) && robot.getOnID().equals(nodeID)).count();
+    }
+
 
     public long robotCountOnNode(List<Robot> robotList, long nodeID){
         return robotList.stream().filter(robot -> robot.getOnID().equals(nodeID)).count();
