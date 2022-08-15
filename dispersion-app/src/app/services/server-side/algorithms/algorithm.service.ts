@@ -5,13 +5,12 @@ import {HttpClient} from "@angular/common/http";
 import {ServerRoute} from "../ServerRoute";
 import {AlgorithmRoutes} from "./AlgorithmRoutes";
 import {algorithmTypes} from "../../../models/types/AlgorithmType";
+import { NodeState } from 'src/app/models/entities/Node';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlgorithmService {
-
-
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +42,7 @@ export class AlgorithmService {
 
   stepRandom(simulationState: SimulationState): Observable<SimulationState> {
     return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.RANDOM + AlgorithmRoutes.STEP, simulationState
+      ServerRoute + AlgorithmRoutes.RANDOM, this.converter(simulationState)
     );
   }
 
@@ -55,7 +54,7 @@ export class AlgorithmService {
 
   stepRandomWithLeader(simulationState: SimulationState): Observable<SimulationState> {
     return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.RANDOM_WITH_LEADER + AlgorithmRoutes.STEP, simulationState
+      ServerRoute + AlgorithmRoutes.RANDOM_WITH_LEADER, this.converter(simulationState)
     );
   }
 
@@ -67,7 +66,7 @@ export class AlgorithmService {
 
   stepRotorRouter(simulationState: SimulationState): Observable<SimulationState> {
     return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.ROTOR_ROUTER + AlgorithmRoutes.STEP, simulationState
+      ServerRoute + AlgorithmRoutes.ROTOR_ROUTER, this.converter(simulationState)
     );
   }
 
@@ -79,7 +78,7 @@ export class AlgorithmService {
 
   stepRotorRouterWithLeader(simulationState: SimulationState): Observable<SimulationState> {
     return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmRoutes.STEP, simulationState
+      ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER, this.converter(simulationState)
     );
   }
 
@@ -87,6 +86,52 @@ export class AlgorithmService {
     return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmRoutes.TEST, data
     );
+  }
+
+  converter(simulationState: SimulationState): any {
+    let DTO: any = {
+      nodes: simulationState.nodes.map(node => new Object({id: node.id, state: this.nodeStateConverter(node.state)})),
+      edges: simulationState.edges.map(edge => new Object({id: edge.id, fromID: edge.fromID, toID: edge.toID, color: this.colorConverter(edge.color)})),
+      robots: simulationState.robots.map(robot => new Object({id: robot.id, onID: robot.onID, state: robot.state, color: this.colorConverter(robot.color), lastEdgeID: robot.lastEdgeID})),
+      counter: simulationState.counter
+    };
+    return DTO;
+  }
+
+  nodeStateConverter(nodeState: NodeState): string {
+    switch (nodeState) {
+      case NodeState.DEFAULT:
+        return 'DEFAULT';
+      case NodeState.PENDING:
+        return 'PENDING';
+      case NodeState.OCCUPIED:
+        return 'OCCUPIED';
+    }
+  }
+
+  colorConverter(color: string): string {
+    switch (color) {
+      case '#000000':
+        return 'BLACK';
+      case '#003300':
+        return 'GREEN';
+      case '#666666':
+        return 'GREY';
+      case '#663300':
+        return 'BROWN';
+      case '#ff9900':
+        return 'ORANGE';
+      case '#ffff00':
+        return 'YELLOW';
+      case '#ff33cc':
+        return 'PINK';
+      case '#9900cc':
+        return 'PURPLE';
+      case '#0000ff':
+        return 'BLUE';
+      case '#00ffff':
+        return 'AQUA';
+    }
   }
 
 }

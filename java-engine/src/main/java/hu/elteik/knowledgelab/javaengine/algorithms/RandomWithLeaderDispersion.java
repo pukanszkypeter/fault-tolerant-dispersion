@@ -48,9 +48,7 @@ public class RandomWithLeaderDispersion {
                     robotsByColor.getValue().forEach(robot -> robot.setState(robot.getID().equals(winnerRobot.getID()) ? RobotState.LEADER : RobotState.EXPLORE));
                 }
             }
-
         }
-
     }
 
     private void compute(Graph graph, List<Robot> robotList) {
@@ -119,18 +117,11 @@ public class RandomWithLeaderDispersion {
                                     throw new RuntimeException("Leader robot with ID " + otherLeader.getID() + " stepped into a trap on Node with ID " + otherLeader.getOnID());
                                 }
                             }
-
                         }
-
                     }
 
-
             }
-
         }
-
-
-
     }
 
     private void move(Graph graph, List<Robot> robotList) {
@@ -170,8 +161,6 @@ public class RandomWithLeaderDispersion {
 
         }
 
-
-
     }
 
 
@@ -182,6 +171,7 @@ public class RandomWithLeaderDispersion {
     public long leaderCountOnNode(List<Robot> robotList, long nodeID){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER) && robot.getOnID().equals(nodeID)).count();
     }
+
 
     public long robotCountOnNode(List<Robot> robotList, long nodeID){
         return robotList.stream().filter(robot -> robot.getOnID().equals(nodeID)).count();

@@ -141,6 +141,7 @@ public class RandomWithLeaderDispersionTest {
         );
         int i = 0;
         while (i < 30) {
+
             new RandomWithLeaderDispersion().step(graph, robotList);
             graph.getNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
@@ -151,7 +152,7 @@ public class RandomWithLeaderDispersionTest {
     }
 
     @Test
-    public void gridWithTwoColorAndThreeLeader() {
+    public void gridWithSomeUnfinishableSet() {
 
         Graph graph = new Graph(
                 List.of(

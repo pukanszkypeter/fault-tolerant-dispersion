@@ -1,5 +1,3 @@
-import {from} from "rxjs";
-
 export class Edge {
 
   id: number;
