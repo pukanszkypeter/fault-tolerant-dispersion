@@ -8,8 +8,11 @@ import {AlgorithmConfigurationComponent} from "./algorithm-configuration/algorit
 import {AlgorithmConfiguration} from "./algorithm-configuration/AlgorithmConfiguration";
 import {SimulationState} from "../../models/entities/SimulationState";
 import {AlgorithmService} from "../../services/server-side/algorithms/algorithm.service";
-import {RobotState} from "../../models/entities/Robot";
+import {Robot, RobotState} from "../../models/entities/Robot";
 import {LogFormComponent} from "./log-form/log-form.component";
+import { HttpClient } from '@angular/common/http';
+import { Edge } from 'src/app/models/entities/Edge';
+import { Node, NodeState } from 'src/app/models/entities/Node';
 
 
 @Component({
@@ -34,10 +37,25 @@ export class SimulatorComponent implements OnInit {
   constructor(private snackBarService: SnackbarService,
               private visService: VisService,
               private algorithmService: AlgorithmService,
+              private http: HttpClient,
               public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    /*
+    this.http.post(
+      'http://localhost:8080/api/engine/random-dispersion',
+      new SimulationState().init({
+        nodes: [{id: 1, state: 'DEFAULT'}, {id: 2, state: 'DEFAULT'}], 
+        edges: [new Edge(1, 1, 2, 'BLACK')], 
+        robots: [new Robot(1, 1, RobotState.START, 'BLACK', 0), new Robot(2, 1, RobotState.START, 'BLACK', 0)],
+        counter: 2})
+    ).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    });
+    */
   }
 
   /** Settings */
@@ -163,7 +181,7 @@ export class SimulatorComponent implements OnInit {
   }
 
   allRobotFinished(): boolean {
-    return this.simulationState.robots.filter(r => r.state === RobotState.FINISHED).length === this.simulationState.robots.length;
+    return this.simulationState.robots.filter(r => r.state === RobotState.SETTLED || r.state === RobotState.TERMINATED).length === this.simulationState.robots.length;
   }
 
   sleep(ms: number): Promise<void> {

@@ -276,7 +276,7 @@ export class OpenStreetMapComponent implements OnInit {
   }
 
   addRobot(): void {
-    this.robots.push(new Robot(1, this.selectedNodeID, RobotState.SEARCHING, 'black', 0));
+    this.robots.push(new Robot(1, this.selectedNodeID, RobotState.EXPLORE, 'black', 0));
     
     const robots = this.getRobots();
     if (robots === 1) {
@@ -372,7 +372,7 @@ export class OpenStreetMapComponent implements OnInit {
   }
 
   allRobotFinished(): boolean {
-    return this.simulationState.robots.filter(r => r.state === RobotState.FINISHED).length === this.simulationState.robots.length;
+    return this.simulationState.robots.filter(r => r.state === RobotState.SETTLED || r.state === RobotState.TERMINATED).length === this.simulationState.robots.length;
   }
 
   sleep(ms: number): Promise<void> {

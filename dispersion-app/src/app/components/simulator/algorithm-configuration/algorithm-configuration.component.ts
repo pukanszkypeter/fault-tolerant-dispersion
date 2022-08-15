@@ -55,7 +55,7 @@ export class AlgorithmConfigurationComponent implements OnInit {
 
       for (let i = 0; i < startNodes.length; i++) {
         for (let j = 0; j < distribution[i]; j++) {
-          robots.push(new Robot(robotID, startNodes[i], RobotState.SEARCHING, key, null));
+          robots.push(new Robot(robotID, startNodes[i], RobotState.START, key, null));
           robotID++;
         }
       }
