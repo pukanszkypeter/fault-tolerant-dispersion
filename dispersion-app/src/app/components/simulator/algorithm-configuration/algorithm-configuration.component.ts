@@ -32,10 +32,9 @@ export class AlgorithmConfigurationComponent implements OnInit {
     });
 
     this.map = data.startNodes;
-    for (let [key, values] of this.map) {
+    for (let [key] of this.map) {
       this.keys.push(key);
       this.settingsFormGroup.addControl(key+'startNodes', new FormControl('', Validators.required));
-      this.settingsFormGroup.addControl(key+'robotLimits', new FormControl(1, [Validators.required, Validators.min(1), Validators.max(values.length)]));
     }
 
   }
@@ -48,10 +47,9 @@ export class AlgorithmConfigurationComponent implements OnInit {
 
     let robotID = 1;
     for (let key of this.keys) {
-      const robotLimit = this.getRobotLimitKey(key).value;
       const startNodes = this.getStartNodeKey(key).value;
 
-      const distribution = this.visService.balance(robotLimit, startNodes.length);
+      const distribution = this.visService.balance(this.map.get(key).length, startNodes.length);
 
       for (let i = 0; i < startNodes.length; i++) {
         for (let j = 0; j < distribution[i]; j++) {
@@ -75,10 +73,6 @@ export class AlgorithmConfigurationComponent implements OnInit {
 
   getStartNodeKey(key: string): FormControl {
     return this.settingsFormGroup.controls[key+'startNodes'] as FormControl;
-  }
-
-  getRobotLimitKey(key: string): FormControl {
-    return this.settingsFormGroup.controls[key+'robotLimits'] as FormControl;
   }
 
 }

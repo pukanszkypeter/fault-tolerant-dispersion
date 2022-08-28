@@ -120,12 +120,8 @@
   "settingsDialogComponent_robotsMax": "A robotok száma max.: ",
   "settingsDialogComponent_colors": "Gráf komponensek",
   "settingsDialogComponent_colorsRequired": "Gráf komponensek megadása kötelező!",
-  "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait és a robotok számait!",
+  "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait!",
   "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező a komponensek számára!",
-  "settingsDialogComponent_robotLimitRequired": "Robotok számának megadása kötelező!",
-  "settingsDialogComponent_robotLimitMin": "Robotok száma min.: 1 lehet!",
-  "settingsDialogComponent_robotLimitMax": "Robotok száma max.: ",
-  "settingsDialogComponent_robotLimitMaxEnd": " lehet!",
 
   "automatedTestComponent_title": "Automatizált tesztelő",
   "automatedTestComponent_settings": "Szimuláció beállítások",
