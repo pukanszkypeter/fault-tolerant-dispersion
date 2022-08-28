@@ -120,13 +120,9 @@
   "settingsDialogComponent_robotsMax": "The number of robots can be max.: ",
   "settingsDialogComponent_colors": "Graph components",
   "settingsDialogComponent_colorsRequired": "Graph components is required!",
-  "settingsDialogComponent_startNodes": "Please select the start nodes and the number of robots of the components!",
+  "settingsDialogComponent_startNodes": "Please select the start nodes of the components!",
   "settingsDialogComponent_startNodesRequired": "Start nodes are required for component!",
-  "settingsDialogComponent_robotLimitRequired": "The number of robots is required!",
-  "settingsDialogComponent_robotLimitMin": "The number of robots must be min.: 1!",
-  "settingsDialogComponent_robotLimitMax": "The number of robots can be max.: ",
-  "settingsDialogComponent_robotLimitMaxEnd": "!",
-
+  
   "automatedTestComponent_title": "Automated tester",
   "automatedTestComponent_settings": "Simulation settings",
   "automatedTestComponent_preview": "Preview graph",
