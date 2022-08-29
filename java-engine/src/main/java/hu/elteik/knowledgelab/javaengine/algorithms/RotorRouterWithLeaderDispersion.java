@@ -3,6 +3,7 @@ package hu.elteik.knowledgelab.javaengine.algorithms;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.core.models.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,7 +52,6 @@ public class RotorRouterWithLeaderDispersion {
     }
 
     private void compute(Graph graph, List<Robot> robotList) {
-        //List<Robot> leaderRobots = getCurrentLeaders(robotList);
 
         Map<Long, List<Robot>> leadersOnDifferentNodes = robotList.stream()
                 .filter(robot -> robot.getState().equals(RobotState.LEADER))
@@ -104,6 +104,7 @@ public class RotorRouterWithLeaderDispersion {
                                 winnerLeader.setDestinationID(leadersByNode.getKey());
 
                             } else {
+
                                 //Find a new path
 
                                 long newPath = getNewPath(graph, leader.getOnID(), leader.getColor());
@@ -225,19 +226,32 @@ public class RotorRouterWithLeaderDispersion {
 
 
         // If the current rotor portID < edge options size, we can choose the next edge option
-        if (currentNode.getLastPortIndex() < edgeOptions.size() - 1) {
 
-            currentNode.setLastPortIndex(currentNode.getLastPortIndex() + 1);
+        if (currentNode.getCurrentComponentPointer() == null) {
+            currentNode.setCurrentComponentPointer(new HashMap<>());
+            currentNode.getCurrentComponentPointer().put(color, 0L);
+        }
+
+        if (currentNode.getCurrentComponentPointer().get(color) == null) {
+            currentNode.getCurrentComponentPointer().put(color, 0L);
+        }
+
+
+
+        if (currentNode.getCurrentComponentPointer().get(color) < edgeOptions.size() - 1) {
+
+            currentNode.getCurrentComponentPointer().put(color, (currentNode.getCurrentComponentPointer().get(color) + 1));
         } else if (edgeOptions.size() == 1){
             System.out.println("Tehre is no more new option, go on the only option we have");
         } else if (edgeOptions.size() == 0) {
             throw new RuntimeException("Leader robot stepped into a trap on Node with ID " + onID);
         } else {
             // If we already checked the all edge, we start from the 0 option!
-            currentNode.setLastPortIndex(0L);
+            //currentNode.setLastPortIndex(0L);
+            currentNode.getCurrentComponentPointer().put(color, 0L);
         }
 
-        return edgeOptions.get(currentNode.getLastPortIndex().intValue());
+        return edgeOptions.get(currentNode.getCurrentComponentPointer().get(color).intValue());
     }
 
     public void settleOnNode(long nodeId, Graph graph) {
@@ -256,7 +270,8 @@ public class RotorRouterWithLeaderDispersion {
 
         if (leaderRobot.getLastUsedEdgeID() == null) {
             System.out.println("The first step");
-            currentNode.setLastPortIndex(0L);
+            currentNode.setCurrentComponentPointer(new HashMap<>());
+            currentNode.getCurrentComponentPointer().put(leaderRobot.getColor(), 0L);
         } else {
             Edge usedEdge = graph.getEdgeList().stream().filter(edge -> edge.getID().equals(leaderRobot.getLastUsedEdgeID()))
                     .collect(Collectors.toList()).get(0);
@@ -268,7 +283,8 @@ public class RotorRouterWithLeaderDispersion {
             long firstPortIndex = 0L;
             for (Edge edge: edgeOptionOnTheNewNode) {
                 if (edge.getID().equals(usedEdge.getID())){
-                    currentNode.setLastPortIndex(firstPortIndex);
+                    currentNode.setCurrentComponentPointer(new HashMap<>());
+                    currentNode.getCurrentComponentPointer().put(leaderRobot.getColor(), firstPortIndex);
                 }
                 firstPortIndex++;
             }

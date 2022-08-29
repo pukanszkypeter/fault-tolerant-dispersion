@@ -107,29 +107,32 @@ public class RotorRouterWithLeaderDispersionTest {
                         new Node(3L, NodeState.DEFAULT),
                         new Node(4L, NodeState.DEFAULT),
                         new Node(5L, NodeState.DEFAULT),
-                        new Node(6L, NodeState.DEFAULT),
-                        new Node(7L, NodeState.DEFAULT)
+                        new Node(6L, NodeState.DEFAULT)
                 ),
                 List.of(
                         new Edge(1L, 1L, 2L, Color.BLACK),
-                        new Edge(2L, 1L, 4L, Color.BLACK),
-                        new Edge(3L, 2L, 5L, Color.BLACK),
-                        new Edge(4L, 4L, 5L, Color.BLACK),
-                        new Edge(5L, 5L, 6L, Color.BLACK),
-                        new Edge(6L, 3L, 2L, Color.BLACK),
-                        new Edge(7L, 3L, 6L, Color.BLACK),
-                        new Edge(8L, 3L, 7L, Color.BLACK),
-                        new Edge(9L, 7L, 6L, Color.BLACK)
+                        new Edge(2L, 1L, 3L, Color.BLACK),
+                        new Edge(3L, 2L, 4L, Color.BLACK),
+                        new Edge(4L, 2L, 4L, Color.BLUE),
+                        new Edge(5L, 1L, 3L, Color.BLUE),
+                        new Edge(6L, 3L, 4L, Color.BLUE),
+                        new Edge(7L, 3L, 4L, Color.BLACK),
+                        new Edge(8L, 4L, 6L, Color.BLACK),
+                        new Edge(9L, 4L, 6L, Color.BLUE),
+                        new Edge(10L, 5L, 6L, Color.BLUE),
+                        new Edge(11L, 3L, 5L, Color.BLUE),
+                        new Edge(12L, 3L, 5L, Color.BLACK)
                 )
         );
         List<Robot> robotList = List.of(
-                new Robot(1L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(2L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(3L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(4L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(5L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(6L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(7L, RobotState.START, Color.BLACK, 1L, null)
+                new Robot(1L, RobotState.START, Color.BLACK, 4L, null),
+                new Robot(2L, RobotState.START, Color.BLACK, 4L, null),
+                new Robot(3L, RobotState.START, Color.BLACK, 4L, null),
+                new Robot(4L, RobotState.START, Color.BLACK, 4L, null),
+                new Robot(5L, RobotState.START, Color.BLUE, 3L, null),
+                new Robot(6L, RobotState.START, Color.BLUE, 3L, null),
+                new Robot(7L, RobotState.START, Color.BLUE, 3L, null),
+                new Robot(8L, RobotState.START, Color.BLUE, 3L, null)
         );
         int i = 0;
         while (i < 10) {
