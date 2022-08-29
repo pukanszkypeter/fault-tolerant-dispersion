@@ -40,6 +40,8 @@ public class AlgorithmController {
 
     @PostMapping("/rotor-router-with-leader-dispersion")
     public ResponseEntity<GraphStateDTO> rotorRouterWithLeaderDispersionStep(@RequestBody GraphStateDTO graphStateDTO) {
+        System.out.println("what we get");
+        System.out.println(graphStateDTO.getNodes());
         return ResponseEntity.ok(algorithmService.step(AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION, graphStateDTO));
     }
 
