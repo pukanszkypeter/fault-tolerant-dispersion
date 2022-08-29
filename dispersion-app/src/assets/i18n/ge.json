@@ -168,5 +168,7 @@
   "openStreetMapComponent_cityNotFound": "Stadt nicht gefunden!",
   "openStreetMapComponent_createNetwork": "Netzwerk erstellen",
   "openStreetMapComponent_selectAlgorithmType": "Auswahl des Algorithmus",
-  "openStreetMapComponent_nodeID": "Knoten-ID"
+  "openStreetMapComponent_nodeID": "Knoten-ID",
+
+  "dfs_with_global": "Global com. DFS"
 }
