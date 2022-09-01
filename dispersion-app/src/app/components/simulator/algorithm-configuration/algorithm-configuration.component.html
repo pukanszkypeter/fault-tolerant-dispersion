@@ -34,16 +34,6 @@
           </mat-select>
           <mat-error *ngIf="getStartNodeKey(key).hasError('required')">{{ 'settingsDialogComponent_startNodesRequired' | translate }}</mat-error>
         </mat-form-field>
-        <!-- Robot Limit -->
-        <mat-form-field appearance="outline">
-          <mat-label [ngStyle]="{'color': key}">{{ getColorByHex(key).text | translate }}</mat-label>
-          <input matInput type="number" [formControl]="getRobotLimitKey(key)">
-          <mat-error *ngIf="getRobotLimitKey(key).hasError('required')">{{ 'settingsDialogComponent_robotLimitRequired' | translate }}</mat-error>
-          <mat-error *ngIf="getRobotLimitKey(key).hasError('min')">{{ 'settingsDialogComponent_robotLimitMin' | translate }}</mat-error>
-          <mat-error *ngIf="getRobotLimitKey(key).hasError('max')">
-            {{ 'settingsDialogComponent_robotLimitMax' | translate }} {{ map.get(key).length }} {{ 'settingsDialogComponent_robotLimitMaxEnd' | translate }}
-          </mat-error>
-        </mat-form-field>
       </div>
 
     </form>
