@@ -1,6 +1,6 @@
 package hu.elteik.knowledgelab.javaengine.algorithms;
 
-import hu.elteik.knowledgelab.javaengine.core.models.*;
+import hu.elteik.knowledgelab.javaengine.core.models.base.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

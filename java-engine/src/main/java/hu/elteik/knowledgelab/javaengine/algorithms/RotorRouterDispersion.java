@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.GlobalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.OccupiedComponentChecker;
-import hu.elteik.knowledgelab.javaengine.core.models.Graph;
-import hu.elteik.knowledgelab.javaengine.core.models.Node;
-import hu.elteik.knowledgelab.javaengine.core.models.NodeState;
-import hu.elteik.knowledgelab.javaengine.core.models.Robot;
-import hu.elteik.knowledgelab.javaengine.core.models.RobotState;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Graph;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Node;
+import hu.elteik.knowledgelab.javaengine.core.models.base.NodeState;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Robot;
+import hu.elteik.knowledgelab.javaengine.core.models.base.RobotState;
 
 public class RotorRouterDispersion {
 

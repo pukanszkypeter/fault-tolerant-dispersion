@@ -1,8 +1,8 @@
 package hu.elteik.knowledgelab.javaengine.algorithms.utils;
 
-import hu.elteik.knowledgelab.javaengine.core.models.Color;
-import hu.elteik.knowledgelab.javaengine.core.models.Robot;
-import hu.elteik.knowledgelab.javaengine.core.models.RobotState;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Color;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Robot;
+import hu.elteik.knowledgelab.javaengine.core.models.base.RobotState;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import hu.elteik.knowledgelab.javaengine.core.models.Robot;
-import hu.elteik.knowledgelab.javaengine.core.models.RobotState;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Robot;
+import hu.elteik.knowledgelab.javaengine.core.models.base.RobotState;
 
 public class GlobalLeaderElection {
     

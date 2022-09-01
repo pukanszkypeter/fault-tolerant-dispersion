@@ -6,7 +6,7 @@ import hu.elteik.knowledgelab.javaengine.algorithms.RotorRouterDispersion;
 import hu.elteik.knowledgelab.javaengine.algorithms.RotorRouterWithLeaderDispersion;
 import hu.elteik.knowledgelab.javaengine.app.dto.AlgorithmType;
 import hu.elteik.knowledgelab.javaengine.app.dto.GraphStateDTO;
-import hu.elteik.knowledgelab.javaengine.core.models.Graph;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Graph;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

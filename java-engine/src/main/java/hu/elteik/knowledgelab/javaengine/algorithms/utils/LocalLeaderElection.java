@@ -1,6 +1,6 @@
 package hu.elteik.knowledgelab.javaengine.algorithms.utils;
 
-import hu.elteik.knowledgelab.javaengine.core.models.Robot;
+import hu.elteik.knowledgelab.javaengine.core.models.base.Robot;
 
 import java.util.ArrayList;
 import java.util.List;

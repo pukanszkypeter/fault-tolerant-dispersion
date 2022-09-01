@@ -3,7 +3,7 @@ package hu.elteik.knowledgelab.javaengine.algorithms;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.GlobalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.OccupiedComponentChecker;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
-import hu.elteik.knowledgelab.javaengine.core.models.*;
+import hu.elteik.knowledgelab.javaengine.core.models.base.*;
 
 import java.util.List;
 import java.util.Objects;

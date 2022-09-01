@@ -2,7 +2,7 @@ package hu.elteik.knowledgelab.javaengine.algorithms;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
-import hu.elteik.knowledgelab.javaengine.core.models.*;
+import hu.elteik.knowledgelab.javaengine.core.models.base.*;
 
 import java.util.List;
 import java.util.Map;
