@@ -1,6 +1,9 @@
 package hu.elteik.knowledgelab.javaengine.algorithms;
 
 import hu.elteik.knowledgelab.javaengine.core.models.base.*;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderRobot;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderGraph;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderNode;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,15 +15,15 @@ public class RotorRouterWithLeaderDispersionTest {
     @Test
     public void gridWithOneColorAndOneLeader() {
 
-        Graph graph = new Graph(
+        RotorRouterWithLeaderGraph graph = new RotorRouterWithLeaderGraph(
                 List.of(
-                        new Node(1L, NodeState.DEFAULT),
-                        new Node(2L, NodeState.DEFAULT),
-                        new Node(3L, NodeState.DEFAULT),
-                        new Node(4L, NodeState.DEFAULT),
-                        new Node(5L, NodeState.DEFAULT),
-                        new Node(6L, NodeState.DEFAULT),
-                        new Node(7L, NodeState.DEFAULT)
+                        new RotorRouterWithLeaderNode(1L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(2L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(3L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(4L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(5L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(6L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(7L, NodeState.DEFAULT, null)
                 ),
                 List.of(
                         new Edge(1L, 1L, 2L, Color.BLACK),
@@ -34,19 +37,19 @@ public class RotorRouterWithLeaderDispersionTest {
                         new Edge(9L, 7L, 6L, Color.BLACK)
                 )
         );
-        List<Robot> robotList = List.of(
-                new Robot(1L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(2L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(3L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(4L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(5L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(6L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(7L, RobotState.START, Color.BLACK, 1L, null)
+        List<RotorRouterWithLeaderRobot> robotList = List.of(
+                new RotorRouterWithLeaderRobot(1L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(2L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(3L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(4L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(5L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(6L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(7L, RobotState.START, Color.BLACK, 1L, null, null)
         );
         int i = 0;
         while (i < 10) {
             new RotorRouterWithLeaderDispersion().step(graph, robotList);
-            graph.getNodeList().forEach(System.out::println);
+            graph.getRotorRouterWithLeaderNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
         }
@@ -55,17 +58,17 @@ public class RotorRouterWithLeaderDispersionTest {
     }
 
     @Test
-    public void lineGraph() {
+    public void lineRotorRouterWithLeaderGraph() {
 
-        Graph graph = new Graph(
+        RotorRouterWithLeaderGraph graph = new RotorRouterWithLeaderGraph(
                 List.of(
-                        new Node(1L, NodeState.DEFAULT),
-                        new Node(2L, NodeState.DEFAULT),
-                        new Node(3L, NodeState.DEFAULT),
-                        new Node(4L, NodeState.DEFAULT),
-                        new Node(5L, NodeState.DEFAULT),
-                        new Node(6L, NodeState.DEFAULT),
-                        new Node(7L, NodeState.DEFAULT)
+                        new RotorRouterWithLeaderNode(1L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(2L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(3L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(4L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(5L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(6L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(7L, NodeState.DEFAULT, null)
                 ),
                 List.of(
                         new Edge(1L, 1L, 2L, Color.BLACK),
@@ -76,19 +79,19 @@ public class RotorRouterWithLeaderDispersionTest {
                         new Edge(6L, 6L, 7L, Color.BLACK)
                 )
         );
-        List<Robot> robotList = List.of(
-                new Robot(1L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(2L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(3L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(4L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(5L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(6L, RobotState.START, Color.BLACK, 1L, null),
-                new Robot(7L, RobotState.START, Color.BLACK, 1L, null)
+        List<RotorRouterWithLeaderRobot> robotList = List.of(
+                new RotorRouterWithLeaderRobot(1L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(2L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(3L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(4L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(5L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(6L, RobotState.START, Color.BLACK, 1L, null, null),
+                new RotorRouterWithLeaderRobot(7L, RobotState.START, Color.BLACK, 1L, null, null)
         );
         int i = 0;
         while (i < 7) {
             new RotorRouterWithLeaderDispersion().step(graph, robotList);
-            graph.getNodeList().forEach(System.out::println);
+            graph.getRotorRouterWithLeaderNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
         }
@@ -100,14 +103,14 @@ public class RotorRouterWithLeaderDispersionTest {
     @Test
     public void gridWithOneColorAndThreeLeader() {
 
-        Graph graph = new Graph(
+        RotorRouterWithLeaderGraph graph = new RotorRouterWithLeaderGraph(
                 List.of(
-                        new Node(1L, NodeState.DEFAULT),
-                        new Node(2L, NodeState.DEFAULT),
-                        new Node(3L, NodeState.DEFAULT),
-                        new Node(4L, NodeState.DEFAULT),
-                        new Node(5L, NodeState.DEFAULT),
-                        new Node(6L, NodeState.DEFAULT)
+                        new RotorRouterWithLeaderNode(1L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(2L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(3L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(4L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(5L, NodeState.DEFAULT, null),
+                        new RotorRouterWithLeaderNode(6L, NodeState.DEFAULT, null)
                 ),
                 List.of(
                         new Edge(1L, 1L, 2L, Color.BLACK),
@@ -124,20 +127,20 @@ public class RotorRouterWithLeaderDispersionTest {
                         new Edge(12L, 3L, 5L, Color.BLACK)
                 )
         );
-        List<Robot> robotList = List.of(
-                new Robot(1L, RobotState.START, Color.BLACK, 4L, null),
-                new Robot(2L, RobotState.START, Color.BLACK, 4L, null),
-                new Robot(3L, RobotState.START, Color.BLACK, 4L, null),
-                new Robot(4L, RobotState.START, Color.BLACK, 4L, null),
-                new Robot(5L, RobotState.START, Color.BLUE, 3L, null),
-                new Robot(6L, RobotState.START, Color.BLUE, 3L, null),
-                new Robot(7L, RobotState.START, Color.BLUE, 3L, null),
-                new Robot(8L, RobotState.START, Color.BLUE, 3L, null)
+        List<RotorRouterWithLeaderRobot> robotList = List.of(
+                new RotorRouterWithLeaderRobot(1L, RobotState.START, Color.BLACK, 4L, null, null),
+                new RotorRouterWithLeaderRobot(2L, RobotState.START, Color.BLACK, 4L, null, null),
+                new RotorRouterWithLeaderRobot(3L, RobotState.START, Color.BLACK, 4L, null, null),
+                new RotorRouterWithLeaderRobot(4L, RobotState.START, Color.BLACK, 4L, null, null),
+                new RotorRouterWithLeaderRobot(5L, RobotState.START, Color.BLUE, 3L, null, null),
+                new RotorRouterWithLeaderRobot(6L, RobotState.START, Color.BLUE, 3L, null, null),
+                new RotorRouterWithLeaderRobot(7L, RobotState.START, Color.BLUE, 3L, null, null),
+                new RotorRouterWithLeaderRobot(8L, RobotState.START, Color.BLUE, 3L, null, null)
         );
         int i = 0;
         while (i < 10) {
             new RotorRouterWithLeaderDispersion().step(graph, robotList);
-            graph.getNodeList().forEach(System.out::println);
+            graph.getRotorRouterWithLeaderNodeList().forEach(System.out::println);
             robotList.forEach(System.out::println);
             i++;
         }

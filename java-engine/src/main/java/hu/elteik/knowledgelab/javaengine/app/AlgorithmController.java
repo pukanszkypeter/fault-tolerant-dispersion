@@ -1,5 +1,7 @@
 package hu.elteik.knowledgelab.javaengine.app;
 
+import hu.elteik.knowledgelab.javaengine.app.dto.RotorRouterDispersionGraphStateDTO;
+import hu.elteik.knowledgelab.javaengine.app.dto.RotorRouterWithLeaderDispersionGraphStateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,24 +27,22 @@ public class AlgorithmController {
 
     @PostMapping("/random-dispersion")
     public ResponseEntity<GraphStateDTO> randomDispersionStep(@RequestBody GraphStateDTO graphStateDTO) {
-        return ResponseEntity.ok(algorithmService.step(AlgorithmType.RANDOM_DISPERSION, graphStateDTO));
+        return ResponseEntity.ok(algorithmService.randomDispersion(graphStateDTO));
     }
 
     @PostMapping("/random-with-leader-dispersion")
     public ResponseEntity<GraphStateDTO> randomWithLeaderDispersionStep(@RequestBody GraphStateDTO graphStateDTO) {
-        return ResponseEntity.ok(algorithmService.step(AlgorithmType.RANDOM_WITH_LEADER_DISPERSION, graphStateDTO));
+        return ResponseEntity.ok(algorithmService.randomWithLeaderDispersion(graphStateDTO));
     }
 
     @PostMapping("/rotor-router-dispersion")
-    public ResponseEntity<GraphStateDTO> rotorRouterDispersionStep(@RequestBody GraphStateDTO graphStateDTO) {
-        return ResponseEntity.ok(algorithmService.step(AlgorithmType.ROTOR_ROUTER_DISPERSION, graphStateDTO));
+    public ResponseEntity<RotorRouterDispersionGraphStateDTO> rotorRouterDispersionStep(@RequestBody RotorRouterDispersionGraphStateDTO graphStateDTO) {
+        return ResponseEntity.ok(algorithmService.rotorRouterDispersion(graphStateDTO));
     }
 
     @PostMapping("/rotor-router-with-leader-dispersion")
-    public ResponseEntity<GraphStateDTO> rotorRouterWithLeaderDispersionStep(@RequestBody GraphStateDTO graphStateDTO) {
-        System.out.println("what we get");
-        System.out.println(graphStateDTO.getNodes());
-        return ResponseEntity.ok(algorithmService.step(AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION, graphStateDTO));
+    public ResponseEntity<RotorRouterWithLeaderDispersionGraphStateDTO> rotorRouterWithLeaderDispersionStep(@RequestBody RotorRouterWithLeaderDispersionGraphStateDTO graphStateDTO) {
+        return ResponseEntity.ok(algorithmService.rotorRouterWithLeaderDispersion(graphStateDTO));
     }
 
 }

@@ -1,30 +1,30 @@
 package hu.elteik.knowledgelab.javaengine.algorithms;
 
+import hu.elteik.knowledgelab.javaengine.algorithms.utils.GlobalLeaderElection;
+import hu.elteik.knowledgelab.javaengine.algorithms.utils.OccupiedComponentChecker;
+import hu.elteik.knowledgelab.javaengine.core.models.base.NodeState;
+import hu.elteik.knowledgelab.javaengine.core.models.base.RobotState;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterdispersion.RotorRouterDispersionGraph;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterdispersion.RotorRouterDispersionNode;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterdispersion.RotorRouterDispersionRobot;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import hu.elteik.knowledgelab.javaengine.algorithms.utils.GlobalLeaderElection;
-import hu.elteik.knowledgelab.javaengine.algorithms.utils.OccupiedComponentChecker;
-import hu.elteik.knowledgelab.javaengine.core.models.base.Graph;
-import hu.elteik.knowledgelab.javaengine.core.models.base.Node;
-import hu.elteik.knowledgelab.javaengine.core.models.base.NodeState;
-import hu.elteik.knowledgelab.javaengine.core.models.base.Robot;
-import hu.elteik.knowledgelab.javaengine.core.models.base.RobotState;
-
 public class RotorRouterDispersion {
 
-    public void step(Graph graph, List<Robot> robotList) {
+    public void step(RotorRouterDispersionGraph graph, List<RotorRouterDispersionRobot> robotList) {
         look(graph, robotList);
         compute(graph, robotList);
         move(graph, robotList);
     }
 
-    public void look(Graph graph, List<Robot> robotList) {
-        for (Robot robot : robotList) {
+    public void look(RotorRouterDispersionGraph graph, List<RotorRouterDispersionRobot> robotList) {
+        for (RotorRouterDispersionRobot robot : robotList) {
             if (robot.getState().equals(RobotState.START) || robot.getState().equals(RobotState.EXPLORE)) {
-                Node currentNode = graph.getNodeList().stream()
+                RotorRouterDispersionNode currentNode = graph.getRotorRouterDispersionNodeList().stream()
                         .filter(node -> node.getID().equals(robot.getOnID()))
                         .findAny()
                         .orElseThrow(() -> new RuntimeException("Node with ID " + robot.getOnID() + " not found!"));
@@ -34,7 +34,7 @@ public class RotorRouterDispersion {
                     if (robot.getState().equals(RobotState.START)) {
                         robot.setState(RobotState.EXPLORE);
                     }
-                    if (new OccupiedComponentChecker().run(graph, robot.getColor())) {
+                    if (new OccupiedComponentChecker<RotorRouterDispersionGraph>().run(graph, robot.getColor())) {
                         robot.setState(RobotState.TERMINATED);
                     }
                 }
@@ -42,19 +42,19 @@ public class RotorRouterDispersion {
         }
     }
 
-    public void compute(Graph graph, List<Robot> robotList) {
+    public void compute(RotorRouterDispersionGraph graph, List<RotorRouterDispersionRobot> robotList) {
 
-        new GlobalLeaderElection().run(robotList);
+        new GlobalLeaderElection<RotorRouterDispersionRobot>().run(robotList);
 
-        for (Robot robot : robotList) {
+        for (RotorRouterDispersionRobot robot : robotList) {
             if (robot.getState().equals(RobotState.LEADER)) {
                 robot.setDestinationID(robot.getOnID());
             }
             else if (robot.getState().equals(RobotState.EXPLORE)) {
-                Node currentNode = graph.getNodeList().stream()
+                RotorRouterDispersionNode currentNode = graph.getRotorRouterDispersionNodeList().stream()
                         .filter(node -> node.getID().equals(robot.getOnID()))
                         .findAny()
-                        .orElseThrow(() -> new RuntimeException("Node with ID " + robot.getOnID() + " not found!"));
+                        .orElseThrow(() -> new RuntimeException("RotorRouterDispersionNode with ID " + robot.getOnID() + " not found!"));
 
                 List<Long> nodeOptions = graph.getEdgeList().stream()
                         .filter(edge ->
@@ -84,10 +84,10 @@ public class RotorRouterDispersion {
         }
     }
 
-    public void move(Graph graph, List<Robot> robotList) {
-        for (Robot robot : robotList) {
+    public void move(RotorRouterDispersionGraph graph, List<RotorRouterDispersionRobot> robotList) {
+        for (RotorRouterDispersionRobot robot : robotList) {
             if (robot.getState().equals(RobotState.LEADER)) {
-                Node currentNode = graph.getNodeList().stream()
+                RotorRouterDispersionNode currentNode = graph.getRotorRouterDispersionNodeList().stream()
                         .filter(node -> node.getID().equals(robot.getOnID()))
                         .findAny()
                         .orElseThrow(() -> new RuntimeException("Node with ID " + robot.getOnID() + " not found!"));
@@ -96,7 +96,7 @@ public class RotorRouterDispersion {
             }
             else if (robot.getState().equals(RobotState.EXPLORE)) {
                 robot.setOnID(robot.getDestinationID());
-                Node pendingNode = graph.getNodeList().stream()
+                RotorRouterDispersionNode pendingNode = graph.getRotorRouterDispersionNodeList().stream()
                         .filter(node -> node.getID().equals(robot.getOnID()))
                         .findAny()
                         .orElseThrow(() -> new RuntimeException("Node with ID " + robot.getOnID() + " not found!"));

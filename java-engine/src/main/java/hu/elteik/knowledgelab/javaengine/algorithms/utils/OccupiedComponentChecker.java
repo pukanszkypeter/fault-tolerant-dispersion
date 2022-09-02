@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import hu.elteik.knowledgelab.javaengine.core.models.base.*;
 
-public class OccupiedComponentChecker {
+public class OccupiedComponentChecker<Object extends Graph> {
     
-    public boolean run(Graph graph, Color component) {
+    public boolean run(Object graph, Color component) {
         List<Edge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
         
         List<Node> componentNodes = new ArrayList<>();

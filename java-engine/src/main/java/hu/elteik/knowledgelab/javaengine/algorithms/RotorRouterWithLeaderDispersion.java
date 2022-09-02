@@ -2,6 +2,9 @@ package hu.elteik.knowledgelab.javaengine.algorithms;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.core.models.base.*;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderGraph;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderNode;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderRobot;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,96 +15,96 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class RotorRouterWithLeaderDispersion {
 
-    public void step(Graph graph, List<Robot> robotList) {
+    public void step(RotorRouterWithLeaderGraph graph, List<RotorRouterWithLeaderRobot> robotList) {
         look(graph, robotList);
         compute(graph, robotList);
         move(graph, robotList);
     }
 
-    private void look(Graph graph, List<Robot> robotList) {
-        Map<Long, List<Robot>> robotsOnDifferentNodes = robotList.stream()
+    private void look(RotorRouterWithLeaderGraph graph, List<RotorRouterWithLeaderRobot> robotList) {
+        Map<Long, List<RotorRouterWithLeaderRobot>> robotsOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
                 .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
-                .collect(groupingBy(Robot::getOnID));
+                .collect(groupingBy(RotorRouterWithLeaderRobot::getOnID));
 
-        for (Map.Entry<Long, List<Robot>> robotsByNode : robotsOnDifferentNodes.entrySet()) {
+        for (Map.Entry<Long, List<RotorRouterWithLeaderRobot>> robotsByRotorRouterWithLeaderNode : robotsOnDifferentRotorRouterWithLeaderNodes.entrySet()) {
 
-            Map<Color, List<Robot>> robotsGroupedByColorOnNode = robotsByNode.getValue()
-                    .stream().collect(groupingBy(Robot::getColor));
+            Map<Color, List<RotorRouterWithLeaderRobot>> robotsGroupedByColorOnRotorRouterWithLeaderNode = robotsByRotorRouterWithLeaderNode.getValue()
+                    .stream().collect(groupingBy(RotorRouterWithLeaderRobot::getColor));
 
-            for (Map.Entry<Color, List<Robot>> robotsByColor : robotsGroupedByColorOnNode.entrySet()) {
+            for (Map.Entry<Color, List<RotorRouterWithLeaderRobot>> robotsByColor : robotsGroupedByColorOnRotorRouterWithLeaderNode.entrySet()) {
                 //There is at least two leader on this node
                 if (leaderCount(robotsByColor.getValue()) > 1) {
-                    List<Robot> currentLeadersInOneNode = getCurrentLeaders(robotsByColor.getValue());
+                    List<RotorRouterWithLeaderRobot> currentLeadersInOneRotorRouterWithLeaderNode = getCurrentLeaders(robotsByColor.getValue());
                     //Recalculate the winner leader
-                    Robot winnerLeader = new LocalLeaderElection().run(currentLeadersInOneNode);
-                    for (Robot robot : currentLeadersInOneNode){
+                    RotorRouterWithLeaderRobot winnerLeader = new LocalLeaderElection<RotorRouterWithLeaderRobot>().run(currentLeadersInOneRotorRouterWithLeaderNode);
+                    for (RotorRouterWithLeaderRobot robot : currentLeadersInOneRotorRouterWithLeaderNode){
                         //If there is more leader robot on one node, we set them back to explore state
                         if (!robot.getID().equals(winnerLeader.getID())) {
                             robot.setState(RobotState.EXPLORE);
                         }
                     }
                 } else if (leaderCount(robotsByColor.getValue()) == 1) {
-                    System.out.println("We have one leader on node:" + robotsByNode.getKey() + " with color: " + robotsByColor.getKey());
+                    System.out.println("We have one leader on node:" + robotsByRotorRouterWithLeaderNode.getKey() + " with color: " + robotsByColor.getKey());
                 } else { // => leader count = 0 => need to choose a new one
                     System.out.println("new leader choosing is hapening!");
-                    Robot winnerRobot = new LocalLeaderElection().run(robotsByColor.getValue());
-                    robotsByColor.getValue().forEach(robot -> robot.setState(robot.getID().equals(winnerRobot.getID()) ? RobotState.LEADER : RobotState.EXPLORE));
+                    RotorRouterWithLeaderRobot winnerRotorRouterWithLeaderRobot = new LocalLeaderElection<RotorRouterWithLeaderRobot>().run(robotsByColor.getValue());
+                    robotsByColor.getValue().forEach(robot -> robot.setState(robot.getID().equals(winnerRotorRouterWithLeaderRobot.getID()) ? RobotState.LEADER : RobotState.EXPLORE));
                 }
             }
         }
     }
 
-    private void compute(Graph graph, List<Robot> robotList) {
+    private void compute(RotorRouterWithLeaderGraph graph, List<RotorRouterWithLeaderRobot> robotList) {
 
-        Map<Long, List<Robot>> leadersOnDifferentNodes = robotList.stream()
+        Map<Long, List<RotorRouterWithLeaderRobot>> leadersOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
                 .filter(robot -> robot.getState().equals(RobotState.LEADER))
-                .collect(groupingBy(Robot::getOnID));
+                .collect(groupingBy(RotorRouterWithLeaderRobot::getOnID));
 
-        for (Map.Entry<Long, List<Robot>> leadersByNode : leadersOnDifferentNodes.entrySet()) {
+        for (Map.Entry<Long, List<RotorRouterWithLeaderRobot>> leadersByRotorRouterWithLeaderNode : leadersOnDifferentRotorRouterWithLeaderNodes.entrySet()) {
 
-            if (isNodeOccupied(graph, leadersByNode.getKey())) {
-                for (Robot leaderRobot: leadersByNode.getValue()) {
+            if (isRotorRouterWithLeaderNodeOccupied(graph, leadersByRotorRouterWithLeaderNode.getKey())) {
+                for (RotorRouterWithLeaderRobot leaderRotorRouterWithLeaderRobot: leadersByRotorRouterWithLeaderNode.getValue()) {
                     // Need to find a new path
-                    long newPath = getNewPath(graph, leaderRobot.getOnID(), leaderRobot.getColor());
-                    leaderRobot.setDestinationID(newPath);
+                    long newPath = getNewPath(graph, leaderRotorRouterWithLeaderRobot.getOnID(), leaderRotorRouterWithLeaderRobot.getColor());
+                    leaderRotorRouterWithLeaderRobot.setDestinationID(newPath);
 
                     Edge usedEdge = graph.getEdgeList().stream()
-                            .filter(edge -> (edge.getFromID().equals(leaderRobot.getOnID()) &&
-                                    edge.getToID().equals(newPath) && edge.getColor().equals(leaderRobot.getColor()))
+                            .filter(edge -> (edge.getFromID().equals(leaderRotorRouterWithLeaderRobot.getOnID()) &&
+                                    edge.getToID().equals(newPath) && edge.getColor().equals(leaderRotorRouterWithLeaderRobot.getColor()))
                                     ||
-                                    (edge.getToID().equals(leaderRobot.getOnID()) &&
-                                            edge.getFromID().equals(newPath) && edge.getColor().equals(leaderRobot.getColor()))
+                                    (edge.getToID().equals(leaderRotorRouterWithLeaderRobot.getOnID()) &&
+                                            edge.getFromID().equals(newPath) && edge.getColor().equals(leaderRotorRouterWithLeaderRobot.getColor()))
                             ).collect(Collectors.toList()).get(0);
-                    leaderRobot.setLastUsedEdgeID(usedEdge.getID());
+                    leaderRotorRouterWithLeaderRobot.setLastUsedEdgeID(usedEdge.getID());
 
                 }
             } else {
                 // Check if the leader is the only robot here and able to settle down
-                if (robotCountOnNode(robotList, leadersByNode.getKey()) == 1) {
+                if (robotCountOnRotorRouterWithLeaderNode(robotList, leadersByRotorRouterWithLeaderNode.getKey()) == 1) {
 
                     //Set the initial lastPort from where he came from
-                    setTheFirstPortIndexOnNode(graph, leadersByNode.getValue().get(0));
+                    setTheFirstPortIndexOnRotorRouterWithLeaderNode(graph, leadersByRotorRouterWithLeaderNode.getValue().get(0));
 
-                    leadersByNode.getValue().get(0).setDestinationID(leadersByNode.getKey()); // if the destination is the same as the on id it will settle there
+                    leadersByRotorRouterWithLeaderNode.getValue().get(0).setDestinationID(leadersByRotorRouterWithLeaderNode.getKey()); // if the destination is the same as the on id it will settle there
 
 
                 } else { // Check if any other group is here IN DIFFERENT COLOR and have election together for settling down
-                    List<Robot> followersInEveryColor = robotList.stream()
+                    List<RotorRouterWithLeaderRobot> followersInEveryColor = robotList.stream()
                             .filter(robot -> robot.getState().equals(RobotState.EXPLORE) &&
-                                    robot.getOnID().equals(leadersByNode.getKey())).collect(Collectors.toList());
+                                    robot.getOnID().equals(leadersByRotorRouterWithLeaderNode.getKey())).collect(Collectors.toList());
 
                     // if 1 < leader without followers
                     if (followersInEveryColor.size() < 1) {
                         //The leaders have election for settling down
-                        Robot winnerLeader = new LocalLeaderElection().run(leadersByNode.getValue());
+                        RotorRouterWithLeaderRobot winnerLeader = new LocalLeaderElection<RotorRouterWithLeaderRobot>().run(leadersByRotorRouterWithLeaderNode.getValue());
 
-                        for (Robot leader : leadersByNode.getValue()) {
+                        for (RotorRouterWithLeaderRobot leader : leadersByRotorRouterWithLeaderNode.getValue()) {
                             if (leader.getID().equals(winnerLeader.getID())) {
 
                                 //Set the initial lastPort from where he came from
-                                setTheFirstPortIndexOnNode(graph, winnerLeader);
+                                setTheFirstPortIndexOnRotorRouterWithLeaderNode(graph, winnerLeader);
 
-                                winnerLeader.setDestinationID(leadersByNode.getKey());
+                                winnerLeader.setDestinationID(leadersByRotorRouterWithLeaderNode.getKey());
 
                             } else {
 
@@ -124,19 +127,19 @@ public class RotorRouterWithLeaderDispersion {
                         //if 1 < leader and someone has followers
                         // Choose a random settler and every other robots move
 
-                        Robot settlerFollower = new LocalLeaderElection().run(followersInEveryColor);
+                        RotorRouterWithLeaderRobot settlerFollower = new LocalLeaderElection<RotorRouterWithLeaderRobot>().run(followersInEveryColor);
 
                         //Find the leader of the settler
-                        Robot leaderForSettler = robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)
+                        RotorRouterWithLeaderRobot leaderForSettler = robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)
                                 && robot.getOnID().equals(settlerFollower.getOnID()) && robot.getColor().equals(settlerFollower.getColor()))
                                 .collect(Collectors.toList()).get(0);
 
-                        setTheFirstPortIndexOnNode(graph, leaderForSettler);
+                        setTheFirstPortIndexOnRotorRouterWithLeaderNode(graph, leaderForSettler);
 
-                        settlerFollower.setDestinationID(leadersByNode.getKey());
+                        settlerFollower.setDestinationID(leadersByRotorRouterWithLeaderNode.getKey());
 
 
-                        for (Robot otherLeader : leadersByNode.getValue()) {
+                        for (RotorRouterWithLeaderRobot otherLeader : leadersByRotorRouterWithLeaderNode.getValue()) {
 
                             long newPath = getNewPath(graph, otherLeader.getOnID(), otherLeader.getColor());
                             otherLeader.setDestinationID(newPath);
@@ -157,32 +160,32 @@ public class RotorRouterWithLeaderDispersion {
         }
     }
 
-    private void move(Graph graph, List<Robot> robotList) {
+    private void move(RotorRouterWithLeaderGraph graph, List<RotorRouterWithLeaderRobot> robotList) {
         // if a leader has different destinationID than his onID then he will move otherwise settle
         // is a simple robot has a destination he will settle on that.
 
-        Map<Long, List<Robot>> robotsOnDifferentNodes = robotList.stream()
+        Map<Long, List<RotorRouterWithLeaderRobot>> robotsOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
                 .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
-                .collect(groupingBy(Robot::getOnID));
+                .collect(groupingBy(RotorRouterWithLeaderRobot::getOnID));
 
-        for (Map.Entry<Long, List<Robot>> robotsByNode : robotsOnDifferentNodes.entrySet()) {
+        for (Map.Entry<Long, List<RotorRouterWithLeaderRobot>> robotsByRotorRouterWithLeaderNode : robotsOnDifferentRotorRouterWithLeaderNodes.entrySet()) {
 
-            Map<Color, List<Robot>> robotsGroupedByColorOnNode = robotsByNode.getValue()
-                    .stream().collect(groupingBy(Robot::getColor));
+            Map<Color, List<RotorRouterWithLeaderRobot>> robotsGroupedByColorOnRotorRouterWithLeaderNode = robotsByRotorRouterWithLeaderNode.getValue()
+                    .stream().collect(groupingBy(RotorRouterWithLeaderRobot::getColor));
 
-            for (Map.Entry<Color, List<Robot>> robotsByColor : robotsGroupedByColorOnNode.entrySet()) {
-                Robot leader = robotsByColor.getValue().stream().filter(robot -> robot.getState().equals(RobotState.LEADER))
+            for (Map.Entry<Color, List<RotorRouterWithLeaderRobot>> robotsByColor : robotsGroupedByColorOnRotorRouterWithLeaderNode.entrySet()) {
+                RotorRouterWithLeaderRobot leader = robotsByColor.getValue().stream().filter(robot -> robot.getState().equals(RobotState.LEADER))
                         .collect(Collectors.toList()).get(0);
                 if (leader.getOnID().equals(leader.getDestinationID())) {
 
                     leader.setState(RobotState.SETTLED);
-                    settleOnNode(leader.getOnID(), graph);
+                    settleOnRotorRouterWithLeaderNode(leader.getOnID(), graph);
                 } else {
                     leader.setOnID(leader.getDestinationID());
-                    for (Robot follower : robotsByColor.getValue().stream().filter(robot -> robot.getState().equals(RobotState.EXPLORE)).collect(Collectors.toList())) {
+                    for (RotorRouterWithLeaderRobot follower : robotsByColor.getValue().stream().filter(robot -> robot.getState().equals(RobotState.EXPLORE)).collect(Collectors.toList())) {
                         if (follower.getDestinationID() != null){
                             follower.setState(RobotState.SETTLED);
-                            settleOnNode(follower.getOnID(), graph);
+                            settleOnRotorRouterWithLeaderNode(follower.getOnID(), graph);
                         } else {
                             follower.setOnID(leader.getDestinationID());
                         }
@@ -196,66 +199,66 @@ public class RotorRouterWithLeaderDispersion {
     }
 
 
-    public long leaderCount(List<Robot> robotList){
+    public long leaderCount(List<RotorRouterWithLeaderRobot> robotList){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).count();
     }
 
-    public long robotCountOnNode(List<Robot> robotList, long nodeID){
+    public long robotCountOnRotorRouterWithLeaderNode(List<RotorRouterWithLeaderRobot> robotList, long nodeID){
         return robotList.stream().filter(robot -> robot.getOnID().equals(nodeID)).count();
     }
 
-    public List<Robot> getCurrentLeaders(List<Robot> robotList){
+    public List<RotorRouterWithLeaderRobot> getCurrentLeaders(List<RotorRouterWithLeaderRobot> robotList){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).collect(Collectors.toList());
     }
 
-    public boolean isNodeOccupied(Graph graph, long nodeId){
-        for (Node node : graph.getNodeList()) {
+    public boolean isRotorRouterWithLeaderNodeOccupied(RotorRouterWithLeaderGraph graph, long nodeId){
+        for (RotorRouterWithLeaderNode node : graph.getRotorRouterWithLeaderNodeList()) {
             if (node.getID() == nodeId && node.getState().equals(NodeState.OCCUPIED)) return true;
         }
         return false;
     }
 
-    public Long getNewPath(Graph graph, long onID, Color color) {
+    public Long getNewPath(RotorRouterWithLeaderGraph graph, long onID, Color color) {
         List<Long> edgeOptions = graph.getEdgeList().stream()
                 .filter(edge -> (edge.getFromID().equals(onID) && edge.getColor().equals(color))
                         || (edge.getToID().equals(onID) && edge.getColor().equals(color)))
                 .map(edge -> edge.getToID().equals(onID) ? edge.getFromID() : edge.getToID())
                 .collect(Collectors.toList());
 
-        Node currentNode = graph.getNodeList().stream().filter(node -> node.getID().equals(onID)).collect(Collectors.toList()).get(0);
+        RotorRouterWithLeaderNode currentRotorRouterWithLeaderNode = graph.getRotorRouterWithLeaderNodeList().stream().filter(node -> node.getID().equals(onID)).collect(Collectors.toList()).get(0);
 
 
         // If the current rotor portID < edge options size, we can choose the next edge option
 
-        if (currentNode.getCurrentComponentPointer() == null) {
-            currentNode.setCurrentComponentPointer(new HashMap<>());
-            currentNode.getCurrentComponentPointer().put(color, 0L);
+        if (currentRotorRouterWithLeaderNode.getCurrentComponentPointer() == null) {
+            currentRotorRouterWithLeaderNode.setCurrentComponentPointer(new HashMap<>());
+            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, 0L);
         }
 
-        if (currentNode.getCurrentComponentPointer().get(color) == null) {
-            currentNode.getCurrentComponentPointer().put(color, 0L);
+        if (currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color) == null) {
+            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, 0L);
         }
 
 
 
-        if (currentNode.getCurrentComponentPointer().get(color) < edgeOptions.size() - 1) {
+        if (currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color) < edgeOptions.size() - 1) {
 
-            currentNode.getCurrentComponentPointer().put(color, (currentNode.getCurrentComponentPointer().get(color) + 1));
+            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, (currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color) + 1));
         } else if (edgeOptions.size() == 1){
             System.out.println("Tehre is no more new option, go on the only option we have");
         } else if (edgeOptions.size() == 0) {
-            throw new RuntimeException("Leader robot stepped into a trap on Node with ID " + onID);
+            throw new RuntimeException("Leader robot stepped into a trap on RotorRouterWithLeaderNode with ID " + onID);
         } else {
             // If we already checked the all edge, we start from the 0 option!
-            //currentNode.setLastPortIndex(0L);
-            currentNode.getCurrentComponentPointer().put(color, 0L);
+            //currentRotorRouterWithLeaderNode.setLastPortIndex(0L);
+            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, 0L);
         }
 
-        return edgeOptions.get(currentNode.getCurrentComponentPointer().get(color).intValue());
+        return edgeOptions.get(currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color).intValue());
     }
 
-    public void settleOnNode(long nodeId, Graph graph) {
-        for (Node node : graph.getNodeList()) {
+    public void settleOnRotorRouterWithLeaderNode(long nodeId, RotorRouterWithLeaderGraph graph) {
+        for (RotorRouterWithLeaderNode node : graph.getRotorRouterWithLeaderNodeList()) {
             if (node.getID().equals(nodeId)) {
                 node.setState(NodeState.OCCUPIED);
             }
@@ -263,28 +266,28 @@ public class RotorRouterWithLeaderDispersion {
     }
 
 
-    public void setTheFirstPortIndexOnNode(Graph graph, Robot leaderRobot) {
+    public void setTheFirstPortIndexOnRotorRouterWithLeaderNode(RotorRouterWithLeaderGraph graph, RotorRouterWithLeaderRobot leaderRotorRouterWithLeaderRobot) {
 
-        Node currentNode = graph.getNodeList().stream()
-                .filter(node -> node.getID().equals(leaderRobot.getOnID())).collect(Collectors.toList()).get(0);
+        RotorRouterWithLeaderNode currentRotorRouterWithLeaderNode = graph.getRotorRouterWithLeaderNodeList().stream()
+                .filter(node -> node.getID().equals(leaderRotorRouterWithLeaderRobot.getOnID())).collect(Collectors.toList()).get(0);
 
-        if (leaderRobot.getLastUsedEdgeID() == null) {
+        if (leaderRotorRouterWithLeaderRobot.getLastUsedEdgeID() == null) {
             System.out.println("The first step");
-            currentNode.setCurrentComponentPointer(new HashMap<>());
-            currentNode.getCurrentComponentPointer().put(leaderRobot.getColor(), 0L);
+            currentRotorRouterWithLeaderNode.setCurrentComponentPointer(new HashMap<>());
+            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(leaderRotorRouterWithLeaderRobot.getColor(), 0L);
         } else {
-            Edge usedEdge = graph.getEdgeList().stream().filter(edge -> edge.getID().equals(leaderRobot.getLastUsedEdgeID()))
+            Edge usedEdge = graph.getEdgeList().stream().filter(edge -> edge.getID().equals(leaderRotorRouterWithLeaderRobot.getLastUsedEdgeID()))
                     .collect(Collectors.toList()).get(0);
 
-            List<Edge> edgeOptionOnTheNewNode = graph.getEdgeList().stream()
-                    .filter(edge -> (edge.getFromID().equals(leaderRobot.getOnID()) && edge.getColor().equals(leaderRobot.getColor()))
-                            || (edge.getToID().equals(leaderRobot.getOnID()) && edge.getColor().equals(leaderRobot.getColor())))
+            List<Edge> edgeOptionOnTheNewRotorRouterWithLeaderNode = graph.getEdgeList().stream()
+                    .filter(edge -> (edge.getFromID().equals(leaderRotorRouterWithLeaderRobot.getOnID()) && edge.getColor().equals(leaderRotorRouterWithLeaderRobot.getColor()))
+                            || (edge.getToID().equals(leaderRotorRouterWithLeaderRobot.getOnID()) && edge.getColor().equals(leaderRotorRouterWithLeaderRobot.getColor())))
                     .collect(Collectors.toList());
             long firstPortIndex = 0L;
-            for (Edge edge: edgeOptionOnTheNewNode) {
+            for (Edge edge: edgeOptionOnTheNewRotorRouterWithLeaderNode) {
                 if (edge.getID().equals(usedEdge.getID())){
-                    currentNode.setCurrentComponentPointer(new HashMap<>());
-                    currentNode.getCurrentComponentPointer().put(leaderRobot.getColor(), firstPortIndex);
+                    currentRotorRouterWithLeaderNode.setCurrentComponentPointer(new HashMap<>());
+                    currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(leaderRotorRouterWithLeaderRobot.getColor(), firstPortIndex);
                 }
                 firstPortIndex++;
             }

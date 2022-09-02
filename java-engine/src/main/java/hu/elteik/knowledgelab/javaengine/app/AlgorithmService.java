@@ -6,8 +6,12 @@ import hu.elteik.knowledgelab.javaengine.algorithms.RotorRouterDispersion;
 import hu.elteik.knowledgelab.javaengine.algorithms.RotorRouterWithLeaderDispersion;
 import hu.elteik.knowledgelab.javaengine.app.dto.AlgorithmType;
 import hu.elteik.knowledgelab.javaengine.app.dto.GraphStateDTO;
+import hu.elteik.knowledgelab.javaengine.app.dto.RotorRouterDispersionGraphStateDTO;
+import hu.elteik.knowledgelab.javaengine.app.dto.RotorRouterWithLeaderDispersionGraphStateDTO;
 import hu.elteik.knowledgelab.javaengine.core.models.base.Graph;
 
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterdispersion.RotorRouterDispersionGraph;
+import hu.elteik.knowledgelab.javaengine.core.models.rotorrouterwithleaderdispersion.RotorRouterWithLeaderGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -34,6 +38,28 @@ public class AlgorithmService {
 
     }
 
+    public GraphStateDTO randomDispersion(GraphStateDTO graphStateDTO) {
+        randomDispersion.step(new Graph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
+        return graphStateDTO;
+    }
+
+    public GraphStateDTO randomWithLeaderDispersion(GraphStateDTO graphStateDTO) {
+        randomWithLeaderDispersion.step(new Graph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
+        return graphStateDTO;
+    }
+
+    public RotorRouterDispersionGraphStateDTO rotorRouterDispersion(RotorRouterDispersionGraphStateDTO graphStateDTO) {
+        rotorRouterDispersion.step(new RotorRouterDispersionGraph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
+        return graphStateDTO;
+    }
+
+    public RotorRouterWithLeaderDispersionGraphStateDTO rotorRouterWithLeaderDispersion(RotorRouterWithLeaderDispersionGraphStateDTO graphStateDTO) {
+        rotorRouterWithLeaderDispersion.step(new RotorRouterWithLeaderGraph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
+        return graphStateDTO;
+    }
+
+
+    /*
     public GraphStateDTO step(AlgorithmType type, GraphStateDTO graphStateDTO) {
         switch (type) {
 
@@ -46,16 +72,18 @@ public class AlgorithmService {
                 return graphStateDTO;
 
             case ROTOR_ROUTER_DISPERSION:
-                rotorRouterDispersion.step(new Graph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
+                rotorRouterDispersion.step(new RotorRouterDispersionGraph(RotorRouterDispersionGraphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
                 return graphStateDTO;
 
             case ROTOR_ROUTER_WITH_LEADER_DISPERSION:
-                rotorRouterWithLeaderDispersion.step(new Graph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
+                rotorRouterWithLeaderDispersion.step(new RotorRouterWithLeaderGraph(graphStateDTO.getNodes(), graphStateDTO.getEdges()), graphStateDTO.getRobots());
                 return graphStateDTO;
 
             default:
                 return graphStateDTO;
         }
     }
+
+     */
 
 }
