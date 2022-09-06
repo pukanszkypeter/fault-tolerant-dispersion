@@ -1,24 +1,25 @@
-import {Edge, VisEdge} from "./Edge";
-import {Node, NodeState, VisNode} from "./Node"
-import {Robot} from "./Robot";
+import {RotorRouterDispersionNode} from "../rotor-router-dispersion-entities/RotorRouterDispersionNode";
+import {RotorRouterWithLeaderRobot} from "./RotorRouterWithLeaderRobot";
+import {Edge, VisEdge} from "../base-entities/Edge";
+import {NodeState, VisNode} from "../base-entities/Node";
 
-export class SimulationState {
+export class RotorRouterWithLeaderSimulationState {
 
-  nodes: Node[] | any[];
+  nodes: RotorRouterDispersionNode[] | any[];
   edges: Edge[];
-  robots: Robot[];
+  robots: RotorRouterWithLeaderRobot[];
   counter: number;
 
-  init(object: any): SimulationState {
-    this.nodes = object.nodes.map((node: any) => new Object({id: node.id, state: this.nodeStateConverter(node.state)}));
+  init(object: any): RotorRouterWithLeaderSimulationState {
+    this.nodes = object.nodes.map((node: any) => new Object({id: node.id, state: this.nodeStateConverter(node.state), currentComponentPointer: node.currentComponentPointer }));
     this.edges = object.edges.map((edge: any) => new Object({id: edge.id, fromID: edge.fromID, toID: edge.toID, color: this.colorConverter(edge.color)}));
     this.robots = object.robots.map((robot: any) => new Object({id: robot.id, onID: robot.onID, state: robot.state, color: this.colorConverter(robot.color), lastEdgeID: robot.lastEdgeID}));
     this.counter = object.counter;
     return this;
   }
 
-  initialize(nodes: VisNode[], edges: VisEdge[], robots: Robot[]): SimulationState {
-    this.nodes = nodes.map(node => new Node(node.id, node.color as NodeState));
+  initialize(nodes: VisNode[], edges: VisEdge[], robots: RotorRouterWithLeaderRobot[]): RotorRouterWithLeaderSimulationState {
+    this.nodes = nodes.map(node => new RotorRouterDispersionNode(node.id, node.color as NodeState));
     this.edges = edges.map(edge => new Edge(edge.id, edge.from, edge.to, edge.color));
     this.robots = robots;
     this.counter = robots.length;
@@ -30,14 +31,13 @@ export class SimulationState {
     return this;
   }
 
-  converter(simulationState: SimulationState): any {
-    let DTO: any = {
-      nodes: simulationState.nodes.map(node => new Object({id: node.id, state: this.nodeStateConverter(node.state)})),
+  converter(simulationState: RotorRouterWithLeaderSimulationState): any {
+    return {
+      nodes: simulationState.nodes.map(node => new Object({id: node.id, state: this.nodeStateConverter(node.state), currentComponentPointer: node.currentComponentPointer})),
       edges: simulationState.edges.map(edge => new Object({id: edge.id, fromID: edge.fromID, toID: edge.toID, color: this.colorConverter(edge.color)})),
       robots: simulationState.robots.map(robot => new Object({id: robot.id, onID: robot.onID, state: robot.state, color: this.colorConverter(robot.color), lastEdgeID: robot.lastEdgeID})),
       counter: simulationState.counter
     };
-    return DTO;
   }
 
   nodeStateConverter(nodeState: string): NodeState {

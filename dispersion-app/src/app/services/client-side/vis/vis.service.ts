@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as vis from 'vis-network';
 import {DataSet} from "vis-data/peer/esm/vis-data"
-import {Node, VisNode} from "../../../models/entities/Node";
-import {VisEdge} from "../../../models/entities/Edge";
-import {NodeState} from "../../../models/entities/Node";
+import {Node, VisNode} from "../../../models/base-entities/Node";
+import {VisEdge} from "../../../models/base-entities/Edge";
+import {NodeState} from "../../../models/base-entities/Node";
 import {GraphConfiguration} from "../../../components/simulator/graph-configuration/GraphConfiguration";
 import {GraphGeneratorService} from "../graph-generator/graph-generator.service";
 

@@ -4,8 +4,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {getColorByHex} from "../../../models/others/Colors";
 import {VisService} from "../../../services/client-side/vis/vis.service";
-import {Robot} from "../../../models/entities/Robot";
-import {RobotState} from "../../../models/entities/Robot";
+import {Robot} from "../../../models/base-entities/Robot";
+import {RobotState} from "../../../models/base-entities/Robot";
 
 @Component({
   selector: 'app-algorithm-configuration',

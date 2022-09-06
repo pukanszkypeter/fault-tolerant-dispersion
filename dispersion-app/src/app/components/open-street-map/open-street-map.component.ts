@@ -5,11 +5,11 @@ import { OpenStreetMapService } from 'src/app/services/server-side/open-street-m
 import { icon, Marker } from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { Node, NodeState } from 'src/app/models/entities/Node';
-import { Edge } from 'src/app/models/entities/Edge';
-import { Robot, RobotState } from 'src/app/models/entities/Robot';
+import { Node, NodeState } from 'src/app/models/base-entities/Node';
+import { Edge } from 'src/app/models/base-entities/Edge';
+import { Robot, RobotState } from 'src/app/models/base-entities/Robot';
 import { AlgorithmSelectDialogComponent } from './algorithm-select-dialog/algorithm-select-dialog.component';
-import { SimulationState } from 'src/app/models/entities/SimulationState';
+import { SimulationState } from 'src/app/models/base-entities/SimulationState';
 import { AlgorithmService } from 'src/app/services/server-side/algorithms/algorithm.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -173,7 +173,7 @@ export class OpenStreetMapComponent implements OnInit {
     this.selectedNodeID = 0;
     // algorithm type
     this.algorithmType = '';
-    // simulator 
+    // simulator
     this.simulationState = undefined;
     this.steps = 0;
     this.RTT = 0;
@@ -235,7 +235,7 @@ export class OpenStreetMapComponent implements OnInit {
         const toIndex = this.nodes.findIndex(node => node.id === edge.toID);
         if (fromIndex > -1 && toIndex > -1) {
           var latlngs = [
-            [this.nodeMarkers[fromIndex].getLatLng().lat, this.nodeMarkers[fromIndex].getLatLng().lng], 
+            [this.nodeMarkers[fromIndex].getLatLng().lat, this.nodeMarkers[fromIndex].getLatLng().lng],
             [this.nodeMarkers[toIndex].getLatLng().lat, this.nodeMarkers[toIndex].getLatLng().lng]
           ];
           var polyline = L.polyline(latlngs as [number, number][]).addTo(this.map);
@@ -277,7 +277,7 @@ export class OpenStreetMapComponent implements OnInit {
 
   addRobot(): void {
     this.robots.push(new Robot(1, this.selectedNodeID, RobotState.EXPLORE, 'black', 0));
-    
+
     const robots = this.getRobots();
     if (robots === 1) {
       var pendingIcon = L.divIcon({
