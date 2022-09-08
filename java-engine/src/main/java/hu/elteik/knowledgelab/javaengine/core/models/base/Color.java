@@ -1,4 +1,4 @@
-package hu.elteik.knowledgelab.javaengine.core.models;
+package hu.elteik.knowledgelab.javaengine.core.models.base;
 
 public enum Color {
     BLACK,

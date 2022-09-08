@@ -6,13 +6,13 @@ import {GraphConfiguration} from "./graph-configuration/GraphConfiguration";
 import {VisService} from "../../services/client-side/vis/vis.service";
 import {AlgorithmConfigurationComponent} from "./algorithm-configuration/algorithm-configuration.component";
 import {AlgorithmConfiguration} from "./algorithm-configuration/AlgorithmConfiguration";
-import {SimulationState} from "../../models/entities/SimulationState";
+import {SimulationState} from "../../models/base-entities/SimulationState";
 import {AlgorithmService} from "../../services/server-side/algorithms/algorithm.service";
-import {Robot, RobotState} from "../../models/entities/Robot";
+import {Robot, RobotState} from "../../models/base-entities/Robot";
 import {LogFormComponent} from "./log-form/log-form.component";
 import { HttpClient } from '@angular/common/http';
-import { Edge } from 'src/app/models/entities/Edge';
-import { Node, NodeState } from 'src/app/models/entities/Node';
+import { Edge } from 'src/app/models/base-entities/Edge';
+import { Node, NodeState } from 'src/app/models/base-entities/Node';
 
 
 @Component({
@@ -46,8 +46,8 @@ export class SimulatorComponent implements OnInit {
     this.http.post(
       'http://localhost:8080/api/engine/random-dispersion',
       new SimulationState().init({
-        nodes: [{id: 1, state: 'DEFAULT'}, {id: 2, state: 'DEFAULT'}], 
-        edges: [new Edge(1, 1, 2, 'BLACK')], 
+        nodes: [{id: 1, state: 'DEFAULT'}, {id: 2, state: 'DEFAULT'}],
+        edges: [new Edge(1, 1, 2, 'BLACK')],
         robots: [new Robot(1, 1, RobotState.START, 'BLACK', 0), new Robot(2, 1, RobotState.START, 'BLACK', 0)],
         counter: 2})
     ).subscribe(res => {

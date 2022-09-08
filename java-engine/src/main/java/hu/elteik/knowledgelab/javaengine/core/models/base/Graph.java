@@ -1,4 +1,4 @@
-package hu.elteik.knowledgelab.javaengine.core.models;
+package hu.elteik.knowledgelab.javaengine.core.models.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Graph {
 
-    private List<Node> nodeList;
-    private List<Edge> edgeList;
+    protected List<Node> nodeList;
+    protected List<Edge> edgeList;
 
 }

@@ -1,5 +1,6 @@
-package hu.elteik.knowledgelab.javaengine.core.models;
+package hu.elteik.knowledgelab.javaengine.core.models.base;
 
+import hu.elteik.knowledgelab.javaengine.core.models.base.Color;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -3,7 +3,7 @@ package hu.elteik.knowledgelab.javaengine.algorithms;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.GlobalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.OccupiedComponentChecker;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
-import hu.elteik.knowledgelab.javaengine.core.models.*;
+import hu.elteik.knowledgelab.javaengine.core.models.base.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +30,7 @@ public class RandomDispersion {
                     if (robot.getState().equals(RobotState.START)) {
                         robot.setState(RobotState.EXPLORE);
                     }
-                    if (new OccupiedComponentChecker().run(graph, robot.getColor())) {
+                    if (new OccupiedComponentChecker<Graph>().run(graph, robot.getColor())) {
                         robot.setState(RobotState.TERMINATED);
                     }
                 }
@@ -40,7 +40,7 @@ public class RandomDispersion {
 
     private void compute(Graph graph, List<Robot> robotList) {
 
-        new GlobalLeaderElection().run(robotList);
+        new GlobalLeaderElection<Robot>().run(robotList);
 
         for (Robot robot : robotList) {
             if (robot.getState().equals(RobotState.LEADER)) {

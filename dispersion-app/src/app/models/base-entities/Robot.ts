@@ -12,14 +12,14 @@ export class Robot {
   onID: number;
   state: RobotState;
   color: string;
-  lastEdgeID: number;
+  destinationID: number;
 
-  constructor(id?: number, onID?: number, state?: RobotState, color?: string, lastEdgeID?: number) {
+  constructor(id?: number, onID?: number, state?: RobotState, color?: string, destinationID?: number) {
     this.id = id;
     this.onID = onID;
     this.state = state;
     this.color = color;
-    this.lastEdgeID = lastEdgeID;
+    this.destinationID = destinationID;
   }
 
 }

@@ -2,7 +2,7 @@ package hu.elteik.knowledgelab.javaengine.algorithms;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
-import hu.elteik.knowledgelab.javaengine.core.models.*;
+import hu.elteik.knowledgelab.javaengine.core.models.base.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class RandomWithLeaderDispersion {
                 if (leaderCount(robotsByColor.getValue()) > 1) {
                     List<Robot> currentLeadersInOneNode = getCurrentLeaders(robotsByColor.getValue());
                     //Recalculate the winner leader
-                    Robot winnerLeader = new LocalLeaderElection().run(currentLeadersInOneNode);
+                    Robot winnerLeader = new LocalLeaderElection<Robot>().run(currentLeadersInOneNode);
                     for (Robot robot : currentLeadersInOneNode){
                         //If there is more leader robot on one node, we set them back to explore state
                         if (!robot.getID().equals(winnerLeader.getID())) {
@@ -44,7 +44,7 @@ public class RandomWithLeaderDispersion {
                     System.out.println("We have one leader on node:" + robotsByNode.getKey() + " with color: " + robotsByColor.getKey());
                 } else { // => leader count = 0 => need to choose a new one
                     System.out.println("new leader choosing is hapening!");
-                    Robot winnerRobot = new LocalLeaderElection().run(robotsByColor.getValue());
+                    Robot winnerRobot = new LocalLeaderElection<Robot>().run(robotsByColor.getValue());
                     robotsByColor.getValue().forEach(robot -> robot.setState(robot.getID().equals(winnerRobot.getID()) ? RobotState.LEADER : RobotState.EXPLORE));
                 }
             }
@@ -86,7 +86,7 @@ public class RandomWithLeaderDispersion {
                         // if 1 < leader without followers
                         if (followersInEveryColor.size() < 1) {
                             //The leaders have election for settling down
-                            Robot winnerLeader = new LocalLeaderElection().run(leadersByNode.getValue());
+                            Robot winnerLeader = new LocalLeaderElection<Robot>().run(leadersByNode.getValue());
 
                             for (Robot leader : leadersByNode.getValue()) {
                                 if (leader.getID().equals(winnerLeader.getID())) {
@@ -106,7 +106,7 @@ public class RandomWithLeaderDispersion {
                             //if 1 < leader and someone has followers
                             // Choose a random settler and every other robots move
 
-                            new LocalLeaderElection().run(followersInEveryColor).setDestinationID(leadersByNode.getKey());
+                            new LocalLeaderElection<Robot>().run(followersInEveryColor).setDestinationID(leadersByNode.getKey());
                             for (Robot otherLeader : leadersByNode.getValue()) {
                                 List<Long> edgeOptions = getNewRandomPath(graph, otherLeader.getOnID(), otherLeader.getColor());
 

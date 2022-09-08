@@ -1,4 +1,4 @@
-import {Robot} from "../../../models/entities/Robot";
+import {Robot} from "../../../models/base-entities/Robot";
 
 export class AlgorithmConfiguration {
 

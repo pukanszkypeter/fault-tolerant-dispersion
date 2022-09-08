@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {VisService} from "../../services/client-side/vis/vis.service";
 import {GraphConfiguration} from "../simulator/graph-configuration/GraphConfiguration";
 import {AlgorithmConfiguration} from "../simulator/algorithm-configuration/AlgorithmConfiguration";
-import {SimulationState} from "../../models/entities/SimulationState";
+import {SimulationState} from "../../models/base-entities/SimulationState";
 import {GraphConfigurationComponent} from "../simulator/graph-configuration/graph-configuration.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../services/client-side/utils/snackbar.service";

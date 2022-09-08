@@ -3,9 +3,6 @@ from flask import Flask, jsonify, request, render_template, send_from_directory
 import warnings
 import os
 
-import visulaziation.visualization
-from algorithms import model, random_algorithm, random_with_leader_algorithm, rotor_router_algorithm, rotor_router_with_leader_algorithm
-from logger import logger
 from visulaziation import visualization
 from map import location
 
@@ -26,60 +23,6 @@ def index():
 @app.route('/favicon.ico') 
 def favicon(): 
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-# Random
-@app.route('/api/engine/random/step', methods=['POST'])
-def stepRandom():
-    return random_algorithm.step(model.SimulationState(request.get_json())).jsonify()
-
-@app.route('/api/engine/random/test', methods=['POST'])
-def testRandom():
-    return jsonify(random_algorithm.test(request.get_json()))
-
-# Random with leader
-@app.route('/api/engine/random-with-leader/step', methods=['POST'])
-def stepRandomWithLeader():
-    return random_with_leader_algorithm.step(model.SimulationState(request.get_json())).jsonify()
-
-@app.route('/api/engine/random-with-leader/test', methods=['POST'])
-def testRandomWithLeader():
-    return jsonify(random_with_leader_algorithm.test(request.get_json()))
-
-# Rotor router
-@app.route('/api/engine/rotor-router/step', methods=['POST'])
-def stepRotorRouter():
-    return rotor_router_algorithm.step(model.SimulationState(request.get_json())).jsonify()
-
-@app.route('/api/engine/rotor-router/test', methods=['POST'])
-def testRotorRouter():
-    return jsonify(rotor_router_algorithm.test(request.get_json()))
-    
-# Rotor router with leader
-@app.route('/api/engine/rotor-router-with-leader/step', methods=['POST'])
-def stepRotorRouterWithLeader():
-    return rotor_router_with_leader_algorithm.step(model.SimulationState(request.get_json())).jsonify()
-
-@app.route('/api/engine/rotor-router-with-leader/test', methods=['POST'])
-def testRotorRouterWithLeader():
-    return jsonify(rotor_router_with_leader_algorithm.test(request.get_json()))
-
-# Logger
-@app.route('/api/engine/logger', methods=['POST'])
-def log():
-    return jsonify(logger.Logger(request.get_json()).log())
-
-# Visualization
-@app.route('/api/engine/visualization/summary-by', methods=['POST'])
-def summary():
-    return jsonify(visualization.summaryByQuery(request.get_json()['summaryBy']))
-
-@app.route('/api/engine/visualization/group-by', methods=['POST'])
-def groupBy():
-    return jsonify(visualization.groupByQuery(request.get_json()['algorithmType'], request.get_json()['graphType'], request.get_json()['groupBy']))
-
-@app.route('/api/engine/visualization/detail-by', methods=['POST'])
-def detailBy():
-    return jsonify(visualization.detailByQuery(request.get_json()['detailBy'], request.get_json()['algorithmType'], request.get_json()['graphType']))
 
 
 # Open Street Map
