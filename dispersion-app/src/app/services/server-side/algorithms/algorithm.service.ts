@@ -26,6 +26,8 @@ export class AlgorithmService {
         return this.stepRotorRouter(simulationState);
       case algorithmTypes[3].value:
         return this.stepRotorRouterWithLeader(simulationState);
+      case algorithmTypes[4].value:
+        return this.stepGlobalComOnDFS(simulationState);
     }
   }
   
@@ -42,6 +44,8 @@ export class AlgorithmService {
         return this.testRotorRouter(data);
       case algorithmTypes[3].value:
         return this.testRotorRouterWithLeader(data);
+      case algorithmTypes[4].value:
+        return this.testGlobalComOnDFS(data);
     }
   }
 
@@ -101,8 +105,20 @@ export class AlgorithmService {
     );
   }
 
-  baseSimulationStateConverter(simulationState: SimulationState): any {
-    return {
+  stepGlobalComOnDFS(simulationState: SimulationState): Observable<SimulationState> {
+    return this.http.post<SimulationState>(
+      ServerRoute + AlgorithmRoutes.GLOBAL_COM_ON_DFS, this.converter(simulationState)
+    );
+  }
+
+  testGlobalComOnDFS(data: any): Observable<number> {
+    return this.http.post<number>(
+      ServerRoute + AlgorithmRoutes.GLOBAL_COM_ON_DFS + AlgorithmRoutes.TEST, data
+    );
+  }
+
+  converter(simulationState: SimulationState): any {
+    let DTO: any = {
       nodes: simulationState.nodes.map(node => new Object({id: node.id, state: this.nodeStateConverter(node.state)})),
       edges: simulationState.edges.map(edge => new Object({id: edge.id, fromID: edge.fromID, toID: edge.toID, color: this.colorConverter(edge.color)})),
       robots: simulationState.robots.map(robot => new Object({id: robot.id, onID: robot.onID, state: robot.state, color: this.colorConverter(robot.color)})),

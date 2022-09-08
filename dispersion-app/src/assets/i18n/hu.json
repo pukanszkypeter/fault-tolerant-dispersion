@@ -164,5 +164,7 @@
   "openStreetMapComponent_cityNotFound": "A város nem található!",
   "openStreetMapComponent_createNetwork": "Hálózat létrehozása",
   "openStreetMapComponent_selectAlgorithmType": "Algoritmus kiválasztása",
-  "openStreetMapComponent_nodeID": "Csúcs azonosító"
+  "openStreetMapComponent_nodeID": "Csúcs azonosító",
+
+  "dfs_with_global": "Globális kom. DFS alapon"
 }
