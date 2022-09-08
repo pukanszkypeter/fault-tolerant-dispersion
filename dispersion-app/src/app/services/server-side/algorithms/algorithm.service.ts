@@ -15,7 +15,7 @@ import {RotorRouterWithLeaderSimulationState} from "../../../models/rotor-router
 export class AlgorithmService {
 
   constructor(private http: HttpClient) { }
-/*
+
   step(algorithmType: string, simulationState: SimulationState): Observable<SimulationState> {
     switch (algorithmType) {
       case algorithmTypes[0].value:
@@ -26,12 +26,8 @@ export class AlgorithmService {
         return this.stepRotorRouter(simulationState);
       case algorithmTypes[3].value:
         return this.stepRotorRouterWithLeader(simulationState);
-      case algorithmTypes[4].value:
-        return this.stepGlobalComOnDFS(simulationState);
     }
   }
-  
- */
 
 
   test(algorithmType: string, data: any): Observable<number> {
@@ -44,8 +40,6 @@ export class AlgorithmService {
         return this.testRotorRouter(data);
       case algorithmTypes[3].value:
         return this.testRotorRouterWithLeader(data);
-      case algorithmTypes[4].value:
-        return this.testGlobalComOnDFS(data);
     }
   }
 
@@ -53,7 +47,7 @@ export class AlgorithmService {
 
   stepRandom(simulationState: SimulationState): Observable<SimulationState> {
     return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.RANDOM, this.baseSimulationStateConverter(simulationState)
+      ServerRoute + AlgorithmRoutes.RANDOM, simulationState
     );
   }
 
@@ -67,7 +61,7 @@ export class AlgorithmService {
 
   stepRandomWithLeader(simulationState: SimulationState): Observable<SimulationState> {
     return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.RANDOM_WITH_LEADER, this.baseSimulationStateConverter(simulationState)
+      ServerRoute + AlgorithmRoutes.RANDOM_WITH_LEADER, simulationState
     );
   }
 
@@ -79,7 +73,7 @@ export class AlgorithmService {
 
   // Dispersion with rotor router
 
-  stepRotorRouter(simulationState: RotorRouterDispersionSimulationState): Observable<RotorRouterDispersionSimulationState> {
+  stepRotorRouter(simulationState: any): Observable<RotorRouterDispersionSimulationState> {
     return this.http.post<RotorRouterDispersionSimulationState>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER, this.rotorRouterDispersionSimulationStateConverter(simulationState)
     );
@@ -93,7 +87,7 @@ export class AlgorithmService {
 
   // Dispersion with leader and rotor router
 
-  stepRotorRouterWithLeader(simulationState: RotorRouterWithLeaderSimulationState): Observable<RotorRouterWithLeaderSimulationState> {
+  stepRotorRouterWithLeader(simulationState: any): Observable<RotorRouterWithLeaderSimulationState> {
     return this.http.post<RotorRouterWithLeaderSimulationState>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER, this.rotorRouterWithLeaderSimulationStateConverter(simulationState)
     );
@@ -102,18 +96,6 @@ export class AlgorithmService {
   testRotorRouterWithLeader(data: any): Observable<number> {
     return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmRoutes.TEST, data
-    );
-  }
-
-  stepGlobalComOnDFS(simulationState: SimulationState): Observable<SimulationState> {
-    return this.http.post<SimulationState>(
-      ServerRoute + AlgorithmRoutes.GLOBAL_COM_ON_DFS, this.converter(simulationState)
-    );
-  }
-
-  testGlobalComOnDFS(data: any): Observable<number> {
-    return this.http.post<number>(
-      ServerRoute + AlgorithmRoutes.GLOBAL_COM_ON_DFS + AlgorithmRoutes.TEST, data
     );
   }
 

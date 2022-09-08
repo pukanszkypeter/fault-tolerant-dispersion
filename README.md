@@ -1,5 +1,5 @@
 # Research project for ELTE - IK (MSc) Knowledge Lab course
-*Authors: Dr. Lukovszki Tamás, Garisa Péter, Vadász Péter, Balázs Bence, Pukánszky Péter*
+*Authors: Dr. Lukovszki Tamás, Vadász Péter, Balázs Bence, Pukánszky Péter*
 <br>
 
 ## <u>Phase 1</u>
