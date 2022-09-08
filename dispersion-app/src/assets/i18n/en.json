@@ -164,5 +164,7 @@
   "openStreetMapComponent_cityNotFound": "City not found!",
   "openStreetMapComponent_createNetwork": "Create network",
   "openStreetMapComponent_selectAlgorithmType": "Algorithm selection",
-  "openStreetMapComponent_nodeID": "Node ID"
+  "openStreetMapComponent_nodeID": "Node ID",
+
+  "dfs_with_global": "Global com. on DFS"
 }

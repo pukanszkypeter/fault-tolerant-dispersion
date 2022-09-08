@@ -24,6 +24,8 @@ export class AlgorithmService {
         return this.stepRotorRouter(simulationState);
       case algorithmTypes[3].value:
         return this.stepRotorRouterWithLeader(simulationState);
+      case algorithmTypes[4].value:
+        return this.stepGlobalComOnDFS(simulationState);
     }
   }
 
@@ -37,6 +39,8 @@ export class AlgorithmService {
         return this.testRotorRouter(data);
       case algorithmTypes[3].value:
         return this.testRotorRouterWithLeader(data);
+      case algorithmTypes[4].value:
+        return this.testGlobalComOnDFS(data);
     }
   }
 
@@ -85,6 +89,18 @@ export class AlgorithmService {
   testRotorRouterWithLeader(data: any): Observable<number> {
     return this.http.post<number>(
       ServerRoute + AlgorithmRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmRoutes.TEST, data
+    );
+  }
+
+  stepGlobalComOnDFS(simulationState: SimulationState): Observable<SimulationState> {
+    return this.http.post<SimulationState>(
+      ServerRoute + AlgorithmRoutes.GLOBAL_COM_ON_DFS, this.converter(simulationState)
+    );
+  }
+
+  testGlobalComOnDFS(data: any): Observable<number> {
+    return this.http.post<number>(
+      ServerRoute + AlgorithmRoutes.GLOBAL_COM_ON_DFS + AlgorithmRoutes.TEST, data
     );
   }
 
