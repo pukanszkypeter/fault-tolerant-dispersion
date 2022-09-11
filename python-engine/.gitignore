@@ -108,3 +108,7 @@ ENV/
 
 # cache files
 cache/
+
+# Database files
+*.sqlite
+*.db

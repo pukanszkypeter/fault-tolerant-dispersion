@@ -1,16 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { SnackbarService } from 'src/app/services/client-side/utils/snackbar.service';
-import { OpenStreetMapService } from 'src/app/services/server-side/open-street-map/open-street-map.service';
 import { icon, Marker } from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { Node, NodeState } from 'src/app/models/base-entities/Node';
-import { Edge } from 'src/app/models/base-entities/Edge';
-import { Robot, RobotState } from 'src/app/models/base-entities/Robot';
 import { AlgorithmSelectDialogComponent } from './algorithm-select-dialog/algorithm-select-dialog.component';
-import { SimulationState } from 'src/app/models/base-entities/SimulationState';
-import { AlgorithmService } from 'src/app/services/server-side/algorithms/algorithm.service';
+import { AlgorithmService } from 'src/app/services/server-side/java-engine/algorithm-service/algorithm.service';
+import { Edge } from 'src/app/models/core/Edge';
+import { Robot } from 'src/app/models/core/Robot';
+import { SimulationStep } from 'src/app/models/dto/SimulationStep';
+import { SimulationState } from 'src/app/models/utils/SimulationState';
+import { RandomDispersionNode } from 'src/app/models/algorithms/random-dispersion/RandomDispersionNode';
+import { RandomDispersionEdge } from 'src/app/models/algorithms/random-dispersion/RandomDispersionEdge';
+import { RandomDispersionRobot } from 'src/app/models/algorithms/random-dispersion/RandomDispersionRobot';
+import { RandomWithLeaderDispersionNode } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionNode';
+import { RandomWithLeaderDispersionEdge } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionEdge';
+import { RandomWithLeaderDispersionRobot } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionRobot';
+import { RotorRouterDispersionNode } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionNode';
+import { RotorRouterDispersionEdge } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionEdge';
+import { RotorRouterDispersionRobot } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionRobot';
+import { RotorRouterWithLeaderDispersionNode } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionNode';
+import { RotorRouterWithLeaderDispersionEdge } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionEdge';
+import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionRobot';
+import { OpenStreetMapService } from 'src/app/services/server-side/python-engine/open-street-map-service/open-street-map.service';
+import { Node } from 'src/app/models/core/Node';
+import { NodeState } from 'src/app/models/utils/NodeState';
+import { Color, getColorByHex } from 'src/app/models/utils/Color';
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
+import { Graph } from 'src/app/models/core/Graph';
+import { VisService } from 'src/app/services/client-side/vis/vis.service';
+import { RobotState } from 'src/app/models/utils/RobotState';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -63,13 +82,16 @@ export class OpenStreetMapComponent implements OnInit {
   nodeMarkers: L.Marker[] = [];
   edges: Edge[] = [];
   edgeLines: L.Polyline[] = [];
-  robots: Robot[] = [];
+  robots: any[] = [];
 
   selectedNodeID = 0;
   algorithmType = '';
 
   // Simulator
-  simulationState: SimulationState;
+  randomSimulation: SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot>;
+  randomWithLeaderSimulation: SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot>;
+  rotorRouterSimulation: SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot>;
+  rotorRouterWithLeaderSimulation: SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot>;
   speed: number = 750;
   steps: number = 0;
   RTT: number = 0;
@@ -79,6 +101,7 @@ export class OpenStreetMapComponent implements OnInit {
               private openStreetMapService: OpenStreetMapService,
               private snackBarService: SnackbarService,
               private algorithmService: AlgorithmService,
+              private visService: VisService,
               public dialog: MatDialog
               )
   {
@@ -174,7 +197,10 @@ export class OpenStreetMapComponent implements OnInit {
     // algorithm type
     this.algorithmType = '';
     // simulator
-    this.simulationState = undefined;
+    this.randomSimulation = undefined;
+    this.randomWithLeaderSimulation = undefined;
+    this.rotorRouterSimulation = undefined;
+    this.rotorRouterWithLeaderSimulation = undefined;
     this.steps = 0;
     this.RTT = 0;
     this.STOPPED = false;
@@ -196,7 +222,6 @@ export class OpenStreetMapComponent implements OnInit {
   createNetwork(): void {
     this.loading = true;
     this.openStreetMapService.createNetwork(this.polygonCoordinates).subscribe(res => {
-
       this.loading = false;
 
       // reset polygons and markers
@@ -242,7 +267,7 @@ export class OpenStreetMapComponent implements OnInit {
           this.edgeLines.push(polyline);
         }
 
-        this.edges.push(new Edge(edge.id, edge.fromID, edge.toID, 'black'));
+        this.edges.push(new Edge(edge.id, edge.fromID, edge.toID));
       }
 
     }, err => {
@@ -266,7 +291,64 @@ export class OpenStreetMapComponent implements OnInit {
         for (let i = 0; i < this.robots.length; i++) {
           this.robots[i].id = i + 1;
         }
-        this.simulationState = new SimulationState().init({nodes: this.nodes, edges: this.edges, robots: this.robots, counter: this.nodes.length});
+
+        switch (this.algorithmType) {
+
+          case AlgorithmType.RANDOM_DISPERSION:
+            this.randomSimulation = new SimulationStep(
+              this.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RandomDispersionNode, RandomDispersionEdge>(
+                this.visService.nodes.map(node => new RandomDispersionNode(node.id, NodeState.DEFAULT)),
+                this.visService.edges.map(edge => new RandomDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.robots
+            );
+            break;
+
+          case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+            this.randomWithLeaderSimulation = new SimulationStep(
+              this.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge>(
+                this.visService.nodes.map(node => new RandomWithLeaderDispersionNode(node.id, NodeState.DEFAULT)),
+                this.visService.edges.map(edge => new RandomWithLeaderDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.robots
+            );
+            break;
+
+          case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+            this.rotorRouterSimulation = new SimulationStep(
+              this.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RotorRouterDispersionNode, RotorRouterDispersionEdge>(
+                this.visService.nodes.map(node => new RotorRouterDispersionNode(node.id, NodeState.DEFAULT, null)),
+                this.visService.edges.map(edge => new RotorRouterDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.robots
+            );
+            break;
+
+          case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+            this.rotorRouterWithLeaderSimulation = new SimulationStep(
+              this.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge>(
+                this.visService.nodes.map(node => new RotorRouterWithLeaderDispersionNode(node.id, NodeState.DEFAULT, null)),
+                this.visService.edges.map(edge => new RotorRouterWithLeaderDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.robots
+            );
+            break;
+
+          default: 
+            throw new Error('Algorithm type not found!');
+        }
       }
     });
   }
@@ -276,18 +358,34 @@ export class OpenStreetMapComponent implements OnInit {
   }
 
   addRobot(): void {
-    this.robots.push(new Robot(1, this.selectedNodeID, RobotState.EXPLORE, 'black', 0));
-
-    const robots = this.getRobots();
-    if (robots === 1) {
-      var pendingIcon = L.divIcon({
-        iconSize: [25, 25],
-        html:'<div style="border-radius: 50%; background-color: red; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + this.selectedNodeID + ' </div>',
-        className: 'custom-marker-icon'
-      });
-      this.nodeMarkers[this.selectedNodeID - 1].setIcon(pendingIcon);
+    if (this.algorithmType) {
+      switch (this.algorithmType) {
+        case AlgorithmType.RANDOM_DISPERSION:
+          this.robots.push(new RandomDispersionRobot(1, RobotState.START, Color.BLACK, this.selectedNodeID, null));
+          break;
+        case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+          this.robots.push(new RandomWithLeaderDispersionRobot(1, RobotState.START, Color.BLACK, this.selectedNodeID, null));
+          break;
+        case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+          this.robots.push(new RotorRouterDispersionRobot(1, RobotState.START, Color.BLACK, this.selectedNodeID, null));
+          break;
+        case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+          this.robots.push(new RotorRouterWithLeaderDispersionRobot(1, RobotState.START, Color.BLACK, this.selectedNodeID, null, null));
+          break;
+        default:
+          throw new Error('Algorithm type not found!');
+      }
+  
+      const robots = this.getRobots();
+      if (robots === 1) {
+        var pendingIcon = L.divIcon({
+          iconSize: [25, 25],
+          html:'<div style="border-radius: 50%; background-color: red; justify-content: center; display: flex; align-items: center; color: white; width: 25px; height: 25px;"> ' + this.selectedNodeID + ' </div>',
+          className: 'custom-marker-icon'
+        });
+        this.nodeMarkers[this.selectedNodeID - 1].setIcon(pendingIcon);
+      }
     }
-
   }
 
   removeRobot(): void {
@@ -308,7 +406,23 @@ export class OpenStreetMapComponent implements OnInit {
 
   async playSimulator(): Promise<void> {
     this.STOPPED = false;
-    while (!this.STOPPED && this.simulationState.counter !== 0 && !this.allRobotFinished()) {
+    let currentSimulation;
+    switch (this.algorithmType) {
+      case AlgorithmType.RANDOM_DISPERSION:
+        currentSimulation = this.randomSimulation;
+        break;
+      case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+        currentSimulation = this.randomWithLeaderSimulation;
+        break;
+      case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+        currentSimulation = this.rotorRouterSimulation;
+        break;
+      case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+        currentSimulation = this.rotorRouterWithLeaderSimulation;
+        break;
+    }
+
+    while (!this.STOPPED && currentSimulation.simulationState !== SimulationState.FINISHED) {
       await this.stepSimulator();
       await this.sleep(this.speed);
     }
@@ -319,25 +433,86 @@ export class OpenStreetMapComponent implements OnInit {
   }
 
   async stepSimulator(): Promise<void> {
-    if (this.simulationState.counter !== 0 && !this.allRobotFinished()) {
-      const start = new Date();
-      this.algorithmService
-        .step(this.algorithmType, this.simulationState)
-        .subscribe(res => {
-          this.steps++;
-          const end = new Date();
-          this.RTT = end.valueOf() - start.valueOf();
-          this.simulationState = new SimulationState().init(res);
-          this.updateMarkers(this.simulationState.nodes);
-          if (this.simulationState.counter === 0) {
-            this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
-          } else if (this.allRobotFinished()) {
-            this.snackBarService.openSnackBar('SIMULATION_STUCK', 'warning-snackbar', null, null, null, 10000);
-          }
-        }, err => {
-          console.log(err);
-          this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
-        });
+    switch (this.algorithmType) {
+      case AlgorithmType.RANDOM_DISPERSION:
+        if (this.randomSimulation.simulationState !== SimulationState.FINISHED) {
+          const start = new Date();
+          this.algorithmService.stepRandom(this.randomSimulation)
+            .subscribe((res: SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot>) => {
+              this.steps++;
+              const end = new Date();
+              this.RTT = end.valueOf() - start.valueOf();
+              this.randomSimulation = res;
+              this.updateMarkers(this.randomSimulation.graph.nodeList);
+              if (this.randomSimulation.simulationState === SimulationState.FINISHED) {
+                this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
+              }
+            }, err => {
+              console.log(err);
+              this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+            });
+        }
+        break;
+
+      case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+        if (this.randomWithLeaderSimulation.simulationState !== SimulationState.FINISHED) {
+          const start = new Date();
+          this.algorithmService.stepRandomWithLeader(this.randomWithLeaderSimulation)
+            .subscribe(res => {
+              this.steps++;
+              const end = new Date();
+              this.RTT = end.valueOf() - start.valueOf();
+              this.randomWithLeaderSimulation = res;
+              this.updateMarkers(this.randomWithLeaderSimulation.graph.nodeList);
+              if (this.randomWithLeaderSimulation.simulationState === SimulationState.FINISHED) {
+                this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
+              }
+            }, err => {
+              console.log(err);
+              this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+            });
+        }
+        break;
+
+      case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+        if (this.rotorRouterSimulation.simulationState !== SimulationState.FINISHED) {
+          const start = new Date();
+          this.algorithmService.stepRotorRouter(this.rotorRouterSimulation)
+            .subscribe(res => {
+              this.steps++;
+              const end = new Date();
+              this.RTT = end.valueOf() - start.valueOf();
+              this.rotorRouterSimulation = res;
+              this.updateMarkers(this.rotorRouterSimulation.graph.nodeList);
+              if (this.rotorRouterSimulation.simulationState === SimulationState.FINISHED) {
+                this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
+              }
+            }, err => {
+              console.log(err);
+              this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+            });
+        }
+        break;
+
+      case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+        if (this.rotorRouterWithLeaderSimulation.simulationState !== SimulationState.FINISHED) {
+          const start = new Date();
+          this.algorithmService.stepRotorRouterWithLeader(this.rotorRouterWithLeaderSimulation)
+            .subscribe(res => {
+              this.steps++;
+              const end = new Date();
+              this.RTT = end.valueOf() - start.valueOf();
+              this.rotorRouterWithLeaderSimulation = res;
+              this.updateMarkers(this.rotorRouterWithLeaderSimulation.graph.nodeList);
+              if (this.rotorRouterWithLeaderSimulation.simulationState === SimulationState.FINISHED) {
+                this.snackBarService.openSnackBar('SIMULATION_FINISHED', 'success-snackbar', null, null, null, 10000);
+              }
+            }, err => {
+              console.log(err);
+              this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
+            });
+        }
+        break;
     }
   }
 
@@ -368,15 +543,27 @@ export class OpenStreetMapComponent implements OnInit {
   }
 
   save(): void {
-
-  }
-
-  allRobotFinished(): boolean {
-    return this.simulationState.robots.filter(r => r.state === RobotState.SETTLED || r.state === RobotState.TERMINATED).length === this.simulationState.robots.length;
   }
 
   sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  isSaveDisabled(): boolean {
+    if (this.algorithmType) {
+      switch (this.algorithmType) {
+        case AlgorithmType.RANDOM_DISPERSION:
+          return !this.randomSimulation || this.randomSimulation.simulationState !== SimulationState.FINISHED;
+        case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+          return !this.randomWithLeaderSimulation || this.randomWithLeaderSimulation.simulationState !== SimulationState.FINISHED;
+        case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+          return !this.rotorRouterSimulation || this.rotorRouterSimulation.simulationState !== SimulationState.FINISHED;
+        case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+          return !this.rotorRouterWithLeaderSimulation || this.rotorRouterWithLeaderSimulation.simulationState !== SimulationState.FINISHED;
+      }
+    } else {
+      return true;
+    }
   }
 
 }

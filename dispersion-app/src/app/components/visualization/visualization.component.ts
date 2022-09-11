@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {graphTypes} from "../../models/types/GraphType";
-import {FormControl, Validators} from "@angular/forms";
-import {algorithmTypes} from "../../models/types/AlgorithmType";
-import {VisualizationService} from "../../services/server-side/visualization/visualization.service";
-import {SnackbarService} from "../../services/client-side/utils/snackbar.service";
-import {LanguageService} from "../../services/client-side/utils/language.service";
-import {MatRadioChange} from "@angular/material/radio";
-import {MatSelectChange} from "@angular/material/select";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from "@angular/forms";
+import { SnackbarService } from "../../services/client-side/utils/snackbar.service";
+import { LanguageService } from "../../services/client-side/utils/language.service";
+import { MatRadioChange } from "@angular/material/radio";
+import { MatSelectChange } from "@angular/material/select";
+import { GraphType } from 'src/app/models/utils/GraphType';
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
+import { VisualizationService } from 'src/app/services/server-side/python-engine/visualization-service/visualization.service';
 
 @Component({
   selector: 'app-visualization',
@@ -28,10 +28,10 @@ export class VisualizationComponent implements OnInit {
   summary: any[] = [];
 
   /** Group By Chart */
-  graphTypes = graphTypes;
+  graphTypes = Object.keys(GraphType);
   graphType = new FormControl('', [Validators.required]);
 
-  algorithmTypes = algorithmTypes;
+  algorithmTypes = Object.keys(AlgorithmType);
   algorithmType = new FormControl('', [Validators.required]);
 
   groupBy = new FormControl('nodes', [Validators.required]);
@@ -77,18 +77,18 @@ export class VisualizationComponent implements OnInit {
 
   createSummary(steps: any[], afterGraph: boolean): any[] {
     let result = [];
-    for (let custom_type_one of afterGraph ? graphTypes : algorithmTypes) {
+    for (let custom_type_one of afterGraph ? this.graphTypes : this.algorithmTypes) {
       let series = [];
-      let values = steps.filter(step => afterGraph ? step[2] === custom_type_one.value : step[1] === custom_type_one.value);
-      for (let custom_type_two of afterGraph ? algorithmTypes : graphTypes) {
-        let value = values.filter(value => afterGraph ? value[1] === custom_type_two.value : value[2] === custom_type_two.value);
+      let values = steps.filter(step => afterGraph ? step[2] === custom_type_one.valueOf() : step[1] === custom_type_one.valueOf());
+      for (let custom_type_two of afterGraph ? this.algorithmTypes : this.graphTypes) {
+        let value = values.filter(value => afterGraph ? value[1] === custom_type_two.valueOf() : value[2] === custom_type_two.valueOf());
         if (value.length === 1) {
-          series.push({name: this.languageService.getTranslatedText(custom_type_two.value), value: value[0][0]});
+          series.push({name: this.languageService.getTranslatedText(custom_type_two.valueOf()), value: value[0][0]});
         } else {
-          series.push({name: this.languageService.getTranslatedText(custom_type_two.value), value: 0});
+          series.push({name: this.languageService.getTranslatedText(custom_type_two.valueOf()), value: 0});
         }
       }
-      result.push({name: this.languageService.getTranslatedText(custom_type_one.value), series: series});
+      result.push({name: this.languageService.getTranslatedText(custom_type_one.valueOf()), series: series});
     }
     return result;
   }

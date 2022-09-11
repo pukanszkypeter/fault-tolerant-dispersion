@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatIconRegistry} from "@angular/material/icon";
 import {DomSanitizer} from "@angular/platform-browser";
-import {icons} from "./models/others/Icons";
+import {icons} from "./models/utils/Icons";
 import {LanguageService} from "./services/client-side/utils/language.service";
 
 export const LANGUAGE_KEY = 'LANGUAGE';

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {graphTypes, hasNodeValueConstraint} from "../../../models/types/GraphType";
-import {algorithmTypes} from "../../../models/types/AlgorithmType";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { GraphType, hasNodeValueConstraint } from "../../../models/utils/GraphType";
 import { Output, EventEmitter } from '@angular/core';
-import {GraphConfiguration} from "../../simulator/graph-configuration/GraphConfiguration";
+import { GraphConfiguration } from "../../simulator/graph-configuration/GraphConfiguration";
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 
 @Component({
   selector: 'app-automated-test-settings',
@@ -14,8 +14,8 @@ export class AutomatedTesterSettingsComponent implements OnInit {
 
   @Output() settingsEvent = new EventEmitter<{simulationConfiguration: GraphConfiguration, tests: number}>();
 
-  graphTypes = graphTypes;
-  algorithmTypes = algorithmTypes;
+  graphTypes = Object.keys(GraphType);
+  algorithmTypes = Object.keys(AlgorithmType);
 
   numberOfNodes = [1];
 
@@ -57,9 +57,6 @@ export class AutomatedTesterSettingsComponent implements OnInit {
         this.algorithmType.value,
         this.graphType.value,
         this.nodes.value,
-        //this.robots.value,
-        //this.colors.value,
-        //this.startNodes.value
       ),
       tests: this.tests.value
     });

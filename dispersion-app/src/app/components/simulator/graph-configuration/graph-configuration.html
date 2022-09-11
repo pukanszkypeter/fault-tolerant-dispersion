@@ -15,8 +15,8 @@
       <mat-form-field appearance="outline">
         <mat-label>{{ 'settingsDialogComponent_graphType' | translate }}</mat-label>
         <mat-select [formControl]="graphType">
-          <mat-option *ngFor="let graphType of graphTypes" [value]="graphType.value">
-            {{ graphType.value | translate }}
+          <mat-option *ngFor="let graphType of graphTypes" [value]="graphType">
+            {{ graphType | translate }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="graphType.hasError('required')">{{ 'settingsDialogComponent_graphTypeRequired' | translate }}</mat-error>
@@ -40,9 +40,9 @@
         <mat-label>{{ 'settingsDialogComponent_colors' | translate }}</mat-label>
         <mat-select [formControl]="colors" multiple>
           <mat-chip-list>
-          <mat-option *ngFor="let color of colorTypes" [value]="color.hex" #option>
-            <mat-chip [disableRipple]="true" [ngStyle]="{'background-color': color.hex, 'color': color.fontColor}" (click)="option.selected ? option.deselect() : option.select()">
-              {{ color.text | translate }}
+          <mat-option *ngFor="let color of colorTypes" [value]="getHexByColor(color)" #option>
+            <mat-chip [disableRipple]="true" [ngStyle]="{'background-color': getHexByColor(color), 'color': getFontColor(color)}" (click)="option.selected ? option.deselect() : option.select()">
+              {{ color | translate }}
             </mat-chip>
           </mat-option>
           </mat-chip-list>

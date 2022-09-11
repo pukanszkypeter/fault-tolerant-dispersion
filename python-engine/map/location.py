@@ -108,4 +108,5 @@ def createNetwork(polygon):
             index += 1
             edges.append(MapEdge(index, currentFrom.id, currentTo.id))
 
+    
     return  MapGraph(list(map(lambda x: x.toJSON(), nodes)), list(map(lambda x: x.toJSON(), edges))).toJSON()

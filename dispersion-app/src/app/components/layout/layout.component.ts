@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {SettingsComponent} from "./settings/settings.component";
+import { MatDialog } from "@angular/material/dialog";
+import { SettingsComponent } from "./settings/settings.component";
 import { filter } from 'rxjs/operators'
-import { NavigationEnd, Router  } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -43,12 +43,12 @@ export class LayoutComponent implements OnInit {
         links[1].classList.add('active');
         break;
 
-      case 'automated-tester':
+      case 'tester':
         Array.from(links).forEach(link => link.classList.remove('active'));
         links[2].classList.add('active');
         break;
 
-      case 'visualization':
+      case 'results':
         Array.from(links).forEach(link => link.classList.remove('active'));
         links[3].classList.add('active');
         break;

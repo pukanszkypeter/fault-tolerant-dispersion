@@ -1,7 +1,6 @@
 
 <mat-card class="animate__animated animate__fadeInDown automated-title">{{ 'automatedTestComponent_title' | translate }}</mat-card>
-<h4 class="mb-4 mt-4">{{ 'automatedTestComponent_init' | translate }}</h4>
-<div class="row">
+<div class="row mt-4">
   <div class="col-6">
     <!-- Graph Config -->
     <mat-card class="config-card">
@@ -10,7 +9,7 @@
           <mat-icon *ngIf="this.graphConfiguration" svgIcon="check" style="width: 40px;height: 40px;"></mat-icon>
           <mat-icon *ngIf="!this.graphConfiguration" svgIcon="close" style="width: 40px;height: 40px;"></mat-icon>
         </div>
-        <mat-card-title>{{ 'simulationComponent_simulationSettings' | translate }}</mat-card-title>
+        <mat-card-title>{{ 'automatedTestComponent_graphSettings' | translate }}</mat-card-title>
         <mat-card-subtitle>
           <span *ngIf="this.graphConfiguration" style="color: green">{{'READY' | translate}}</span>
           <span *ngIf="!this.graphConfiguration" style="color: red">{{'NOT_READY' | translate}}</span>
@@ -35,7 +34,7 @@
           <mat-icon *ngIf="this.algorithmConfiguration" svgIcon="check" style="width: 40px;height: 40px;"></mat-icon>
           <mat-icon *ngIf="!this.algorithmConfiguration" svgIcon="close" style="width: 40px;height: 40px;"></mat-icon>
         </div>
-        <mat-card-title>{{ 'simulationComponent_algorithmSettings' | translate }}</mat-card-title>
+        <mat-card-title>{{ 'automatedTestComponent_algorithmSettings' | translate }}</mat-card-title>
         <mat-card-subtitle>
           <span *ngIf="this.algorithmConfiguration" style="color: green">{{'READY' | translate}}</span>
           <span *ngIf="!this.algorithmConfiguration" style="color: red">{{'NOT_READY' | translate}}</span>
@@ -69,8 +68,7 @@
     </mat-card>
   </div>
 </div>
-<h4 class="mb-4 mt-4">{{ 'automatedTestComponent_result' | translate }}</h4>
-<div class="row">
+<div class="row mt-4">
   <div class="col-12">
     <mat-card>
       <p class="test-ratio">{{testRatio}}%</p>

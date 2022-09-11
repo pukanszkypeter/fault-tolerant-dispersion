@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { algorithmTypes } from 'src/app/models/types/AlgorithmType';
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 
 @Component({
   selector: 'app-algorithm-select-dialog',
@@ -10,7 +10,7 @@ import { algorithmTypes } from 'src/app/models/types/AlgorithmType';
 })
 export class AlgorithmSelectDialogComponent implements OnInit {
 
-  algorithmTypes = algorithmTypes;
+  algorithmTypes = Object.keys(AlgorithmType);
   
   algorithmTypeGroup: FormGroup;
 

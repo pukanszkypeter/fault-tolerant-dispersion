@@ -28,7 +28,7 @@
     </mat-form-field>
   </div>
 </div>
-<div class="row mt-2 mb-4 align-items-center" *ngIf="algorithmType !== ''">
+<div class="row mt-2 mb-4 align-items-center" *ngIf="algorithmType !== '' && nodes.length === robots.length">
   <div class="col-6">
     <button mat-mini-fab class="simulation-operators" (click)="playSimulator()">
       <mat-icon svgIcon="play" matTooltip="{{ 'PLAY' | translate }}"></mat-icon>
@@ -52,7 +52,7 @@
   <div class="col-6 text-end">
     <span class="server-response-time">{{ 'simulationComponent_steps' | translate }}: {{ steps }}</span>
     <span class="server-response-time">{{ 'simulationComponent_serverResponseTime' | translate }}: {{ RTT }} ms</span>
-    <button mat-mini-fab class="simulation-operators" (click)="save()" [disabled]="!this.simulationState || this.simulationState.counter !== 0">
+    <button mat-mini-fab class="simulation-operators" (click)="save()" [disabled]="isSaveDisabled()">
       <mat-icon svgIcon="save" matTooltip="{{ 'simulationComponent_save' | translate }}"></mat-icon>
     </button>
   </div>
@@ -61,15 +61,15 @@
 <div id="map" class="shadow"></div>
 <div class="row text-center mt-4" *ngIf="polygonCoordinates.length > 2">
   <div class="col-12">
-    <button mat-raised-button (click)="createNetwork()">{{'openStreetMapComponent_createNetwork' | translate}}</button>
+    <button mat-raised-button [class.disabled]="this.loading" [disabled]="this.loading" (click)="createNetwork()">{{'openStreetMapComponent_createNetwork' | translate}}</button>
   </div>
 </div>
-<div class="row text-center mt-4 mb-4 align-items-center" *ngIf="nodes.length > 0 && algorithmType === ''">
+<div class="row text-center mt-4 mb-4 align-items-center" *ngIf="nodes.length > robots.length">
   <div class="col-4">
     {{'settingsDialogComponent_robots' | translate}}: {{robots.length}} / {{nodes.length}}
   </div>
   <div class="col-4">
-    <button mat-raised-button [class.disabled]="robots.length < nodes.length" [disabled]="robots.length < nodes.length" (click)="selectAlgorithmType()">{{'openStreetMapComponent_selectAlgorithmType' | translate}}</button>
+    <button mat-raised-button [class.disabled]="algorithmType !== ''" [disabled]="algorithmType !== ''" (click)="selectAlgorithmType()">{{'openStreetMapComponent_selectAlgorithmType' | translate}}</button>
   </div>
   <div class="col-4">
     <div *ngIf="selectedNodeID !== 0">
@@ -81,8 +81,8 @@
           {{'simulationComponent_informationPanelRobots' | translate}}: {{getRobots()}}
         </div>
         <div class="col-4">
-          <button mat-icon-button><mat-icon svgIcon="add" (click)="addRobot()"></mat-icon></button> |
-          <button mat-icon-button [disabled]="getRobots() === 0"><mat-icon svgIcon="remove" (click)="removeRobot()"></mat-icon></button>
+          <button mat-icon-button [disabled]="algorithmType === ''"><mat-icon svgIcon="add" (click)="addRobot()"></mat-icon></button> |
+          <button mat-icon-button [disabled]="getRobots() === 0 || algorithmType === ''"><mat-icon svgIcon="remove" (click)="removeRobot()"></mat-icon></button>
         </div>
       </div>
     </div>

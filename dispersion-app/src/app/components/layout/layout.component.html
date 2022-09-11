@@ -21,10 +21,10 @@
             <a class="nav-link" (click)="handleActiveState('simulator')" [routerLink]="['/simulator']">{{ 'layoutComponent_simulation' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="handleActiveState('automated-tester')" [routerLink]="['/automated-tester']">{{ 'layoutComponent_automatedTest' | translate }}</a>
+            <a class="nav-link" (click)="handleActiveState('tester')" [routerLink]="['/tester']">{{ 'layoutComponent_automatedTest' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="handleActiveState('visualization')" [routerLink]="['/visualization']">{{ 'layoutComponent_visualization' | translate }}</a>
+            <a class="nav-link" (click)="handleActiveState('results')" [routerLink]="['/results']">{{ 'layoutComponent_visualization' | translate }}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" (click)="handleActiveState('open-street-map')" [routerLink]="['/open-street-map']">{{ 'layoutComponent_openStreetMap' | translate }}</a>
@@ -33,15 +33,15 @@
         <!-- Right side links -->
         <ul class="navbar-nav d-flex">
           <li class="nav-item">
-            <a target="_blank" href="https://github.com/pukanszkypeter/knowledge-lab/tree/develop">
+            <a target="_blank" href="https://github.com/pukanszkypeter/knowledge-lab/tree/master">
               <button mat-icon-button>
-                <mat-icon id="github-icon" matTooltip="{{'layoutComponent_github' | translate }}" svgIcon="github">
+                <mat-icon id="github-icon" svgIcon="github">
                 </mat-icon>
               </button>
             </a>
           </li>
           <li class="nav-item">
-            <button id="settings-button" mat-icon-button (click)="openSettingsDialog()"><mat-icon matTooltip="{{ 'layoutComponent_settings' | translate }}" svgIcon="settings"></mat-icon></button>
+            <button id="settings-button" mat-icon-button (click)="openSettingsDialog()"><mat-icon svgIcon="settings"></mat-icon></button>
           </li>
         </ul>
       </div>

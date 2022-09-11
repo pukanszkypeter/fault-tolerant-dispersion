@@ -1,11 +1,11 @@
-import {Robot} from "../../../models/base-entities/Robot";
+import { AlgorithmType } from "src/app/models/utils/AlgorithmType";
 
 export class AlgorithmConfiguration {
 
-  algorithmType: string;
-  robots: Robot[];
+  algorithmType: AlgorithmType;
+  robots: any[];
 
-  constructor(algorithmType?: string, robots?: Robot[]) {
+  constructor(algorithmType?: AlgorithmType, robots?: any[]) {
     this.algorithmType = algorithmType;
     this.robots = robots;
   }
