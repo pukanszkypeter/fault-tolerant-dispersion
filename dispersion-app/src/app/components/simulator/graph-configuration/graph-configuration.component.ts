@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {graphTypes, hasNodeValueConstraint} from "../../../models/types/GraphType";
-import {colors} from "../../../models/others/Colors";
+import {GraphType, hasNodeValueConstraint} from "../../../models/utils/GraphType";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import { Color, getFontColor, getHexByColor } from 'src/app/models/utils/Color';
 
 @Component({
   selector: 'app-settings-dialog',
@@ -11,8 +11,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class GraphConfigurationComponent implements OnInit {
 
-  graphTypes = graphTypes;
-  colorTypes = colors;
+  graphTypes = Object.keys(GraphType);
+  colorTypes = Object.keys(Color);
+  getFontColor = getFontColor;
+  getHexByColor = getHexByColor;
 
   settingsFormGroup: FormGroup;
 

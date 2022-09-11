@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RotorRouterDispersionNode extends Node {
     
-    private Map<Color, Long> currentComponentPointer;
+    private Map<Color, Long> rotorRouter;
     
 }

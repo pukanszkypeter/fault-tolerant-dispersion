@@ -64,6 +64,30 @@ public class AlgorithmEngineService {
         }
     }
 
+    public Long randomDispersionTest(SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot> step) {
+        if (step.getAlgorithmType().equals(AlgorithmType.RANDOM_DISPERSION)) {
+            try {
+                while (!step.getSimulationState().equals(SimulationState.FINISHED)) {
+                    if (step.getSimulationState().equals(SimulationState.DEFAULT)) {
+                        step.setSimulationState(SimulationState.IN_PROGRESS);
+                    }
+
+                    randomDispersionManager.step(step.getGraph(), step.getRobotList());
+                    step.setStep(step.getStep() + 1);
+
+                    if (isDispersionReached(step.getGraph().getNodeList()) && areRobotsFinished(step.getRobotList())) {
+                        step.setSimulationState(SimulationState.FINISHED);
+                    }
+                }
+                return step.getStep();
+            } catch (Exception e) {
+                return null;
+            }
+        } else {
+            throw new RuntimeException("Wrong algorithm type defined.");
+        }
+    }
+
     public SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot> randomWithLeaderDispersionStep(SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot> step) {
         if (step.getAlgorithmType().equals(AlgorithmType.RANDOM_WITH_LEADER_DISPERSION)) {
             
@@ -79,6 +103,30 @@ public class AlgorithmEngineService {
             }
     
             return step;
+        } else {
+            throw new RuntimeException("Wrong algorithm type defined.");
+        }
+    }
+
+    public Long randomWithLeaderDispersionTest(SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot> step) {
+        if (step.getAlgorithmType().equals(AlgorithmType.RANDOM_WITH_LEADER_DISPERSION)) {
+            try {
+                while (!step.getSimulationState().equals(SimulationState.FINISHED)) {
+                    if (step.getSimulationState().equals(SimulationState.DEFAULT)) {
+                        step.setSimulationState(SimulationState.IN_PROGRESS);
+                    }
+
+                    randomWithLeaderDispersionManager.step(step.getGraph(), step.getRobotList());
+                    step.setStep(step.getStep() + 1);
+                    
+                    if (isDispersionReached(step.getGraph().getNodeList()) && areRobotsFinished(step.getRobotList())) {
+                        step.setSimulationState(SimulationState.FINISHED);
+                    }
+                }
+                return step.getStep();
+            } catch (Exception e) {
+                return null;
+            }
         } else {
             throw new RuntimeException("Wrong algorithm type defined.");
         }
@@ -104,6 +152,30 @@ public class AlgorithmEngineService {
         }
     }
 
+    public Long rotorRouterDispersionTest(SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot> step) {
+        if (step.getAlgorithmType().equals(AlgorithmType.ROTOR_ROUTER_DISPERSION)) {
+            try {
+                while (!step.getSimulationState().equals(SimulationState.FINISHED)) {
+                    if (step.getSimulationState().equals(SimulationState.DEFAULT)) {
+                        step.setSimulationState(SimulationState.IN_PROGRESS);
+                    }
+
+                    rotorRouterDispersionManager.step(step.getGraph(), step.getRobotList());
+                    step.setStep(step.getStep() + 1);
+
+                    if (isDispersionReached(step.getGraph().getNodeList()) && areRobotsFinished(step.getRobotList())) {
+                        step.setSimulationState(SimulationState.FINISHED);
+                    }
+                }
+                return step.getStep();
+            } catch (Exception e) {
+                return null;
+            }
+        } else {
+            throw new RuntimeException("Wrong algorithm type defined.");
+        }
+    }
+
     public SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot> rotorRouterWithLeaderDispersionStep(SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot> step) {
         if (step.getAlgorithmType().equals(AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION)) {
             
@@ -119,6 +191,30 @@ public class AlgorithmEngineService {
             }
     
             return step;
+        } else {
+            throw new RuntimeException("Wrong algorithm type defined.");
+        }
+    }
+
+    public Long rotorRouterWithLeaderDispersionTest(SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot> step) {
+        if (step.getAlgorithmType().equals(AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION)) {
+            try {
+                while (!step.getSimulationState().equals(SimulationState.FINISHED)) {
+                    if (step.getSimulationState().equals(SimulationState.DEFAULT)) {
+                        step.setSimulationState(SimulationState.IN_PROGRESS);
+                    }
+                    
+                    rotorRouterWithLeaderDispersionManager.step(step.getGraph(), step.getRobotList());
+                    step.setStep(step.getStep() + 1);
+
+                    if (isDispersionReached(step.getGraph().getNodeList()) && areRobotsFinished(step.getRobotList())) {
+                        step.setSimulationState(SimulationState.FINISHED);
+                    }
+                }
+                return step.getStep();
+            } catch (Exception e) {
+                return null;
+            }
         } else {
             throw new RuntimeException("Wrong algorithm type defined.");
         }

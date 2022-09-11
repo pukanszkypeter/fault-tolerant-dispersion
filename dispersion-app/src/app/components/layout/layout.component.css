@@ -3,21 +3,17 @@
   font-weight: 600;
 }
 
-.navbar-logo:hover {
-  color: yellow;
-}
-
 .nav-link {
   color: rgba(255,255,255,0.90);
 }
 
 .nav-link:hover {
-  color: yellow;
+  font-weight: 600;
 }
 
 .active {
-  color: yellow;
   font-weight: 600;
+  text-decoration: underline;
 }
 
 .navbar-toggler:focus {

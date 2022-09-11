@@ -232,17 +232,17 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
 
         // If the current rotor portID < edge options size, we can choose the next edge option
 
-        if (currentRotorRouterWithLeaderNode.getCurrentComponentPointer() == null) {
-            currentRotorRouterWithLeaderNode.setCurrentComponentPointer(new HashMap<>());
-            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, 0L);
+        if (currentRotorRouterWithLeaderNode.getRotorRouter() == null) {
+            currentRotorRouterWithLeaderNode.setRotorRouter(new HashMap<>());
+            currentRotorRouterWithLeaderNode.getRotorRouter().put(color, 0L);
         }
 
-        if (currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color) == null) {
-            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, 0L);
+        if (currentRotorRouterWithLeaderNode.getRotorRouter().get(color) == null) {
+            currentRotorRouterWithLeaderNode.getRotorRouter().put(color, 0L);
         }
 
-        if (currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color) < edgeOptions.size() - 1) {
-            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, (currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color) + 1));
+        if (currentRotorRouterWithLeaderNode.getRotorRouter().get(color) < edgeOptions.size() - 1) {
+            currentRotorRouterWithLeaderNode.getRotorRouter().put(color, (currentRotorRouterWithLeaderNode.getRotorRouter().get(color) + 1));
         } else if (edgeOptions.size() == 1){
             // System.out.println("There is no more new option, go on the only option we have");
         } else if (edgeOptions.size() == 0) {
@@ -250,10 +250,10 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
         } else {
             // If we already checked the all edge, we start from the 0 option!
             // currentRotorRouterWithLeaderNode.setLastPortIndex(0L);
-            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(color, 0L);
+            currentRotorRouterWithLeaderNode.getRotorRouter().put(color, 0L);
         }
 
-        return edgeOptions.get(currentRotorRouterWithLeaderNode.getCurrentComponentPointer().get(color).intValue());
+        return edgeOptions.get(currentRotorRouterWithLeaderNode.getRotorRouter().get(color).intValue());
     }
 
     private void settleOnRotorRouterWithLeaderNode(Long nodeID, Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge> graph) {
@@ -270,8 +270,8 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
 
         if (leaderRotorRouterWithLeaderRobot.getLastUsedEdgeID() == null) {
             // System.out.println("The first step");
-            currentRotorRouterWithLeaderNode.setCurrentComponentPointer(new HashMap<>());
-            currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(leaderRotorRouterWithLeaderRobot.getColor(), 0L);
+            currentRotorRouterWithLeaderNode.setRotorRouter(new HashMap<>());
+            currentRotorRouterWithLeaderNode.getRotorRouter().put(leaderRotorRouterWithLeaderRobot.getColor(), 0L);
         } else {
             RotorRouterWithLeaderDispersionEdge usedEdge = graph.getEdgeList().stream().filter(edge -> edge.getID().equals(leaderRotorRouterWithLeaderRobot.getLastUsedEdgeID()))
                     .collect(Collectors.toList()).get(0);
@@ -283,8 +283,8 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
             long firstPortIndex = 0L;
             for (RotorRouterWithLeaderDispersionEdge edge: edgeOptionOnTheNewRotorRouterWithLeaderNode) {
                 if (edge.getID().equals(usedEdge.getID())){
-                    currentRotorRouterWithLeaderNode.setCurrentComponentPointer(new HashMap<>());
-                    currentRotorRouterWithLeaderNode.getCurrentComponentPointer().put(leaderRotorRouterWithLeaderRobot.getColor(), firstPortIndex);
+                    currentRotorRouterWithLeaderNode.setRotorRouter(new HashMap<>());
+                    currentRotorRouterWithLeaderNode.getRotorRouter().put(leaderRotorRouterWithLeaderRobot.getColor(), firstPortIndex);
                 }
                 firstPortIndex++;
             }

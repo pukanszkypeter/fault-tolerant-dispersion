@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 
 def groupByQuery(algorithmType, graphType, groupBy):
-    connection = sqlite3.Connection("db/memory.sqlite")
+    connection = sqlite3.Connection("./database/database.sqlite")
     result = []
     
     if groupBy == 'nodes':
@@ -24,7 +24,7 @@ def groupByQuery(algorithmType, graphType, groupBy):
 
 
 def summaryByQuery(summaryBy):
-    connection = sqlite3.Connection("db/memory.sqlite")
+    connection = sqlite3.Connection("./database/database.sqlite")
     result = []
 
     if summaryBy == 'max':
@@ -43,7 +43,7 @@ def summaryByQuery(summaryBy):
     return result.values.tolist()
 
 def detailByQuery(detailBy,  algorithmType, graphType):
-    connection = sqlite3.Connection("db/memory.sqlite")
+    connection = sqlite3.Connection("./database/database.sqlite")
     result = []
 
     if detailBy == 'max':

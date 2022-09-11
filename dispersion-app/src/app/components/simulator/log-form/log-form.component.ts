@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {LoggerService} from "../../../services/server-side/logger/logger.service";
-import {SnackbarService} from "../../../services/client-side/utils/snackbar.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { LoggerService } from "../../../services/server-side/python-engine/logger-service/logger.service";
+import { SnackbarService } from "../../../services/client-side/utils/snackbar.service";
 
 @Component({
   selector: 'app-log-form',

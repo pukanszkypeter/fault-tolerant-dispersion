@@ -15,8 +15,8 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ 'settingsDialogComponent_algorithmType' | translate }}</mat-label>
           <mat-select [formControl]="algorithmType">
-            <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType.value">
-              {{ algorithmType.value | translate }}
+            <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType">
+              {{ algorithmType | translate }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="algorithmType.hasError('required')">{{ 'settingsDialogComponent_algorithmTypeRequired' | translate }}</mat-error>

@@ -115,17 +115,15 @@ public class RandomDispersionManagement implements RandomDispersionManager<Rando
 
     private boolean isComponentOccupied(Graph<RandomDispersionNode, RandomDispersionEdge> graph, Color component) {
         List<RandomDispersionEdge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
-        
+
+        List<Long> fromIDs = componentEdges.stream().map(RandomDispersionEdge::getFromID).collect(Collectors.toList());
+        List<Long> toIDs = componentEdges.stream().map(RandomDispersionEdge::getToID).collect(Collectors.toList());
+        fromIDs.addAll(toIDs);
+
+        List<Long> componentNodeIDs = fromIDs.stream().distinct().collect(Collectors.toList());
         List<RandomDispersionNode> componentNodes = new ArrayList<>();
-        for (RandomDispersionEdge edge : componentEdges) {
-            RandomDispersionNode fromNode = graph.getNodeList().stream().filter(node -> node.getID().equals(edge.getFromID())).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + edge.getFromID() + " not found!"));
-            RandomDispersionNode toNode = graph.getNodeList().stream().filter(node -> node.getID().equals(edge.getToID())).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + edge.getToID() + " not found!"));
-            if (!componentNodes.contains(fromNode)) {
-                componentNodes.add(fromNode);
-            }
-            if (!componentNodes.contains(toNode)) {
-                componentNodes.add(toNode);
-            }
+        for (Long ID : componentNodeIDs) {
+            componentNodes.add(graph.getNodeList().stream().filter(node -> node.getID().equals(ID)).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + ID + " not found!")));
         }
 
         return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();

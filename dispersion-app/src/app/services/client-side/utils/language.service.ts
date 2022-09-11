@@ -22,7 +22,7 @@ export class LanguageService {
   setDefaultLanguage(): void {
     let language = localStorage.getItem(LANGUAGE_KEY);
     if (!language) {
-      this.setLanguage('en');
+      this.setLanguage('EN');
     } else {
       this.translate.setDefaultLang(language);
     }

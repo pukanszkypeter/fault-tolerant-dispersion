@@ -1,14 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import {VisService} from "../../services/client-side/vis/vis.service";
-import {GraphConfiguration} from "../simulator/graph-configuration/GraphConfiguration";
-import {AlgorithmConfiguration} from "../simulator/algorithm-configuration/AlgorithmConfiguration";
-import {SimulationState} from "../../models/base-entities/SimulationState";
-import {GraphConfigurationComponent} from "../simulator/graph-configuration/graph-configuration.component";
-import {MatDialog} from "@angular/material/dialog";
-import {SnackbarService} from "../../services/client-side/utils/snackbar.service";
-import {AlgorithmConfigurationComponent} from "../simulator/algorithm-configuration/algorithm-configuration.component";
-import {FormControl, Validators} from "@angular/forms";
-import {AlgorithmService} from "../../services/server-side/algorithms/algorithm.service";
+import { VisService } from "../../services/client-side/vis/vis.service";
+import { GraphConfiguration } from "../simulator/graph-configuration/GraphConfiguration";
+import { AlgorithmConfiguration } from "../simulator/algorithm-configuration/AlgorithmConfiguration";
+import { GraphConfigurationComponent } from "../simulator/graph-configuration/graph-configuration.component";
+import { MatDialog } from "@angular/material/dialog";
+import { SnackbarService } from "../../services/client-side/utils/snackbar.service";
+import { AlgorithmConfigurationComponent } from "../simulator/algorithm-configuration/algorithm-configuration.component";
+import { FormControl, Validators } from "@angular/forms";
+import { AlgorithmService } from "../../services/server-side/java-engine/algorithm-service/algorithm.service";
+import { SimulationStep } from 'src/app/models/dto/SimulationStep';
+import { SimulationState } from 'src/app/models/utils/SimulationState';
+import { RandomDispersionNode } from 'src/app/models/algorithms/random-dispersion/RandomDispersionNode';
+import { RandomDispersionEdge } from 'src/app/models/algorithms/random-dispersion/RandomDispersionEdge';
+import { RandomDispersionRobot } from 'src/app/models/algorithms/random-dispersion/RandomDispersionRobot';
+import { RandomWithLeaderDispersionNode } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionNode';
+import { RandomWithLeaderDispersionEdge } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionEdge';
+import { RandomWithLeaderDispersionRobot } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionRobot';
+import { RotorRouterDispersionNode } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionNode';
+import { RotorRouterDispersionEdge } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionEdge';
+import { RotorRouterDispersionRobot } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionRobot';
+import { RotorRouterWithLeaderDispersionNode } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionNode';
+import { RotorRouterWithLeaderDispersionEdge } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionEdge';
+import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionRobot';
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
+import { Graph } from 'src/app/models/core/Graph';
+import { NodeState } from 'src/app/models/utils/NodeState';
+import { getColorByHex } from 'src/app/models/utils/Color';
+import { LoggerService } from 'src/app/services/server-side/python-engine/logger-service/logger.service';
 
 @Component({
   selector: 'app-automated-test',
@@ -20,7 +38,10 @@ export class AutomatedTesterComponent implements OnInit {
   graphConfiguration: GraphConfiguration;
   algorithmConfiguration: AlgorithmConfiguration;
 
-  simulationState: SimulationState;
+  randomSimulation: SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot>;
+  randomWithLeaderSimulation: SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot>;
+  rotorRouterSimulation: SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot>;
+  rotorRouterWithLeaderSimulation: SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot>;
 
   testsInProgress = false;
   tests: FormControl = new FormControl(1, [Validators.required, Validators.min(1), Validators.max(1000)]);
@@ -34,6 +55,7 @@ export class AutomatedTesterComponent implements OnInit {
   constructor(private snackBarService: SnackbarService,
               private visService: VisService,
               private algorithmService: AlgorithmService,
+              private loggerService: LoggerService,
               public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -68,11 +90,64 @@ export class AutomatedTesterComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.algorithmConfiguration = new AlgorithmConfiguration().initialize(res);
-        this.simulationState = new SimulationState().initialize(
-          this.visService.nodes,
-          this.visService.edges,
-          this.algorithmConfiguration.robots
-        );
+        switch (this.algorithmConfiguration.algorithmType) {
+
+          case AlgorithmType.RANDOM_DISPERSION:
+            this.randomSimulation = new SimulationStep(
+              this.algorithmConfiguration.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RandomDispersionNode, RandomDispersionEdge>(
+                this.visService.nodes.map(node => new RandomDispersionNode(node.id, NodeState.DEFAULT)),
+                this.visService.edges.map(edge => new RandomDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.algorithmConfiguration.robots
+            );
+            break;
+
+          case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+            this.randomWithLeaderSimulation = new SimulationStep(
+              this.algorithmConfiguration.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge>(
+                this.visService.nodes.map(node => new RandomWithLeaderDispersionNode(node.id, NodeState.DEFAULT)),
+                this.visService.edges.map(edge => new RandomWithLeaderDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.algorithmConfiguration.robots
+            );
+            break;
+
+          case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+            this.rotorRouterSimulation = new SimulationStep(
+              this.algorithmConfiguration.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RotorRouterDispersionNode, RotorRouterDispersionEdge>(
+                this.visService.nodes.map(node => new RotorRouterDispersionNode(node.id, NodeState.DEFAULT, null)),
+                this.visService.edges.map(edge => new RotorRouterDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.algorithmConfiguration.robots
+            );
+            break;
+
+          case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+            this.rotorRouterWithLeaderSimulation = new SimulationStep(
+              this.algorithmConfiguration.algorithmType, 
+              SimulationState.DEFAULT, 
+              0, 
+              new Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge>(
+                this.visService.nodes.map(node => new RotorRouterWithLeaderDispersionNode(node.id, NodeState.DEFAULT, null)),
+                this.visService.edges.map(edge => new RotorRouterWithLeaderDispersionEdge(edge.id, edge.from, edge.to, getColorByHex(edge.color)))
+                ), 
+              this.algorithmConfiguration.robots
+            );
+            break;
+
+          default: 
+            throw new Error('Algorithm type not found!');
+        }
+
         this.snackBarService.openSnackBar('SUCCESSFUL_SAVE', 'success-snackbar');
       }
     }, err => {
@@ -83,8 +158,23 @@ export class AutomatedTesterComponent implements OnInit {
 
   resetGraph(): void {
    this.graphConfiguration = null;
+   if (this.algorithmConfiguration) {
+    switch (this.algorithmConfiguration.algorithmType) {
+      case AlgorithmType.RANDOM_DISPERSION:
+        this.randomSimulation = null;
+        break;
+      case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+        this.randomWithLeaderSimulation = null;
+        break;
+      case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+        this.rotorRouterSimulation = null;
+        break;
+      case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+        this.rotorRouterWithLeaderSimulation = null;
+        break;
+    }
+   }
    this.algorithmConfiguration = null;
-   this.simulationState = null;
    this.stepsList = [];
    this.serverList = [];
    this.summary = [{tests: 0, success: 0, failed: 0, steps: 0, server: 0}];
@@ -92,8 +182,23 @@ export class AutomatedTesterComponent implements OnInit {
   }
 
   resetAlgorithm(): void {
+    if (this.algorithmConfiguration) {
+      switch (this.algorithmConfiguration.algorithmType) {
+        case AlgorithmType.RANDOM_DISPERSION:
+          this.randomSimulation = null;
+          break;
+        case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+          this.randomWithLeaderSimulation = null;
+          break;
+        case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+          this.rotorRouterSimulation = null;
+          break;
+        case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+          this.rotorRouterWithLeaderSimulation = null;
+          break;
+      }
+    }
     this.algorithmConfiguration = null;
-    this.simulationState = null;
     this.stepsList = [];
     this.serverList = [];
     this.summary = [{tests: 0, success: 0, failed: 0, steps: 0, server: 0}];
@@ -102,21 +207,49 @@ export class AutomatedTesterComponent implements OnInit {
 
   run(tests: number): void {
     this.testsInProgress = true;
+    let simulation: any;
+    switch (this.algorithmConfiguration.algorithmType) {
+      case AlgorithmType.RANDOM_DISPERSION:
+        simulation = this.randomSimulation;
+        break;
+      case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+        simulation = this.randomWithLeaderSimulation;
+        break;
+      case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+        simulation = this.rotorRouterSimulation;
+        break;
+      case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+        simulation = this.rotorRouterWithLeaderSimulation;
+        break;
+    }
     if (tests > 0) {
       const start = new Date();
-      this.algorithmService.test(this.algorithmConfiguration.algorithmType, this.wrapTestData())
+      this.algorithmService.test(this.algorithmConfiguration.algorithmType, simulation)
         .subscribe(res => {
           const end = new Date();
           if (res) {
-            tests--;
-            this.summary[0].tests++;
-            this.summary[0].success++;
-            this.stepsList.push(res);
-            this.summary[0].steps = this.stepsList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
-            this.serverList.push(end.valueOf() - start.valueOf());
-            this.summary[0].server = this.serverList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
-            this.testRatio = Math.ceil((this.summary[0].tests / (tests + this.summary[0].tests)) * 100);
-            setTimeout(() => this.run(tests), 500);
+            this.loggerService.log({
+              graphType: this.graphConfiguration.graphType,
+              algorithmType: this.algorithmConfiguration.algorithmType,
+              nodes: this.graphConfiguration.nodes,
+              robots: simulation.robotList.length,
+              components: this.graphConfiguration.colors.length,
+              steps: res
+            }).subscribe(tes => {
+              if (tes) {
+                tests--;
+                this.summary[0].tests++;
+                this.summary[0].success++;
+                this.stepsList.push(res);
+                this.summary[0].steps = this.stepsList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
+                this.serverList.push(end.valueOf() - start.valueOf());
+                this.summary[0].server = this.serverList.reduce((a,b) => a + b, 0) / this.summary[0].tests;
+                this.testRatio = Math.ceil((this.summary[0].tests / (tests + this.summary[0].tests)) * 100);
+                setTimeout(() => this.run(tests), 500);
+              }
+            }, err => {
+              console.log(err);
+            });
           } else {
             tests--;
             this.summary[0].tests++;
@@ -140,17 +273,6 @@ export class AutomatedTesterComponent implements OnInit {
     } else {
       this.testsInProgress = false;
       this.snackBarService.openSnackBar('SUCCESSFUL_SAVE', 'success-snackbar')
-    }
-  }
-
-  wrapTestData(): any {
-    return {
-      algorithmType: this.algorithmConfiguration.algorithmType,
-      graphType: this.graphConfiguration.graphType,
-      nodes: this.graphConfiguration.nodes,
-      robots: this.algorithmConfiguration.robots.length,
-      components: this.graphConfiguration.colors.length,
-      simulationState: this.simulationState
     }
   }
 

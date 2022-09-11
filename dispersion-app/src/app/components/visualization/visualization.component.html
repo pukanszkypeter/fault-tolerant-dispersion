@@ -62,8 +62,8 @@
           <mat-form-field appearance="outline" class="visualization-select">
             <mat-label>{{ 'settingsDialogComponent_graphType' | translate }}</mat-label>
             <mat-select [formControl]="graphType">
-              <mat-option *ngFor="let graphType of graphTypes" [value]="graphType.value">
-                {{ graphType.value | translate }}
+              <mat-option *ngFor="let graphType of graphTypes" [value]="graphType">
+                {{ graphType | translate }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="graphType.hasError('required')">{{ 'settingsDialogComponent_graphTypeRequired' | translate }}</mat-error>
@@ -71,8 +71,8 @@
           <mat-form-field appearance="outline" class="visualization-select">
             <mat-label>{{ 'settingsDialogComponent_algorithmType' | translate }}</mat-label>
             <mat-select [formControl]="algorithmType">
-              <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType.value">
-                {{ algorithmType.value | translate }}
+              <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType">
+                {{ algorithmType | translate }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="algorithmType.hasError('required')">{{ 'settingsDialogComponent_algorithmTypeRequired' | translate }}</mat-error>
@@ -135,8 +135,8 @@
           <mat-form-field appearance="outline" class="visualization-select">
             <mat-label>{{ 'settingsDialogComponent_graphType' | translate }}</mat-label>
             <mat-select [formControl]="graphTypeDetail">
-              <mat-option *ngFor="let graphType of graphTypes" [value]="graphType.value">
-                {{ graphType.value | translate }}
+              <mat-option *ngFor="let graphType of graphTypes" [value]="graphType">
+                {{ graphType | translate }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="graphTypeDetail.hasError('required')">{{ 'settingsDialogComponent_graphTypeRequired' | translate }}</mat-error>
@@ -144,8 +144,8 @@
           <mat-form-field appearance="outline" class="visualization-select">
             <mat-label>{{ 'settingsDialogComponent_algorithmType' | translate }}</mat-label>
             <mat-select [formControl]="algorithmTypeDetail">
-              <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType.value">
-                {{ algorithmType.value | translate }}
+              <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType">
+                {{ algorithmType | translate }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="algorithmTypeDetail.hasError('required')">{{ 'settingsDialogComponent_algorithmTypeRequired' | translate }}</mat-error>

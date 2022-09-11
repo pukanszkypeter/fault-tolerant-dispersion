@@ -16,7 +16,7 @@ import hu.elteik.knowledgelab.javaengine.app.dto.SimulationStep;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/algorithm")
+@RequestMapping("/api/java-engine/algorithm")
 public class AlgorithmEngineController {
 
     private final AlgorithmEngineService algorithmEngineService;
@@ -31,9 +31,19 @@ public class AlgorithmEngineController {
         return ResponseEntity.ok(algorithmEngineService.randomDispersionStep(step));
     }
 
+    @PostMapping("/random-dispersion/test")
+    public ResponseEntity<Long> randomDispersionTest(@RequestBody SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.randomDispersionTest(step));
+    }
+
     @PostMapping("/random-with-leader-dispersion/step")
     public ResponseEntity<SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot>> randomWithLeaderDispersionStep(@RequestBody SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot> step) {
         return ResponseEntity.ok(algorithmEngineService.randomWithLeaderDispersionStep(step));
+    }
+
+    @PostMapping("/random-with-leader-dispersion/test")
+    public ResponseEntity<Long> randomWithLeaderDispersionTest(@RequestBody SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.randomWithLeaderDispersionTest(step));
     }
 
     @PostMapping("/rotor-router-dispersion/step")
@@ -41,9 +51,19 @@ public class AlgorithmEngineController {
         return ResponseEntity.ok(algorithmEngineService.rotorRouterDispersionStep(step));
     }
 
+    @PostMapping("/rotor-router-dispersion/test")
+    public ResponseEntity<Long> rotorRouterDispersionTest(@RequestBody SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.rotorRouterDispersionTest(step));
+    }
+
     @PostMapping("/rotor-router-with-leader-dispersion/step")
     public ResponseEntity<SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot>> rotorRouterWithLeaderDispersionStep(@RequestBody SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot> step) {
         return ResponseEntity.ok(algorithmEngineService.rotorRouterWithLeaderDispersionStep(step));
+    }
+
+    @PostMapping("/rotor-router-with-leader-dispersion/test")
+    public ResponseEntity<Long> rotorRouterWithLeaderDispersionTest(@RequestBody SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.rotorRouterWithLeaderDispersionTest(step));
     }
 
 }

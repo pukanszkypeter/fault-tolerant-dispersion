@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as vis from 'vis-network';
-import {DataSet} from "vis-data/peer/esm/vis-data"
-import {Node, VisNode} from "../../../models/base-entities/Node";
-import {VisEdge} from "../../../models/base-entities/Edge";
-import {NodeState} from "../../../models/base-entities/Node";
-import {GraphConfiguration} from "../../../components/simulator/graph-configuration/GraphConfiguration";
-import {GraphGeneratorService} from "../graph-generator/graph-generator.service";
+import { DataSet } from "vis-data/peer/esm/vis-data"
+import { GraphConfiguration} from "../../../components/simulator/graph-configuration/GraphConfiguration";
+import { GraphGeneratorService } from "../graph-generator/graph-generator.service";
+import { VisNode } from 'src/app/models/vis/VisNode';
+import { VisEdge } from 'src/app/models/vis/VisEdge';
+import { getNodeStateColor, NodeState } from 'src/app/models/utils/NodeState';
+import { Node } from 'src/app/models/core/Node';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class VisService {
 
         // Node
         if (!this.idExist(nodes, Number(chunk[0]))){
-          nodes.push(new VisNode(Number(chunk[0]), chunk[0], NodeState.DEFAULT));
+          nodes.push(new VisNode(Number(chunk[0]), chunk[0], getNodeStateColor(NodeState.DEFAULT)));
         }
 
         // Edges
@@ -100,7 +101,7 @@ export class VisService {
   update(nodes: Node[]): void {
     let visNodes = (this.network as any).nodesHandler.body.data.nodes;
     for (let i = 0; i < nodes.length; i++) {
-      visNodes.update({id: nodes[i].id, label: nodes[i].id.toString(), color: nodes[i].state});
+      visNodes.update({id: nodes[i].id, label: nodes[i].id.toString(), color: getNodeStateColor(nodes[i].state)});
     }
   }
 

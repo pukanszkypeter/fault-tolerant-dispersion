@@ -68,22 +68,22 @@ public class RotorRouterDispersionManagement implements RotorRouterDispersionMan
                         .map(edge -> Objects.equals(edge.getToID(), currentNode.getID()) ? edge.getFromID() : edge.getToID())
                         .collect(Collectors.toList());
 
-                if (currentNode.getCurrentComponentPointer() == null) {
-                    currentNode.setCurrentComponentPointer(new HashMap<>());
-                    currentNode.getCurrentComponentPointer().put(robot.getColor(), nodeOptions.get(0));
-                } else if (!currentNode.getCurrentComponentPointer().containsKey(robot.getColor())) {
-                    currentNode.getCurrentComponentPointer().put(robot.getColor(), nodeOptions.get(0));
+                if (currentNode.getRotorRouter() == null) {
+                    currentNode.setRotorRouter(new HashMap<>());
+                    currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(0));
+                } else if (!currentNode.getRotorRouter().containsKey(robot.getColor())) {
+                    currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(0));
                 } else {
-                    int index = nodeOptions.indexOf(currentNode.getCurrentComponentPointer().get(robot.getColor()));
+                    int index = nodeOptions.indexOf(currentNode.getRotorRouter().get(robot.getColor()));
                     if (index == (nodeOptions.size() - 1)) {
-                        currentNode.getCurrentComponentPointer().put(robot.getColor(), nodeOptions.get(0));
+                        currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(0));
                     } else {
                         index++;
-                        currentNode.getCurrentComponentPointer().put(robot.getColor(), nodeOptions.get(index));
+                        currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(index));
                     }
                 }
 
-                robot.setDestinationID(currentNode.getCurrentComponentPointer().get(robot.getColor()));
+                robot.setDestinationID(currentNode.getRotorRouter().get(robot.getColor()));
 
             }
         }
@@ -133,17 +133,15 @@ public class RotorRouterDispersionManagement implements RotorRouterDispersionMan
 
     private boolean isComponentOccupied(Graph<RotorRouterDispersionNode, RotorRouterDispersionEdge> graph, Color component) {
         List<RotorRouterDispersionEdge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
-        
+
+        List<Long> fromIDs = componentEdges.stream().map(RotorRouterDispersionEdge::getFromID).collect(Collectors.toList());
+        List<Long> toIDs = componentEdges.stream().map(RotorRouterDispersionEdge::getToID).collect(Collectors.toList());
+        fromIDs.addAll(toIDs);
+
+        List<Long> componentNodeIDs = fromIDs.stream().distinct().collect(Collectors.toList());
         List<RotorRouterDispersionNode> componentNodes = new ArrayList<>();
-        for (RotorRouterDispersionEdge edge : componentEdges) {
-            RotorRouterDispersionNode fromNode = graph.getNodeList().stream().filter(node -> node.getID().equals(edge.getFromID())).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + edge.getFromID() + " not found!"));
-            RotorRouterDispersionNode toNode = graph.getNodeList().stream().filter(node -> node.getID().equals(edge.getToID())).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + edge.getToID() + " not found!"));
-            if (!componentNodes.contains(fromNode)) {
-                componentNodes.add(fromNode);
-            }
-            if (!componentNodes.contains(toNode)) {
-                componentNodes.add(toNode);
-            }
+        for (Long ID : componentNodeIDs) {
+            componentNodes.add(graph.getNodeList().stream().filter(node -> node.getID().equals(ID)).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + ID + " not found!")));
         }
 
         return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();

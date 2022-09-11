@@ -1,30 +1,19 @@
 <!-- TITLE -->
 <mat-card class="simulation-title animate__animated animate__fadeInDown">{{ 'simulationComponent_title' | translate }}</mat-card>
-<!-- INSTRUCTION SECTION -->
-<div class="row mt-4">
-  <div class="col-12">
-    <h4>{{ 'simulationComponent_instructions' | translate }}</h4>
-    <ol class="mt-2">
-      <li>{{ 'simulationComponent_graphConfiguration' | translate }}</li>
-      <li>{{ 'simulationComponent_algorithmConfiguration' | translate }}</li>
-      <li>{{ 'simulationComponent_runAlgorithm' | translate }}</li>
-      <li>{{ 'simulationComponent_resetSimulation' | translate }} <mat-icon svgIcon="emoji" style="height: 20px;width: 20px;"></mat-icon></li>
-    </ol>
-  </div>
-</div>
 <!-- OPERATORS SECTION -->
+
 <div class="row mt-4">
   <div class="col-6">
     <button mat-mini-fab class="simulation-operators" (click)="playSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
-      <mat-icon svgIcon="play" matTooltip="{{ 'PLAY' | translate }}"></mat-icon>
+      <mat-icon svgIcon="play"></mat-icon>
     </button>
     <button mat-mini-fab class="simulation-operators" (click)="stopSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
-      <mat-icon svgIcon="pause" matTooltip="{{ 'PAUSE' | translate }}"></mat-icon>
+      <mat-icon svgIcon="pause"></mat-icon>
     </button>
     <button mat-mini-fab class="simulation-operators" (click)="stepSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
-      <mat-icon svgIcon="next-step" matTooltip="{{ 'NEXT_STEP' | translate }}"></mat-icon>
+      <mat-icon svgIcon="next-step"></mat-icon>
     </button>
-    <mat-icon svgIcon="speed" id="speed-icon" matTooltip="{{ 'SPEED' | translate }}"></mat-icon>
+    <mat-icon svgIcon="speed" id="speed-icon"></mat-icon>
     <mat-slider color="primary"
                 [max]="2000"
                 [min]="200"
@@ -32,25 +21,26 @@
                 [thumbLabel]="true"
                 [(ngModel)]="speed"
                 [disabled]="!graphConfiguration || !algorithmConfiguration"></mat-slider>
-    <span>{{ speed }} ms</span>
+    <span class="server-response-time">{{ speed }} ms</span>
   </div>
   <div class="col-6 text-end">
-    <span class="server-response-time">{{ 'simulationComponent_steps' | translate }}: {{ steps }}</span>
+    <span class="server-response-time">{{ 'simulationComponent_steps' | translate }}: {{ getSteps() }}</span>
     <span class="server-response-time">{{ 'simulationComponent_serverResponseTime' | translate }}: {{ RTT }} ms</span>
     <button mat-mini-fab class="simulation-operators" (click)="resetSimulator()" [disabled]="!graphConfiguration || !algorithmConfiguration">
-      <mat-icon svgIcon="reset" matTooltip="{{ 'RESET' | translate }}"></mat-icon>
+      <mat-icon svgIcon="reset"></mat-icon>
     </button>
-    <button mat-mini-fab class="simulation-operators" (click)="save()" [disabled]="!this.simulationState || this.simulationState.counter !== 0">
-      <mat-icon svgIcon="save" matTooltip="{{ 'simulationComponent_save' | translate }}"></mat-icon>
+    <button mat-mini-fab class="simulation-operators" (click)="save()" [disabled]="isSaveDisabled()">
+      <mat-icon svgIcon="save"></mat-icon>
     </button>
     <button mat-mini-fab class="simulation-operators" (click)="openAlgorithmConfiguration()" [disabled]="!graphConfiguration || !!algorithmConfiguration">
-      <mat-icon svgIcon="robot" matTooltip="{{ 'simulationComponent_algorithmSettings' | translate }}"></mat-icon>
+      <mat-icon svgIcon="robot"></mat-icon>
     </button>
     <button mat-mini-fab class="simulation-operators" (click)="openGraphConfiguration()" [disabled]="!!graphConfiguration">
-      <mat-icon svgIcon="tree" matTooltip="{{ 'simulationComponent_simulationSettings' | translate }}"></mat-icon>
+      <mat-icon svgIcon="tree"></mat-icon>
     </button>
   </div>
 </div>
+
 <!-- SIMULATOR SECTION -->
 <div class="row mt-4">
   <div class="col-12">
@@ -58,52 +48,51 @@
   </div>
 </div>
 <!-- INFORMATION PANEL SECTION -->
-<h4 class="mb-4 mt-4">{{ 'simulationComponent_informationPanel' | translate }}</h4>
-<div class="row"></div>
-<div class="col-12">
-  <div class="mat-elevation-z8 robot-table" *ngIf="algorithmConfiguration">
-    <table mat-table [dataSource]="simulationState.robots">
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="mat-elevation-z8 robot-table" *ngIf="algorithmConfiguration">
+      <table mat-table [dataSource]="getRobots()">
 
-      <!-- ID Column -->
-      <ng-container matColumnDef="ID">
-        <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableIDColumn' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableIDColumn' | translate }} </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
 
-      <!-- On ID Column -->
-      <ng-container matColumnDef="onID">
-        <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tablePositionColumn' | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.onID}} </td>
-      </ng-container>
+        <ng-container matColumnDef="onID">
+          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tablePositionColumn' | translate }} </th>
+          <td mat-cell *matCellDef="let element"> {{element.onID}} </td>
+        </ng-container>
 
-      <!-- Color Column -->
-      <ng-container matColumnDef="color">
-        <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableColorColumn' | translate }} </th>
-        <td mat-cell *matCellDef="let element"><mat-chip [ngStyle]="{background: element.color, width: '32px'}"></mat-chip></td>
-      </ng-container>
+        <ng-container matColumnDef="color">
+          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableColorColumn' | translate }} </th>
+          <td mat-cell *matCellDef="let element"><mat-chip [ngStyle]="{background: getHexByColor(element.color), width: '32px'}"></mat-chip></td>
+        </ng-container>
 
-      <!-- State Column -->
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableStateColumn' | translate }} </th>
-        <td mat-cell *matCellDef="let element">
-          <span [ngStyle]="{color: '#ff0000'}" *ngIf="element.state === 'SEARCHING'">{{element.state | translate }}</span>
-          <span [ngStyle]="{color: '#33cc33'}" *ngIf="element.state === 'FINISHED'">{{element.state | translate }}</span>
-          <span [ngStyle]="{color: '#0066ff'}" *ngIf="element.state === 'LEADER'">{{element.state | translate }}</span>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="state">
+          <th mat-header-cell *matHeaderCellDef> {{ 'simulationComponent_tableStateColumn' | translate }} </th>
+          <td mat-cell *matCellDef="let element">
+            <span [ngStyle]="{color: '#2EDA33'}" *ngIf="element.state === 'START'">{{element.state | translate }}</span>
+            <span [ngStyle]="{color: '#EB6813'}" *ngIf="element.state === 'EXPLORE'">{{element.state | translate }}</span>
+            <span [ngStyle]="{color: '#133BDE'}" *ngIf="element.state === 'LEADER'">{{element.state | translate }}</span>
+            <span [ngStyle]="{color: '#EF4019'}" *ngIf="element.state === 'SETTLED'">{{element.state | translate }}</span>
+            <span [ngStyle]="{color: '#050303'}" *ngIf="element.state === 'TERMINATED'">{{element.state | translate }}</span>
+          </td>
+        </ng-container>
 
-      <!-- State Icon Column -->
-      <ng-container matColumnDef="stateIcon">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-icon svgIcon="search" *ngIf="element.state === 'SEARCHING'"></mat-icon>
-          <mat-icon svgIcon="check" *ngIf="element.state === 'FINISHED'"></mat-icon>
-          <mat-icon svgIcon="star" *ngIf="element.state === 'LEADER'"></mat-icon>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="stateIcon">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon svgIcon="robot" *ngIf="element.state === 'START'"></mat-icon>
+            <mat-icon svgIcon="search" *ngIf="element.state === 'EXPLORE'"></mat-icon>
+            <mat-icon svgIcon="star" *ngIf="element.state === 'LEADER'"></mat-icon>
+            <mat-icon svgIcon="check" *ngIf="element.state === 'SETTLED'"></mat-icon>
+            <mat-icon svgIcon="pause" *ngIf="element.state === 'TERMINATED'"></mat-icon>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
   </div>
 </div>

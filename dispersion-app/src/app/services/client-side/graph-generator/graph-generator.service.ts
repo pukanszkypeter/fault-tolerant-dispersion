@@ -220,15 +220,15 @@ export class GraphGeneratorService {
 
   generateGraph(type: string, nodes: number, robots: number, startNodes: string): string {
     switch(type) {
-      case 'simpleLine': return this.generateSimpleLine(nodes, robots, startNodes);
-      case 'circle': return this.generateCircleGraph(nodes, robots, startNodes);
-      case 'complete': return this.generateCompleteGraph(nodes, robots, startNodes);
-      case 'barbell': return this.generateBarbellGraph(nodes, robots, startNodes);
-      case 'lollipop': return this.generateLollipopGraph(nodes, robots, startNodes);
-      case 'specialLine': return this.generateSpecialLine(nodes, robots, startNodes);
-      case 'grid': return this.generateGridGraph(nodes, robots, startNodes);
-      case 'hypercube': return this.generateHyperCube(nodes, robots, startNodes);
-      case 'er_random': return this.generateERRandomGraph(nodes, robots, startNodes);
+      case 'SIMPLE_LINE': return this.generateSimpleLine(nodes, robots, startNodes);
+      case 'CIRCLE': return this.generateCircleGraph(nodes, robots, startNodes);
+      case 'COMPLETE': return this.generateCompleteGraph(nodes, robots, startNodes);
+      case 'BARBELL': return this.generateBarbellGraph(nodes, robots, startNodes);
+      case 'LOLLIPOP': return this.generateLollipopGraph(nodes, robots, startNodes);
+      case 'SPECIAL_LINE': return this.generateSpecialLine(nodes, robots, startNodes);
+      case 'GRID': return this.generateGridGraph(nodes, robots, startNodes);
+      case 'HYPER_CUBE': return this.generateHyperCube(nodes, robots, startNodes);
+      case 'ER_RANDOM': return this.generateERRandomGraph(nodes, robots, startNodes);
     }
   }
 

@@ -1,27 +1,31 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {algorithmTypes} from "../../../models/types/AlgorithmType";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {getColorByHex} from "../../../models/others/Colors";
-import {VisService} from "../../../services/client-side/vis/vis.service";
-import {Robot} from "../../../models/base-entities/Robot";
-import {RobotState} from "../../../models/base-entities/Robot";
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RandomDispersionRobot } from 'src/app/models/algorithms/random-dispersion/RandomDispersionRobot';
+import { RandomWithLeaderDispersionRobot } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionRobot';
+import { RotorRouterDispersionRobot } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionRobot';
+import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionRobot';
+import { Robot } from 'src/app/models/core/Robot';
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
+import { getColorByHex } from 'src/app/models/utils/Color';
+import { RobotState } from 'src/app/models/utils/RobotState';
+import { VisService } from 'src/app/services/client-side/vis/vis.service';
 
 @Component({
   selector: 'app-algorithm-configuration',
   templateUrl: './algorithm-configuration.component.html',
   styleUrls: ['./algorithm-configuration.component.css']
 })
-export class AlgorithmConfigurationComponent implements OnInit {
+export class AlgorithmConfigurationComponent {
 
-  algorithmTypes = algorithmTypes;
+  algorithmTypes = Object.keys(AlgorithmType);
+
+  getColorByHex = getColorByHex;
 
   settingsFormGroup: FormGroup;
 
   keys: string[] = [];
   map: Map<string, number[]>;
-
-  getColorByHex = getColorByHex;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               fb: FormBuilder,
@@ -34,7 +38,7 @@ export class AlgorithmConfigurationComponent implements OnInit {
     this.map = data.startNodes;
     for (let [key] of this.map) {
       this.keys.push(key);
-      this.settingsFormGroup.addControl(key+'startNodes', new FormControl('', Validators.required));
+      this.settingsFormGroup.addControl(key + 'startNodes', new FormControl('', Validators.required));
     }
 
   }
@@ -43,7 +47,7 @@ export class AlgorithmConfigurationComponent implements OnInit {
   }
 
   save() {
-    let robots: Robot[] = [];
+    let robots = [];
 
     let robotID = 1;
     for (let key of this.keys) {
@@ -53,7 +57,22 @@ export class AlgorithmConfigurationComponent implements OnInit {
 
       for (let i = 0; i < startNodes.length; i++) {
         for (let j = 0; j < distribution[i]; j++) {
-          robots.push(new Robot(robotID, startNodes[i], RobotState.START, key, null));
+          switch (this.algorithmType.value) {
+            case AlgorithmType.RANDOM_DISPERSION:
+              robots.push(new RandomDispersionRobot(robotID, RobotState.START, getColorByHex(key), startNodes[i], null));
+              break;
+            case AlgorithmType.RANDOM_WITH_LEADER_DISPERSION:
+              robots.push(new RandomWithLeaderDispersionRobot(robotID, RobotState.START, getColorByHex(key), startNodes[i], null));
+              break;
+            case AlgorithmType.ROTOR_ROUTER_DISPERSION:
+              robots.push(new RotorRouterDispersionRobot(robotID, RobotState.START, getColorByHex(key), startNodes[i], null));
+              break;
+            case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
+              robots.push(new RotorRouterWithLeaderDispersionRobot(robotID, RobotState.START, getColorByHex(key), startNodes[i], null, null));
+              break;
+            default:
+              throw new Error('Algorithm type not found!');
+          }
           robotID++;
         }
       }
