@@ -1,9 +1,12 @@
 package hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_with_leader_dispersion;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import hu.elteik.knowledgelab.javaengine.algorithms.random_with_leader_dispersion.models.RandomWithLeaderDispersionEdge;
+import hu.elteik.knowledgelab.javaengine.algorithms.random_with_leader_dispersion.models.RandomWithLeaderDispersionNode;
 import org.springframework.stereotype.Component;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_with_leader_dispersion.models.*;
@@ -71,6 +74,15 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
 
             if (isRotorRouterWithLeaderNodeOccupied(graph, leadersByRotorRouterWithLeaderNode.getKey())) {
                 for (RotorRouterWithLeaderDispersionRobot leaderRotorRouterWithLeaderRobot: leadersByRotorRouterWithLeaderNode.getValue()) {
+
+                    //Check if the component still has some free nodes
+                    if (isComponentOccupied(graph, leaderRotorRouterWithLeaderRobot.getColor())) {
+                        // Terminate the leader and his followers
+                        robotList.stream().filter(robot -> robot.getOnID().equals(leaderRotorRouterWithLeaderRobot.getOnID())
+                                && !robot.getState().equals(RobotState.SETTLED))
+                                .forEach(follower -> follower.setState(RobotState.TERMINATED));
+                    }
+
                     // Need to find a new path
                     long newPath = getNewPath(graph, leaderRotorRouterWithLeaderRobot.getOnID(), leaderRotorRouterWithLeaderRobot.getColor());
                     leaderRotorRouterWithLeaderRobot.setDestinationID(newPath);
@@ -168,7 +180,7 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
         // is a simple robot has a destination he will settle on that.
 
         Map<Long, List<RotorRouterWithLeaderDispersionRobot>> robotsOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
-                .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
+                .filter(robot -> !robot.getState().equals(RobotState.SETTLED) && !robot.getState().equals(RobotState.TERMINATED))
                 .collect(groupingBy(RotorRouterWithLeaderDispersionRobot::getOnID));
 
         for (Map.Entry<Long, List<RotorRouterWithLeaderDispersionRobot>> robotsByRotorRouterWithLeaderNode : robotsOnDifferentRotorRouterWithLeaderNodes.entrySet()) {
@@ -269,7 +281,7 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
                 .filter(node -> node.getID().equals(leaderRotorRouterWithLeaderRobot.getOnID())).collect(Collectors.toList()).get(0);
 
         if (leaderRotorRouterWithLeaderRobot.getLastUsedEdgeID() == null) {
-            // System.out.println("The first step");
+
             currentRotorRouterWithLeaderNode.setRotorRouter(new HashMap<>());
             currentRotorRouterWithLeaderNode.getRotorRouter().put(leaderRotorRouterWithLeaderRobot.getColor(), 0L);
         } else {
@@ -289,6 +301,22 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
                 firstPortIndex++;
             }
         }
+    }
+
+    private boolean isComponentOccupied(Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge> graph, Color component) {
+        List<RotorRouterWithLeaderDispersionEdge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
+
+        List<Long> fromIDs = componentEdges.stream().map(RotorRouterWithLeaderDispersionEdge::getFromID).collect(Collectors.toList());
+        List<Long> toIDs = componentEdges.stream().map(RotorRouterWithLeaderDispersionEdge::getToID).collect(Collectors.toList());
+        fromIDs.addAll(toIDs);
+
+        List<Long> componentNodeIDs = fromIDs.stream().distinct().collect(Collectors.toList());
+        List<RotorRouterWithLeaderDispersionNode> componentNodes = new ArrayList<>();
+        for (Long ID : componentNodeIDs) {
+            componentNodes.add(graph.getNodeList().stream().filter(node -> node.getID().equals(ID)).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + ID + " not found!")));
+        }
+
+        return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();
     }
     
 }

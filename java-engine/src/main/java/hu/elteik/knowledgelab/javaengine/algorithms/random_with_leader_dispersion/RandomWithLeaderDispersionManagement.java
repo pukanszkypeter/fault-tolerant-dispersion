@@ -1,9 +1,12 @@
 package hu.elteik.knowledgelab.javaengine.algorithms.random_with_leader_dispersion;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_dispersion.models.RotorRouterDispersionEdge;
+import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_dispersion.models.RotorRouterDispersionNode;
 import org.springframework.stereotype.Component;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.random_with_leader_dispersion.models.*;
@@ -70,6 +73,14 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
 
             if (isNodeOccupied(graph, leadersByNode.getKey())) {
                 for (RandomWithLeaderDispersionRobot leaderRobot: leadersByNode.getValue()) {
+                    //Check if the component still has some free nodes
+                    if (isComponentOccupied(graph, leaderRobot.getColor())) {
+                        // Terminate the leader and his followers
+                        robotList.stream().filter(robot -> robot.getOnID().equals(leaderRobot.getOnID())
+                                        && !robot.getState().equals(RobotState.SETTLED))
+                                .forEach(follower -> follower.setState(RobotState.TERMINATED));
+                    }
+
                     // Need to find a new path
                     List<Long> edgeOptions = getNewRandomPath(graph, leaderRobot.getOnID(), leaderRobot.getColor());
                     if (edgeOptions.size() > 0) {
@@ -135,7 +146,7 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
         // is a simple robot has a destination he will settle on that.
 
         Map<Long, List<RandomWithLeaderDispersionRobot>> robotsOnDifferentNodes = robotList.stream()
-                .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
+                .filter(robot -> !robot.getState().equals(RobotState.SETTLED) && !robot.getState().equals(RobotState.TERMINATED))
                 .collect(groupingBy(RandomWithLeaderDispersionRobot::getOnID));
 
         for (Map.Entry<Long, List<RandomWithLeaderDispersionRobot>> robotsByNode : robotsOnDifferentNodes.entrySet()) {
@@ -202,6 +213,28 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
                 node.setState(NodeState.OCCUPIED);
             }
         }
+    }
+
+    private boolean isComponentOccupied(Graph<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge> graph, Color component) {
+        List<RandomWithLeaderDispersionEdge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
+
+        List<Long> fromIDs = componentEdges.stream().map(RandomWithLeaderDispersionEdge::getFromID).collect(Collectors.toList());
+        List<Long> toIDs = componentEdges.stream().map(RandomWithLeaderDispersionEdge::getToID).collect(Collectors.toList());
+        fromIDs.addAll(toIDs);
+
+        List<Long> componentNodeIDs = fromIDs.stream().distinct().collect(Collectors.toList());
+        List<RandomWithLeaderDispersionNode> componentNodes = new ArrayList<>();
+        for (Long ID : componentNodeIDs) {
+            componentNodes.add(graph.getNodeList().stream().filter(node -> node.getID().equals(ID)).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + ID + " not found!")));
+        }
+
+        System.out.println("Szin konponens méret");
+        System.out.println(componentNodes.size());
+
+        System.out.println("az elfoglalt szín");
+        System.out.println(componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count());
+
+        return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();
     }
     
 }

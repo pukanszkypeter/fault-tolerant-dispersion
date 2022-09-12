@@ -88,7 +88,7 @@ def createNetwork(polygon):
 
     polygonShape = geometry.Polygon(polypoints)
 
-    G = ox.graph_from_polygon(polygon = polygonShape, network_type='drive')
+    G = ox.graph_from_polygon(polygon = polygonShape, network_type='drive', simplify = True)
 
     nodes = []
     index = 0
