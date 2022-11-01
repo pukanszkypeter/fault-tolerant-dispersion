@@ -10,11 +10,8 @@ Types of changes can be as follows: `Added`, `Changed`, `Deprecated`, `Removed`,
 ## [0.0.1](https://github.com/pukanszkypeter/fault-tolerant-dispersion/tree/v0.0.1) - 2022-11-02
 ### Added
 - This changelog and readme.
-- Git hooks with [Husky](https://typicode.github.io/husky/#/).
 ### Changed
 - User-friendly UI changes.
-### Removed
-- Color based algorithm simulators.
 
 ## [0.0.0](https://github.com/pukanszkypeter/fault-tolerant-dispersion/tree/v0.0.0) - 2022-10-28
 

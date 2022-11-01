@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as vis from 'vis-network';
 import { DataSet } from "vis-data/peer/esm/vis-data"
-import { GraphConfiguration} from "../../../components/simulator/graph-configuration/GraphConfiguration";
+import { GraphConfiguration} from "../../../components/pages/simulator/graph-configuration/GraphConfiguration";
 import { GraphGeneratorService } from "../graph-generator/graph-generator.service";
 import { VisNode } from 'src/app/models/vis/VisNode';
 import { VisEdge } from 'src/app/models/vis/VisEdge';

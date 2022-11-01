@@ -1,58 +1,146 @@
-<header>
-  <nav class="navbar navbar-expand-lg primary-color shadow">
-    <div class="container-xl pt-1 pb-1">
-      <!-- Logo -->
-      <a 
-        class="navbar-brand navbar-logo"
-        (click)="handleActiveState('home')"
-        [routerLink]="['/home']">
-        <img src="assets/images/navbar-logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-        {{ 'layoutComponent_title' | translate }}
-      </a>
-      <!-- Toggler -->
-      <button mat-icon-button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#toggler">
-        <mat-icon svgIcon="menu"></mat-icon>
-      </button>
-      <!-- Links -->
-      <div class="collapse navbar-collapse" id="toggler">
-        <!-- Left side links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6"
+    [routerLink]="['/dashboard']"
+  >
+    <img alt="icon" src="assets/images/icon.png" height="25px" width="25px" />
+    <span class="navbar-brand-title">Dispersion <wbr /> Systems</span>
+  </a>
+  <button
+    class="navbar-toggler position-absolute d-md-none collapsed"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#sidebarMenu"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input
+    class="form-control form-control-dark w-100 rounded-0 border-0"
+    type="text"
+    [placeholder]="'layout.header.search' | translate"
+  />
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a
+        class="nav-link px-3"
+        [routerLink]="['/**']"
+        >{{ "layout.header.signOut" | translate }}</a
+      >
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav
+      id="sidebarMenu"
+      class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+    >
+      <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" (click)="handleActiveState('simulator')" [routerLink]="['/simulator']">{{ 'layoutComponent_simulation' | translate }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="handleActiveState('tester')" [routerLink]="['/tester']">{{ 'layoutComponent_automatedTest' | translate }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="handleActiveState('results')" [routerLink]="['/results']">{{ 'layoutComponent_visualization' | translate }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="handleActiveState('open-street-map')" [routerLink]="['/open-street-map']">{{ 'layoutComponent_openStreetMap' | translate }}</a>
-          </li>
-        </ul>
-        <!-- Right side links -->
-        <ul class="navbar-nav d-flex">
-          <li class="nav-item">
-            <a target="_blank" href="https://github.com/pukanszkypeter/knowledge-lab/tree/master">
-              <button mat-icon-button>
-                <mat-icon id="github-icon" svgIcon="github">
-                </mat-icon>
-              </button>
+            <a
+              class="nav-link"
+              [routerLink]="['/dashboard']"
+            >
+              <i class="bi bi-house-door me-1"></i>
+              {{ "layout.nav.dashboard" | translate }}
             </a>
           </li>
           <li class="nav-item">
-            <button id="settings-button" mat-icon-button (click)="openSettingsDialog()"><mat-icon svgIcon="settings"></mat-icon></button>
+            <a
+              class="nav-link"
+              [routerLink]="['/simulator']"
+            >
+              <i class="bi bi-speedometer me-1"></i>
+              {{ "layout.nav.simulator" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/tester']"
+            >
+              <i class="bi bi-bug me-1"></i>
+              {{ "layout.nav.tester" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/results']"
+            >
+              <i class="bi bi-graph-up me-1"></i>
+              {{ "layout.nav.results" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/open-street-map']"
+            >
+              <i class="bi bi-geo-alt me-1"></i>
+              Open Street Map
+            </a>
+          </li>
+        </ul>
+
+        <h6
+          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase"
+        >
+          <span>{{ "layout.nav.other" | translate }}</span>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/profile']"
+            >
+              <i class="bi bi-person me-1"></i>
+              {{ "layout.nav.profile" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              target="_blank"
+              href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+            >
+              <i class="bi bi-github me-1"></i>
+              {{ "layout.nav.github" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/settings']"
+            >
+              <i class="bi bi-gear me-1"></i>
+              {{ "layout.nav.settings" | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/changelog']"
+            >
+              <i class="bi bi-info-circle me-1"></i>
+              {{ "layout.nav.changelog" | translate }}
+            </a>
           </li>
         </ul>
       </div>
-    </div>
-  </nav>
-</header>
-<main>
-  <div class="container-xl mt-4">
-    <ng-content></ng-content>
-  </div>
-</main>
-<footer>
+    </nav>
 
-</footer>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <ng-content></ng-content>
+    </main>
+
+    <footer class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <!-- TODO: Footer content -->
+    </footer>
+  </div>
+</div>

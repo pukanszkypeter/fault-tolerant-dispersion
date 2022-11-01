@@ -1,4 +1,52 @@
 {
+  "layout": {
+    "header": {
+      "search": "Search",
+      "signOut": "Sign out"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "simulator": "Simulator",
+      "tester": "Tester",
+      "results": "Results",
+      "other": "Other",
+      "profile": "Profile",
+      "settings": "Settings",
+      "github": "GitHub",
+      "changelog": "Changelog"
+    },
+    "footer": {
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "simulator": {
+      "title": "Simulator"
+    },
+    "tester": {
+      "title": "Tester"
+    },
+    "results": {
+      "title": "Results"
+    },
+    "openStreetMap": {
+      "title": "Open Street Map"
+    },
+    "profile": {
+      "title": "Profile"
+    },
+    "settings": {
+      "title": "Settings"
+    },
+    "changelog": {
+      "title": "Changelog"
+    }
+  },
+
+  
+
   "HUNGARIAN": "Hungarian",
   "GERMAN": "German",
   "ENGLISH": "English",

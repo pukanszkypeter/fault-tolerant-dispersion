@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
-import { SettingsComponent } from "./settings/settings.component";
+import { SettingsComponent } from "../pages/settings/settings.component";
 import { filter } from 'rxjs/operators'
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -17,12 +17,7 @@ export class LayoutComponent implements OnInit {
     this.router.events
     .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
     .subscribe(event => {
-      if (
-        event.id === 1 &&
-        event.url === event.urlAfterRedirects 
-      ) {
-       this.handleActiveState(event.url.substring(1));
-      }
+      event.url === '/' ? this.handleActiveState('dashboard') : this.handleActiveState(event.url.substring(1));
     });
    }
 
@@ -31,46 +26,44 @@ export class LayoutComponent implements OnInit {
 
   public handleActiveState(path: string): void {
     const links = document.getElementsByTagName('a');
-
+    
     switch(path) {
-
-      case 'home':
+      case 'dashboard':
         Array.from(links).forEach(link => link.classList.remove('active'));
+        links[2].classList.add('active')
         break;
-
       case 'simulator':
-        Array.from(links).forEach(link => link.classList.remove('active'));
-        links[1].classList.add('active');
-        break;
-
-      case 'tester':
-        Array.from(links).forEach(link => link.classList.remove('active'));
-        links[2].classList.add('active');
-        break;
-
-      case 'results':
         Array.from(links).forEach(link => link.classList.remove('active'));
         links[3].classList.add('active');
         break;
-
-      case 'open-street-map':
+      case 'tester':
         Array.from(links).forEach(link => link.classList.remove('active'));
         links[4].classList.add('active');
         break;
-
+      case 'results':
+        Array.from(links).forEach(link => link.classList.remove('active'));
+        links[5].classList.add('active');
+        break;
+      case 'open-street-map':
+        Array.from(links).forEach(link => link.classList.remove('active'));
+        links[6].classList.add('active');
+        break;
+      case 'profile':
+        Array.from(links).forEach(link => link.classList.remove('active'));
+        links[7].classList.add('active');
+        break;
+      case 'settings':
+        Array.from(links).forEach(link => link.classList.remove('active'));
+        links[9].classList.add('active');
+        break;
+      case 'changelog':
+        Array.from(links).forEach(link => link.classList.remove('active'));
+        links[10].classList.add('active');
+        break;
       default:
         Array.from(links).forEach(link => link.classList.remove('active'));
         break;
     }
-  }
-
-  openSettingsDialog(): void {
-    this.dialog.open(SettingsComponent, {
-      height: '40%',
-      width: '30%',
-      position: {top: '2%'},
-      disableClose: true
-    });
   }
 
 }
