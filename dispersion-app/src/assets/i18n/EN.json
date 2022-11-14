@@ -1,4 +1,9 @@
 {
+  "application": {
+    "feedback": {
+      "translationChanged": "The language of the application is *English*"
+    }
+  },
   "layout": {
     "header": {
       "search": "Search",

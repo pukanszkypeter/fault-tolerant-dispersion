@@ -1,4 +1,9 @@
 {
+  "application": {
+    "feedback": {
+      "translationChanged": "Die Sprache der Anwendung ist *Deutsch*"
+    }
+  },
   "layout": {
     "header": {
       "search": "Suche",

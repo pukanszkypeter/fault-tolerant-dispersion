@@ -1,4 +1,9 @@
 {
+  "application": {
+    "feedback": {
+      "translationChanged": "Az applikáció nyelve *Magyar*"
+    }
+  },
   "layout": {
     "header": {
       "search": "Keresés",

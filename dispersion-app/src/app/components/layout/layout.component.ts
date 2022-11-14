@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { getLanguageCode, Language } from 'src/app/models/utils/Language';
 import { LanguageService } from 'src/app/services/client-side/utils/language.service';
+import { SnackbarService } from 'src/app/services/client-side/utils/snackbar.service';
 
 @Component({
   selector: 'app-layout',
@@ -16,7 +17,8 @@ export class LayoutComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private snackBarService: SnackbarService
   ) {
     this.router.events
       .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
@@ -73,5 +75,17 @@ export class LayoutComponent implements OnInit {
 
   public changeLanguage(language: string): void {
     this.languageService.setLanguage(getLanguageCode(language));
+    setTimeout(
+      () =>
+        this.snackBarService.openSnackBar(
+          'application.feedback.translationChanged',
+          'success-snackbar',
+          null,
+          'right',
+          'bottom',
+          null
+        ),
+      500
+    );
   }
 }
