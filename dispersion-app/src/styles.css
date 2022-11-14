@@ -5,31 +5,4 @@
 @import "~leaflet/dist/leaflet.css";
 
 html, body { height: 100%; }
-body { margin: 0; background: #F5F5F5; }
-
-.primary-color {
-  background-color: #353839;
-}
-
-img, svg {
-  vertical-align: 0;
-}
-
-.success-snackbar {
-  background-color: green;
-  color: white;
-}
-
-.error-snackbar {
-  background-color: red;
-  color: white;
-}
-
-.warning-snackbar {
-  background-color: orange;
-  color: white;
-}
-
-.mat-simple-snackbar {
-  justify-content: center !important;
-}
+body { margin: 0; background: #FFFFFF; }

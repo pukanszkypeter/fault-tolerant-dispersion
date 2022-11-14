@@ -1,4 +1,52 @@
 {
+  "layout": {
+    "header": {
+      "search": "Keresés",
+      "signOut": "Kijelentkezés"
+    },
+    "nav": {
+      "dashboard": "Irányítópult",
+      "simulator": "Szimulátor",
+      "tester": "Tesztelő",
+      "results": "Eredmények",
+      "other": "Egyéb",
+      "profile": "Profil",
+      "settings": "Beállítások",
+      "github": "GitHub",
+      "changelog": "Változási napló"
+    },
+    "footer": {
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Irányítópult"
+    },
+    "simulator": {
+      "title": "Szimulátor"
+    },
+    "tester": {
+      "title": "Tesztelő"
+    },
+    "results": {
+      "title": "Eredmények"
+    },
+    "openStreetMap": {
+      "title": "Open Street Map"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "settings": {
+      "title": "Beállítások"
+    },
+    "changelog": {
+      "title": "Változási napló"
+    }
+  },
+
+
+
   "HUNGARIAN": "Magyar",
   "GERMAN": "Német",
   "ENGLISH": "Angol",
@@ -120,6 +168,7 @@
   "automatedTestComponent_algorithmSettings": "Algoritmus beállítások",
   "automatedTestComponent_settings": "Szimuláció beállítások",
   "automatedTestComponent_preview": "Gráf előnézet",
+  "automatedTestComponent_init": "Initialization phase",
   "automatedTestComponent_configure": "Konfiguráció",
   "automatedTesterComponent_testsColumn": "Tesztek száma",
   "automatedTesterComponent_successColumn": "Sikeres tesztek",

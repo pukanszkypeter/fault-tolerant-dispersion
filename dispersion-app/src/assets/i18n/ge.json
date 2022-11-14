@@ -1,4 +1,52 @@
 {
+  "layout": {
+    "header": {
+      "search": "Suche",
+      "signOut": "Ausloggen"
+    },
+    "nav": {
+      "dashboard": "Startsite",
+      "simulator": "Simulator",
+      "tester": "Tester",
+      "results": "Ergebnisse",
+      "other": "Sonstiges",
+      "profile": "Profil",
+      "settings": "Einstellungen",
+      "github": "GitHub",
+      "changelog": "Changelog"
+    },
+    "footer": {
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Startsite"
+    },
+    "simulator": {
+      "title": "Simulator"
+    },
+    "tester": {
+      "title": "Tester"
+    },
+    "results": {
+      "title": "Ergebnisse"
+    },
+    "openStreetMap": {
+      "title": "Open Street Map"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "settings": {
+      "title": "Einstellungen"
+    },
+    "changelog": {
+      "title": "Changelog"
+    }
+  },
+
+
+
   "HUNGARIAN": "Ungarn",
   "GERMAN": "Deutsch",
   "ENGLISH": "Englisch",
@@ -120,6 +168,7 @@
   "automatedTestComponent_algorithmSettings": "Algorithmus-Einstellungen",
   "automatedTestComponent_settings": "Simulation Einstellungen",
   "automatedTestComponent_preview": "Vorschau Graph",
+  "automatedTestComponent_init": "Initialization phase",
   "automatedTestComponent_configure": "Konfiguration",
   "automatedTesterComponent_testsColumn": "Anzahl der Tests",
   "automatedTesterComponent_successColumn": "Erfolgreiche Tests",

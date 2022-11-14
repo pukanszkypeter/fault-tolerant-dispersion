@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_dispersion.models.RotorRouterDispersionEdge;
-import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_dispersion.models.RotorRouterDispersionNode;
 import org.springframework.stereotype.Component;
 
 import hu.elteik.knowledgelab.javaengine.algorithms.random_with_leader_dispersion.models.*;
