@@ -1,0 +1,209 @@
+{
+  "layout": {
+    "header": {
+      "search": "Suche",
+      "signOut": "Ausloggen",
+      "hungarian": "Ungarisch",
+      "german": "Deutsch",
+      "english": "Englisch"
+    },
+    "nav": {
+      "dashboard": "Startsite",
+      "simulator": "Simulator",
+      "tester": "Tester",
+      "results": "Ergebnisse",
+      "other": "Sonstiges",
+      "profile": "Profil",
+      "settings": "Einstellungen",
+      "github": "GitHub",
+      "changelog": "Changelog"
+    },
+    "footer": {}
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Startsite"
+    },
+    "simulator": {
+      "title": "Simulator"
+    },
+    "tester": {
+      "title": "Tester"
+    },
+    "results": {
+      "title": "Ergebnisse"
+    },
+    "openStreetMap": {
+      "title": "Open Street Map"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "settings": {
+      "title": "Einstellungen"
+    },
+    "changelog": {
+      "title": "Changelog"
+    }
+  },
+
+  "HUNGARIAN": "Ungarn",
+  "GERMAN": "Deutsch",
+  "ENGLISH": "Englisch",
+
+  "SAVE": "Speichern",
+  "SAVE_AND_RESET": "Speichern und Zurücksetzen",
+  "ONLY_RESET": "Nur Zurücksetzen",
+  "CLOSE": "Schließen",
+
+  "READY": "Fertig",
+  "NOT_READY": "Nicht fertig",
+
+  "PLAY": "Spielen",
+  "NEXT_STEP": "Nächster Schritt",
+  "PAUSE": "Pause",
+  "RESET": "Zurücksetzen",
+  "SPEED": "Geschwindigkeit",
+  "RUN": "Run",
+
+  "SUCCESSFUL_SAVE": "Erfolgreiches speichern!",
+  "UNSUCCESSFUL_SAVE": "Konnte nicht gespeichert werden!",
+  "FORM_ERROR": "Formularfehler!",
+  "SERVER_ERROR": "Daten vom Server konnten nicht geladen werden!",
+
+  "RANDOM_DISPERSION": "Zufällig Dispersion",
+  "RANDOM_WITH_LEADER_DISPERSION": "Zufällig mit Anführer Dispersion",
+  "ROTOR_ROUTER_DISPERSION": "Roto-Rooter Dispersion",
+  "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Roto-Rooter mit Anführer Dispersion",
+
+  "START": "Starter",
+  "EXPLORE": "Forscher",
+  "LEADER": "Leader",
+  "SETTLED": "Festgelegt",
+  "TERMINATED": "Beendet",
+
+  "SIMULATION_FINISHED": "Die Roboter konnten alle Knoten erfolgreich besetzen!",
+  "SIMULATION_STUCK": "Hoppla! Es sieht so aus, als ob alle Roboter vor der Besetzung fertig waren!",
+
+  "COMPLETE": "Komplett",
+  "SIMPLE_LINE": "Einfache Linie",
+  "CIRCLE": "Kreis",
+  "BARBELL": "Hantel",
+  "LOLLIPOP": "Lolly",
+  "SPECIAL_LINE": "Sonderlinie",
+  "GRID": "Netz",
+  "HYPER_CUBE": "Hyperwürfel",
+  "ER_RANDOM": "ER Zufällig",
+
+  "BLACK": "Schwarz",
+  "GREEN": "Grün",
+  "GREY": "Grau",
+  "BROWN": "Braun",
+  "ORANGE": "Orange",
+  "YELLOW": "Gelb",
+  "PINK": "Rosa",
+  "PURPLE": "Lila",
+  "BLUE": "Blau",
+  "AQUA": "Wasser",
+
+  "not_configured": "Nicht konfiguriert",
+  "configured": "Konfiguriert",
+  "running": "Laufende",
+  "stopped": "Gestoppt",
+
+  "layoutComponent_title": "Dispersion Systems",
+  "layoutComponent_home": "Startseite",
+  "layoutComponent_simulation": "Simulator",
+  "layoutComponent_automatedTest": "Tester",
+  "layoutComponent_visualization": "Ergebnisse",
+  "layoutComponent_openStreetMap": "Open Street Map",
+
+  "settingsComponent_title": "Applikation Einstellungen",
+  "settingsComponent_version": "Version",
+  "settingsComponent_language": "Sprache",
+
+  "homeComponent_title": "Dispersion Systems",
+  "pageNotFoundComponent_title": "404 - Seite nicht gefunden!",
+
+  "simulationComponent_title": "Simulator",
+  "simulationComponent_tableIDColumn": "No.",
+  "simulationComponent_tableColorColumn": "Farbe",
+  "simulationComponent_tablePositionColumn": "Position",
+  "simulationComponent_tableStateColumn": "Zustand",
+  "simulationComponent_informationPanelState": "Zustand",
+  "simulationComponent_informationPanelModified": "Geändert",
+  "simulationComponent_informationPanelAlgorithm": "Algorithmus Typ",
+  "simulationComponent_informationPanelGraph": "Graph Typ",
+  "simulationComponent_informationPanelNodes": "Knoten",
+  "simulationComponent_informationPanelRobots": "Roboter",
+  "simulationComponent_informationPanelColors": "Farben",
+  "simulationComponent_informationPanelStartNodes": "Startknoten",
+  "simulationComponent_serverResponseTime": "Antwortzeit des Servers",
+  "simulationComponent_steps": "Schritte",
+
+  "settingsDialogComponent_title": "Graph Konfiguration",
+  "settingsDialogComponent_algorithmTitle": "Algorithmus Konfiguration",
+  "settingsDialogComponent_graphType": "Graph Typ",
+  "settingsDialogComponent_graphTypeRequired": "Graph typ ist erforderlich!",
+  "settingsDialogComponent_algorithmType": "Algorithmus Typ",
+  "settingsDialogComponent_algorithmTypeRequired": "Algorithmus typ ist erforderlich!",
+  "settingsDialogComponent_nodes": "Anzahl der Knoten",
+  "settingsDialogComponent_nodesRequired": "Die Anzahl der Knoten ist erforderlich!",
+  "settingsDialogComponent_nodesMin": "Die Anzahl der Knoten muss min.: 1 sein!",
+  "settingsDialogComponent_nodesMax": "Die Anzahl der Knoten muss max.: 50 sein!",
+  "settingsDialogComponent_barbellConstraintError": "Die Anzahl der Knoten muss ein Vielfaches von 3 sein!",
+  "settingsDialogComponent_lollipopConstraintError": "Die Anzahl der Knoten muss ein Vielfaches von 2 sein!",
+  "settingsDialogComponent_hypercubeConstraintError": "Die Anzahl der Knoten muss eine Potenz von 2 sein!",
+  "settingsDialogComponent_robots": "Anzahl Roboter",
+  "settingsDialogComponent_robotsRequired": "Die Anzahl der Roboter ist erforderlich!",
+  "settingsDialogComponent_robotsMin": "Die Anzahl der Roboter muss min.: 1 sein!",
+  "settingsDialogComponent_robotsMax": "Die Anzahl der Roboter muss max.: ",
+  "settingsDialogComponent_colors": "Diagrammkomponenten",
+  "settingsDialogComponent_colorsRequired": "Diagrammkomponenten ist erforderlich!",
+  "settingsDialogComponent_startNodes": "Bitte wählen Sie die Anfangspunkte der Komponenten aus!",
+  "settingsDialogComponent_startNodesRequired": "Anfangspunkte für Komponenten sind erforderlich!",
+
+  "automatedTestComponent_title": "Tester",
+  "automatedTestComponent_graphSettings": "Grafikeinstellungen",
+  "automatedTestComponent_algorithmSettings": "Algorithmus-Einstellungen",
+  "automatedTestComponent_settings": "Simulation Einstellungen",
+  "automatedTestComponent_preview": "Vorschau Graph",
+  "automatedTestComponent_init": "Initialization phase",
+  "automatedTestComponent_configure": "Konfiguration",
+  "automatedTesterComponent_testsColumn": "Anzahl der Tests",
+  "automatedTesterComponent_successColumn": "Erfolgreiche Tests",
+  "automatedTesterComponent_failedColumn": "Fehlgeschlagene Tests",
+  "automatedTesterComponent_stepsColumn": "Durchschnittliche Schritte ",
+  "automatedTesterComponent_serverColumn": "Durchschnittliche Serverantwortzeit",
+
+  "automatedTestSettingsComponent_tests": "Anzahl der Tests",
+  "automatedTestSettingsComponent_testsRequired": "Die Anzahl der Tests ist erforderlich!",
+  "automatedTestSettingsComponent_testsMin": "Die Anzahl der Tests muss min.: 1 sein!",
+  "automatedTestSettingsComponent_testsMax": "Die Anzahl der Tests muss max.: 1000 sein!",
+
+  "logFormComponent_title": "Möchten Sie das folgende Ergebnis speichern?",
+
+  "visualizationComponent_title": "Ergebnisse",
+  "visualizationComponent_groupByChart": "Group By Diagramm",
+  "visualizationComponent_query": "Anfrage",
+  "visualizationComponent_graphComponents": "Die Anzahl den Graph Komponenten",
+  "visualizationComponent_averageSteps": "Anzahl der durchschnittlichen Schritte",
+  "visualizationComponent_noTestFound": "Keine Testdaten gefunden!",
+  "visualizationComponent_averageStepsChart": "Diagramm der Zusammenfassung",
+  "visualizationComponent_summaryByCaption": "Zusammenfassung von",
+  "visualizationComponent_summaryByRequired": "Zusammenfassung von ist erforderlich!",
+  "visualizationComponent_max": "Maximum Schritte",
+  "visualizationComponent_min": "Minimum Schritte",
+  "visualizationComponent_average": "Durchschnittlichen Schritte",
+  "visualizationComponent_tests": "Dia Anzahl der Tests",
+  "visualizationComponent_xAxis": "X-Achse",
+  "visualizationComponent_detailByChart": "Detail By Diagramm",
+  "visualizationComponent_detailByCaption": "Detail By",
+
+  "openStreetMapComponent_title": "Open Street Map",
+  "openStreetMapComponent_searchCity": "Suche nach einer Stadt...",
+  "openStreetMapComponent_cityNotFound": "Stadt nicht gefunden!",
+  "openStreetMapComponent_createNetwork": "Netzwerk erstellen",
+  "openStreetMapComponent_selectAlgorithmType": "Auswahl des Algorithmus",
+  "openStreetMapComponent_nodeID": "Knoten-ID"
+}

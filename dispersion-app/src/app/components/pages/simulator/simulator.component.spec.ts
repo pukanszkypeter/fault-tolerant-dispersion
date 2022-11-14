@@ -8,9 +8,8 @@ describe('StaticComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SimulatorComponent ]
-    })
-    .compileComponents();
+      declarations: [SimulatorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

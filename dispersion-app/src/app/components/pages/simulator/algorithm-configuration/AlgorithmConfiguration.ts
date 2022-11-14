@@ -1,7 +1,6 @@
-import { AlgorithmType } from "src/app/models/utils/AlgorithmType";
+import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 
 export class AlgorithmConfiguration {
-
   algorithmType: AlgorithmType;
   robots: any[];
 
@@ -16,5 +15,4 @@ export class AlgorithmConfiguration {
 
     return this;
   }
-
 }

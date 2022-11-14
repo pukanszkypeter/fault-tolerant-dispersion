@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 
 export const LANGUAGE_KEY = 'LANGUAGE';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LanguageService {
-
-  constructor(private translate: TranslateService) { }
+  constructor(private translate: TranslateService) {}
 
   getLanguage(): string {
     return this.translate.getDefaultLang();
@@ -30,13 +29,15 @@ export class LanguageService {
 
   getTranslatedText(key: string): string {
     let text: string;
-    this.translate.get(key).subscribe(res => {
-      text = res;
-    }, err => {
-      console.log(err);
-    });
+    this.translate.get(key).subscribe(
+      (res) => {
+        text = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
 
     return text;
   }
-
 }

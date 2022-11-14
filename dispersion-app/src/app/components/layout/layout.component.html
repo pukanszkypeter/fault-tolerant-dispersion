@@ -24,11 +24,29 @@
   />
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a
-        class="nav-link px-3"
-        [routerLink]="['/**']"
-        >{{ "layout.header.signOut" | translate }}</a
+      <button
+        mat-icon-button
+        id="translate-icon"
+        class="nav-link mx-2"
+        [matMenuTriggerFor]="languageMenu"
       >
+        <mat-icon svgIcon="translate"></mat-icon>
+      </button>
+      <mat-menu #languageMenu="matMenu" xPosition="before">
+        <button
+          mat-menu-item
+          *ngFor="let language of languages"
+          class="language-menu-item"
+          (click)="changeLanguage(language)"
+        >
+          {{ "layout.header." + language.toLocaleLowerCase() | translate }}
+        </button>
+      </mat-menu>
+    </div>
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" [routerLink]="['/**']">{{
+        "layout.header.signOut" | translate
+      }}</a>
     </div>
   </div>
 </header>
@@ -42,46 +60,31 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/dashboard']"
-            >
+            <a class="nav-link" [routerLink]="['/dashboard']">
               <i class="bi bi-house-door me-1"></i>
               {{ "layout.nav.dashboard" | translate }}
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/simulator']"
-            >
+            <a class="nav-link" [routerLink]="['/simulator']">
               <i class="bi bi-speedometer me-1"></i>
               {{ "layout.nav.simulator" | translate }}
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/tester']"
-            >
+            <a class="nav-link" [routerLink]="['/tester']">
               <i class="bi bi-bug me-1"></i>
               {{ "layout.nav.tester" | translate }}
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/results']"
-            >
+            <a class="nav-link" [routerLink]="['/results']">
               <i class="bi bi-graph-up me-1"></i>
               {{ "layout.nav.results" | translate }}
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/open-street-map']"
-            >
+            <a class="nav-link" [routerLink]="['/open-street-map']">
               <i class="bi bi-geo-alt me-1"></i>
               Open Street Map
             </a>
@@ -95,10 +98,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/profile']"
-            >
+            <a class="nav-link" [routerLink]="['/profile']">
               <i class="bi bi-person me-1"></i>
               {{ "layout.nav.profile" | translate }}
             </a>
@@ -114,19 +114,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/settings']"
-            >
+            <a class="nav-link" [routerLink]="['/settings']">
               <i class="bi bi-gear me-1"></i>
               {{ "layout.nav.settings" | translate }}
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['/changelog']"
-            >
+            <a class="nav-link" [routerLink]="['/changelog']">
               <i class="bi bi-info-circle me-1"></i>
               {{ "layout.nav.changelog" | translate }}
             </a>

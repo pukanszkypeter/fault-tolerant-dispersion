@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-changelog',
   templateUrl: './changelog.component.html',
-  styleUrls: ['./changelog.component.css']
+  styleUrls: ['./changelog.component.css'],
 })
 export class ChangelogComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

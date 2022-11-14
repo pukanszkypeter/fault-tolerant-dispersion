@@ -1,36 +1,47 @@
 <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <h3 mat-dialog-title>{{ 'simulationComponent_informationPanelAlgorithm' | translate }}</h3>
-      </div>
-      <div class="col-4 text-end">
-        <button mat-mini-fab style="background-color: white" mat-dialog-close>
-          <mat-icon svgIcon="close"></mat-icon>
-        </button>
-      </div>
+  <div class="row">
+    <div class="col-8">
+      <h3 mat-dialog-title>
+        {{ "simulationComponent_informationPanelAlgorithm" | translate }}
+      </h3>
     </div>
-    <mat-dialog-content>
-      <form [formGroup]="algorithmTypeGroup">
-  
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'settingsDialogComponent_algorithmType' | translate }}</mat-label>
-          <mat-select [formControl]="algorithmType">
-            <mat-option *ngFor="let algorithmType of algorithmTypes" [value]="algorithmType">
-              {{ algorithmType | translate }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="algorithmType.hasError('required')">{{ 'settingsDialogComponent_algorithmTypeRequired' | translate }}</mat-error>
-        </mat-form-field>
-  
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-raised-button color="primary" [disabled]="algorithmTypeGroup.invalid" (click)="save()">
-        {{ 'SAVE' | translate }}
+    <div class="col-4 text-end">
+      <button mat-mini-fab style="background-color: white" mat-dialog-close>
+        <mat-icon svgIcon="close"></mat-icon>
       </button>
-      <button mat-raised-button mat-dialog-close>
-        {{ 'CLOSE' | translate }}
-      </button>
-    </mat-dialog-actions>
+    </div>
   </div>
-  
+  <mat-dialog-content>
+    <form [formGroup]="algorithmTypeGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>{{
+          "settingsDialogComponent_algorithmType" | translate
+        }}</mat-label>
+        <mat-select [formControl]="algorithmType">
+          <mat-option
+            *ngFor="let algorithmType of algorithmTypes"
+            [value]="algorithmType"
+          >
+            {{ algorithmType | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="algorithmType.hasError('required')">{{
+          "settingsDialogComponent_algorithmTypeRequired" | translate
+        }}</mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="algorithmTypeGroup.invalid"
+      (click)="save()"
+    >
+      {{ "SAVE" | translate }}
+    </button>
+    <button mat-raised-button mat-dialog-close>
+      {{ "CLOSE" | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

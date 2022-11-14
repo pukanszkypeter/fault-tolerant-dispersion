@@ -1,0 +1,209 @@
+{
+  "layout": {
+    "header": {
+      "search": "Keresés",
+      "signOut": "Kijelentkezés",
+      "hungarian": "Magyar",
+      "german": "Német",
+      "english": "Angol"
+    },
+    "nav": {
+      "dashboard": "Irányítópult",
+      "simulator": "Szimulátor",
+      "tester": "Tesztelő",
+      "results": "Eredmények",
+      "other": "Egyéb",
+      "profile": "Profil",
+      "settings": "Beállítások",
+      "github": "GitHub",
+      "changelog": "Változási napló"
+    },
+    "footer": {}
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Irányítópult"
+    },
+    "simulator": {
+      "title": "Szimulátor"
+    },
+    "tester": {
+      "title": "Tesztelő"
+    },
+    "results": {
+      "title": "Eredmények"
+    },
+    "openStreetMap": {
+      "title": "Open Street Map"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "settings": {
+      "title": "Beállítások"
+    },
+    "changelog": {
+      "title": "Változási napló"
+    }
+  },
+
+  "HUNGARIAN": "Magyar",
+  "GERMAN": "Német",
+  "ENGLISH": "Angol",
+
+  "SAVE": "Mentés",
+  "SAVE_AND_RESET": "Mentés és Visszaállítás",
+  "ONLY_RESET": "Csak visszaállítás",
+  "CLOSE": "Bezárás",
+
+  "READY": "Kész",
+  "NOT_READY": "Nincs kész",
+
+  "PLAY": "Indítás",
+  "NEXT_STEP": "Következő lépés",
+  "PAUSE": "Megállít",
+  "RESET": "Visszaállítás",
+  "SPEED": "Sebesség",
+  "RUN": "Indítás",
+
+  "SUCCESSFUL_SAVE": "Sikeres mentés!",
+  "UNSUCCESSFUL_SAVE": "Sikertelen mentés!",
+  "FORM_ERROR": "Űrlap hiba!",
+  "SERVER_ERROR": "Nem sikerült betölteni az adatokat a szerverről!",
+
+  "RANDOM_DISPERSION": "Véletlen diszperzió",
+  "RANDOM_WITH_LEADER_DISPERSION": "Véletlen - vezetővel diszperzió",
+  "ROTOR_ROUTER_DISPERSION": "Rotor router diszperzió",
+  "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router - vezetővel diszperzió",
+
+  "START": "Start",
+  "EXPLORE": "Kereső",
+  "LEADER": "Vezető",
+  "SETTLED": "Letelepedett",
+  "TERMINATED": "Terminált",
+
+  "SIMULATION_FINISHED": "A robotok sikeresen el tudták foglalni az összes csomópontot!",
+  "SIMULATION_STUCK": "Hoppá! Úgy tűnik, minden robot végzett a megszállás előtt!",
+
+  "COMPLETE": "Teljes",
+  "SIMPLE_LINE": "Egyszerű vonal",
+  "CIRCLE": "Kör",
+  "BARBELL": "Súlyzó",
+  "LOLLIPOP": "Nyalóka",
+  "SPECIAL_LINE": "Speciális Vonal",
+  "GRID": "Rács",
+  "HYPER_CUBE": "Hiperkocka",
+  "ER_RANDOM": "ER Random",
+
+  "BLACK": "Fekete",
+  "GREEN": "Zöld",
+  "GREY": "Szürke",
+  "BROWN": "Barna",
+  "ORANGE": "Narancs",
+  "YELLOW": "Citromsárga",
+  "PINK": "Rózsaszín",
+  "PURPLE": "Lila",
+  "BLUE": "Kék",
+  "AQUA": "Víz",
+
+  "not_configured": "Nem konfigurált",
+  "configured": "Konfigurált",
+  "running": "Fut",
+  "stopped": "Megállt",
+
+  "layoutComponent_title": "Dispersion Systems",
+  "layoutComponent_home": "Kezőoldal",
+  "layoutComponent_simulation": "Szimulátor",
+  "layoutComponent_automatedTest": "Tesztelő",
+  "layoutComponent_visualization": "Eredmények",
+  "layoutComponent_openStreetMap": "Open Street Map",
+
+  "settingsComponent_title": "Alkalmazás beállítások",
+  "settingsComponent_version": "Verzió",
+  "settingsComponent_language": "Nyelv",
+
+  "homeComponent_title": "Dispersion Systems",
+  "pageNotFoundComponent_title": "404 - Az oldal nem található!",
+
+  "simulationComponent_title": "Szimulátor",
+  "simulationComponent_tableIDColumn": "No.",
+  "simulationComponent_tableColorColumn": "Szín",
+  "simulationComponent_tablePositionColumn": "Pozíció",
+  "simulationComponent_tableStateColumn": "Állapot",
+  "simulationComponent_informationPanelState": "Állapot",
+  "simulationComponent_informationPanelModified": "Módosított",
+  "simulationComponent_informationPanelAlgorithm": "Algoritmus típus",
+  "simulationComponent_informationPanelGraph": "Gráf típus",
+  "simulationComponent_informationPanelNodes": "Csúcsok",
+  "simulationComponent_informationPanelRobots": "Robotok",
+  "simulationComponent_informationPanelColors": "Színek",
+  "simulationComponent_informationPanelStartNodes": "Kezdő csúcsok",
+  "simulationComponent_serverResponseTime": "Szerver válasz idő",
+  "simulationComponent_steps": "Lépések",
+
+  "settingsDialogComponent_title": "Gráf konfiguráció",
+  "settingsDialogComponent_algorithmTitle": "Algoritmus konfiguráció",
+  "settingsDialogComponent_graphType": "Gráf típus",
+  "settingsDialogComponent_graphTypeRequired": "Gráf típus megadása kötelező!",
+  "settingsDialogComponent_algorithmType": "Algoritmus típus",
+  "settingsDialogComponent_algorithmTypeRequired": "Algoritmus típus megadása kötelező!",
+  "settingsDialogComponent_nodes": "Csúcsok száma",
+  "settingsDialogComponent_nodesRequired": "Csúcsok számának megadása kötelező!",
+  "settingsDialogComponent_nodesMin": "A csúcsok száma min.: 1 lehet!",
+  "settingsDialogComponent_nodesMax": "A csúcsok száma max.: 50 lehet!",
+  "settingsDialogComponent_barbellConstraintError": "A csúcsok számának 3 többszörösének kell lennie!",
+  "settingsDialogComponent_lollipopConstraintError": "A csúcsok számának 2 többszörösének kell lennie!",
+  "settingsDialogComponent_hypercubeConstraintError": "A csúcsok számának 2 hatványának kell lennie!",
+  "settingsDialogComponent_robots": "Robotok száma",
+  "settingsDialogComponent_robotsRequired": "Robotok számának megadása kötelező!",
+  "settingsDialogComponent_robotsMin": "A robotok száma min.: 1 lehet!",
+  "settingsDialogComponent_robotsMax": "A robotok száma max.: ",
+  "settingsDialogComponent_colors": "Gráf komponensek",
+  "settingsDialogComponent_colorsRequired": "Gráf komponensek megadása kötelező!",
+  "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait!",
+  "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező a komponensek számára!",
+
+  "automatedTestComponent_title": "Tesztelő",
+  "automatedTestComponent_graphSettings": "Gráf beállítások",
+  "automatedTestComponent_algorithmSettings": "Algoritmus beállítások",
+  "automatedTestComponent_settings": "Szimuláció beállítások",
+  "automatedTestComponent_preview": "Gráf előnézet",
+  "automatedTestComponent_init": "Initialization phase",
+  "automatedTestComponent_configure": "Konfiguráció",
+  "automatedTesterComponent_testsColumn": "Tesztek száma",
+  "automatedTesterComponent_successColumn": "Sikeres tesztek",
+  "automatedTesterComponent_failedColumn": "Sikertelen tesztek",
+  "automatedTesterComponent_stepsColumn": "Átlagos lépés",
+  "automatedTesterComponent_serverColumn": "Átlagos szerver válaszidő",
+
+  "automatedTestSettingsComponent_tests": "Tesztek száma",
+  "automatedTestSettingsComponent_testsRequired": "Tesztek számának megadása kötelező!",
+  "automatedTestSettingsComponent_testsMin": "A tesztek száma min.: 1 lehet!",
+  "automatedTestSettingsComponent_testsMax": "A tesztek száma max.: 1000 lehet!",
+
+  "logFormComponent_title": "Szeretné az alábbi eredményeket elmenteni?",
+
+  "visualizationComponent_title": "Eredmények",
+  "visualizationComponent_groupByChart": "Group By Diagram",
+  "visualizationComponent_query": "Lekérdezés",
+  "visualizationComponent_graphComponents": "Gráf komponensek száma",
+  "visualizationComponent_averageSteps": "Átlagos lépések száma",
+  "visualizationComponent_noTestFound": "Nem található teszt adat!",
+  "visualizationComponent_averageStepsChart": "Összegző Diagram",
+  "visualizationComponent_summaryByCaption": "Összegzés",
+  "visualizationComponent_summaryByRequired": "Az összegzés megadása kötelező!",
+  "visualizationComponent_max": "Maximum lépés",
+  "visualizationComponent_min": "Minimum lépés",
+  "visualizationComponent_average": "Átlagos lépés",
+  "visualizationComponent_tests": "Tesztek száma",
+  "visualizationComponent_xAxis": "X-tengely",
+  "visualizationComponent_detailByChart": "Részlet Diagram",
+  "visualizationComponent_detailByCaption": "Részlet",
+
+  "openStreetMapComponent_title": "Open Street Map",
+  "openStreetMapComponent_searchCity": "Keress egy várost...",
+  "openStreetMapComponent_cityNotFound": "A város nem található!",
+  "openStreetMapComponent_createNetwork": "Hálózat létrehozása",
+  "openStreetMapComponent_selectAlgorithmType": "Algoritmus kiválasztása",
+  "openStreetMapComponent_nodeID": "Csúcs azonosító"
+}

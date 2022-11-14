@@ -8,9 +8,8 @@ describe('AutomatedTestSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutomatedTesterSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [AutomatedTesterSettingsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

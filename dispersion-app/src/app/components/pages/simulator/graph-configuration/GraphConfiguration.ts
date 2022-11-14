@@ -1,5 +1,4 @@
 export class GraphConfiguration {
-
   graphType: string;
   nodes: number;
   colors: string[];
@@ -17,5 +16,4 @@ export class GraphConfiguration {
 
     return this;
   }
-
 }

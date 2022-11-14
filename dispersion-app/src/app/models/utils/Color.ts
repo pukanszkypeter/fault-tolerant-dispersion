@@ -8,7 +8,7 @@ export enum Color {
   PINK = 'PINK',
   PURPLE = 'PURPLE',
   BLUE = 'BLUE',
-  AQUA = 'AQUA'
+  AQUA = 'AQUA',
 }
 
 export function getFontColor(color: Color | string): string {
@@ -42,7 +42,7 @@ export function getColorByHex(hex: string): Color {
     case '#00ffff':
       return Color.AQUA;
     default:
-        throw new Error('Color not found!');
+      throw new Error('Color not found!');
   }
 }
 
@@ -69,6 +69,6 @@ export function getHexByColor(color: Color | string): string {
     case Color.AQUA:
       return '#00ffff';
     default:
-        throw new Error('Color not found!');
+      throw new Error('Color not found!');
   }
 }

@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
 import * as vis from 'vis-network';
-import { DataSet } from "vis-data/peer/esm/vis-data"
-import { GraphConfiguration} from "../../../components/pages/simulator/graph-configuration/GraphConfiguration";
-import { GraphGeneratorService } from "../graph-generator/graph-generator.service";
+import { DataSet } from 'vis-data/peer/esm/vis-data';
+import { GraphConfiguration } from '../../../components/pages/simulator/graph-configuration/GraphConfiguration';
+import { GraphGeneratorService } from '../graph-generator/graph-generator.service';
 import { VisNode } from 'src/app/models/vis/VisNode';
 import { VisEdge } from 'src/app/models/vis/VisEdge';
 import { getNodeStateColor, NodeState } from 'src/app/models/utils/NodeState';
 import { Node } from 'src/app/models/core/Node';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VisService {
-
   network: vis.Network;
 
   nodes: VisNode[];
   edges: VisEdge[];
 
-  constructor(private graphGenerator: GraphGeneratorService) { }
+  constructor(private graphGenerator: GraphGeneratorService) {}
 
-  initGraphFromConfig(configuration: GraphConfiguration, container: HTMLElement, options: any): void {
-    this.network = new vis.Network(container, this.initDataFromConfig(configuration), options);
+  initGraphFromConfig(
+    configuration: GraphConfiguration,
+    container: HTMLElement,
+    options: any
+  ): void {
+    this.network = new vis.Network(
+      container,
+      this.initDataFromConfig(configuration),
+      options
+    );
   }
 
   initDataFromConfig(configuration: GraphConfiguration): any {
@@ -31,21 +38,32 @@ export class VisService {
     let edges: VisEdge[] = [];
     let edgeID = 1;
     for (let color of colors) {
-      const graph = this.graphGenerator.generateGraph(configuration.graphType, configuration.nodes, 0, '');
+      const graph = this.graphGenerator.generateGraph(
+        configuration.graphType,
+        configuration.nodes,
+        0,
+        ''
+      );
 
       const lines = graph.split('\n');
       for (let line of lines) {
         const chunk = line.split(':');
 
         // Node
-        if (!this.idExist(nodes, Number(chunk[0]))){
-          nodes.push(new VisNode(Number(chunk[0]), chunk[0], getNodeStateColor(NodeState.DEFAULT)));
+        if (!this.idExist(nodes, Number(chunk[0]))) {
+          nodes.push(
+            new VisNode(
+              Number(chunk[0]),
+              chunk[0],
+              getNodeStateColor(NodeState.DEFAULT)
+            )
+          );
         }
 
         // Edges
         const toValues = chunk[1].split(',');
         for (let to of toValues) {
-          if(!this.isDuplicatedEdge(chunk[0], to, edges)) {
+          if (!this.isDuplicatedEdge(chunk[0], to, edges)) {
             edges.push(new VisEdge(edgeID, Number(chunk[0]), Number(to)));
             edgeID++;
           }
@@ -59,9 +77,9 @@ export class VisService {
       edges = this.dropRandomEdges(edges, colors);
     }
     this.nodes = nodes;
-    this.edges = edges
+    this.edges = edges;
 
-    return {nodes: new DataSet(nodes), edges: new DataSet(edges)};
+    return { nodes: new DataSet(nodes), edges: new DataSet(edges) };
   }
 
   dropRandomEdges(edges: VisEdge[], colors: string[]): VisEdge[] {
@@ -69,25 +87,28 @@ export class VisService {
 
     let cutFrom = 0;
     for (let i of colors) {
-      const edgesWithCurrentColor = edges.filter(edge => edge.color === i);
+      const edgesWithCurrentColor = edges.filter((edge) => edge.color === i);
 
       // Drop 60-100% of edges from front or back
       let percentAge = edgesWithCurrentColor.length * 0.6;
 
-      let dropElementsAfter = Math.floor(Math.random() * (edgesWithCurrentColor.length - percentAge + 1)) + percentAge;
+      let dropElementsAfter =
+        Math.floor(
+          Math.random() * (edgesWithCurrentColor.length - percentAge + 1)
+        ) + percentAge;
 
       if (cutFrom === 0) {
-        for (let j = 0; j < edgesWithCurrentColor.length-1; j++) {
+        for (let j = 0; j < edgesWithCurrentColor.length - 1; j++) {
           if (j <= dropElementsAfter) {
-            fixEdges.push(edgesWithCurrentColor[j])
+            fixEdges.push(edgesWithCurrentColor[j]);
           }
         }
         cutFrom = 1;
       } else if (cutFrom === 1) {
         let counter = 0;
-        for (let j = edgesWithCurrentColor.length-1; j > 0; j--) {
+        for (let j = edgesWithCurrentColor.length - 1; j > 0; j--) {
           if (counter <= dropElementsAfter) {
-            fixEdges.push(edgesWithCurrentColor[j])
+            fixEdges.push(edgesWithCurrentColor[j]);
           }
           counter++;
         }
@@ -101,21 +122,27 @@ export class VisService {
   update(nodes: Node[]): void {
     let visNodes = (this.network as any).nodesHandler.body.data.nodes;
     for (let i = 0; i < nodes.length; i++) {
-      visNodes.update({id: nodes[i].id, label: nodes[i].id.toString(), color: getNodeStateColor(nodes[i].state)});
+      visNodes.update({
+        id: nodes[i].id,
+        label: nodes[i].id.toString(),
+        color: getNodeStateColor(nodes[i].state),
+      });
     }
   }
 
   /** Helper Methods */
 
   isDuplicatedEdge(from: string, to: string, edges: VisEdge[]): boolean {
-    return !!edges.find(value => value.from === Number(to) && value.to === Number(from));
+    return !!edges.find(
+      (value) => value.from === Number(to) && value.to === Number(from)
+    );
   }
 
-  colorEdges(edges: VisEdge[], color:string): VisEdge[]{
+  colorEdges(edges: VisEdge[], color: string): VisEdge[] {
     let edgesWithNewColor: VisEdge[] = [];
 
-    for (let edge of edges){
-      if (edge.color === undefined ) {
+    for (let edge of edges) {
+      if (edge.color === undefined) {
         edge.color = color;
         edgesWithNewColor.push(edge);
       }
@@ -124,9 +151,9 @@ export class VisService {
     return edgesWithNewColor;
   }
 
-  idExist(nodes: VisNode[], id: number): boolean{
-    for (let i of nodes){
-      if (i.id === id){
+  idExist(nodes: VisNode[], id: number): boolean {
+    for (let i of nodes) {
+      if (i.id === id) {
         return true;
       }
     }
@@ -157,15 +184,18 @@ export class VisService {
       const color = this.edges[i].color;
       const from = this.edges[i].from;
       const to = this.edges[i].to;
-      !startNodes.has(color) ? startNodes.set(color, [from, to]) : startNodes.get(color).push(from, to);
+      !startNodes.has(color)
+        ? startNodes.set(color, [from, to])
+        : startNodes.get(color).push(from, to);
     }
 
     for (let [key, values] of startNodes) {
-      values = [...new Set(values)].sort(function(a, b){return a - b}); // because of distinct
+      values = [...new Set(values)].sort(function (a, b) {
+        return a - b;
+      }); // because of distinct
       startNodes.set(key, values);
     }
 
     return startNodes;
   }
-
 }

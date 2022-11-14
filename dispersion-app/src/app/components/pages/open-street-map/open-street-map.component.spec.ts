@@ -8,9 +8,8 @@ describe('OpenStreetMapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OpenStreetMapComponent ]
-    })
-    .compileComponents();
+      declarations: [OpenStreetMapComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

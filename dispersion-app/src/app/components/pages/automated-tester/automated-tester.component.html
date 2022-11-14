@@ -1,6 +1,5 @@
-
 <div class="pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">{{ 'pages.tester.title' | translate }}</h1>
+  <h1 class="h2">{{ "pages.tester.title" | translate }}</h1>
 </div>
 <div class="row mt-4">
   <div class="col-6">
@@ -8,23 +7,65 @@
     <mat-card class="config-card">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
-          <mat-icon *ngIf="this.graphConfiguration" svgIcon="check" style="width: 40px;height: 40px;"></mat-icon>
-          <mat-icon *ngIf="!this.graphConfiguration" svgIcon="close" style="width: 40px;height: 40px;"></mat-icon>
+          <mat-icon
+            *ngIf="this.graphConfiguration"
+            svgIcon="check"
+            style="width: 40px; height: 40px"
+          ></mat-icon>
+          <mat-icon
+            *ngIf="!this.graphConfiguration"
+            svgIcon="close"
+            style="width: 40px; height: 40px"
+          ></mat-icon>
         </div>
-        <mat-card-title>{{ 'automatedTestComponent_graphSettings' | translate }}</mat-card-title>
+        <mat-card-title>{{
+          "automatedTestComponent_graphSettings" | translate
+        }}</mat-card-title>
         <mat-card-subtitle>
-          <span *ngIf="this.graphConfiguration" style="color: green">{{'READY' | translate}}</span>
-          <span *ngIf="!this.graphConfiguration" style="color: red">{{'NOT_READY' | translate}}</span>
+          <span *ngIf="this.graphConfiguration" style="color: green">{{
+            "READY" | translate
+          }}</span>
+          <span *ngIf="!this.graphConfiguration" style="color: red">{{
+            "NOT_READY" | translate
+          }}</span>
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p>{{ 'simulationComponent_informationPanelGraph' | translate }}: {{this.graphConfiguration ? (this.graphConfiguration.graphType | translate ) : '-'}}</p>
-        <p>{{ 'settingsDialogComponent_nodes' | translate }}: {{this.graphConfiguration ? this.graphConfiguration.nodes : 0}}</p>
-        <p>{{ 'settingsDialogComponent_colors' | translate }}: {{this.graphConfiguration ? this.graphConfiguration.colors.length : 0}}</p>
+        <p>
+          {{ "simulationComponent_informationPanelGraph" | translate }}:
+          {{
+            this.graphConfiguration
+              ? (this.graphConfiguration.graphType | translate)
+              : "-"
+          }}
+        </p>
+        <p>
+          {{ "settingsDialogComponent_nodes" | translate }}:
+          {{ this.graphConfiguration ? this.graphConfiguration.nodes : 0 }}
+        </p>
+        <p>
+          {{ "settingsDialogComponent_colors" | translate }}:
+          {{
+            this.graphConfiguration ? this.graphConfiguration.colors.length : 0
+          }}
+        </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" [disabled]="this.testsInProgress" (click)="configureGraph()">{{ 'automatedTestComponent_configure' | translate }}</button>
-        <button mat-button [disabled]="!this.graphConfiguration || this.testsInProgress" (click)="resetGraph()">{{ 'RESET' | translate }}</button>
+        <button
+          mat-button
+          color="primary"
+          [disabled]="this.testsInProgress"
+          (click)="configureGraph()"
+        >
+          {{ "automatedTestComponent_configure" | translate }}
+        </button>
+        <button
+          mat-button
+          [disabled]="!this.graphConfiguration || this.testsInProgress"
+          (click)="resetGraph()"
+        >
+          {{ "RESET" | translate }}
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>
@@ -33,23 +74,64 @@
     <mat-card class="config-card">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
-          <mat-icon *ngIf="this.algorithmConfiguration" svgIcon="check" style="width: 40px;height: 40px;"></mat-icon>
-          <mat-icon *ngIf="!this.algorithmConfiguration" svgIcon="close" style="width: 40px;height: 40px;"></mat-icon>
+          <mat-icon
+            *ngIf="this.algorithmConfiguration"
+            svgIcon="check"
+            style="width: 40px; height: 40px"
+          ></mat-icon>
+          <mat-icon
+            *ngIf="!this.algorithmConfiguration"
+            svgIcon="close"
+            style="width: 40px; height: 40px"
+          ></mat-icon>
         </div>
-        <mat-card-title>{{ 'automatedTestComponent_algorithmSettings' | translate }}</mat-card-title>
+        <mat-card-title>{{
+          "automatedTestComponent_algorithmSettings" | translate
+        }}</mat-card-title>
         <mat-card-subtitle>
-          <span *ngIf="this.algorithmConfiguration" style="color: green">{{'READY' | translate}}</span>
-          <span *ngIf="!this.algorithmConfiguration" style="color: red">{{'NOT_READY' | translate}}</span>
+          <span *ngIf="this.algorithmConfiguration" style="color: green">{{
+            "READY" | translate
+          }}</span>
+          <span *ngIf="!this.algorithmConfiguration" style="color: red">{{
+            "NOT_READY" | translate
+          }}</span>
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p>{{ 'simulationComponent_informationPanelAlgorithm' | translate }}: {{this.algorithmConfiguration ? (this.algorithmConfiguration.algorithmType | translate ) : '-'}}</p>
-        <p>{{ 'settingsDialogComponent_robots' | translate }}: {{this.algorithmConfiguration ? this.algorithmConfiguration.robots.length : 0}}</p>
-        <br>
+        <p>
+          {{ "simulationComponent_informationPanelAlgorithm" | translate }}:
+          {{
+            this.algorithmConfiguration
+              ? (this.algorithmConfiguration.algorithmType | translate)
+              : "-"
+          }}
+        </p>
+        <p>
+          {{ "settingsDialogComponent_robots" | translate }}:
+          {{
+            this.algorithmConfiguration
+              ? this.algorithmConfiguration.robots.length
+              : 0
+          }}
+        </p>
+        <br />
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" [disabled]="!this.graphConfiguration || this.testsInProgress" (click)="configureAlgorithm()">{{ 'automatedTestComponent_configure' | translate }}</button>
-        <button mat-button [disabled]="!this.algorithmConfiguration || this.testsInProgress" (click)="resetAlgorithm()">{{ 'RESET' | translate }}</button>
+        <button
+          mat-button
+          color="primary"
+          [disabled]="!this.graphConfiguration || this.testsInProgress"
+          (click)="configureAlgorithm()"
+        >
+          {{ "automatedTestComponent_configure" | translate }}
+        </button>
+        <button
+          mat-button
+          [disabled]="!this.algorithmConfiguration || this.testsInProgress"
+          (click)="resetAlgorithm()"
+        >
+          {{ "RESET" | translate }}
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>
@@ -59,61 +141,105 @@
     <mat-card class="tests-card">
       <p style="margin: 0">
         <mat-form-field appearance="outline" style="width: 50%">
-          <mat-label>{{ 'automatedTestSettingsComponent_tests' | translate }}</mat-label>
-          <input matInput [formControl]="tests" type="number" min="1" max="1000">
-          <mat-error *ngIf="tests.hasError('required')">{{ 'automatedTestSettingsComponent_testsRequired' | translate }}</mat-error>
-          <mat-error *ngIf="tests.hasError('min')">{{ 'automatedTestSettingsComponent_testsMin' | translate }}</mat-error>
-          <mat-error *ngIf="tests.hasError('max')">{{ 'automatedTestSettingsComponent_testsMax' | translate }}</mat-error>
+          <mat-label>{{
+            "automatedTestSettingsComponent_tests" | translate
+          }}</mat-label>
+          <input
+            matInput
+            [formControl]="tests"
+            type="number"
+            min="1"
+            max="1000"
+          />
+          <mat-error *ngIf="tests.hasError('required')">{{
+            "automatedTestSettingsComponent_testsRequired" | translate
+          }}</mat-error>
+          <mat-error *ngIf="tests.hasError('min')">{{
+            "automatedTestSettingsComponent_testsMin" | translate
+          }}</mat-error>
+          <mat-error *ngIf="tests.hasError('max')">{{
+            "automatedTestSettingsComponent_testsMax" | translate
+          }}</mat-error>
         </mat-form-field>
       </p>
-      <button mat-raised-button color="primary" [disabled]="!tests.valid || !this.algorithmConfiguration || !this.graphConfiguration || this.testsInProgress" (click)="run(tests.value)">{{ 'RUN' | translate }} <i class="bi bi-arrow-right"></i></button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="
+          !tests.valid ||
+          !this.algorithmConfiguration ||
+          !this.graphConfiguration ||
+          this.testsInProgress
+        "
+        (click)="run(tests.value)"
+      >
+        {{ "RUN" | translate }} <i class="bi bi-arrow-right"></i>
+      </button>
     </mat-card>
   </div>
 </div>
 <div class="row mt-4">
   <div class="col-12">
     <mat-card>
-      <p class="test-ratio">{{testRatio}}%</p>
+      <p class="test-ratio">{{ testRatio }}%</p>
       <mat-progress-bar
         class="test-progress-bar"
         color="primary"
         mode="determinate"
-        [value]="testRatio">
+        [value]="testRatio"
+      >
       </mat-progress-bar>
-      <table mat-table [dataSource]="summary" class="mat-elevation-z8 summary-table">
-
+      <table
+        mat-table
+        [dataSource]="summary"
+        class="mat-elevation-z8 summary-table"
+      >
         <!-- Tests Column -->
         <ng-container matColumnDef="tests">
-          <th mat-header-cell *matHeaderCellDef> {{ 'automatedTesterComponent_testsColumn' | translate }} </th>
-          <td mat-cell *matCellDef="let element"> {{element.tests}} </td>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "automatedTesterComponent_testsColumn" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.tests }}</td>
         </ng-container>
 
         <!-- Success Column -->
         <ng-container matColumnDef="success">
-          <th mat-header-cell *matHeaderCellDef> {{ 'automatedTesterComponent_successColumn' | translate }} </th>
-          <td mat-cell *matCellDef="let element"> {{element.success}} </td>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "automatedTesterComponent_successColumn" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.success }}</td>
         </ng-container>
 
         <!-- Failed Column -->
         <ng-container matColumnDef="failed">
-          <th mat-header-cell *matHeaderCellDef> {{ 'automatedTesterComponent_failedColumn' | translate }} </th>
-          <td mat-cell *matCellDef="let element"> {{element.failed}} </td>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "automatedTesterComponent_failedColumn" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.failed }}</td>
         </ng-container>
 
         <!-- Steps Column -->
         <ng-container matColumnDef="steps">
-          <th mat-header-cell *matHeaderCellDef> {{ 'automatedTesterComponent_stepsColumn' | translate }} </th>
-          <td mat-cell *matCellDef="let element"> {{element.steps | number: '1.2-2'}} </td>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "automatedTesterComponent_stepsColumn" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.steps | number: "1.2-2" }}
+          </td>
         </ng-container>
 
         <!-- Server Column -->
         <ng-container matColumnDef="server">
-          <th mat-header-cell *matHeaderCellDef> {{ 'automatedTesterComponent_serverColumn' | translate }} </th>
-          <td mat-cell *matCellDef="let element"> {{element.server | number: '1.2-2'}} </td>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "automatedTesterComponent_serverColumn" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.server | number: "1.2-2" }}
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="summaryColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: summaryColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: summaryColumns"></tr>
       </table>
     </mat-card>
   </div>
