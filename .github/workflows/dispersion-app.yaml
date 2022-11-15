@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Use Node.js
-        working-directory: ./dispersion-app
         uses: actions/setup-node@v2
+        working-directory: ./dispersion-app
         with:
           node-version: 16
 
