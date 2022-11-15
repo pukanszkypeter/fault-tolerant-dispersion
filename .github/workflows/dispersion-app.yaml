@@ -13,13 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        working-directory: dispersion-app
 
       - name: Use Node.js
+        working-directory: dispersion-app
         uses: actions/setup-node@v2
         with:
           node-version: 16
 
       - name: Cache node modules
+        working-directory: dispersion-app
         id: cache-nodemodules
         uses: actions/cache@v2
         env:
@@ -34,14 +37,17 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Dependencies
+        working-directory: dispersion-app
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
           npm ci
 
       - name: Build
+        working-directory: dispersion-app
         run: |
           npm run build -- --prod
 
       - name: Lint
+        working-directory: dispersion-app
         run: |
           npm run lint
