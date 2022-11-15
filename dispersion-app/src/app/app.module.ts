@@ -12,6 +12,8 @@ import { MaterialModule } from './material.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MarkdownModule } from 'ngx-markdown';
+import { SecurityContext } from '@angular/core';
 // Components
 import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
 import { SimulatorComponent } from './components/pages/simulator/simulator.component';
@@ -64,6 +66,10 @@ import { ChangelogComponent } from './components/pages/changelog/changelog.compo
     FormsModule,
     ReactiveFormsModule,
     NgxChartsModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      sanitize: SecurityContext.NONE,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

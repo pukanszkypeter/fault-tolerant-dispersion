@@ -111,15 +111,18 @@
 
 .sidebar .nav-link {
   font-weight: 500;
-  color: #333;
+  color: #505050;
 }
 
 .sidebar .nav-link:hover {
-  opacity: 80%;
+  background-color: rgb(230, 247, 255);
+  color: rgb(24, 144, 255);
 }
 
 .sidebar .nav-link.active {
-  color: #2470dc;
+  color: rgb(24, 144, 255);
+  border-right: 2px solid rgb(24, 144, 255);
+  background-color: rgb(230, 247, 255);
 }
 
 .sidebar-heading {

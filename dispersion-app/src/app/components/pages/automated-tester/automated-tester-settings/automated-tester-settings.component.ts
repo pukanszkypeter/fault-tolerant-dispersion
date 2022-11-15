@@ -79,7 +79,6 @@ export class AutomatedTesterSettingsComponent implements OnInit {
   run(): void {
     this.settingsEvent.emit({
       simulationConfiguration: new GraphConfiguration(
-        this.algorithmType.value,
         this.graphType.value,
         this.nodes.value
       ),

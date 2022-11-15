@@ -30,7 +30,9 @@
       "title": "Irányítópult"
     },
     "simulator": {
-      "title": "Szimulátor"
+      "title": "Szimulátor",
+      "graphCreated": "Gsráf sikeresen létrehozva.",
+      "algorithmInitalized": "Az algoritmus sikeresen inicializálva."
     },
     "tester": {
       "title": "Tesztelő"
@@ -166,7 +168,7 @@
   "settingsDialogComponent_colors": "Gráf komponensek",
   "settingsDialogComponent_colorsRequired": "Gráf komponensek megadása kötelező!",
   "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait!",
-  "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező a komponensek számára!",
+  "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező!",
 
   "automatedTestComponent_title": "Tesztelő",
   "automatedTestComponent_graphSettings": "Gráf beállítások",

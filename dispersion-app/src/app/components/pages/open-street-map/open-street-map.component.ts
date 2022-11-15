@@ -7,7 +7,6 @@ import { FormControl } from '@angular/forms';
 import { AlgorithmSelectDialogComponent } from './algorithm-select-dialog/algorithm-select-dialog.component';
 import { AlgorithmService } from 'src/app/services/server-side/java-engine/algorithm-service/algorithm.service';
 import { Edge } from 'src/app/models/core/Edge';
-import { Robot } from 'src/app/models/core/Robot';
 import { SimulationStep } from 'src/app/models/dto/SimulationStep';
 import { SimulationState } from 'src/app/models/utils/SimulationState';
 import { RandomDispersionNode } from 'src/app/models/algorithms/random-dispersion/RandomDispersionNode';
@@ -25,7 +24,6 @@ import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/
 import { OpenStreetMapService } from 'src/app/services/server-side/python-engine/open-street-map-service/open-street-map.service';
 import { Node } from 'src/app/models/core/Node';
 import { NodeState } from 'src/app/models/utils/NodeState';
-import { Color, getColorByHex } from 'src/app/models/utils/Color';
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 import { Graph } from 'src/app/models/core/Graph';
 import { VisService } from 'src/app/services/client-side/vis/vis.service';
@@ -353,12 +351,7 @@ export class OpenStreetMapComponent implements OnInit {
                 ),
                 this.visService.edges.map(
                   (edge) =>
-                    new RandomDispersionEdge(
-                      edge.id,
-                      edge.from,
-                      edge.to,
-                      getColorByHex(edge.color)
-                    )
+                    new RandomDispersionEdge(edge.id, edge.from, edge.to)
                 )
               ),
               this.robots
@@ -386,8 +379,7 @@ export class OpenStreetMapComponent implements OnInit {
                     new RandomWithLeaderDispersionEdge(
                       edge.id,
                       edge.from,
-                      edge.to,
-                      getColorByHex(edge.color)
+                      edge.to
                     )
                 )
               ),
@@ -411,12 +403,7 @@ export class OpenStreetMapComponent implements OnInit {
                 ),
                 this.visService.edges.map(
                   (edge) =>
-                    new RotorRouterDispersionEdge(
-                      edge.id,
-                      edge.from,
-                      edge.to,
-                      getColorByHex(edge.color)
-                    )
+                    new RotorRouterDispersionEdge(edge.id, edge.from, edge.to)
                 )
               ),
               this.robots
@@ -445,8 +432,7 @@ export class OpenStreetMapComponent implements OnInit {
                     new RotorRouterWithLeaderDispersionEdge(
                       edge.id,
                       edge.from,
-                      edge.to,
-                      getColorByHex(edge.color)
+                      edge.to
                     )
                 )
               ),
@@ -474,7 +460,6 @@ export class OpenStreetMapComponent implements OnInit {
             new RandomDispersionRobot(
               1,
               RobotState.START,
-              Color.BLACK,
               this.selectedNodeID,
               null
             )
@@ -485,7 +470,6 @@ export class OpenStreetMapComponent implements OnInit {
             new RandomWithLeaderDispersionRobot(
               1,
               RobotState.START,
-              Color.BLACK,
               this.selectedNodeID,
               null
             )
@@ -496,7 +480,6 @@ export class OpenStreetMapComponent implements OnInit {
             new RotorRouterDispersionRobot(
               1,
               RobotState.START,
-              Color.BLACK,
               this.selectedNodeID,
               null
             )
@@ -507,7 +490,6 @@ export class OpenStreetMapComponent implements OnInit {
             new RotorRouterWithLeaderDispersionRobot(
               1,
               RobotState.START,
-              Color.BLACK,
               this.selectedNodeID,
               null,
               null

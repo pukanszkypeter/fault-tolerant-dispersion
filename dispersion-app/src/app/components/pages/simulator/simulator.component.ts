@@ -26,7 +26,6 @@ import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 import { Graph } from 'src/app/models/core/Graph';
 import { NodeState } from 'src/app/models/utils/NodeState';
-import { getColorByHex, getHexByColor } from 'src/app/models/utils/Color';
 
 @Component({
   selector: 'app-static',
@@ -62,10 +61,7 @@ export class SimulatorComponent implements OnInit {
   RTT: number = 0;
   STOPPED = false;
 
-  getColorByHex = getColorByHex;
-  getHexByColor = getHexByColor;
-
-  displayedColumns = ['ID', 'onID', 'color', 'state', 'stateIcon'];
+  displayedColumns = ['ID', 'onID', 'state', 'stateIcon'];
 
   constructor(
     private snackBarService: SnackbarService,
@@ -93,8 +89,11 @@ export class SimulatorComponent implements OnInit {
           this.graphConfiguration = new GraphConfiguration().initialize(res);
           this.initSimulator(this.graphConfiguration);
           this.snackBarService.openSnackBar(
-            'SUCCESSFUL_SAVE',
-            'success-snackbar'
+            'pages.simulator.graphCreated',
+            'success-snackbar',
+            null,
+            'right',
+            'bottom'
           );
         }
       },
@@ -132,12 +131,7 @@ export class SimulatorComponent implements OnInit {
                   ),
                   this.visService.edges.map(
                     (edge) =>
-                      new RandomDispersionEdge(
-                        edge.id,
-                        edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
-                      )
+                      new RandomDispersionEdge(edge.id, edge.from, edge.to)
                   )
                 ),
                 this.algorithmConfiguration.robots
@@ -175,8 +169,7 @@ export class SimulatorComponent implements OnInit {
                       new RandomWithLeaderDispersionEdge(
                         edge.id,
                         edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
+                        edge.to
                       )
                   )
                 ),
@@ -214,12 +207,7 @@ export class SimulatorComponent implements OnInit {
                   ),
                   this.visService.edges.map(
                     (edge) =>
-                      new RotorRouterDispersionEdge(
-                        edge.id,
-                        edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
-                      )
+                      new RotorRouterDispersionEdge(edge.id, edge.from, edge.to)
                   )
                 ),
                 this.algorithmConfiguration.robots
@@ -260,8 +248,7 @@ export class SimulatorComponent implements OnInit {
                       new RotorRouterWithLeaderDispersionEdge(
                         edge.id,
                         edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
+                        edge.to
                       )
                   )
                 ),
@@ -288,8 +275,11 @@ export class SimulatorComponent implements OnInit {
           }
 
           this.snackBarService.openSnackBar(
-            'SUCCESSFUL_SAVE',
-            'success-snackbar'
+            'pages.simulator.algorithmInitalized',
+            'success-snackbar',
+            null,
+            'right',
+            'bottom'
           );
         }
       },
@@ -315,8 +305,7 @@ export class SimulatorComponent implements OnInit {
         },
       },
       edges: {
-        width: 2,
-        shadow: true,
+        width: 1,
       },
       // physics: false,
       interaction: {
@@ -579,7 +568,6 @@ export class SimulatorComponent implements OnInit {
         algorithmType: this.algorithmConfiguration.algorithmType,
         nodes: this.graphConfiguration.nodes,
         robots: robotsSize,
-        components: this.graphConfiguration.colors.length,
         steps: steps,
       },
       height: '45%',

@@ -10,7 +10,6 @@ import {
   hasNodeValueConstraint,
 } from '../../../../models/utils/GraphType';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Color, getFontColor, getHexByColor } from 'src/app/models/utils/Color';
 
 @Component({
   selector: 'app-settings-dialog',
@@ -19,9 +18,6 @@ import { Color, getFontColor, getHexByColor } from 'src/app/models/utils/Color';
 })
 export class GraphConfigurationComponent implements OnInit {
   graphTypes = Object.keys(GraphType);
-  colorTypes = Object.keys(Color);
-  getFontColor = getFontColor;
-  getHexByColor = getHexByColor;
 
   settingsFormGroup: FormGroup;
 
@@ -37,7 +33,6 @@ export class GraphConfigurationComponent implements OnInit {
         this.data.automatedMode ? Validators.max(1000) : Validators.max(50),
         Validators.required,
       ]),
-      colors: new FormControl('', Validators.required),
     });
 
     this.graphType.valueChanges.subscribe((res) => {
@@ -51,7 +46,6 @@ export class GraphConfigurationComponent implements OnInit {
     this.dialogRef.close({
       graphType: this.graphType.value,
       nodes: this.nodes.value,
-      colors: this.colors.value,
     });
   }
 
@@ -63,9 +57,5 @@ export class GraphConfigurationComponent implements OnInit {
 
   get nodes(): FormControl {
     return this.settingsFormGroup.controls['nodes'] as FormControl;
-  }
-
-  get colors(): FormControl {
-    return this.settingsFormGroup.controls['colors'] as FormControl;
   }
 }

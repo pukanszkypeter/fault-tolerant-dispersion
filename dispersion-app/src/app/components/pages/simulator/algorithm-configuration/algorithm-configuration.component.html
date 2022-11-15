@@ -29,24 +29,20 @@
           "settingsDialogComponent_algorithmTypeRequired" | translate
         }}</mat-error>
       </mat-form-field>
-
-      <p>{{ "settingsDialogComponent_startNodes" | translate }}</p>
-      <div *ngFor="let key of keys">
-        <!-- Start Nodes -->
-        <mat-form-field appearance="outline">
-          <mat-label [ngStyle]="{ color: key }">{{
-            getColorByHex(key) | translate
-          }}</mat-label>
-          <mat-select [formControl]="getStartNodeKey(key)" multiple>
-            <mat-option *ngFor="let value of map.get(key)" [value]="value">
-              {{ value }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="getStartNodeKey(key).hasError('required')">{{
-            "settingsDialogComponent_startNodesRequired" | translate
-          }}</mat-error>
-        </mat-form-field>
-      </div>
+      <!-- Start Nodes -->
+      <mat-form-field appearance="outline">
+        <mat-label>{{
+          "simulationComponent_informationPanelStartNodes" | translate
+        }}</mat-label>
+        <mat-select [formControl]="startNodes" multiple>
+          <mat-option *ngFor="let value of this.nodes" [value]="value">
+            {{ value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="startNodes.hasError('required')">{{
+          "settingsDialogComponent_startNodesRequired" | translate
+        }}</mat-error>
+      </mat-form-field>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

@@ -25,7 +25,6 @@ import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 import { Graph } from 'src/app/models/core/Graph';
 import { NodeState } from 'src/app/models/utils/NodeState';
-import { getColorByHex } from 'src/app/models/utils/Color';
 import { LoggerService } from 'src/app/services/server-side/python-engine/logger-service/logger.service';
 
 @Component({
@@ -136,12 +135,7 @@ export class AutomatedTesterComponent implements OnInit {
                   ),
                   this.visService.edges.map(
                     (edge) =>
-                      new RandomDispersionEdge(
-                        edge.id,
-                        edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
-                      )
+                      new RandomDispersionEdge(edge.id, edge.from, edge.to)
                   )
                 ),
                 this.algorithmConfiguration.robots
@@ -169,8 +163,7 @@ export class AutomatedTesterComponent implements OnInit {
                       new RandomWithLeaderDispersionEdge(
                         edge.id,
                         edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
+                        edge.to
                       )
                   )
                 ),
@@ -194,12 +187,7 @@ export class AutomatedTesterComponent implements OnInit {
                   ),
                   this.visService.edges.map(
                     (edge) =>
-                      new RotorRouterDispersionEdge(
-                        edge.id,
-                        edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
-                      )
+                      new RotorRouterDispersionEdge(edge.id, edge.from, edge.to)
                   )
                 ),
                 this.algorithmConfiguration.robots
@@ -228,8 +216,7 @@ export class AutomatedTesterComponent implements OnInit {
                       new RotorRouterWithLeaderDispersionEdge(
                         edge.id,
                         edge.from,
-                        edge.to,
-                        getColorByHex(edge.color)
+                        edge.to
                       )
                   )
                 ),
@@ -334,7 +321,6 @@ export class AutomatedTesterComponent implements OnInit {
                   algorithmType: this.algorithmConfiguration.algorithmType,
                   nodes: this.graphConfiguration.nodes,
                   robots: simulation.robotList.length,
-                  components: this.graphConfiguration.colors.length,
                   steps: res,
                 })
                 .subscribe(

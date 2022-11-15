@@ -30,7 +30,9 @@
       "title": "Dashboard"
     },
     "simulator": {
-      "title": "Simulator"
+      "title": "Simulator",
+      "graphCreated": "Graph created successfully.",
+      "algorithmInitalized": "Algorithm initalized successfully."
     },
     "tester": {
       "title": "Tester"
@@ -166,7 +168,7 @@
   "settingsDialogComponent_colors": "Graph components",
   "settingsDialogComponent_colorsRequired": "Graph components is required!",
   "settingsDialogComponent_startNodes": "Please select the start nodes of the components!",
-  "settingsDialogComponent_startNodesRequired": "Start nodes are required for component!",
+  "settingsDialogComponent_startNodesRequired": "Start nodes are required!",
 
   "automatedTestComponent_title": "Tester",
   "automatedTestComponent_graphSettings": "Graph settings",

@@ -110,20 +110,6 @@
           <td mat-cell *matCellDef="let element">{{ element.onID }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="color">
-          <th mat-header-cell *matHeaderCellDef>
-            {{ "simulationComponent_tableColorColumn" | translate }}
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-chip
-              [ngStyle]="{
-                background: getHexByColor(element.color),
-                width: '32px'
-              }"
-            ></mat-chip>
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="state">
           <th mat-header-cell *matHeaderCellDef>
             {{ "simulationComponent_tableStateColumn" | translate }}

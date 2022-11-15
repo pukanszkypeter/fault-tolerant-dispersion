@@ -11,7 +11,6 @@ import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_with_leader_dis
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.core.algorithms.RotorRouterWithLeaderDispersionManager;
 import hu.elteik.knowledgelab.javaengine.core.models.Graph;
-import hu.elteik.knowledgelab.javaengine.core.utils.Color;
 import hu.elteik.knowledgelab.javaengine.core.utils.NodeState;
 import hu.elteik.knowledgelab.javaengine.core.utils.RobotState;
 
@@ -30,6 +29,7 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
     }
 
     private void look(Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge> graph, List<RotorRouterWithLeaderDispersionRobot> robotList) {
+        /*
         Map<Long, List<RotorRouterWithLeaderDispersionRobot>> robotsOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
                 .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
                 .collect(groupingBy(RotorRouterWithLeaderDispersionRobot::getOnID));
@@ -60,10 +60,11 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
                 }
             }
         }
+        */
     }
 
     private void compute(Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge> graph, List<RotorRouterWithLeaderDispersionRobot> robotList) {
-
+        /*
         Map<Long, List<RotorRouterWithLeaderDispersionRobot>> leadersOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
                 .filter(robot -> robot.getState().equals(RobotState.LEADER))
                 .collect(groupingBy(RotorRouterWithLeaderDispersionRobot::getOnID));
@@ -171,12 +172,13 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
                 }
             }
         }
+        */
     }
 
     private void move(Graph<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge> graph, List<RotorRouterWithLeaderDispersionRobot> robotList) {
         // If a leader has different destinationID than his onID then he will move otherwise settle
         // is a simple robot has a destination he will settle on that.
-
+        /*
         Map<Long, List<RotorRouterWithLeaderDispersionRobot>> robotsOnDifferentRotorRouterWithLeaderNodes = robotList.stream()
                 .filter(robot -> !robot.getState().equals(RobotState.SETTLED) && !robot.getState().equals(RobotState.TERMINATED))
                 .collect(groupingBy(RotorRouterWithLeaderDispersionRobot::getOnID));
@@ -209,9 +211,10 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
             }
 
         }
+        */
     }
 
-
+    /*
     private Long leaderCount(List<RotorRouterWithLeaderDispersionRobot> robotList) {
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).count();
     }
@@ -316,5 +319,5 @@ public class RotorRouterWithLeaderDispersionManagement implements RotorRouterWit
 
         return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();
     }
-    
+    */
 }

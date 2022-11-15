@@ -1,7 +1,5 @@
 package hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_dispersion;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,7 +10,6 @@ import hu.elteik.knowledgelab.javaengine.algorithms.rotor_router_dispersion.mode
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.core.algorithms.RotorRouterDispersionManager;
 import hu.elteik.knowledgelab.javaengine.core.models.Graph;
-import hu.elteik.knowledgelab.javaengine.core.utils.Color;
 import hu.elteik.knowledgelab.javaengine.core.utils.NodeState;
 import hu.elteik.knowledgelab.javaengine.core.utils.RobotState;
 
@@ -39,16 +36,12 @@ public class RotorRouterDispersionManagement implements RotorRouterDispersionMan
                     if (robot.getState().equals(RobotState.START)) {
                         robot.setState(RobotState.EXPLORE);
                     }
-                    if (isComponentOccupied(graph, robot.getColor())) {
-                        robot.setState(RobotState.TERMINATED);
-                    }
                 }
             }
         }
     }
 
     public void compute(Graph<RotorRouterDispersionNode, RotorRouterDispersionEdge> graph, List<RotorRouterDispersionRobot> robotList) {
-
         globalLeaderElection(robotList);
 
         for (RotorRouterDispersionRobot robot : robotList) {
@@ -63,27 +56,24 @@ public class RotorRouterDispersionManagement implements RotorRouterDispersionMan
 
                 List<Long> nodeOptions = graph.getEdgeList().stream()
                         .filter(edge ->
-                                (Objects.equals(edge.getFromID(), currentNode.getID()) && Objects.equals(edge.getColor(), robot.getColor())) ||
-                                (Objects.equals(edge.getToID(), currentNode.getID()) && Objects.equals(edge.getColor(), robot.getColor())))
+                                (Objects.equals(edge.getFromID(), currentNode.getID())) ||
+                                (Objects.equals(edge.getToID(), currentNode.getID())))
                         .map(edge -> Objects.equals(edge.getToID(), currentNode.getID()) ? edge.getFromID() : edge.getToID())
                         .collect(Collectors.toList());
 
                 if (currentNode.getRotorRouter() == null) {
-                    currentNode.setRotorRouter(new HashMap<>());
-                    currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(0));
-                } else if (!currentNode.getRotorRouter().containsKey(robot.getColor())) {
-                    currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(0));
+                    currentNode.setRotorRouter(nodeOptions.get(0));
                 } else {
-                    int index = nodeOptions.indexOf(currentNode.getRotorRouter().get(robot.getColor()));
+                    int index = nodeOptions.indexOf(currentNode.getRotorRouter());
                     if (index == (nodeOptions.size() - 1)) {
-                        currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(0));
+                        currentNode.setRotorRouter(nodeOptions.get(0));
                     } else {
                         index++;
-                        currentNode.getRotorRouter().put(robot.getColor(), nodeOptions.get(index));
+                        currentNode.setRotorRouter(nodeOptions.get(index));
                     }
                 }
 
-                robot.setDestinationID(currentNode.getRotorRouter().get(robot.getColor()));
+                robot.setDestinationID(currentNode.getRotorRouter());
 
             }
         }
@@ -119,7 +109,8 @@ public class RotorRouterDispersionManagement implements RotorRouterDispersionMan
 
         for (RotorRouterDispersionRobot robot : leaders) {
             List<RotorRouterDispersionRobot> nominees = robotList.stream()
-                    .filter(nominee -> nominee.getState().equals(RobotState.LEADER) && Objects.equals(nominee.getOnID(), robot.getOnID()))
+                    .filter(nominee -> nominee.getState().equals(RobotState.LEADER)
+                            && Objects.equals(nominee.getOnID(), robot.getOnID()))
                     .collect(Collectors.toList());
             if (nominees.size() > 1) {
                 RotorRouterDispersionRobot leader = new LocalLeaderElection<RotorRouterDispersionRobot>().run(nominees);
@@ -129,22 +120,6 @@ public class RotorRouterDispersionManagement implements RotorRouterDispersionMan
                 }
             }
         }
-    }
-
-    private boolean isComponentOccupied(Graph<RotorRouterDispersionNode, RotorRouterDispersionEdge> graph, Color component) {
-        List<RotorRouterDispersionEdge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
-
-        List<Long> fromIDs = componentEdges.stream().map(RotorRouterDispersionEdge::getFromID).collect(Collectors.toList());
-        List<Long> toIDs = componentEdges.stream().map(RotorRouterDispersionEdge::getToID).collect(Collectors.toList());
-        fromIDs.addAll(toIDs);
-
-        List<Long> componentNodeIDs = fromIDs.stream().distinct().collect(Collectors.toList());
-        List<RotorRouterDispersionNode> componentNodes = new ArrayList<>();
-        for (Long ID : componentNodeIDs) {
-            componentNodes.add(graph.getNodeList().stream().filter(node -> node.getID().equals(ID)).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + ID + " not found!")));
-        }
-
-        return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();
     }
     
 }

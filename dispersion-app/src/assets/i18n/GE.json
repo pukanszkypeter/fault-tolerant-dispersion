@@ -30,7 +30,9 @@
       "title": "Startsite"
     },
     "simulator": {
-      "title": "Simulator"
+      "title": "Simulator",
+      "graphCreated": "Diagramm erfolgreich erstellt.",
+      "algorithmInitalized": "Algorithmus erfolgreich initialisiert."
     },
     "tester": {
       "title": "Tester"
@@ -166,7 +168,7 @@
   "settingsDialogComponent_colors": "Diagrammkomponenten",
   "settingsDialogComponent_colorsRequired": "Diagrammkomponenten ist erforderlich!",
   "settingsDialogComponent_startNodes": "Bitte wählen Sie die Anfangspunkte der Komponenten aus!",
-  "settingsDialogComponent_startNodesRequired": "Anfangspunkte für Komponenten sind erforderlich!",
+  "settingsDialogComponent_startNodesRequired": "Anfangspunkte sind erforderlich!",
 
   "automatedTestComponent_title": "Tester",
   "automatedTestComponent_graphSettings": "Grafikeinstellungen",
