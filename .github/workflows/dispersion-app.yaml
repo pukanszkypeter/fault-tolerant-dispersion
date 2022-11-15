@@ -13,15 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
+      
       - name: Use Node.js
         uses: actions/setup-node@v2
-        working-directory: ./dispersion-app
         with:
           node-version: 16
 
       - name: Cache node modules
-        working-directory: ./dispersion-app
         id: cache-nodemodules
         uses: actions/cache@v2
         env:
