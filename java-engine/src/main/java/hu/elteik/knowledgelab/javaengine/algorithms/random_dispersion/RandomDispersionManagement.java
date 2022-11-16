@@ -1,6 +1,5 @@
 package hu.elteik.knowledgelab.javaengine.algorithms.random_dispersion;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import hu.elteik.knowledgelab.javaengine.algorithms.random_dispersion.models.*;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.*;
 import hu.elteik.knowledgelab.javaengine.core.algorithms.RandomDispersionManager;
 import hu.elteik.knowledgelab.javaengine.core.models.Graph;
-import hu.elteik.knowledgelab.javaengine.core.utils.Color;
 import hu.elteik.knowledgelab.javaengine.core.utils.NodeState;
 import hu.elteik.knowledgelab.javaengine.core.utils.RobotState;
 
@@ -38,18 +36,14 @@ public class RandomDispersionManagement implements RandomDispersionManager<Rando
                     if (robot.getState().equals(RobotState.START)) {
                         robot.setState(RobotState.EXPLORE);
                     }
-                    if (isComponentOccupied(graph, robot.getColor())) {
-                        robot.setState(RobotState.TERMINATED);
-                    }
                 }
             }
         }
     }
 
     private void compute(Graph<RandomDispersionNode, RandomDispersionEdge> graph, List<RandomDispersionRobot> robotList) {
-
         globalLeaderElection(robotList);
-
+        
         for (RandomDispersionRobot robot : robotList) {
             if (robot.getState().equals(RobotState.LEADER)) {
                 robot.setDestinationID(robot.getOnID());
@@ -57,8 +51,8 @@ public class RandomDispersionManagement implements RandomDispersionManager<Rando
             else if (robot.getState().equals(RobotState.EXPLORE)) {
                 List<Long> nodeOptions = graph.getEdgeList().stream()
                         .filter(edge ->
-                                (Objects.equals(edge.getFromID(), robot.getOnID()) && Objects.equals(edge.getColor(), robot.getColor())) ||
-                                (Objects.equals(edge.getToID(), robot.getOnID()) && Objects.equals(edge.getColor(), robot.getColor())))
+                                (Objects.equals(edge.getFromID(), robot.getOnID())) ||
+                                (Objects.equals(edge.getToID(), robot.getOnID())))
                         .map(edge -> Objects.equals(edge.getToID(), robot.getOnID()) ? edge.getFromID() : edge.getToID())
                         .collect(Collectors.toList());
                 if (nodeOptions.size() > 0) {
@@ -113,20 +107,4 @@ public class RandomDispersionManagement implements RandomDispersionManager<Rando
         }
     }
 
-    private boolean isComponentOccupied(Graph<RandomDispersionNode, RandomDispersionEdge> graph, Color component) {
-        List<RandomDispersionEdge> componentEdges = graph.getEdgeList().stream().filter(edge -> edge.getColor().equals(component)).collect(Collectors.toList());
-
-        List<Long> fromIDs = componentEdges.stream().map(RandomDispersionEdge::getFromID).collect(Collectors.toList());
-        List<Long> toIDs = componentEdges.stream().map(RandomDispersionEdge::getToID).collect(Collectors.toList());
-        fromIDs.addAll(toIDs);
-
-        List<Long> componentNodeIDs = fromIDs.stream().distinct().collect(Collectors.toList());
-        List<RandomDispersionNode> componentNodes = new ArrayList<>();
-        for (Long ID : componentNodeIDs) {
-            componentNodes.add(graph.getNodeList().stream().filter(node -> node.getID().equals(ID)).findAny().orElseThrow(() -> new RuntimeException("Node with ID " + ID + " not found!")));
-        }
-
-        return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();
-    }
-    
 }

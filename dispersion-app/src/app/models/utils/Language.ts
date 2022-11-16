@@ -1,7 +1,7 @@
 export enum Language {
-  HUNGARIAN = 'HUNGARIAN',
+  ENGLISH = 'ENGLISH',
   GERMAN = 'GERMAN',
-  ENGLISH = 'ENGLISH'
+  HUNGARIAN = 'HUNGARIAN',
 }
 
 export function getLanguageCode(language: Language | string): string {
@@ -9,7 +9,7 @@ export function getLanguageCode(language: Language | string): string {
     case Language.HUNGARIAN:
       return 'HU';
     case Language.GERMAN:
-      return 'GE'
+      return 'GE';
     case Language.ENGLISH:
       return 'EN';
     default:

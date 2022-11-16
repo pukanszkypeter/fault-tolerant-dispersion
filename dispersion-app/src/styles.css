@@ -4,5 +4,41 @@
 @import "~animate.css";
 @import "~leaflet/dist/leaflet.css";
 
-html, body { height: 100%; }
-body { margin: 0; background: #FFFFFF; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: #ffffff;
+}
+
+svg {
+  vertical-align: unset !important;
+}
+
+.success-snackbar {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.info-snackbar {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.danger-snackbar {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.warning-snackbar {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
+.mat-simple-snackbar {
+  justify-content: center !important;
+  font-family: var(--bs-body-font-family);
+  font-size: 16px;
+}

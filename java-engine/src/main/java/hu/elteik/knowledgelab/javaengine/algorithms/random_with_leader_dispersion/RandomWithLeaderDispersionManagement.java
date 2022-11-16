@@ -12,7 +12,6 @@ import hu.elteik.knowledgelab.javaengine.algorithms.utils.LocalLeaderElection;
 import hu.elteik.knowledgelab.javaengine.algorithms.utils.RandomNumber;
 import hu.elteik.knowledgelab.javaengine.core.algorithms.RandomWithLeaderDispersionManager;
 import hu.elteik.knowledgelab.javaengine.core.models.Graph;
-import hu.elteik.knowledgelab.javaengine.core.utils.Color;
 import hu.elteik.knowledgelab.javaengine.core.utils.NodeState;
 import hu.elteik.knowledgelab.javaengine.core.utils.RobotState;
 
@@ -29,6 +28,7 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
     }
 
     private void look(Graph<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge> graph, List<RandomWithLeaderDispersionRobot> robotList) {
+        /*
         Map<Long, List<RandomWithLeaderDispersionRobot>> robotsOnDifferentNodes = robotList.stream()
                 .filter(robot -> !robot.getState().equals(RobotState.SETTLED))
                 .collect(groupingBy(RandomWithLeaderDispersionRobot::getOnID));
@@ -59,10 +59,11 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
                 }
             }
         }
+         */
     }
 
     private void compute(Graph<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge> graph, List<RandomWithLeaderDispersionRobot> robotList) {
-
+        /*
         Map<Long, List<RandomWithLeaderDispersionRobot>> leadersOnDifferentNodes = robotList.stream()
                 .filter(robot -> robot.getState().equals(RobotState.LEADER))
                 .collect(groupingBy(RandomWithLeaderDispersionRobot::getOnID));
@@ -137,12 +138,13 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
                 }
             }
         }
+         */
     }
 
     private void move(Graph<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge> graph, List<RandomWithLeaderDispersionRobot> robotList) {
         // If a leader has different destinationID than his onID then he will move otherwise settle
         // is a simple robot has a destination he will settle on that.
-
+        /*
         Map<Long, List<RandomWithLeaderDispersionRobot>> robotsOnDifferentNodes = robotList.stream()
                 .filter(robot -> !robot.getState().equals(RobotState.SETTLED) && !robot.getState().equals(RobotState.TERMINATED))
                 .collect(groupingBy(RandomWithLeaderDispersionRobot::getOnID));
@@ -175,9 +177,9 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
             }
 
         }
-
+         */
     }
-
+    /*
     private Long leaderCount(List<RandomWithLeaderDispersionRobot> robotList){
         return robotList.stream().filter(robot -> robot.getState().equals(RobotState.LEADER)).count();
     }
@@ -234,5 +236,5 @@ public class RandomWithLeaderDispersionManagement implements RandomWithLeaderDis
 
         return componentNodes.size() == componentNodes.stream().filter(node -> node.getState().equals(NodeState.OCCUPIED)).count();
     }
-    
+     */
 }

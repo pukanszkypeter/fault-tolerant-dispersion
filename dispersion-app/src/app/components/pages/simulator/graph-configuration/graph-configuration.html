@@ -1,7 +1,9 @@
 <div class="container">
   <div class="row">
     <div class="col-8">
-      <h1 mat-dialog-title>{{ 'settingsDialogComponent_title' | translate }}</h1>
+      <h1 mat-dialog-title>
+        {{ 'settingsDialogComponent_title' | translate }}
+      </h1>
     </div>
     <div class="col-4 text-end">
       <button mat-mini-fab style="background-color: white" mat-dialog-close>
@@ -11,49 +13,72 @@
   </div>
   <mat-dialog-content>
     <form [formGroup]="settingsFormGroup">
-
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'settingsDialogComponent_graphType' | translate }}</mat-label>
+        <mat-label
+          >{{ 'settingsDialogComponent_graphType' | translate }}</mat-label
+        >
         <mat-select [formControl]="graphType">
           <mat-option *ngFor="let graphType of graphTypes" [value]="graphType">
             {{ graphType | translate }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="graphType.hasError('required')">{{ 'settingsDialogComponent_graphTypeRequired' | translate }}</mat-error>
+        <mat-error *ngIf="graphType.hasError('required')"
+          >{{ 'settingsDialogComponent_graphTypeRequired' | translate
+          }}</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'settingsDialogComponent_nodes' | translate }}</mat-label>
-        <input matInput type="number" [formControl]="nodes" min="1" max="1000" *ngIf="this.data.automatedMode">
-        <input matInput type="number" [formControl]="nodes" min="1" max="50" *ngIf="!this.data.automatedMode">
-        <mat-error *ngIf="nodes.hasError('required')">{{ 'settingsDialogComponent_nodesRequired' | translate }}</mat-error>
-        <mat-error *ngIf="nodes.hasError('min')">{{ 'settingsDialogComponent_nodesMin' | translate }}</mat-error>
+        <input
+          matInput
+          type="number"
+          [formControl]="nodes"
+          min="1"
+          max="1000"
+          *ngIf="this.data.automatedMode"
+        />
+        <input
+          matInput
+          type="number"
+          [formControl]="nodes"
+          min="1"
+          max="50"
+          *ngIf="!this.data.automatedMode"
+        />
+        <mat-error *ngIf="nodes.hasError('required')"
+          >{{ 'settingsDialogComponent_nodesRequired' | translate }}</mat-error
+        >
+        <mat-error *ngIf="nodes.hasError('min')"
+          >{{ 'settingsDialogComponent_nodesMin' | translate }}</mat-error
+        >
         <mat-error *ngIf="nodes.hasError('max')">
-          <span *ngIf="!this.data.automatedMode">{{ 'settingsDialogComponent_nodesMax' | translate }}</span>
+          <span *ngIf="!this.data.automatedMode"
+            >{{ 'settingsDialogComponent_nodesMax' | translate }}</span
+          >
         </mat-error>
-        <mat-error *ngIf="nodes.hasError('barbellConstraintError')">{{ 'settingsDialogComponent_barbellConstraintError' | translate }}</mat-error>
-        <mat-error *ngIf="nodes.hasError('lollipopConstraintError')"> {{ 'settingsDialogComponent_lollipopConstraintError' | translate }}</mat-error>
-        <mat-error *ngIf="nodes.hasError('hypercubeConstraintError')">{{ 'settingsDialogComponent_hypercubeConstraintError' | translate }}</mat-error>
+        <mat-error *ngIf="nodes.hasError('barbellConstraintError')"
+          >{{ 'settingsDialogComponent_barbellConstraintError' | translate
+          }}</mat-error
+        >
+        <mat-error *ngIf="nodes.hasError('lollipopConstraintError')">
+          {{ 'settingsDialogComponent_lollipopConstraintError' | translate
+          }}</mat-error
+        >
+        <mat-error *ngIf="nodes.hasError('hypercubeConstraintError')"
+          >{{ 'settingsDialogComponent_hypercubeConstraintError' | translate
+          }}</mat-error
+        >
       </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'settingsDialogComponent_colors' | translate }}</mat-label>
-        <mat-select [formControl]="colors" multiple>
-          <mat-chip-list>
-          <mat-option *ngFor="let color of colorTypes" [value]="getHexByColor(color)" #option>
-            <mat-chip [disableRipple]="true" [ngStyle]="{'background-color': getHexByColor(color), 'color': getFontColor(color)}" (click)="option.selected ? option.deselect() : option.select()">
-              {{ color | translate }}
-            </mat-chip>
-          </mat-option>
-          </mat-chip-list>
-        </mat-select>
-        <mat-error *ngIf="colors.hasError('required')">{{ 'settingsDialogComponent_colorsRequired' | translate }}</mat-error>
-      </mat-form-field>
-
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" [disabled]="settingsFormGroup.invalid" (click)="save()">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="settingsFormGroup.invalid"
+      (click)="save()"
+    >
       {{ 'SAVE' | translate }}
     </button>
     <button mat-raised-button mat-dialog-close>

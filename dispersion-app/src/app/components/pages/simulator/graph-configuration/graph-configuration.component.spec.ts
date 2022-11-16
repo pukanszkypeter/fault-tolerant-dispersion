@@ -8,9 +8,8 @@ describe('SettingsDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GraphConfigurationComponent ]
-    })
-    .compileComponents();
+      declarations: [GraphConfigurationComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

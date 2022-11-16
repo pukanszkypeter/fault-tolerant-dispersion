@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { SimulationStep } from 'src/app/models/dto/SimulationStep';
 import { RandomDispersionNode } from 'src/app/models/algorithms/random-dispersion/RandomDispersionNode';
 import { RandomDispersionEdge } from 'src/app/models/algorithms/random-dispersion/RandomDispersionEdge';
@@ -19,11 +19,10 @@ import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlgorithmService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Test
 
@@ -44,62 +43,161 @@ export class AlgorithmService {
 
   // Random dispersion
 
-  stepRandom(simulationStep: SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot>): 
-    Observable<SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot>> {
-      return this.http.post<SimulationStep<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot>>(
-      JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.RANDOM + AlgorithmServiceRoutes.STEP, simulationStep
+  stepRandom(
+    simulationStep: SimulationStep<
+      RandomDispersionNode,
+      RandomDispersionEdge,
+      RandomDispersionRobot
+    >
+  ): Observable<
+    SimulationStep<
+      RandomDispersionNode,
+      RandomDispersionEdge,
+      RandomDispersionRobot
+    >
+  > {
+    return this.http.post<
+      SimulationStep<
+        RandomDispersionNode,
+        RandomDispersionEdge,
+        RandomDispersionRobot
+      >
+    >(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.RANDOM +
+        AlgorithmServiceRoutes.STEP,
+      simulationStep
     );
   }
 
   testRandom(simulation: any): Observable<number> {
-      return this.http.post<number>(
-      JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.RANDOM + AlgorithmServiceRoutes.TEST, simulation
+    return this.http.post<number>(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.RANDOM +
+        AlgorithmServiceRoutes.TEST,
+      simulation
     );
   }
 
   // Random with leader dispersion
 
-  stepRandomWithLeader(simulationStep: SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot>): 
-    Observable<SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot>> {
-    return this.http.post<SimulationStep<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot>>(
-      JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.RANDOM_WITH_LEADER + AlgorithmServiceRoutes.STEP, simulationStep
+  stepRandomWithLeader(
+    simulationStep: SimulationStep<
+      RandomWithLeaderDispersionNode,
+      RandomWithLeaderDispersionEdge,
+      RandomWithLeaderDispersionRobot
+    >
+  ): Observable<
+    SimulationStep<
+      RandomWithLeaderDispersionNode,
+      RandomWithLeaderDispersionEdge,
+      RandomWithLeaderDispersionRobot
+    >
+  > {
+    return this.http.post<
+      SimulationStep<
+        RandomWithLeaderDispersionNode,
+        RandomWithLeaderDispersionEdge,
+        RandomWithLeaderDispersionRobot
+      >
+    >(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.RANDOM_WITH_LEADER +
+        AlgorithmServiceRoutes.STEP,
+      simulationStep
     );
   }
 
   testRandomWithLeader(simulation: any): Observable<number> {
     return this.http.post<number>(
-    JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.RANDOM_WITH_LEADER + AlgorithmServiceRoutes.TEST, simulation
-  );
-}
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.RANDOM_WITH_LEADER +
+        AlgorithmServiceRoutes.TEST,
+      simulation
+    );
+  }
 
   // Rotor router dispersion
 
-  stepRotorRouter(simulationStep: SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot>): 
-    Observable<SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot>> {
-    return this.http.post<SimulationStep<RotorRouterDispersionNode, RotorRouterDispersionEdge, RotorRouterDispersionRobot>>(
-      JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.ROTOR_ROUTER + AlgorithmServiceRoutes.STEP, simulationStep
+  stepRotorRouter(
+    simulationStep: SimulationStep<
+      RotorRouterDispersionNode,
+      RotorRouterDispersionEdge,
+      RotorRouterDispersionRobot
+    >
+  ): Observable<
+    SimulationStep<
+      RotorRouterDispersionNode,
+      RotorRouterDispersionEdge,
+      RotorRouterDispersionRobot
+    >
+  > {
+    return this.http.post<
+      SimulationStep<
+        RotorRouterDispersionNode,
+        RotorRouterDispersionEdge,
+        RotorRouterDispersionRobot
+      >
+    >(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.ROTOR_ROUTER +
+        AlgorithmServiceRoutes.STEP,
+      simulationStep
     );
   }
 
   testRotorRouter(simulation: any): Observable<number> {
     return this.http.post<number>(
-    JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.ROTOR_ROUTER + AlgorithmServiceRoutes.TEST, simulation
-  );
-}
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.ROTOR_ROUTER +
+        AlgorithmServiceRoutes.TEST,
+      simulation
+    );
+  }
 
   // Rotor router with leader dispersion
 
-  stepRotorRouterWithLeader(simulationStep: SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot>): 
-    Observable<SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot>> {
-    return this.http.post<SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot>>(
-      JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmServiceRoutes.STEP, simulationStep
+  stepRotorRouterWithLeader(
+    simulationStep: SimulationStep<
+      RotorRouterWithLeaderDispersionNode,
+      RotorRouterWithLeaderDispersionEdge,
+      RotorRouterWithLeaderDispersionRobot
+    >
+  ): Observable<
+    SimulationStep<
+      RotorRouterWithLeaderDispersionNode,
+      RotorRouterWithLeaderDispersionEdge,
+      RotorRouterWithLeaderDispersionRobot
+    >
+  > {
+    return this.http.post<
+      SimulationStep<
+        RotorRouterWithLeaderDispersionNode,
+        RotorRouterWithLeaderDispersionEdge,
+        RotorRouterWithLeaderDispersionRobot
+      >
+    >(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.ROTOR_ROUTER_WITH_LEADER +
+        AlgorithmServiceRoutes.STEP,
+      simulationStep
     );
   }
 
   testRotorRouterWithLeader(simulation: any): Observable<number> {
     return this.http.post<number>(
-    JavaEngineRoute + AlgorithmServiceRoutes.ALGORITHM_SERVICE + AlgorithmServiceRoutes.ROTOR_ROUTER_WITH_LEADER + AlgorithmServiceRoutes.TEST, simulation
-  );
-}
-
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.ROTOR_ROUTER_WITH_LEADER +
+        AlgorithmServiceRoutes.TEST,
+      simulation
+    );
+  }
 }

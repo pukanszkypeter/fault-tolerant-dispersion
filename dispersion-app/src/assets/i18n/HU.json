@@ -1,8 +1,16 @@
 {
+  "application": {
+    "feedback": {
+      "translationChanged": "Az applikáció nyelve *Magyar*"
+    }
+  },
   "layout": {
     "header": {
       "search": "Keresés",
-      "signOut": "Kijelentkezés"
+      "signOut": "Kijelentkezés",
+      "hungarian": "Magyar",
+      "german": "Német",
+      "english": "Angol"
     },
     "nav": {
       "dashboard": "Irányítópult",
@@ -15,15 +23,16 @@
       "github": "GitHub",
       "changelog": "Változási napló"
     },
-    "footer": {
-    }
+    "footer": {}
   },
   "pages": {
     "dashboard": {
       "title": "Irányítópult"
     },
     "simulator": {
-      "title": "Szimulátor"
+      "title": "Szimulátor",
+      "graphCreated": "Gsráf sikeresen létrehozva.",
+      "algorithmInitalized": "Az algoritmus sikeresen inicializálva."
     },
     "tester": {
       "title": "Tesztelő"
@@ -44,8 +53,6 @@
       "title": "Változási napló"
     }
   },
-
-
 
   "HUNGARIAN": "Magyar",
   "GERMAN": "Német",
@@ -161,7 +168,7 @@
   "settingsDialogComponent_colors": "Gráf komponensek",
   "settingsDialogComponent_colorsRequired": "Gráf komponensek megadása kötelező!",
   "settingsDialogComponent_startNodes": "Kérlek válaszd ki a komponensek kezdő csúcsait!",
-  "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező a komponensek számára!",
+  "settingsDialogComponent_startNodesRequired": "A kezdő csúcsok megadása kötelező!",
 
   "automatedTestComponent_title": "Tesztelő",
   "automatedTestComponent_graphSettings": "Gráf beállítások",

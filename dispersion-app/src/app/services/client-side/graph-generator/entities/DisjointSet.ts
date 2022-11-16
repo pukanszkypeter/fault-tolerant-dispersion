@@ -1,5 +1,4 @@
 export class Node {
-
   value: number;
   parent: Node;
   height: number;
@@ -14,7 +13,6 @@ export class Node {
 }
 
 export class DisjointSet {
-
   size: number;
   numberOfComponents: number;
   items: Node[];

@@ -1,21 +1,20 @@
 export class SimpleGraph {
-
   size: number;
   matrix: boolean[];
 
   constructor(size: number) {
     this.size = size;
     this.matrix = [];
-    for (let i = 0; i < size * (size - 1) / 2; ++i) {
+    for (let i = 0; i < (size * (size - 1)) / 2; ++i) {
       this.matrix[i] = false;
     }
   }
 
   calculateIndex(from: number, to: number) {
     if (from < to) {
-      return to * (to - 1) / 2 + from;
+      return (to * (to - 1)) / 2 + from;
     } else {
-      return from * (from - 1) / 2 + to;
+      return (from * (from - 1)) / 2 + to;
     }
   }
 
@@ -34,5 +33,4 @@ export class SimpleGraph {
   getNumberOfNodes() {
     return this.size;
   }
-
 }
