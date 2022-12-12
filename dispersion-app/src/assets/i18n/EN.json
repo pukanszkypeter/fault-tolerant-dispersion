@@ -82,12 +82,15 @@
   "RANDOM_WITH_LEADER_DISPERSION": "Random with leader dispersion",
   "ROTOR_ROUTER_DISPERSION": "Rotor router dispersion",
   "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router with leader dispersion",
+  "FAULTLESS_DFS_DISPERSION": "DFS dispersion",
+  "FAULTY_DFS_DISPERSION": "Fault tolerant DFS dispersion",
 
   "START": "Start",
   "EXPLORE": "Explore",
   "LEADER": "Leader",
   "SETTLED": "Settled",
   "TERMINATED": "Terminated",
+  "CRASHED": "Crashed",
 
   "SIMULATION_FINISHED": "The robots could successfully occupy all nodes!",
   "SIMULATION_STUCK": "Oops! It looks like all robots finished before occupation!",
@@ -136,6 +139,7 @@
   "simulationComponent_tableIDColumn": "No.",
   "simulationComponent_tableColorColumn": "Color",
   "simulationComponent_tablePositionColumn": "Position",
+  "simulationComponent_tableLabelColumn": "Label",
   "simulationComponent_tableStateColumn": "State",
   "simulationComponent_informationPanelState": "State",
   "simulationComponent_informationPanelModified": "Modified",

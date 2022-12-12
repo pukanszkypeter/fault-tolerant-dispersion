@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import engine.algorithms.faultless_dfs_dispersion.models.*;
+import engine.algorithms.faulty_dfs_dispersion.models.*;
 import engine.algorithms.random_dispersion.models.*;
 import engine.algorithms.random_with_leader_dispersion.models.*;
 import engine.algorithms.rotor_router_dispersion.models.*;
@@ -72,6 +74,30 @@ public class AlgorithmEngineController {
     public ResponseEntity<Long> rotorRouterWithLeaderDispersionTest(
             @RequestBody SimulationStep<RotorRouterWithLeaderDispersionNode, RotorRouterWithLeaderDispersionEdge, RotorRouterWithLeaderDispersionRobot> step) {
         return ResponseEntity.ok(algorithmEngineService.rotorRouterWithLeaderDispersionTest(step));
+    }
+
+    @PostMapping("/faultless-dfs-dispersion/step")
+    public ResponseEntity<SimulationStep<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge, FaultlessDfsDispersionRobot>> faultlessDfsDispersionStep(
+            @RequestBody SimulationStep<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge, FaultlessDfsDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.faultlessDfsDispersionStep(step));
+    }
+
+    @PostMapping("/faultless-dfs-dispersion/test")
+    public ResponseEntity<Long> faultlessDfsDispersionTest(
+            @RequestBody SimulationStep<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge, FaultlessDfsDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.faultlessDfsDispersionTest(step));
+    }
+
+    @PostMapping("/faulty-dfs-dispersion/step")
+    public ResponseEntity<SimulationStep<FaultyDfsDispersionNode, FaultyDfsDispersionEdge, FaultyDfsDispersionRobot>> faultyDfsDispersionStep(
+            @RequestBody SimulationStep<FaultyDfsDispersionNode, FaultyDfsDispersionEdge, FaultyDfsDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.faultyDfsDispersionStep(step));
+    }
+
+    @PostMapping("/faulty-dfs-dispersion/test")
+    public ResponseEntity<Long> faultyDfsDispersionTest(
+            @RequestBody SimulationStep<FaultyDfsDispersionNode, FaultyDfsDispersionEdge, FaultyDfsDispersionRobot> step) {
+        return ResponseEntity.ok(algorithmEngineService.faultyDfsDispersionTest(step));
     }
 
 }

@@ -82,12 +82,15 @@
   "RANDOM_WITH_LEADER_DISPERSION": "Véletlen - vezetővel diszperzió",
   "ROTOR_ROUTER_DISPERSION": "Rotor router diszperzió",
   "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router - vezetővel diszperzió",
+  "FAULTLESS_DFS_DISPERSION": "DFS diszperzió",
+  "FAULTY_DFS_DISPERSION": "Hibatűrő DFS diszperzió",
 
   "START": "Start",
   "EXPLORE": "Kereső",
   "LEADER": "Vezető",
   "SETTLED": "Letelepedett",
   "TERMINATED": "Terminált",
+  "CRASHED": "Összeomlott",
 
   "SIMULATION_FINISHED": "A robotok sikeresen el tudták foglalni az összes csomópontot!",
   "SIMULATION_STUCK": "Hoppá! Úgy tűnik, minden robot végzett a megszállás előtt!",
@@ -136,6 +139,7 @@
   "simulationComponent_tableIDColumn": "No.",
   "simulationComponent_tableColorColumn": "Szín",
   "simulationComponent_tablePositionColumn": "Pozíció",
+  "simulationComponent_tableLabelColumn": "Címke",
   "simulationComponent_tableStateColumn": "Állapot",
   "simulationComponent_informationPanelState": "Állapot",
   "simulationComponent_informationPanelModified": "Módosított",

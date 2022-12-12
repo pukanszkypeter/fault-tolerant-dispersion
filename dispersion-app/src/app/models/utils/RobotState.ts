@@ -4,4 +4,5 @@ export enum RobotState {
   LEADER = 'LEADER',
   SETTLED = 'SETTLED',
   TERMINATED = 'TERMINATED',
+  CRASHED = 'CRASHED'
 }

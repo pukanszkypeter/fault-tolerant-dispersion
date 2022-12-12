@@ -62,8 +62,7 @@ public class RootedFaultlessDFSTraversal {
                         new Node('C'),
                         new Node('D'),
                         new Node('E'),
-                        new Node('F'),
-                        new Node('G')),
+                        new Node('F')),
                 Arrays.asList(
                         new Edge(1, 'X', 'W', 1, 2),
                         new Edge(2, 'X', 'Y', 2, 1),
@@ -74,8 +73,7 @@ public class RootedFaultlessDFSTraversal {
                         new Edge(7, 'C', 'D', 1, 2),
                         new Edge(8, 'D', 'A', 1, 3),
                         new Edge(9, 'C', 'E', 3, 1),
-                        new Edge(10, 'E', 'F', 2, 1),
-                        new Edge(11, 'A', 'G', 4, 1)));
+                        new Edge(10, 'E', 'F', 2, 1)));
 
         List<Robot> robots = Arrays.asList(
                 new Robot(1, 'X', 0, 0, 0, false),
@@ -87,8 +85,7 @@ public class RootedFaultlessDFSTraversal {
                 new Robot(7, 'X', 0, 0, 0, false),
                 new Robot(8, 'X', 0, 0, 0, false),
                 new Robot(9, 'X', 0, 0, 0, false),
-                new Robot(10, 'X', 0, 0, 0, false),
-                new Robot(11, 'X', 0, 0, 0, false));
+                new Robot(10, 'X', 0, 0, 0, false));
 
         int step = 1;
 
@@ -125,12 +122,14 @@ public class RootedFaultlessDFSTraversal {
 
             // COMPUTE
             int nodeDegree = (int) currentEdges.stream().count();
+            int oldChild = router.getChild();
+            int lastUsedPort = activeRobots.get(activeRobots.size() - 1).getLastUsedPort();
 
-            if (router.getChild() <= nodeDegree) {
-                if (router.getChild() + 1 != router.getParent()) {
-                    router.setChild(router.getChild() + 1);
+            if (oldChild <= nodeDegree) {
+                if (oldChild + 1 != router.getParent()) {
+                    router.setChild(oldChild + 1);
                 } else {
-                    router.setChild(router.getChild() + 2);
+                    router.setChild(oldChild + 2);
                 }
             }
 
@@ -167,7 +166,8 @@ public class RootedFaultlessDFSTraversal {
                     : travelEdge.getToPort();
             System.out.println(
                     exitPort == router.getParent() ? " and active robots move (BACKWARD) through " + exitPort + "."
-                            : " and active robots move (FORWARD) through " + exitPort + ".");
+                            : (router.getParent() != lastUsedPort && oldChild != lastUsedPort) ? " and active robots move (BACKWARD) through " + exitPort + "."  
+                                : " and active robots move (FORWARD) through " + exitPort + ".");
 
             try {
                 step++;
