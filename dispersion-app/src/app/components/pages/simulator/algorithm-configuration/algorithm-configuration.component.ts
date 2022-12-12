@@ -6,11 +6,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FaultlessDfsDispersionRobot } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionRobot';
+import { FaultyDfsDispersionRobot } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionRobot';
 import { RandomDispersionRobot } from 'src/app/models/algorithms/random-dispersion/RandomDispersionRobot';
 import { RandomWithLeaderDispersionRobot } from 'src/app/models/algorithms/random-with-leader-dispersion/RandomWithLeaderDispersionRobot';
 import { RotorRouterDispersionRobot } from 'src/app/models/algorithms/rotor-router-dispersion/RotorRouterDispersionRobot';
 import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionRobot';
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
+import { RobotPhase } from 'src/app/models/utils/RobotPhase';
 import { RobotState } from 'src/app/models/utils/RobotState';
 import { VisService } from 'src/app/services/client-side/vis/vis.service';
 
@@ -98,6 +101,33 @@ export class AlgorithmConfigurationComponent {
               )
             );
             break;
+          case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+            robots.push(
+              new FaultlessDfsDispersionRobot(
+                robotID,
+                RobotState.START,
+                startNodes[i],
+                null,
+                null,
+                null
+              )
+            );
+            break;
+          case AlgorithmType.FAULTY_DFS_DISPERSION:
+          robots.push(
+            new FaultyDfsDispersionRobot(
+              robotID,
+              RobotState.START,
+              startNodes[i],
+              null,
+              null,
+              null,
+              RobotPhase.FORWARD,
+              distribution[i],
+              null
+            )
+          );
+          break;
           default:
             throw new Error('Algorithm type not found!');
         }

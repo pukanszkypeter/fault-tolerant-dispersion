@@ -17,6 +17,12 @@ import { RotorRouterWithLeaderDispersionNode } from 'src/app/models/algorithms/r
 import { RotorRouterWithLeaderDispersionEdge } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionEdge';
 import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/rotor-router-with-leader-dispersion/RotorRouterWithLeaderDispersionRobot';
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
+import { FaultlessDfsDispersionNode } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionNode';
+import { FaultlessDfsDispersionEdge } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionEdge';
+import { FaultlessDfsDispersionRobot } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionRobot';
+import { FaultyDfsDispersionNode } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionNode';
+import { FaultyDfsDispersionEdge } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionEdge';
+import { FaultyDfsDispersionRobot } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionRobot';
 
 @Injectable({
   providedIn: 'root',
@@ -200,4 +206,77 @@ export class AlgorithmService {
       simulation
     );
   }
+
+  // Faultless DFS dispersion
+
+  stepFaultlessDfs(
+    simulationStep: SimulationStep<
+      FaultlessDfsDispersionNode,
+      FaultlessDfsDispersionEdge,
+      FaultlessDfsDispersionRobot
+    >
+  ): Observable<
+    SimulationStep<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge, FaultlessDfsDispersionRobot>
+  > {
+    return this.http.post<
+      SimulationStep<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge, FaultlessDfsDispersionRobot>
+    >(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.FAULTLESS_DFS +
+        AlgorithmServiceRoutes.STEP,
+      simulationStep
+    );
+  }
+
+  testFaultlessDfs(simulation: any): Observable<number> {
+    return this.http.post<number>(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.FAULTLESS_DFS +
+        AlgorithmServiceRoutes.TEST,
+      simulation
+    );
+  }
+
+  // Faulty DFS dispersion
+
+  stepFaultyDfs(
+    simulationStep: SimulationStep<
+      FaultyDfsDispersionNode,
+      FaultyDfsDispersionEdge,
+      FaultyDfsDispersionRobot
+    >
+  ): Observable<
+    SimulationStep<
+      FaultyDfsDispersionNode,
+      FaultyDfsDispersionEdge,
+      FaultyDfsDispersionRobot
+    >
+  > {
+    return this.http.post<
+      SimulationStep<
+        FaultyDfsDispersionNode,
+        FaultyDfsDispersionEdge,
+        FaultyDfsDispersionRobot
+      >
+    >(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.FAULTY_DFS +
+        AlgorithmServiceRoutes.STEP,
+      simulationStep
+    );
+  }
+
+  testFaultyDfs(simulation: any): Observable<number> {
+    return this.http.post<number>(
+      JavaEngineRoute +
+        AlgorithmServiceRoutes.ALGORITHM_SERVICE +
+        AlgorithmServiceRoutes.FAULTY_DFS +
+        AlgorithmServiceRoutes.TEST,
+      simulation
+    );
+  }
+  
 }

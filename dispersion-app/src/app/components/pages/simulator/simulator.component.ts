@@ -7,8 +7,8 @@ import { VisService } from '../../../services/client-side/vis/vis.service';
 import { AlgorithmConfigurationComponent } from './algorithm-configuration/algorithm-configuration.component';
 import { AlgorithmConfiguration } from './algorithm-configuration/AlgorithmConfiguration';
 import { AlgorithmService } from '../../../services/server-side/java-engine/algorithm-service/algorithm.service';
+import { GraphGeneratorService } from '../../../services/client-side/graph-generator/graph-generator.service';
 import { LogFormComponent } from './log-form/log-form.component';
-import { HttpClient } from '@angular/common/http';
 import { SimulationStep } from 'src/app/models/dto/SimulationStep';
 import { SimulationState } from 'src/app/models/utils/SimulationState';
 import { RandomDispersionNode } from 'src/app/models/algorithms/random-dispersion/RandomDispersionNode';
@@ -26,6 +26,13 @@ import { RotorRouterWithLeaderDispersionRobot } from 'src/app/models/algorithms/
 import { AlgorithmType } from 'src/app/models/utils/AlgorithmType';
 import { Graph } from 'src/app/models/core/Graph';
 import { NodeState } from 'src/app/models/utils/NodeState';
+import { FaultlessDfsDispersionNode } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionNode';
+import { FaultlessDfsDispersionEdge } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionEdge';
+import { FaultlessDfsDispersionRobot } from 'src/app/models/algorithms/faultless-dfs-dispersion/FaultlessDfsDispersionRobot';
+import { FaultyDfsDispersionNode } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionNode';
+import { FaultyDfsDispersionEdge } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionEdge';
+import { FaultyDfsDispersionRobot } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionRobot';
+import { RobotState } from 'src/app/models/utils/RobotState';
 
 @Component({
   selector: 'app-static',
@@ -56,18 +63,29 @@ export class SimulatorComponent implements OnInit {
     RotorRouterWithLeaderDispersionEdge,
     RotorRouterWithLeaderDispersionRobot
   >;
+  faultlessDfsSimulation: SimulationStep<
+    FaultlessDfsDispersionNode,
+    FaultlessDfsDispersionEdge,
+    FaultlessDfsDispersionRobot
+  >;
+  faultyDfsSimulation: SimulationStep<
+    FaultyDfsDispersionNode,
+    FaultyDfsDispersionEdge,
+    FaultyDfsDispersionRobot
+  >;
 
   speed: number = 750;
   RTT: number = 0;
   STOPPED = false;
 
   displayedColumns = ['ID', 'onID', 'state', 'stateIcon'];
+  faultyDisplayedColumns = ['ID', 'onID', 'label', 'state', 'stateIcon', 'crash'];
 
   constructor(
     private snackBarService: SnackbarService,
     private visService: VisService,
     private algorithmService: AlgorithmService,
-    private http: HttpClient,
+    private graphGeneratorService: GraphGeneratorService,
     public dialog: MatDialog
   ) {}
 
@@ -270,6 +288,64 @@ export class SimulatorComponent implements OnInit {
               );
               break;
 
+            case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+              this.faultlessDfsSimulation = new SimulationStep(
+                this.algorithmConfiguration.algorithmType,
+                SimulationState.DEFAULT,
+                0,
+                new Graph<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge>(
+                  this.visService.nodes.map(
+                    (node) => new FaultlessDfsDispersionNode(node.id, NodeState.DEFAULT)
+                  ),
+                  this.visService.edges.map(
+                    (edge) =>
+                      new FaultlessDfsDispersionEdge(edge.id, edge.from, edge.to, 0, 0)
+                  )
+                ),
+                this.algorithmConfiguration.robots
+              );
+              this.graphGeneratorService.labelPorts(this.faultlessDfsSimulation.graph);
+              this.faultlessDfsSimulation.graph.nodeList
+                .filter((node) =>
+                  [
+                    ...new Set(
+                      this.faultlessDfsSimulation.robotList.map((robot) => robot.onID)
+                    ),
+                  ].includes(node.id)
+                )
+                .forEach((node) => (node.state = NodeState.PENDING));
+              this.visService.update(this.faultlessDfsSimulation.graph.nodeList);
+              break;
+
+              case AlgorithmType.FAULTY_DFS_DISPERSION:
+              this.faultyDfsSimulation = new SimulationStep(
+                this.algorithmConfiguration.algorithmType,
+                SimulationState.DEFAULT,
+                0,
+                new Graph<FaultyDfsDispersionNode, FaultyDfsDispersionEdge>(
+                  this.visService.nodes.map(
+                    (node) => new FaultyDfsDispersionNode(node.id, NodeState.DEFAULT)
+                  ),
+                  this.visService.edges.map(
+                    (edge) =>
+                      new FaultyDfsDispersionEdge(edge.id, edge.from, edge.to, 0, 0)
+                  )
+                ),
+                this.algorithmConfiguration.robots
+              );
+              this.graphGeneratorService.labelPorts(this.faultyDfsSimulation.graph);
+              this.faultyDfsSimulation.graph.nodeList
+                .filter((node) =>
+                  [
+                    ...new Set(
+                      this.faultyDfsSimulation.robotList.map((robot) => robot.onID)
+                    ),
+                  ].includes(node.id)
+                )
+                .forEach((node) => (node.state = NodeState.PENDING));
+              this.visService.update(this.faultyDfsSimulation.graph.nodeList);
+              break;
+
             default:
               throw new Error('Algorithm type not found!');
           }
@@ -332,6 +408,12 @@ export class SimulatorComponent implements OnInit {
       case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
         this.rotorRouterWithLeaderSimulation = null;
         break;
+      case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+        this.faultlessDfsSimulation = null;
+        break;
+      case AlgorithmType.FAULTY_DFS_DISPERSION:
+        this.faultyDfsSimulation = null;
+        break;
     }
     this.algorithmConfiguration = null;
     this.graphConfiguration = null;
@@ -353,6 +435,12 @@ export class SimulatorComponent implements OnInit {
         break;
       case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
         currentSimulation = this.rotorRouterWithLeaderSimulation;
+        break;
+      case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+        currentSimulation = this.faultlessDfsSimulation;
+        break;
+      case AlgorithmType.FAULTY_DFS_DISPERSION:
+        currentSimulation = this.faultyDfsSimulation;
         break;
     }
     while (
@@ -534,6 +622,85 @@ export class SimulatorComponent implements OnInit {
             );
         }
         break;
+
+      case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+        if (this.faultlessDfsSimulation.simulationState !== SimulationState.FINISHED) {
+          const start = new Date();
+          this.algorithmService.stepFaultlessDfs(this.faultlessDfsSimulation).subscribe(
+            (
+              res: SimulationStep<
+                FaultlessDfsDispersionNode,
+                FaultlessDfsDispersionEdge,
+                FaultlessDfsDispersionRobot
+              >
+            ) => {
+              const end = new Date();
+              this.RTT = end.valueOf() - start.valueOf();
+              this.faultlessDfsSimulation = res;
+              this.visService.update(this.faultlessDfsSimulation.graph.nodeList);
+              if (
+                this.faultlessDfsSimulation.simulationState === SimulationState.FINISHED
+              ) {
+                this.snackBarService.openSnackBar(
+                  'SIMULATION_FINISHED',
+                  'success-snackbar',
+                  null,
+                  null,
+                  null,
+                  10000
+                );
+              }
+            },
+            (err) => {
+              console.log(err);
+              this.snackBarService.openSnackBar(
+                'SERVER_ERROR',
+                'error-snackbar'
+              );
+            }
+          );
+        }
+        break;
+
+        case AlgorithmType.FAULTY_DFS_DISPERSION:
+        if (this.faultyDfsSimulation.simulationState !== SimulationState.FINISHED) {
+          const start = new Date();
+          this.algorithmService.stepFaultyDfs(this.faultyDfsSimulation).subscribe(
+            (
+              res: SimulationStep<
+                FaultyDfsDispersionNode,
+                FaultyDfsDispersionEdge,
+                FaultyDfsDispersionRobot
+              >
+            ) => {
+              console.log(res);
+              const end = new Date();
+              this.RTT = end.valueOf() - start.valueOf();
+              this.faultyDfsSimulation = res;
+              this.visService.update(this.faultyDfsSimulation.graph.nodeList);
+              if (
+                this.faultyDfsSimulation.simulationState === SimulationState.FINISHED
+              ) {
+                this.snackBarService.openSnackBar(
+                  'SIMULATION_FINISHED',
+                  'success-snackbar',
+                  null,
+                  null,
+                  null,
+                  10000
+                );
+              }
+            },
+            (err) => {
+              console.log(err);
+              this.snackBarService.openSnackBar(
+                'SERVER_ERROR',
+                'error-snackbar'
+              );
+            }
+          );
+        }
+        break;
     }
   }
 
@@ -559,6 +726,14 @@ export class SimulatorComponent implements OnInit {
       case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
         robotsSize = this.rotorRouterWithLeaderSimulation.robotList.length;
         steps = this.rotorRouterWithLeaderSimulation.step;
+        break;
+      case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+        robotsSize = this.faultlessDfsSimulation.robotList.length;
+        steps = this.faultlessDfsSimulation.step;
+        break;
+      case AlgorithmType.FAULTY_DFS_DISPERSION:
+        robotsSize = this.faultyDfsSimulation.robotList.length;
+        steps = this.faultyDfsSimulation.step;
         break;
     }
 
@@ -602,6 +777,10 @@ export class SimulatorComponent implements OnInit {
         return this.rotorRouterSimulation.robotList;
       case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
         return this.rotorRouterWithLeaderSimulation.robotList;
+      case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+        return this.faultlessDfsSimulation.robotList;
+      case AlgorithmType.FAULTY_DFS_DISPERSION:
+        return this.faultyDfsSimulation.robotList;
     }
   }
 
@@ -616,6 +795,10 @@ export class SimulatorComponent implements OnInit {
           return this.rotorRouterSimulation.step;
         case AlgorithmType.ROTOR_ROUTER_WITH_LEADER_DISPERSION:
           return this.rotorRouterWithLeaderSimulation.step;
+        case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+          return this.faultlessDfsSimulation.step;
+        case AlgorithmType.FAULTY_DFS_DISPERSION:
+          return this.faultyDfsSimulation.step;
       }
     } else {
       return 0;
@@ -648,9 +831,31 @@ export class SimulatorComponent implements OnInit {
             this.rotorRouterWithLeaderSimulation.simulationState !==
               SimulationState.FINISHED
           );
+        case AlgorithmType.FAULTLESS_DFS_DISPERSION:
+          return (
+            !this.faultlessDfsSimulation ||
+            this.faultlessDfsSimulation.simulationState !== SimulationState.FINISHED
+          );
+        case AlgorithmType.FAULTY_DFS_DISPERSION:
+          return (
+            !this.faultyDfsSimulation ||
+            this.faultyDfsSimulation.simulationState !== SimulationState.FINISHED
+          );
       }
     } else {
       return true;
     }
   }
+
+  crashRobot(robot: FaultyDfsDispersionRobot): void {
+    if (robot.state == RobotState.SETTLED) {
+      const nodeIndex = this.faultyDfsSimulation.graph.nodeList.findIndex(node => node.id === robot.onID); 
+      if (nodeIndex > -1) {
+        this.faultyDfsSimulation.graph.nodeList[nodeIndex].state = NodeState.DEFAULT;
+      }
+      this.visService.update(this.faultyDfsSimulation.graph.nodeList);
+    }
+    robot.state = RobotState.CRASHED;
+  }
+
 }

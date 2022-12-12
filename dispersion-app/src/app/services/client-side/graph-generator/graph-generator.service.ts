@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Edge } from 'src/app/models/core/Edge';
 import { DisjointSet } from './entities/DisjointSet';
 import { SimpleGraph } from './entities/SimpleGraph';
 
@@ -254,5 +255,41 @@ export class GraphGeneratorService {
       case 'ER_RANDOM':
         return this.generateERRandomGraph(nodes, robots, startNodes);
     }
+  }
+
+  labelPorts(graph: any): void {
+    for (let node of graph.nodeList) {
+      let edges: any[] = this.shuffle(
+        graph.edgeList.filter(
+          (edge: any) => edge.fromID === node.id || edge.toID === node.id
+        )
+      );
+      let port = 1;
+      for (let edge of edges) {
+        if (edge.fromID === node.id) {
+          edge.fromPort = port;
+        } else {
+          edge.toPort = port;
+        }
+        port += 1;
+      }
+    }
+  }
+
+  shuffle<T>(array: T[]): T[] {
+    let currentIndex = array.length,
+      randomIndex;
+
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
   }
 }
