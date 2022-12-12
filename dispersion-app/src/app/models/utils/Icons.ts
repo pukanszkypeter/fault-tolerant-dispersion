@@ -27,4 +27,5 @@ export const icons: Icon[] = [
   { selector: 'add', path: 'assets/icons/add-icon.svg' },
   { selector: 'remove', path: 'assets/icons/remove-icon.svg' },
   { selector: 'translate', path: 'assets/icons/translate-icon.svg' },
+  { selector: 'crashed', path: 'assets/icons/crashed-icon.svg' },
 ];

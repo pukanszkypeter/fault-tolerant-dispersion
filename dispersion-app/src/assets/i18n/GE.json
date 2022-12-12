@@ -82,12 +82,15 @@
   "RANDOM_WITH_LEADER_DISPERSION": "Zufällig mit Anführer Dispersion",
   "ROTOR_ROUTER_DISPERSION": "Roto-Rooter Dispersion",
   "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Roto-Rooter mit Anführer Dispersion",
+  "FAULTLESS_DFS_DISPERSION": "DFS Dispersion",
+  "FAULTY_DFS_DISPERSION": "Fehlertolerantes DFS Dispersion",
 
   "START": "Starter",
   "EXPLORE": "Forscher",
   "LEADER": "Leader",
   "SETTLED": "Festgelegt",
   "TERMINATED": "Beendet",
+  "CRASHED": "Abgestürzt",
 
   "SIMULATION_FINISHED": "Die Roboter konnten alle Knoten erfolgreich besetzen!",
   "SIMULATION_STUCK": "Hoppla! Es sieht so aus, als ob alle Roboter vor der Besetzung fertig waren!",
@@ -136,6 +139,7 @@
   "simulationComponent_tableIDColumn": "No.",
   "simulationComponent_tableColorColumn": "Farbe",
   "simulationComponent_tablePositionColumn": "Position",
+  "simulationComponent_tableLabelColumn": "Aufkleber",
   "simulationComponent_tableStateColumn": "Zustand",
   "simulationComponent_informationPanelState": "Zustand",
   "simulationComponent_informationPanelModified": "Geändert",
