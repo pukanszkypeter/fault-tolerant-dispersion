@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import {
   GraphType,
-  hasNodeValueConstraint,
+  // hasNodeValueConstraint,
 } from '../../../../models/utils/GraphType';
 import { Output, EventEmitter } from '@angular/core';
 import { GraphConfiguration } from '../../simulator/graph-configuration/GraphConfiguration';
@@ -69,9 +69,11 @@ export class AutomatedTesterSettingsComponent implements OnInit {
       }
     });
 
+    /*
     this.graphType.valueChanges.subscribe((res) => {
       hasNodeValueConstraint(res, this.nodes);
     });
+    */
   }
 
   ngOnInit(): void {}

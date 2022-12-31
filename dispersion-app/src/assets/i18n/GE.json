@@ -1,33 +1,31 @@
 {
   "application": {
     "feedback": {
-      "translationChanged": "Die Sprache der Anwendung ist *Deutsch*"
+      "notification": "Nachricht",
+      "languageChanged": "Die Sprache hat sich geändert."
     }
   },
   "layout": {
     "header": {
-      "search": "Suche",
-      "signOut": "Ausloggen",
       "hungarian": "Ungarisch",
       "german": "Deutsch",
       "english": "Englisch"
     },
     "nav": {
-      "dashboard": "Startsite",
+      "home": "Startsite",
       "simulator": "Simulator",
       "tester": "Tester",
       "results": "Ergebnisse",
-      "other": "Sonstiges",
-      "profile": "Profil",
-      "settings": "Einstellungen",
-      "github": "GitHub",
       "changelog": "Changelog"
     },
     "footer": {}
   },
   "pages": {
-    "dashboard": {
-      "title": "Startsite"
+    "home": {
+      "hero": "Dispersion Systems ist eine Anwendung, mit der wir schnell und effizient verschiedene Dispersionsalgorithmen simulieren und testen können. Mit Hilfe verschiedener Technologien versuchen wir, die beste Erfahrung zu bieten und die von der Anwendung bereitgestellten Funktionen ständig zu verbessern.",
+      "features": "Funktionen",
+      "simulatorTitle": "Das Hauptfunktion ist der Simulator",
+      "simulatorDescription": "Durch die vielen Diagrammtopologien können wir den Betrieb des ausgewählten Dispersionsalgorithmus simulieren, während nützliche Informationen angezeigt werden."
     },
     "simulator": {
       "title": "Simulator",
@@ -94,16 +92,6 @@
 
   "SIMULATION_FINISHED": "Die Roboter konnten alle Knoten erfolgreich besetzen!",
   "SIMULATION_STUCK": "Hoppla! Es sieht so aus, als ob alle Roboter vor der Besetzung fertig waren!",
-
-  "COMPLETE": "Komplett",
-  "SIMPLE_LINE": "Einfache Linie",
-  "CIRCLE": "Kreis",
-  "BARBELL": "Hantel",
-  "LOLLIPOP": "Lolly",
-  "SPECIAL_LINE": "Sonderlinie",
-  "GRID": "Netz",
-  "HYPER_CUBE": "Hyperwürfel",
-  "ER_RANDOM": "ER Zufällig",
 
   "BLACK": "Schwarz",
   "GREEN": "Grün",

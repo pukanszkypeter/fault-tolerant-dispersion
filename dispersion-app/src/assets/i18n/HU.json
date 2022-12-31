@@ -1,33 +1,31 @@
 {
   "application": {
     "feedback": {
-      "translationChanged": "Az applikáció nyelve *Magyar*"
+      "notification": "Értesítés",
+      "languageChanged": "A nyelv megváltozott."
     }
   },
   "layout": {
     "header": {
-      "search": "Keresés",
-      "signOut": "Kijelentkezés",
       "hungarian": "Magyar",
       "german": "Német",
       "english": "Angol"
     },
     "nav": {
-      "dashboard": "Irányítópult",
+      "home": "Kezdőlap",
       "simulator": "Szimulátor",
       "tester": "Tesztelő",
       "results": "Eredmények",
-      "other": "Egyéb",
-      "profile": "Profil",
-      "settings": "Beállítások",
-      "github": "GitHub",
       "changelog": "Változási napló"
     },
     "footer": {}
   },
   "pages": {
-    "dashboard": {
-      "title": "Irányítópult"
+    "home": {
+      "hero": "A Dispersion Systems egy olyan alkalmazás, ahol gyorsan és hatékonyan szimulálhatunk és tesztelhetünk különböző diszperziós algoritmusokat. Különböző technológiák segítségével igyekszünk a legjobb élményt nyújtani és folyamatosan fejleszteni az alkalmazás által nyújtott funkciókat.",
+      "features": "Funkciók",
+      "simulatorTitle": "A fő funkció a szimulátor",
+      "simulatorDescription": "A sok gráf topológián keresztül szimulálhatjuk a kiválasztott diszperziós algoritmus működését, miközben hasznos információk jelennek meg."
     },
     "simulator": {
       "title": "Szimulátor",
@@ -94,16 +92,6 @@
 
   "SIMULATION_FINISHED": "A robotok sikeresen el tudták foglalni az összes csomópontot!",
   "SIMULATION_STUCK": "Hoppá! Úgy tűnik, minden robot végzett a megszállás előtt!",
-
-  "COMPLETE": "Teljes",
-  "SIMPLE_LINE": "Egyszerű vonal",
-  "CIRCLE": "Kör",
-  "BARBELL": "Súlyzó",
-  "LOLLIPOP": "Nyalóka",
-  "SPECIAL_LINE": "Speciális Vonal",
-  "GRID": "Rács",
-  "HYPER_CUBE": "Hiperkocka",
-  "ER_RANDOM": "ER Random",
 
   "BLACK": "Fekete",
   "GREEN": "Zöld",

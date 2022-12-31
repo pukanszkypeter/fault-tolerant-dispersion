@@ -19,7 +19,6 @@ import { PageNotFoundComponent } from './components/pages/page-not-found/page-no
 import { SimulatorComponent } from './components/pages/simulator/simulator.component';
 import { GraphConfigurationComponent } from './components/pages/simulator/graph-configuration/graph-configuration.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { SettingsComponent } from './components/pages/settings/settings.component';
 import { AutomatedTesterComponent } from './components/pages/automated-tester/automated-tester.component';
 import { AutomatedTesterSettingsComponent } from './components/pages/automated-tester/automated-tester-settings/automated-tester-settings.component';
 import { AlgorithmConfigurationComponent } from './components/pages/simulator/algorithm-configuration/algorithm-configuration.component';
@@ -27,52 +26,51 @@ import { VisualizationComponent } from './components/pages/visualization/visuali
 import { LogFormComponent } from './components/pages/simulator/log-form/log-form.component';
 import { OpenStreetMapComponent } from './components/pages/open-street-map/open-street-map.component';
 import { AlgorithmSelectDialogComponent } from './components/pages/open-street-map/algorithm-select-dialog/algorithm-select-dialog.component';
-import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
-import { ProfileComponent } from './components/pages/profile/profile.component';
+import { HomeComponent } from './components/pages/home/home.component';
 import { ChangelogComponent } from './components/pages/changelog/changelog.component';
+import { ToastComponent } from './components/utils/toast/toast.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-    SimulatorComponent,
-    GraphConfigurationComponent,
-    LayoutComponent,
-    SettingsComponent,
-    AutomatedTesterComponent,
-    AutomatedTesterSettingsComponent,
-    AlgorithmConfigurationComponent,
-    LogFormComponent,
-    VisualizationComponent,
-    OpenStreetMapComponent,
-    AlgorithmSelectDialogComponent,
-    DashboardComponent,
-    ProfileComponent,
-    ChangelogComponent,
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxChartsModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-      sanitize: SecurityContext.NONE,
-    }),
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        PageNotFoundComponent,
+        SimulatorComponent,
+        GraphConfigurationComponent,
+        LayoutComponent,
+        AutomatedTesterComponent,
+        AutomatedTesterSettingsComponent,
+        AlgorithmConfigurationComponent,
+        LogFormComponent,
+        VisualizationComponent,
+        OpenStreetMapComponent,
+        AlgorithmSelectDialogComponent,
+        HomeComponent,
+        ChangelogComponent,
+        ToastComponent
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxChartsModule,
+        MarkdownModule.forRoot({
+            loader: HttpClient,
+            sanitize: SecurityContext.NONE,
+        })
+    ]
 })
 export class AppModule {}
 

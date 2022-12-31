@@ -4,7 +4,8 @@ import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { getLanguageCode, Language } from 'src/app/models/utils/Language';
 import { LanguageService } from 'src/app/services/client-side/utils/language.service';
-import { SnackbarService } from 'src/app/services/client-side/utils/snackbar.service';
+import { ToastService } from 'src/app/services/client-side/utils/toast.service';
+import { v4 as uuidv4 } from "uuid";
 
 @Component({
   selector: 'app-layout',
@@ -13,79 +14,74 @@ import { SnackbarService } from 'src/app/services/client-side/utils/snackbar.ser
 })
 export class LayoutComponent implements OnInit {
   languages = Object.keys(Language);
+  colorMode: string = localStorage.getItem("colorMode") || "light";
+  
 
   constructor(
     public dialog: MatDialog,
+    public toastService: ToastService,
     private router: Router,
     private languageService: LanguageService,
-    private snackBarService: SnackbarService
   ) {
     this.router.events
       .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
       .subscribe((event) => {
         event.url === '/'
-          ? this.handleActiveState('dashboard')
+          ? this.handleActiveState('home')
           : this.handleActiveState(event.url.substring(1));
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    document.documentElement.setAttribute('data-bs-theme', this.colorMode);
+    document.getElementById("language-dropdown").setAttribute('data-bs-theme', this.colorMode);
+  }
 
   public handleActiveState(path: string): void {
-    const links = document.getElementsByTagName('a');
+    const links = document.getElementsByClassName('custom-link');
 
     switch (path) {
-      case 'dashboard':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[2].classList.add('active');
+      case 'home':
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
+        links[0].classList.add('active-link');
         break;
       case 'simulator':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[3].classList.add('active');
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
+        links[1].classList.add('active-link');
         break;
       case 'tester':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[4].classList.add('active');
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
+        links[2].classList.add('active-link');
         break;
       case 'results':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[5].classList.add('active');
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
+        links[3].classList.add('active-link');
         break;
       case 'open-street-map':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[6].classList.add('active');
-        break;
-      case 'profile':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[7].classList.add('active');
-        break;
-      case 'settings':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[9].classList.add('active');
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
+        links[4].classList.add('active-link');
         break;
       case 'changelog':
-        Array.from(links).forEach((link) => link.classList.remove('active'));
-        links[10].classList.add('active');
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
+        links[5].classList.add('active-link');
         break;
       default:
-        Array.from(links).forEach((link) => link.classList.remove('active'));
+        Array.from(links).forEach((link) => link.classList.remove('active-link'));
         break;
     }
   }
 
-  public changeLanguage(language: string): void {
+  changeLanguage(language: string): void {
     this.languageService.setLanguage(getLanguageCode(language));
-    setTimeout(
-      () =>
-        this.snackBarService.openSnackBar(
-          'application.feedback.translationChanged',
-          'success-snackbar',
-          null,
-          'right',
-          'bottom',
-          null
-        ),
-      500
-    );
+    this.toastService.show({uuid: uuidv4(), headerKey: "application.feedback.notification", bodyKey: "application.feedback.languageChanged"});
   }
+
+  toggleColorMode(): void {
+    const nextColorMode: string = this.colorMode === "light" ? "dark" : "light";
+    this.colorMode = nextColorMode;
+    document.documentElement.setAttribute('data-bs-theme', this.colorMode);
+    document.getElementById("language-dropdown").setAttribute('data-bs-theme', this.colorMode);
+    localStorage.setItem("colorMode", this.colorMode);
+  }
+
 }

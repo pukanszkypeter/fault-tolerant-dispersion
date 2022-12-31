@@ -4,7 +4,6 @@ import { GraphConfiguration } from '../simulator/graph-configuration/GraphConfig
 import { AlgorithmConfiguration } from '../simulator/algorithm-configuration/AlgorithmConfiguration';
 import { GraphConfigurationComponent } from '../simulator/graph-configuration/graph-configuration.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SnackbarService } from '../../../services/client-side/utils/snackbar.service';
 import { AlgorithmConfigurationComponent } from '../simulator/algorithm-configuration/algorithm-configuration.component';
 import { FormControl, Validators } from '@angular/forms';
 import { AlgorithmService } from '../../../services/server-side/java-engine/algorithm-service/algorithm.service';
@@ -71,7 +70,6 @@ export class AutomatedTesterComponent implements OnInit {
   summaryColumns = ['tests', 'success', 'failed', 'steps', 'server'];
 
   constructor(
-    private snackBarService: SnackbarService,
     private visService: VisService,
     private algorithmService: AlgorithmService,
     private loggerService: LoggerService,
@@ -94,15 +92,11 @@ export class AutomatedTesterComponent implements OnInit {
         if (res) {
           this.graphConfiguration = new GraphConfiguration().initialize(res);
           this.visService.initDataFromConfig(this.graphConfiguration);
-          this.snackBarService.openSnackBar(
-            'SUCCESSFUL_SAVE',
-            'success-snackbar'
-          );
+
         }
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('FORM_ERROR', 'error-snackbar');
       }
     );
   }
@@ -228,15 +222,11 @@ export class AutomatedTesterComponent implements OnInit {
               throw new Error('Algorithm type not found!');
           }
 
-          this.snackBarService.openSnackBar(
-            'SUCCESSFUL_SAVE',
-            'success-snackbar'
-          );
+
         }
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('FORM_ERROR', 'error-snackbar');
       }
     );
   }
@@ -381,7 +371,6 @@ export class AutomatedTesterComponent implements OnInit {
         );
     } else {
       this.testsInProgress = false;
-      this.snackBarService.openSnackBar('SUCCESSFUL_SAVE', 'success-snackbar');
     }
   }
 }

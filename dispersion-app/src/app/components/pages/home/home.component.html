@@ -1,0 +1,58 @@
+<div class="px-4 py-5 my-3 text-center">
+  <img class="d-block mx-auto mb-3" src="assets/images/icon.png" id="icon" alt="icon" width="100" height="100">
+  <h1 class="display-5 fw-bold">Dispersion Systems</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">{{"pages.home.hero" | translate}}</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <h2 class="pb-2 border-bottom">{{"pages.home.features" | translate}}</h2>
+
+  <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+    <div class="col d-flex flex-column align-items-start gap-2">
+      <h3 class="fw-bold">{{"pages.home.simulatorTitle" | translate}}</h3>
+      <p class="text-muted">{{"pages.home.simulatorDescription" | translate}}</p>
+      <a [routerLink]="['/simulator']" class="btn btn-outline-primary btn-lg d-flex align-items-center">
+        <span style="padding-bottom: 2.5px;">{{ "layout.nav.simulator" | translate }}</span>
+        <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+
+    <div class="col">
+      <div class="row row-cols-1 row-cols-sm-2 g-4">
+        <div class="col d-flex flex-column gap-2">
+          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+            <i class="bi bi-speedometer" style="padding: 6px 12px 6px 12px;"></i>
+          </div>
+          <h4 class="fw-semibold mb-0">Tester</h4>
+          <p class="text-muted">We can run automated test cases on larger amounts of data.</p>
+        </div>
+
+        <div class="col d-flex flex-column gap-2">
+          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+            <i class="bi bi-bar-chart-fill" style="padding: 6px 12px 6px 12px;"></i>
+          </div>
+          <h4 class="fw-semibold mb-0">Results</h4>
+          <p class="text-muted">We can see the results of the algorithms with the help of spectacular diagrams.</p>
+        </div>
+
+        <div class="col d-flex flex-column gap-2">
+          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+            <i class="bi bi-geo-fill" style="padding: 6px 12px 6px 12px;"></i>
+          </div>
+          <h4 class="fw-semibold mb-0">Open Street Map</h4>
+          <p class="text-muted">We can even test on real road networks using Open Street Map.</p>
+        </div>
+
+        <div class="col d-flex flex-column gap-2">
+          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+            <i class="bi bi-tools" style="padding: 6px 12px 6px 12px;"></i>
+          </div>
+          <h4 class="fw-semibold mb-0">Changelog</h4>
+          <p class="text-muted">We can read the changes made in the application by version.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

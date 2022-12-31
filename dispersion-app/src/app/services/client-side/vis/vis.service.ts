@@ -7,6 +7,7 @@ import { VisNode } from 'src/app/models/vis/VisNode';
 import { VisEdge } from 'src/app/models/vis/VisEdge';
 import { getNodeStateColor, NodeState } from 'src/app/models/utils/NodeState';
 import { Node } from 'src/app/models/core/Node';
+import { GeneratorService } from '../../server-side/java-engine/generator-service/generator.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,63 +18,46 @@ export class VisService {
   nodes: VisNode[];
   edges: VisEdge[];
 
-  constructor(private graphGenerator: GraphGeneratorService) {}
+  constructor(private graphGenerator: GraphGeneratorService, private generatorService: GeneratorService) {}
 
   initGraphFromConfig(
     configuration: GraphConfiguration,
     container: HTMLElement,
     options: any
   ): void {
-    this.network = new vis.Network(
-      container,
-      this.initDataFromConfig(configuration),
-      options
-    );
+
+    let network: vis.Network;
+
+    this.initDataFromConfig(configuration).then(data => {
+      network = new vis.Network(container, data, options);
+    }).catch(error => {
+      console.log(error);
+    }).finally(() => {
+      this.network = network;
+    });
   }
 
-  initDataFromConfig(configuration: GraphConfiguration): any {
-    let nodes: VisNode[] = [];
-    let edges: VisEdge[] = [];
-    let edgeID = 1;
+  async initDataFromConfig(configuration: GraphConfiguration): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let nodes: VisNode[] = [];
+      let edges: VisEdge[] = [];
 
-    const graph = this.graphGenerator.generateGraph(
-      configuration.graphType,
-      configuration.nodes,
-      0,
-      ''
-    );
-
-    const lines = graph.split('\n');
-    for (let line of lines) {
-      const chunk = line.split(':');
-
-      // Node
-      if (!this.idExist(nodes, Number(chunk[0]))) {
-        nodes.push(
-          new VisNode(
-            Number(chunk[0]),
-            chunk[0],
-            getNodeStateColor(NodeState.DEFAULT)
-          )
-        );
-      }
-
-      // Edges
-      const toValues = chunk[1].split(',');
-      for (let to of toValues) {
-        if (!this.isDuplicatedEdge(chunk[0], to, edges)) {
-          edges.push(
-            new VisEdge(edgeID, Number(chunk[0]), Number(to), '#B0B0B0')
-          );
-          edgeID++;
+      this.generatorService.generateGraph(configuration.graphType, configuration.nodes).subscribe(res => {
+        for (let node of res.nodeList) {
+          nodes.push(new VisNode(node.id, node.id.toString(), getNodeStateColor(node.state)));
         }
-      }
-    }
+        for (let edge of res.edgeList) {
+          edges.push(new VisEdge(edge.id, edge.fromID, edge.toID, "#B0B0B0"));
+        }
 
-    this.nodes = nodes;
-    this.edges = edges;
+        this.nodes = nodes;
+        this.edges = edges;
 
-    return { nodes: new DataSet(nodes), edges: new DataSet(edges) };
+        resolve({ nodes: new DataSet(nodes), edges: new DataSet(edges) });
+      }, err => {
+        reject(err);
+      });
+    });
   }
 
   update(nodes: Node[]): void {

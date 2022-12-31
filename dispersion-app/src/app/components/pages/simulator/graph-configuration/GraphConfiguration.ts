@@ -1,8 +1,10 @@
+import { GraphType } from "src/app/models/utils/GraphType";
+
 export class GraphConfiguration {
-  graphType: string;
+  graphType: GraphType;
   nodes: number;
 
-  constructor(graphType?: string, nodes?: number) {
+  constructor(graphType?: GraphType, nodes?: number) {
     this.graphType = graphType;
     this.nodes = nodes;
   }

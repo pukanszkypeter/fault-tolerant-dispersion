@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { SnackbarService } from '../../../services/client-side/utils/snackbar.service';
 import { LanguageService } from '../../../services/client-side/utils/language.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSelectChange } from '@angular/material/select';
@@ -59,7 +58,6 @@ export class VisualizationComponent implements OnInit {
 
   constructor(
     private visualizationService: VisualizationService,
-    private snackBarService: SnackbarService,
     private languageService: LanguageService
   ) {}
 
@@ -79,7 +77,6 @@ export class VisualizationComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
         setTimeout(() => (this.SUMMARY_LOADING = false), 1000);
       }
     );
@@ -162,7 +159,6 @@ export class VisualizationComponent implements OnInit {
         },
         (err) => {
           console.log(err);
-          this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
           setTimeout(() => (this.LOADING = false), 1000);
         }
       );
@@ -196,7 +192,6 @@ export class VisualizationComponent implements OnInit {
         },
         (err) => {
           console.log(err);
-          this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
           setTimeout(() => (this.DETAIL_LOADING = false), 1000);
         }
       );

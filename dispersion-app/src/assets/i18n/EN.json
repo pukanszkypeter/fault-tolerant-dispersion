@@ -1,33 +1,31 @@
 {
   "application": {
     "feedback": {
-      "translationChanged": "The language of the application is *English*"
+      "notification": "Notification",
+      "languageChanged": "The language has changed."
     }
   },
   "layout": {
     "header": {
-      "search": "Search",
-      "signOut": "Sign out",
       "hungarian": "Hungarian",
       "german": "German",
       "english": "English"
     },
     "nav": {
-      "dashboard": "Dashboard",
+      "home": "Home",
       "simulator": "Simulator",
       "tester": "Tester",
       "results": "Results",
-      "other": "Other",
-      "profile": "Profile",
-      "settings": "Settings",
-      "github": "GitHub",
       "changelog": "Changelog"
     },
     "footer": {}
   },
   "pages": {
-    "dashboard": {
-      "title": "Dashboard"
+    "home": {
+      "hero": "Dispersion Systems is an application where we can quickly and efficiently simulate and test different dispersion algorithms. With the help of different technologies, we try to provide the best experience and constantly improve the features provided by the application.",
+      "features": "Features",
+      "simulatorTitle": "The main feature is the simulator",
+      "simulatorDescription": "Through the many graph topologies, we can simulate the operation of the selected dispersion algorithm, while useful information is displayed."
     },
     "simulator": {
       "title": "Simulator",
@@ -94,16 +92,6 @@
 
   "SIMULATION_FINISHED": "The robots could successfully occupy all nodes!",
   "SIMULATION_STUCK": "Oops! It looks like all robots finished before occupation!",
-
-  "COMPLETE": "Complete",
-  "SIMPLE_LINE": "Simple Line",
-  "CIRCLE": "Circle",
-  "BARBELL": "Barbell",
-  "LOLLIPOP": "Lollipop",
-  "SPECIAL_LINE": "Special Line",
-  "GRID": "Grid",
-  "HYPER_CUBE": "Hypercube",
-  "ER_RANDOM": "ER Random",
 
   "BLACK": "Black",
   "GREEN": "Green",

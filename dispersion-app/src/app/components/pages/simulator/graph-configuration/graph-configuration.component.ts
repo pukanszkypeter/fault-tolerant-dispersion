@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import {
   GraphType,
-  hasNodeValueConstraint,
+  // hasNodeValueConstraint,
 } from '../../../../models/utils/GraphType';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -35,9 +35,11 @@ export class GraphConfigurationComponent implements OnInit {
       ]),
     });
 
+    /*
     this.graphType.valueChanges.subscribe((res) => {
       hasNodeValueConstraint(res, this.nodes);
     });
+    */
   }
 
   ngOnInit(): void {}

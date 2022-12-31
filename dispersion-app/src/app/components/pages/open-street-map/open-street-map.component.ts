@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { SnackbarService } from 'src/app/services/client-side/utils/snackbar.service';
 import { icon, Marker } from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
@@ -120,7 +119,6 @@ export class OpenStreetMapComponent implements OnInit {
 
   constructor(
     private openStreetMapService: OpenStreetMapService,
-    private snackBarService: SnackbarService,
     private algorithmService: AlgorithmService,
     private visService: VisService,
     public dialog: MatDialog
@@ -183,16 +181,12 @@ export class OpenStreetMapComponent implements OnInit {
           // set view
           this.map.setView([this.selectedCity.lat, this.selectedCity.lng], 14);
         } else {
-          this.snackBarService.openSnackBar(
-            'openStreetMapComponent_cityNotFound',
-            'error-snackbar'
-          );
+
         }
         this.loading = false;
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
         this.loading = false;
       }
     );
@@ -318,7 +312,6 @@ export class OpenStreetMapComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('SERVER_ERROR', 'error-snackbar');
         this.loading = false;
       }
     );
@@ -591,22 +584,12 @@ export class OpenStreetMapComponent implements OnInit {
                 this.randomSimulation.simulationState ===
                 SimulationState.FINISHED
               ) {
-                this.snackBarService.openSnackBar(
-                  'SIMULATION_FINISHED',
-                  'success-snackbar',
-                  null,
-                  null,
-                  null,
-                  10000
-                );
+
               }
             },
             (err) => {
               console.log(err);
-              this.snackBarService.openSnackBar(
-                'SERVER_ERROR',
-                'error-snackbar'
-              );
+
             }
           );
         }
@@ -633,22 +616,12 @@ export class OpenStreetMapComponent implements OnInit {
                   this.randomWithLeaderSimulation.simulationState ===
                   SimulationState.FINISHED
                 ) {
-                  this.snackBarService.openSnackBar(
-                    'SIMULATION_FINISHED',
-                    'success-snackbar',
-                    null,
-                    null,
-                    null,
-                    10000
-                  );
+
                 }
               },
               (err) => {
                 console.log(err);
-                this.snackBarService.openSnackBar(
-                  'SERVER_ERROR',
-                  'error-snackbar'
-                );
+
               }
             );
         }
@@ -673,22 +646,12 @@ export class OpenStreetMapComponent implements OnInit {
                   this.rotorRouterSimulation.simulationState ===
                   SimulationState.FINISHED
                 ) {
-                  this.snackBarService.openSnackBar(
-                    'SIMULATION_FINISHED',
-                    'success-snackbar',
-                    null,
-                    null,
-                    null,
-                    10000
-                  );
+
                 }
               },
               (err) => {
                 console.log(err);
-                this.snackBarService.openSnackBar(
-                  'SERVER_ERROR',
-                  'error-snackbar'
-                );
+
               }
             );
         }
@@ -715,22 +678,12 @@ export class OpenStreetMapComponent implements OnInit {
                   this.rotorRouterWithLeaderSimulation.simulationState ===
                   SimulationState.FINISHED
                 ) {
-                  this.snackBarService.openSnackBar(
-                    'SIMULATION_FINISHED',
-                    'success-snackbar',
-                    null,
-                    null,
-                    null,
-                    10000
-                  );
+
                 }
               },
               (err) => {
                 console.log(err);
-                this.snackBarService.openSnackBar(
-                  'SERVER_ERROR',
-                  'error-snackbar'
-                );
+
               }
             );
         }

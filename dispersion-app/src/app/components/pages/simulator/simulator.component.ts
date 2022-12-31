@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GraphConfigurationComponent } from './graph-configuration/graph-configuration.component';
-import { SnackbarService } from '../../../services/client-side/utils/snackbar.service';
 import { GraphConfiguration } from './graph-configuration/GraphConfiguration';
 import { VisService } from '../../../services/client-side/vis/vis.service';
 import { AlgorithmConfigurationComponent } from './algorithm-configuration/algorithm-configuration.component';
@@ -82,7 +81,6 @@ export class SimulatorComponent implements OnInit {
   faultyDisplayedColumns = ['ID', 'onID', 'label', 'state', 'stateIcon', 'crash'];
 
   constructor(
-    private snackBarService: SnackbarService,
     private visService: VisService,
     private algorithmService: AlgorithmService,
     private graphGeneratorService: GraphGeneratorService,
@@ -106,18 +104,10 @@ export class SimulatorComponent implements OnInit {
         if (res) {
           this.graphConfiguration = new GraphConfiguration().initialize(res);
           this.initSimulator(this.graphConfiguration);
-          this.snackBarService.openSnackBar(
-            'pages.simulator.graphCreated',
-            'success-snackbar',
-            null,
-            'right',
-            'bottom'
-          );
         }
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('FORM_ERROR', 'error-snackbar');
       }
     );
   }
@@ -349,19 +339,11 @@ export class SimulatorComponent implements OnInit {
             default:
               throw new Error('Algorithm type not found!');
           }
-
-          this.snackBarService.openSnackBar(
-            'pages.simulator.algorithmInitalized',
-            'success-snackbar',
-            null,
-            'right',
-            'bottom'
-          );
         }
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('FORM_ERROR', 'error-snackbar');
+
       }
     );
   }
@@ -479,22 +461,10 @@ export class SimulatorComponent implements OnInit {
                 this.randomSimulation.simulationState ===
                 SimulationState.FINISHED
               ) {
-                this.snackBarService.openSnackBar(
-                  'SIMULATION_FINISHED',
-                  'success-snackbar',
-                  null,
-                  null,
-                  null,
-                  10000
-                );
               }
             },
             (err) => {
               console.log(err);
-              this.snackBarService.openSnackBar(
-                'SERVER_ERROR',
-                'error-snackbar'
-              );
             }
           );
         }
@@ -520,22 +490,12 @@ export class SimulatorComponent implements OnInit {
                   this.randomWithLeaderSimulation.simulationState ===
                   SimulationState.FINISHED
                 ) {
-                  this.snackBarService.openSnackBar(
-                    'SIMULATION_FINISHED',
-                    'success-snackbar',
-                    null,
-                    null,
-                    null,
-                    10000
-                  );
+                 
                 }
               },
               (err) => {
                 console.log(err);
-                this.snackBarService.openSnackBar(
-                  'SERVER_ERROR',
-                  'error-snackbar'
-                );
+
               }
             );
         }
@@ -561,22 +521,12 @@ export class SimulatorComponent implements OnInit {
                   this.rotorRouterSimulation.simulationState ===
                   SimulationState.FINISHED
                 ) {
-                  this.snackBarService.openSnackBar(
-                    'SIMULATION_FINISHED',
-                    'success-snackbar',
-                    null,
-                    null,
-                    null,
-                    10000
-                  );
+
                 }
               },
               (err) => {
                 console.log(err);
-                this.snackBarService.openSnackBar(
-                  'SERVER_ERROR',
-                  'error-snackbar'
-                );
+
               }
             );
         }
@@ -602,22 +552,12 @@ export class SimulatorComponent implements OnInit {
                   this.rotorRouterWithLeaderSimulation.simulationState ===
                   SimulationState.FINISHED
                 ) {
-                  this.snackBarService.openSnackBar(
-                    'SIMULATION_FINISHED',
-                    'success-snackbar',
-                    null,
-                    null,
-                    null,
-                    10000
-                  );
+
                 }
               },
               (err) => {
                 console.log(err);
-                this.snackBarService.openSnackBar(
-                  'SERVER_ERROR',
-                  'error-snackbar'
-                );
+
               }
             );
         }
@@ -641,22 +581,12 @@ export class SimulatorComponent implements OnInit {
               if (
                 this.faultlessDfsSimulation.simulationState === SimulationState.FINISHED
               ) {
-                this.snackBarService.openSnackBar(
-                  'SIMULATION_FINISHED',
-                  'success-snackbar',
-                  null,
-                  null,
-                  null,
-                  10000
-                );
+
               }
             },
             (err) => {
               console.log(err);
-              this.snackBarService.openSnackBar(
-                'SERVER_ERROR',
-                'error-snackbar'
-              );
+
             }
           );
         }
@@ -681,22 +611,12 @@ export class SimulatorComponent implements OnInit {
               if (
                 this.faultyDfsSimulation.simulationState === SimulationState.FINISHED
               ) {
-                this.snackBarService.openSnackBar(
-                  'SIMULATION_FINISHED',
-                  'success-snackbar',
-                  null,
-                  null,
-                  null,
-                  10000
-                );
+
               }
             },
             (err) => {
               console.log(err);
-              this.snackBarService.openSnackBar(
-                'SERVER_ERROR',
-                'error-snackbar'
-              );
+
             }
           );
         }
@@ -758,7 +678,7 @@ export class SimulatorComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.snackBarService.openSnackBar('FORM_ERROR', 'error-snackbar');
+
       }
     );
   }

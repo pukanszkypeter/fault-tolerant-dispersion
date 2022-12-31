@@ -4,8 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { icons } from './models/utils/Icons';
 import { LanguageService } from './services/client-side/utils/language.service';
 
-export const LANGUAGE_KEY = 'LANGUAGE';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

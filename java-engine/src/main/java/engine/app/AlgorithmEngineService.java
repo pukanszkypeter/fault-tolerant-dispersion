@@ -2,7 +2,6 @@ package engine.app;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
 
@@ -30,7 +29,6 @@ public class AlgorithmEngineService {
     private final FaultlessDfsDispersionManager<FaultlessDfsDispersionNode, FaultlessDfsDispersionEdge, FaultlessDfsDispersionRobot> faultlessDfsDispersionManager;
     private final FaultyDfsDispersionManager<FaultyDfsDispersionNode, FaultyDfsDispersionEdge, FaultyDfsDispersionRobot> faultyDfsDispersionManager;
 
-    @Autowired
     public AlgorithmEngineService(
             RandomDispersionManager<RandomDispersionNode, RandomDispersionEdge, RandomDispersionRobot> randomDispersionManager,
             RandomWithLeaderDispersionManager<RandomWithLeaderDispersionNode, RandomWithLeaderDispersionEdge, RandomWithLeaderDispersionRobot> randomWithLeaderDispersionManager,

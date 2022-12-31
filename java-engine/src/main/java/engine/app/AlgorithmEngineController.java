@@ -1,6 +1,5 @@
 package engine.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +22,6 @@ public class AlgorithmEngineController {
 
     private final AlgorithmEngineService algorithmEngineService;
 
-    @Autowired
     public AlgorithmEngineController(AlgorithmEngineService algorithmEngineService) {
         this.algorithmEngineService = algorithmEngineService;
     }
