@@ -32,6 +32,9 @@ import { FaultyDfsDispersionNode } from 'src/app/models/algorithms/faulty-dfs-di
 import { FaultyDfsDispersionEdge } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionEdge';
 import { FaultyDfsDispersionRobot } from 'src/app/models/algorithms/faulty-dfs-dispersion/FaultyDfsDispersionRobot';
 import { RobotState } from 'src/app/models/utils/RobotState';
+import { GraphType } from 'src/app/models/utils/GraphType';
+import { Collapse, Tooltip } from 'bootstrap';
+import { LanguageService } from 'src/app/services/client-side/utils/language.service';
 
 @Component({
   selector: 'app-static',
@@ -39,6 +42,12 @@ import { RobotState } from 'src/app/models/utils/RobotState';
   styleUrls: ['./simulator.component.css'],
 })
 export class SimulatorComponent implements OnInit {
+
+  graphTypes = Object.keys(GraphType);
+
+  // Graph Form
+  topology: GraphType = null;
+
   graphConfiguration: GraphConfiguration;
   algorithmConfiguration: AlgorithmConfiguration;
 
@@ -81,13 +90,74 @@ export class SimulatorComponent implements OnInit {
   faultyDisplayedColumns = ['ID', 'onID', 'label', 'state', 'stateIcon', 'crash'];
 
   constructor(
+    private languageService: LanguageService,
     private visService: VisService,
     private algorithmService: AlgorithmService,
     private graphGeneratorService: GraphGeneratorService,
     public dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    const forms = document.querySelectorAll(".needs-validation") as NodeListOf<HTMLInputElement>;
+
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+  
+        form.classList.add('was-validated')
+      }, false);
+    });
+
+    const topologySelect = document.getElementById("topologySelect") as HTMLSelectElement;
+    topologySelect.addEventListener('change', () => {
+      const graphInfoEl = document.querySelector("#graph-info");
+      const accordionEl = document.querySelector(".accordion");
+      const collapseEl = document.querySelector(".collapse");
+    
+      const collapseButtonEl = document.querySelector(".accordion-button") as HTMLButtonElement;
+      collapseButtonEl.disabled = false;
+
+      if (this.topology === null) {
+        graphInfoEl.classList.remove("graph-info-disabled");
+        accordionEl.classList.remove("accordion-disabled");
+        new Collapse(collapseEl).show();
+      } else {
+        new Collapse(collapseEl).hide();
+        setTimeout(() => {
+          new Collapse(collapseEl).show();
+        }, 250);
+      }
+
+      this.topology = topologySelect.value as GraphType;
+      new Tooltip(graphInfoEl, {title: this.languageService.getTranslatedText("graph.type." + this.topology + "_INFO")}).enable();
+
+    }, false);
+  }
+
+  graphReset(): void {
+    this.topology = null;
+    const graphInfoEl = document.querySelector("#graph-info");
+    const accordionEl = document.querySelector(".accordion");
+    accordionEl.classList.add("accordion-disabled");
+    const collapseButtonEl = document.querySelector(".accordion-button") as HTMLButtonElement;
+    collapseButtonEl.disabled = true;
+    const collapseEl = document.querySelector(".collapse");
+    new Collapse(collapseEl).hide();
+    graphInfoEl.classList.add("graph-info-disabled");
+    new Tooltip(graphInfoEl).disable();
+
+    const forms = document.querySelectorAll(".needs-validation") as NodeListOf<HTMLInputElement>;
+
+    Array.from(forms).forEach(form => {
+      form.addEventListener('reset', event => {
+        form.classList.remove('was-validated')
+      }, false);
+    });
+  }
 
   /** Settings */
 

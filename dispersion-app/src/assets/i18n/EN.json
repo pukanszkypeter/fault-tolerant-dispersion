@@ -25,12 +25,22 @@
       "hero": "Dispersion Systems is an application where we can quickly and efficiently simulate and test different dispersion algorithms. With the help of different technologies, we try to provide the best experience and constantly improve the features provided by the application.",
       "features": "Features",
       "simulatorTitle": "The main feature is the simulator",
-      "simulatorDescription": "Through the many graph topologies, we can simulate the operation of the selected dispersion algorithm, while useful information is displayed."
+      "simulatorDescription": "Through the many graph topologies, we can simulate the operation of the selected dispersion algorithm, while useful information is displayed.",
+      "testerDescription": "We can run automated test cases on larger amounts of data.",
+      "resultsDescription": "We can see the results of the algorithms with the help of spectacular diagrams.",
+      "mapDescription": "We can even test on real road networks using",
+      "changelogDescription": "We can read the changes made in the application by version."
     },
     "simulator": {
       "title": "Simulator",
-      "graphCreated": "Graph created successfully.",
-      "algorithmInitalized": "Algorithm initalized successfully."
+      "graphConfiguration": "Graph configuration",
+      "topology": "Topology",
+      "choose": "Choose",
+      "invalidGraphType": "Please select a valid graph type.",
+      "algorithmConfiguration": "Algorithm configuration",
+      "simulationPreview": "Simulation preview",
+      "previewDesc": "Quickly check out the configured simulation preview and let's get ready to blast off.",
+      "launch": "Launch"
     },
     "tester": {
       "title": "Tester"
@@ -38,17 +48,16 @@
     "results": {
       "title": "Results"
     },
-    "openStreetMap": {
-      "title": "Open Street Map"
-    },
-    "profile": {
-      "title": "Profile"
-    },
-    "settings": {
-      "title": "Settings"
-    },
     "changelog": {
       "title": "Changelog"
+    }
+  },
+  "graph": {
+    "type": {
+      "BARABASI_ALBERT_FOREST": "Barabasi Albert Forest",
+      "BARABASI_ALBERT_FOREST_INFO": "Barabasi Albert Forest INFO",
+      "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
+      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO"
     }
   },
 

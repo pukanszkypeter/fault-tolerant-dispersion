@@ -1,8 +1,96 @@
-<!-- TITLE -->
+<div class="container">
+  <h2 class="pt-2 pb-2 mt-5 border-bottom">{{ "pages.simulator.title" | translate }}</h2>
+  <div class="row mt-2 gy-4">
+    <div class="col-xl-6">
+      <div class="card">
+        <h5 class="card-header d-flex flex-wrap justify-content-start">
+          <span class="me-auto">{{ "pages.simulator.graphConfiguration" | translate}} #1</span>
+          <div class="text-end">
+            <i class="bi bi-x-lg text-danger"></i>
+          </div>
+        </h5>
+        <div class="card-body">
+          <form class="needs-validation" novalidate>
+            <div class="my-3">
+              <label for="topologySelect" class="form-label">{{ "pages.simulator.topology" | translate }}</label>
+              <div class="input-group">
+                <select id="topologySelect" class="form-select" required>
+                  <option selected disabled value="">{{"pages.simulator.choose" | translate}}...</option>
+                  <option *ngFor="let type of graphTypes" value="{{type}}">{{ "graph.type." + type | translate}}</option>
+                </select>
+                <label id="graph-info" class="input-group-text graph-info-disabled" for="topologySelect" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <i class="bi bi-info-circle"></i>
+                </label>
+                <div class="invalid-feedback">
+                  {{ "pages.simulator.invalidGraphType" | translate}}
+                </div>
+              </div>
+            </div>
+            <div class="my-4">
+              <label for="propertiesAccordion" class="form-label">Properties</label>
+              <div class="accordion accordion-disabled" id="propertiesAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button disabled style="height: 38px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+                      Choose topology first
+                    </button>
+                  </h2>
+                  <div id="collapseForm" class="accordion-collapse collapse" data-bs-parent="#propertiesAccordion">
+                    <div class="accordion-body">
+                      <div *ngIf="topology === graphTypes[0]">Forest</div>
+                      <div *ngIf="topology === graphTypes[1]">Graph</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-outline-primary my-3" type="reset" (click)="graphReset()">Reset</button>&nbsp;
+            <button class="btn btn-outline-primary my-3" type="submit">Configure</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="card">
+        <h5 class="card-header d-flex flex-wrap justify-content-start">
+          <span class="me-auto">{{ "pages.simulator.algorithmConfiguration" | translate}} #2</span>
+          <div class="text-end">
+            <i class="bi bi-x-lg text-danger"></i>
+          </div>
+        </h5>
+        <div class="card-body">
+          Text...
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 justify-content-center">
+    <div class="col-xl-6">
+      <div class="card text-center">
+        <div class="card-img-top" style="height: 400px; background: cornflowerblue;"></div>
+        <div class="card-body">
+          <h5 class="card-title">{{ "pages.simulator.simulationPreview" | translate}}</h5>
+          <p class="card-text text-muted fw-light">{{ "pages.simulator.previewDesc" | translate}}</p>
+          <button class="btn btn-outline-primary btn-lg">
+            {{ "pages.simulator.launch" | translate }}
+            <i class="bi bi-rocket-takeoff"></i>
+          </button>
+        </div>
+        <div class="card-footer text-muted">
+          <small>Not configured yet</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+TITLE
 <div class="pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">{{ "pages.simulator.title" | translate }}</h1>
 </div>
-<!-- OPERATORS SECTION -->
+
+OPERATORS SECTION
 
 <div class="row mt-4">
   <div class="col-6">
@@ -85,13 +173,16 @@
   </div>
 </div>
 
-<!-- SIMULATOR SECTION -->
+SIMULATOR SECTION
+
 <div class="row mt-4">
   <div class="col-12">
     <mat-card id="vis-container"></mat-card>
   </div>
 </div>
-<!-- INFORMATION PANEL SECTION -->
+
+INFORMATION PANEL SECTION
+
 <div class="row mt-4">
   <div class="col-12">
     <div class="mat-elevation-z8 robot-table" *ngIf="algorithmConfiguration">
@@ -201,3 +292,4 @@
     </div>
   </div>
 </div>
+-->

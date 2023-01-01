@@ -22,35 +22,43 @@
     <div class="col">
       <div class="row row-cols-1 row-cols-sm-2 g-4">
         <div class="col d-flex flex-column gap-2">
-          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
-            <i class="bi bi-speedometer" style="padding: 6px 12px 6px 12px;"></i>
-          </div>
-          <h4 class="fw-semibold mb-0">Tester</h4>
-          <p class="text-muted">We can run automated test cases on larger amounts of data.</p>
+          <a [routerLink]="['/tester']" style="width: fit-content;">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+              <i class="bi bi-speedometer" style="padding: 6px 12px 6px 12px;"></i>
+            </div>
+          </a>
+          <h4 class="fw-semibold mb-0">{{ "layout.nav.tester" | translate }}</h4>
+          <p class="text-muted">{{ "pages.home.testerDescription" | translate }}</p>
         </div>
 
         <div class="col d-flex flex-column gap-2">
-          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
-            <i class="bi bi-bar-chart-fill" style="padding: 6px 12px 6px 12px;"></i>
-          </div>
-          <h4 class="fw-semibold mb-0">Results</h4>
-          <p class="text-muted">We can see the results of the algorithms with the help of spectacular diagrams.</p>
+          <a [routerLink]="['/results']" style="width: fit-content;">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+              <i class="bi bi-bar-chart-fill" style="padding: 6px 12px 6px 12px;"></i>
+            </div>
+          </a>
+          <h4 class="fw-semibold mb-0">{{ "layout.nav.results" | translate }}</h4>
+          <p class="text-muted">{{ "pages.home.resultsDescription" | translate }}</p>
         </div>
 
         <div class="col d-flex flex-column gap-2">
-          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
-            <i class="bi bi-geo-fill" style="padding: 6px 12px 6px 12px;"></i>
-          </div>
+          <a [routerLink]="['/open-street-map']" style="width: fit-content;">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+              <i class="bi bi-geo-fill" style="padding: 6px 12px 6px 12px;"></i>
+            </div>
+          </a>
           <h4 class="fw-semibold mb-0">Open Street Map</h4>
-          <p class="text-muted">We can even test on real road networks using Open Street Map.</p>
+          <p class="text-muted">{{ "pages.home.mapDescription" | translate }} <a href="https://www.openstreetmap.org/" target="_blank">Open Street Map</a>.</p>
         </div>
 
         <div class="col d-flex flex-column gap-2">
-          <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
-            <i class="bi bi-tools" style="padding: 6px 12px 6px 12px;"></i>
-          </div>
-          <h4 class="fw-semibold mb-0">Changelog</h4>
-          <p class="text-muted">We can read the changes made in the application by version.</p>
+          <a [routerLink]="['/changelog']" style="width: fit-content;">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3" style="width: fit-content;">
+              <i class="bi bi-tools" style="padding: 6px 12px 6px 12px;"></i>
+            </div>
+          </a>
+          <h4 class="fw-semibold mb-0">{{ "layout.nav.changelog" | translate }}</h4>
+          <p class="text-muted">{{ "pages.home.changelogDescription" | translate }}</p>
         </div>
       </div>
     </div>

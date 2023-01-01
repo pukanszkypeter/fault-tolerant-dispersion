@@ -25,12 +25,22 @@
       "hero": "Dispersion Systems ist eine Anwendung, mit der wir schnell und effizient verschiedene Dispersionsalgorithmen simulieren und testen können. Mit Hilfe verschiedener Technologien versuchen wir, die beste Erfahrung zu bieten und die von der Anwendung bereitgestellten Funktionen ständig zu verbessern.",
       "features": "Funktionen",
       "simulatorTitle": "Das Hauptfunktion ist der Simulator",
-      "simulatorDescription": "Durch die vielen Diagrammtopologien können wir den Betrieb des ausgewählten Dispersionsalgorithmus simulieren, während nützliche Informationen angezeigt werden."
+      "simulatorDescription": "Durch die vielen Diagrammtopologien können wir den Betrieb des ausgewählten Dispersionsalgorithmus simulieren, während nützliche Informationen angezeigt werden.",
+      "testerDescription": "Wir können automatisierte Testfälle mit größeren Datenmengen durchführen.",
+      "resultsDescription": "Wir können die Ergebnisse der Algorithmen anhand spektakulärer Diagramme sehen.",
+      "mapDescription": "Wir können sogar auf realen Straßennetzen testen mit Hilfe von",
+      "changelogDescription": "Wir können die in der Anwendung vorgenommenen Änderungen nach Version lesen."
     },
     "simulator": {
       "title": "Simulator",
-      "graphCreated": "Diagramm erfolgreich erstellt.",
-      "algorithmInitalized": "Algorithmus erfolgreich initialisiert."
+      "graphConfiguration": "Diagrammkonfiguration",
+      "topology": "Topologie",
+      "choose": "Auswählen",
+      "invalidGraphType": "Bitte wählen Sie einen gültigen Diagrammtyp aus.",
+      "algorithmConfiguration": "Algorithmuskonfiguration",
+      "simulationPreview": "Simulationsvorschau",
+      "previewDesc": "Schauen Sie sich schnell die konfigurierte Simulationsvorschau an und machen Sie sich bereit zum Abheben.",
+      "launch": "Start"
     },
     "tester": {
       "title": "Tester"
@@ -38,17 +48,16 @@
     "results": {
       "title": "Ergebnisse"
     },
-    "openStreetMap": {
-      "title": "Open Street Map"
-    },
-    "profile": {
-      "title": "Profil"
-    },
-    "settings": {
-      "title": "Einstellungen"
-    },
     "changelog": {
       "title": "Changelog"
+    }
+  },
+  "graph": {
+    "type": {
+      "BARABASI_ALBERT_FOREST": "Barabasi Albert Wald",
+      "BARABASI_ALBERT_FOREST_INFO": "Barabasi Albert Forest INFO",
+      "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
+      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO"
     }
   },
 

@@ -25,12 +25,22 @@
       "hero": "A Dispersion Systems egy olyan alkalmazás, ahol gyorsan és hatékonyan szimulálhatunk és tesztelhetünk különböző diszperziós algoritmusokat. Különböző technológiák segítségével igyekszünk a legjobb élményt nyújtani és folyamatosan fejleszteni az alkalmazás által nyújtott funkciókat.",
       "features": "Funkciók",
       "simulatorTitle": "A fő funkció a szimulátor",
-      "simulatorDescription": "A sok gráf topológián keresztül szimulálhatjuk a kiválasztott diszperziós algoritmus működését, miközben hasznos információk jelennek meg."
+      "simulatorDescription": "A sok gráf topológián keresztül szimulálhatjuk a kiválasztott diszperziós algoritmus működését, miközben hasznos információk jelennek meg.",
+      "testerDescription": "Nagyobb adatmennyiségen tudunk automatizált teszteseteket futtatni.",
+      "resultsDescription": "Az algoritmusok eredményeit látványos diagramok segítségével láthatjuk.",
+      "mapDescription": "Akár valós úthálózatokon is tesztelhetünk, amihez segítséget nyújt az",
+      "changelogDescription": "Az alkalmazásban végrehajtott változtatásokat verziónként visszakövethetjük."
     },
     "simulator": {
       "title": "Szimulátor",
-      "graphCreated": "Gsráf sikeresen létrehozva.",
-      "algorithmInitalized": "Az algoritmus sikeresen inicializálva."
+      "graphConfiguration": "Gráf konfiguráció",
+      "topology": "Topológia",
+      "choose": "Kiválaszt",
+      "invalidGraphType": "Kérjük válasszon valid gráf típust.",
+      "algorithmConfiguration": "Algoritmus konfiguráció",
+      "simulationPreview": "Szimuláció előnézet",
+      "previewDesc": "Tekintse meg gyorsan a konfigurált szimulációs előnézetet, és készüljön fel a kilövésre.",
+      "launch": "Indítás"
     },
     "tester": {
       "title": "Tesztelő"
@@ -38,17 +48,16 @@
     "results": {
       "title": "Eredmények"
     },
-    "openStreetMap": {
-      "title": "Open Street Map"
-    },
-    "profile": {
-      "title": "Profil"
-    },
-    "settings": {
-      "title": "Beállítások"
-    },
     "changelog": {
       "title": "Változási napló"
+    }
+  },
+  "graph": {
+    "type": {
+      "BARABASI_ALBERT_FOREST": "Barabasi Albert Erdő",
+      "BARABASI_ALBERT_FOREST_INFO": "Barabasi Albert Forest INFO",
+      "BARABASI_ALBERT_GRAPH": "Barabasi Albert Gráf",
+      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO"
     }
   },
 

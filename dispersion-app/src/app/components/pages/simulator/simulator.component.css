@@ -1,33 +1,17 @@
-.simulation-title {
-  text-align: center;
-  font-size: larger;
+label#graph-info {
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
 }
 
-.simulation-operators {
-  margin-right: 20px;
-  background-color: white;
+label#graph-info:hover {
+  filter: brightness(0.75);
 }
 
-mat-card#vis-container {
-  height: 500px;
+.graph-info-disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-mat-icon#speed-icon {
-  margin-left: 20px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
-.server-response-time {
-  margin-right: 20px;
-  vertical-align: middle;
-}
-
-table {
-  width: 100%;
-}
-
-.robot-table {
-  overflow: auto;
-  max-height: 500px;
+.accordion-disabled {
+  opacity: 0.5;
 }
