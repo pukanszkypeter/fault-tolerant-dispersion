@@ -129,7 +129,7 @@ export class SimulatorComponent implements OnInit {
         new Collapse(collapseEl).hide();
         setTimeout(() => {
           new Collapse(collapseEl).show();
-        }, 250);
+        }, 500);
       }
 
       this.topology = topologySelect.value as GraphType;
@@ -153,7 +153,7 @@ export class SimulatorComponent implements OnInit {
     const forms = document.querySelectorAll(".needs-validation") as NodeListOf<HTMLInputElement>;
 
     Array.from(forms).forEach(form => {
-      form.addEventListener('reset', event => {
+      form.addEventListener('reset', _event => {
         form.classList.remove('was-validated')
       }, false);
     });
