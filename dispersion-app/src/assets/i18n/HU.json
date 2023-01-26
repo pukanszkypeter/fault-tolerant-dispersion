@@ -2,7 +2,8 @@
   "application": {
     "feedback": {
       "notification": "Értesítés",
-      "languageChanged": "A nyelv megváltozott."
+      "languageChanged": "A nyelv megváltozott.",
+      "serverError": "Szerver hiba."
     }
   },
   "layout": {
@@ -17,8 +18,7 @@
       "tester": "Tesztelő",
       "results": "Eredmények",
       "changelog": "Változási napló"
-    },
-    "footer": {}
+    }
   },
   "pages": {
     "home": {
@@ -37,10 +37,15 @@
       "topology": "Topológia",
       "choose": "Kiválaszt",
       "invalidGraphType": "Kérjük válasszon valid gráf típust.",
+      "properties": "Tulajdonságok",
+      "topologyFirst": "Először válassza ki a topológiát",
+      "defaultSettings": "Alapbeállítások",
       "algorithmConfiguration": "Algoritmus konfiguráció",
       "simulationPreview": "Szimuláció előnézet",
       "previewDesc": "Tekintse meg gyorsan a konfigurált szimulációs előnézetet, és készüljön fel a kilövésre.",
-      "launch": "Indítás"
+      "launch": "Indítás",
+      "configure": "Konfiguráció",
+      "reset": "Visszaállítás"
     },
     "tester": {
       "title": "Tesztelő"
@@ -54,10 +59,36 @@
   },
   "graph": {
     "type": {
-      "BARABASI_ALBERT_FOREST": "Barabasi Albert Erdő",
-      "BARABASI_ALBERT_FOREST_INFO": "Barabasi Albert Forest INFO",
-      "BARABASI_ALBERT_GRAPH": "Barabasi Albert Gráf",
-      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO"
+      "BARABASI_ALBERT_FOREST": "Barabási Albert Erdő",
+      "BARABASI_ALBERT_FOREST_INFO": "Barabási Albert Forest INFO",
+      "BARABASI_ALBERT_GRAPH": "Barabási Albert Gráf",
+      "BARABASI_ALBERT_GRAPH_INFO": "Barabási Albert Graph INFO",
+      "BARBELL": "Súlyzó",
+      "BARBELL_INFO": "Súlyzó INFO",
+      "COMPLETE": "Teljes",
+      "COMPLETE_INFO": "Teljes INFO",
+      "GNM_RANDOM": "GNM Random",
+      "GNM_RANDOM_INFO": "GNM Random INFO",
+      "GNP_RANDOM": "GNP Random",
+      "GNP_RANDOM_INFO": "GNP Random INFO",
+      "GRID": "Rács",
+      "GRID_INFO": "Rács INFO",
+      "HYPER_CUBE": "Hiperkocka",
+      "HYPER_CUBE_INFO": "Hiperkocka INFO",
+      "LINEAR": "Lineáris",
+      "LINEAR_INFO": "Lineáris INFO",
+      "LOLLIPOP": "Nyalóka",
+      "LOLLIPOP_INFO": "Nyalóka INFO",
+      "RING": "Kör",
+      "RING_INFO": "Kör INFO",
+      "RANDOM_REGULAR": "Random reguláris",
+      "RANDOM_REGULAR_INFO": "Random reguláris INFO",
+      "STAR": "Csillag",
+      "STAR_INFO": "Csillag INFO",
+      "WHEEL": "Kerék",
+      "WHEEL_INFO": "Kerék INFO",
+      "WINDMILL": "Szélmalom",
+      "WINDMILL_INFO": "Szélmalom INFO"
     }
   },
 

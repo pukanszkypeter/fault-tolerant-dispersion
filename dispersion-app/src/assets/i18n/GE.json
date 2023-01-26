@@ -2,7 +2,8 @@
   "application": {
     "feedback": {
       "notification": "Nachricht",
-      "languageChanged": "Die Sprache hat sich geändert."
+      "languageChanged": "Die Sprache hat sich geändert.",
+      "serverError": "Serverfehler."
     }
   },
   "layout": {
@@ -17,8 +18,7 @@
       "tester": "Tester",
       "results": "Ergebnisse",
       "changelog": "Changelog"
-    },
-    "footer": {}
+    }
   },
   "pages": {
     "home": {
@@ -37,10 +37,15 @@
       "topology": "Topologie",
       "choose": "Auswählen",
       "invalidGraphType": "Bitte wählen Sie einen gültigen Diagrammtyp aus.",
+      "properties": "Eigenschaften",
+      "topologyFirst": "Wählen Sie zuerst die Topologie aus",
+      "defaultSettings": "Standardeinstellungen",
       "algorithmConfiguration": "Algorithmuskonfiguration",
       "simulationPreview": "Simulationsvorschau",
       "previewDesc": "Schauen Sie sich schnell die konfigurierte Simulationsvorschau an und machen Sie sich bereit zum Abheben.",
-      "launch": "Start"
+      "launch": "Start",
+      "configure": "Konfigurieren",
+      "reset": "Zurücksetzen"
     },
     "tester": {
       "title": "Tester"
@@ -57,7 +62,33 @@
       "BARABASI_ALBERT_FOREST": "Barabasi Albert Wald",
       "BARABASI_ALBERT_FOREST_INFO": "Barabasi Albert Forest INFO",
       "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
-      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO"
+      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO",
+      "BARBELL": "Hantel",
+      "BARBELL_INFO": "Hantel INFO",
+      "COMPLETE": "Komplett",
+      "COMPLETE_INFO": "Komplett INFO",
+      "GNM_RANDOM": "GNM Random",
+      "GNM_RANDOM_INFO": "GNM Random INFO",
+      "GNP_RANDOM": "GNP Random",
+      "GNP_RANDOM_INFO": "GNP Random INFO",
+      "GRID": "Netz",
+      "GRID_INFO": "Netz INFO",
+      "HYPER_CUBE": "Hyperwürfel",
+      "HYPER_CUBE_INFO": "Hyperwürfel INFO",
+      "LINEAR": "Linear",
+      "LINEAR_INFO": "Linear INFO",
+      "LOLLIPOP": "Lolly",
+      "LOLLIPOP_INFO": "Lolly INFO",
+      "RING": "Ring",
+      "RING_INFO": "Ring INFO",
+      "RANDOM_REGULAR": "Random regular",
+      "RANDOM_REGULAR_INFO": "Random regular INFO",
+      "STAR": "Stern",
+      "STAR_INFO": "Stern INFO",
+      "WHEEL": "Rad",
+      "WHEEL_INFO": "Rad INFO",
+      "WINDMILL": "Windmühle",
+      "WINDMILL_INFO": "Windmühle INFO"
     }
   },
 

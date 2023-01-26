@@ -91,7 +91,7 @@ export class AutomatedTesterComponent implements OnInit {
       (res) => {
         if (res) {
           this.graphConfiguration = new GraphConfiguration().initialize(res);
-          this.visService.initDataFromConfig(this.graphConfiguration);
+          // this.visService.initDataFromConfig(this.graphConfiguration);
 
         }
       },

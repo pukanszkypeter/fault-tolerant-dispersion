@@ -35,6 +35,9 @@ import { RobotState } from 'src/app/models/utils/RobotState';
 import { GraphType } from 'src/app/models/utils/GraphType';
 import { Collapse, Tooltip } from 'bootstrap';
 import { LanguageService } from 'src/app/services/client-side/utils/language.service';
+import { FormStrategy, getGraphSettings, InputProps, manipulateGraphSettings } from 'src/app/models/utils/GraphSettings';
+import { ToastService } from 'src/app/services/client-side/utils/toast.service';
+import { v4 as uuidv4 } from "uuid";
 
 @Component({
   selector: 'app-static',
@@ -46,7 +49,11 @@ export class SimulatorComponent implements OnInit {
   graphTypes = Object.keys(GraphType);
 
   // Graph Form
-  topology: GraphType = null;
+  topology: GraphType | null = null;
+  graphSettings: InputProps | null = null;
+
+  graphProgress: boolean = false;
+  graphConfigured: boolean = false;
 
   graphConfiguration: GraphConfiguration;
   algorithmConfiguration: AlgorithmConfiguration;
@@ -94,26 +101,15 @@ export class SimulatorComponent implements OnInit {
     private visService: VisService,
     private algorithmService: AlgorithmService,
     private graphGeneratorService: GraphGeneratorService,
+    private toastSerivce: ToastService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
 
-    const forms = document.querySelectorAll(".needs-validation") as NodeListOf<HTMLInputElement>;
-
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-  
-        form.classList.add('was-validated')
-      }, false);
-    });
-
     const topologySelect = document.getElementById("topologySelect") as HTMLSelectElement;
     topologySelect.addEventListener('change', () => {
+      this.graphProgress = true;
       const graphInfoEl = document.querySelector("#graph-info");
       const accordionEl = document.querySelector(".accordion");
       const collapseEl = document.querySelector(".collapse");
@@ -124,22 +120,58 @@ export class SimulatorComponent implements OnInit {
       if (this.topology === null) {
         graphInfoEl.classList.remove("graph-info-disabled");
         accordionEl.classList.remove("accordion-disabled");
-        new Collapse(collapseEl).show();
       } else {
         new Collapse(collapseEl).hide();
-        setTimeout(() => {
-          new Collapse(collapseEl).show();
-        }, 500);
       }
 
       this.topology = topologySelect.value as GraphType;
       new Tooltip(graphInfoEl, {title: this.languageService.getTranslatedText("graph.type." + this.topology + "_INFO")}).enable();
 
+      setTimeout(() => {
+        new Collapse(collapseEl).show();
+        const switchEl = document.getElementById("defaultSettings") as HTMLInputElement;
+        switchEl.checked = true;
+        manipulateGraphSettings(this.topology, FormStrategy.DEFAULT);
+        this.graphProgress = false;
+      }, 500);
+
     }, false);
   }
 
-  graphReset(): void {
+  switchFormStrategy(): void {
+    const switchEl = document.getElementById("defaultSettings") as HTMLInputElement;
+    manipulateGraphSettings(this.topology, switchEl.checked ? FormStrategy.DEFAULT : FormStrategy.CUSTOM);
+  }
+
+  configureGraph(): void {
+    const form = document.getElementById("graph-form") as HTMLInputElement;
+
+    if (form.checkValidity()) {
+      this.graphProgress = true;
+      const switchEl = document.getElementById("defaultSettings") as HTMLInputElement;
+      const container = document.getElementById("preview-container");
+      this.graphSettings = getGraphSettings(this.topology, switchEl.checked ? FormStrategy.DEFAULT : FormStrategy.CUSTOM);
+      this.visService
+        .initGraph(this.topology, this.graphSettings, container)
+        .catch((error) => {
+          this.toastSerivce.show({uuid: uuidv4(), headerKey: "application.feedback.notification", bodyKey: "application.feedback.serverError"});
+          console.log(error);
+        })
+        .finally(() => {
+          this.graphProgress = false;
+          this.graphConfigured = true;
+        });
+    }
+
+    form.classList.add('was-validated')
+  }
+
+  resetGraph(): void {
+    this.graphConfigured = false;
+    this.graphProgress = true;
     this.topology = null;
+    this.graphSettings = null;
+    this.visService.destoryGraph();
     const graphInfoEl = document.querySelector("#graph-info");
     const accordionEl = document.querySelector(".accordion");
     accordionEl.classList.add("accordion-disabled");
@@ -150,13 +182,23 @@ export class SimulatorComponent implements OnInit {
     graphInfoEl.classList.add("graph-info-disabled");
     new Tooltip(graphInfoEl).disable();
 
-    const forms = document.querySelectorAll(".needs-validation") as NodeListOf<HTMLInputElement>;
+    const form = document.getElementById("graph-form") as HTMLFormElement;
+    form.classList.remove('was-validated');
+    form.reset();
+    this.graphProgress = false;
+  }
 
-    Array.from(forms).forEach(form => {
-      form.addEventListener('reset', _event => {
-        form.classList.remove('was-validated')
-      }, false);
-    });
+  setEdgePropabilityText(): void {
+    const propability = Number((document.getElementById("propability") as HTMLInputElement).value) * 100;
+    const propabilityText = document.getElementById("propability-text");
+    propabilityText.textContent = String(propability.toFixed(0));
+  }
+
+  initPreviewGraph(): void {
+    setTimeout(() => {
+      const previewDialogEl = document.getElementById("preview-dialog");
+      this.visService.initGraph(this.topology, this.graphSettings, previewDialogEl);
+    }, 500);
   }
 
   /** Settings */
@@ -173,7 +215,7 @@ export class SimulatorComponent implements OnInit {
       (res) => {
         if (res) {
           this.graphConfiguration = new GraphConfiguration().initialize(res);
-          this.initSimulator(this.graphConfiguration);
+          // this.initSimulator(this.graphConfiguration);
         }
       },
       (err) => {
@@ -420,6 +462,7 @@ export class SimulatorComponent implements OnInit {
 
   /** Simulator */
 
+  /*
   initSimulator(configuration: GraphConfiguration): void {
     const container = document.getElementById('vis-container');
     this.visService.initGraphFromConfig(configuration, container, {
@@ -442,6 +485,7 @@ export class SimulatorComponent implements OnInit {
       },
     });
   }
+  */
 
   resetSimulator(): void {
     this.speed = 750;

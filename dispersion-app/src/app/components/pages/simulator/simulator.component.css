@@ -15,3 +15,32 @@ label#graph-info:hover {
 .accordion-disabled {
   opacity: 0.5;
 }
+
+#preview-container {
+  width: 100%;
+  height: 400px;
+}
+
+#preview-actions {
+  width: 100%;
+  height: 25px;
+  text-align: end;
+  margin-top: 0.5rem;
+  margin-left: -0.25rem;
+}
+
+.custom-icon {
+  font-size: 20px;
+  opacity: 85%;
+  padding: 0;
+}
+
+.custom-icon:hover {
+  font-size: 25px;
+  opacity: 100%;
+  padding: 0;
+}
+
+#preview-dialog {
+  height: 500px;
+}

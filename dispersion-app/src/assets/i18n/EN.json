@@ -2,7 +2,8 @@
   "application": {
     "feedback": {
       "notification": "Notification",
-      "languageChanged": "The language has changed."
+      "languageChanged": "The language has changed.",
+      "serverError": "Server error."
     }
   },
   "layout": {
@@ -17,8 +18,7 @@
       "tester": "Tester",
       "results": "Results",
       "changelog": "Changelog"
-    },
-    "footer": {}
+    }
   },
   "pages": {
     "home": {
@@ -37,10 +37,15 @@
       "topology": "Topology",
       "choose": "Choose",
       "invalidGraphType": "Please select a valid graph type.",
+      "properties": "Properties",
+      "topologyFirst": "Choose topology first",
+      "defaultSettings": "Use default settings",
       "algorithmConfiguration": "Algorithm configuration",
       "simulationPreview": "Simulation preview",
       "previewDesc": "Quickly check out the configured simulation preview and let's get ready to blast off.",
-      "launch": "Launch"
+      "launch": "Launch",
+      "configure": "Configure",
+      "reset": "Reset"
     },
     "tester": {
       "title": "Tester"
@@ -57,7 +62,33 @@
       "BARABASI_ALBERT_FOREST": "Barabasi Albert Forest",
       "BARABASI_ALBERT_FOREST_INFO": "Barabasi Albert Forest INFO",
       "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
-      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO"
+      "BARABASI_ALBERT_GRAPH_INFO": "Barabasi Albert Graph INFO",
+      "BARBELL": "Barbell",
+      "BARBELL_INFO": "Barbell INFO",
+      "COMPLETE": "Complete",
+      "COMPLETE_INFO": "Complete INFO",
+      "GNM_RANDOM": "GNM Random",
+      "GNM_RANDOM_INFO": "GNM Random INFO",
+      "GNP_RANDOM": "GNP Random",
+      "GNP_RANDOM_INFO": "GNP Random INFO",
+      "GRID": "Grid",
+      "GRID_INFO": "Grid INFO",
+      "HYPER_CUBE": "Hyper cube",
+      "HYPER_CUBE_INFO": "Hyper cube INFO",
+      "LINEAR": "Linear",
+      "LINEAR_INFO": "Linear INFO",
+      "LOLLIPOP": "Lollipop",
+      "LOLLIPOP_INFO": "Lollipop INFO",
+      "RING": "Ring",
+      "RING_INFO": "Ring INFO",
+      "RANDOM_REGULAR": "Random regular",
+      "RANDOM_REGULAR_INFO": "Random regular INFO",
+      "STAR": "Star",
+      "STAR_INFO": "Star INFO",
+      "WHEEL": "Wheel",
+      "WHEEL_INFO": "Wheel INFO",
+      "WINDMILL": "Windmill",
+      "WINDMILL_INFO": "Windmill INFO"
     }
   },
 

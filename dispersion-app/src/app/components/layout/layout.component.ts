@@ -6,6 +6,7 @@ import { getLanguageCode, Language } from 'src/app/models/utils/Language';
 import { LanguageService } from 'src/app/services/client-side/utils/language.service';
 import { ToastService } from 'src/app/services/client-side/utils/toast.service';
 import { v4 as uuidv4 } from "uuid";
+import { ThemeService } from 'src/app/services/client-side/utils/theme.service';
 
 @Component({
   selector: 'app-layout',
@@ -13,15 +14,15 @@ import { v4 as uuidv4 } from "uuid";
   styleUrls: ['./layout.component.css'],
 })
 export class LayoutComponent implements OnInit {
+
   languages = Object.keys(Language);
-  colorMode: string = localStorage.getItem("colorMode") || "light";
-  
 
   constructor(
     public dialog: MatDialog,
     public toastService: ToastService,
+    public themeService: ThemeService,
     private router: Router,
-    private languageService: LanguageService,
+    private languageService: LanguageService
   ) {
     this.router.events
       .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
@@ -33,8 +34,15 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    document.documentElement.setAttribute('data-bs-theme', this.colorMode);
-    document.getElementById("language-dropdown").setAttribute('data-bs-theme', this.colorMode);
+    this.themeService.theme$.subscribe({
+      next(value) {
+        document.documentElement.setAttribute('data-bs-theme', value); 
+        document.getElementById("language-dropdown").setAttribute('data-bs-theme', value);
+      },
+      error(err) {
+        console.log(err);
+      },
+    });
   }
 
   public handleActiveState(path: string): void {
@@ -76,12 +84,10 @@ export class LayoutComponent implements OnInit {
     this.toastService.show({uuid: uuidv4(), headerKey: "application.feedback.notification", bodyKey: "application.feedback.languageChanged"});
   }
 
-  toggleColorMode(): void {
-    const nextColorMode: string = this.colorMode === "light" ? "dark" : "light";
-    this.colorMode = nextColorMode;
-    document.documentElement.setAttribute('data-bs-theme', this.colorMode);
-    document.getElementById("language-dropdown").setAttribute('data-bs-theme', this.colorMode);
-    localStorage.setItem("colorMode", this.colorMode);
+  toggleTheme(nextTheme: string): void {
+      this.themeService.toggleTheme(nextTheme);
+      document.documentElement.setAttribute('data-bs-theme', nextTheme);
+      document.getElementById("language-dropdown").setAttribute('data-bs-theme', nextTheme); 
   }
 
 }

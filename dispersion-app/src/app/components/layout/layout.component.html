@@ -1,5 +1,5 @@
 <div class="bg-body">
-  <header data-bs-theme="dark" class="p-3 sticky-top bg-gradient" [ngClass]="{'shadow-lg': colorMode !== 'dark', 'shadow-sm': colorMode === 'dark'}" style="background: #4E32A8;">
+  <header data-bs-theme="dark" class="p-3 sticky-top bg-gradient" [ngClass]="{'shadow-lg': (themeService.theme$ | async) !== 'dark', 'shadow-sm': (themeService.theme$ | async) === 'dark'}" style="background: #4E32A8;">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a class="d-flex align-items-center mb-2 mb-lg-0 pe-2" [routerLink]="['/home']">
           <img id="icon" alt="icon" src="assets/images/icon.png" height="40px" width="40px" />
@@ -30,8 +30,8 @@
         </div>
 
         <div class="text-end">
-          <i *ngIf="colorMode === 'dark'" (click)="toggleColorMode()" class="bi bi-brightness-high-fill custom-icon"></i>
-          <i *ngIf="colorMode !== 'dark'" (click)="toggleColorMode()" class="bi bi-moon-fill custom-icon"></i>
+          <i *ngIf="(themeService.theme$ | async) === 'dark'" (click)="toggleTheme('light')" class="bi bi-brightness-high-fill custom-icon"></i>
+          <i *ngIf="(themeService.theme$ | async) !== 'dark'" (click)="toggleTheme('dark')" class="bi bi-moon-fill custom-icon"></i>
         </div>
 
       </div>
