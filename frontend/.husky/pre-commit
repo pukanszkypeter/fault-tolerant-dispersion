@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd frontend
-echo Precommit
+npm run format:fix
