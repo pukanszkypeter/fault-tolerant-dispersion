@@ -1,0 +1,18 @@
+{
+  "hu": "Magyar",
+  "de": "Német",
+  "en": "Angol",
+
+  "header": {
+    "home": "Főoldal",
+    "simulator": "Szimulátor",
+    "mapSimulator": "Térkép Szimulátor",
+    "tester": "Tesztelő",
+    "results": "Eredmények",
+    "changelog": "Változási Napló",
+    "pageNotFound": "Nem Található Oldal (404)",
+    "languageChanged": "A nyelv megváltozott.",
+    "lightMode": "A világos téma aktív.",
+    "darkMode": "A sötét téma aktív."
+  }
+}

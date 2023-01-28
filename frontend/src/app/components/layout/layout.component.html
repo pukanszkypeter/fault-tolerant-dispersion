@@ -1,5 +1,6 @@
-<ng-container class="mat-typography">
-  <app-header></app-header>
-  <app-main></app-main>
-  <app-footer></app-footer>
+<ng-container>
+  <app-header id="header" [pages]="pages"></app-header>
+  <app-main id="main" [pages]="pages">
+    <ng-content></ng-content>
+  </app-main>
 </ng-container>

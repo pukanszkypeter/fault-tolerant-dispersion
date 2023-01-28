@@ -1,14 +1,40 @@
-<mat-toolbar color="primary" [class.mat-elevation-z8]="true">
+<mat-toolbar id="upper-toolbar" color="primary" [class.mat-elevation-z8]="true">
   <a id="logo-link" [routerLink]="['/home']">
     <img id="logo" alt="logo" src="assets/images/logo.png" />
-    <span>Dispersion Systems</span>
   </a>
-
+  <ng-container *ngFor="let page of pages">
+    <ng-container *ngIf="page.key !== 'page-not-found'">
+      <button
+        class="page-button"
+        mat-button
+        color="accent"
+        routerLinkActive="active"
+        [routerLink]="['/' + page.key]"
+      >
+        {{ page.translateKey | translate }}
+      </button>
+    </ng-container>
+  </ng-container>
   <span class="spacer"></span>
-  <button mat-icon-button>
-    <mat-icon>favorite</mat-icon>
+  <button mat-icon-button (click)="toggleDarkMode()">
+    <mat-icon *ngIf="!(darkMode$ | async)">dark_mode</mat-icon>
+    <mat-icon *ngIf="darkMode$ | async">light_mode</mat-icon>
   </button>
-  <button mat-icon-button>
-    <mat-icon>share</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="translateMenu">
+    <mat-icon>translate</mat-icon>
   </button>
+  <mat-menu #translateMenu="matMenu" xPosition="before" yPosition="below">
+    <ng-container *ngFor="let language of languages">
+      <button mat-menu-item (click)="changeLanguage(language.key)">
+        {{ language.key | translate }}
+      </button>
+    </ng-container>
+  </mat-menu>
+  <a
+    mat-icon-button
+    target="_blank"
+    href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+  >
+    <img alt="github" src="assets/images/github.png" />
+  </a>
 </mat-toolbar>

@@ -1,1 +1,13 @@
-<p>main works!</p>
+<div id="main-container">
+  <mat-toolbar id="lower-toolbar" color="{{ $color | async }}">
+    <span id="page-title">{{
+      ($activePage | async)?.translateKey || "" | translate
+    }}</span>
+    <span class="spacer"></span>
+    <mat-icon id="page-icon">{{ ($activePage | async)?.iconKey }}</mat-icon>
+  </mat-toolbar>
+  <div id="page-container">
+    <ng-content></ng-content>
+  </div>
+</div>
+<app-footer [pages]="pages"></app-footer>

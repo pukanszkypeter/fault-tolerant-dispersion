@@ -1,1 +1,28 @@
-<p>footer works!</p>
+<mat-toolbar id="footer-container" color="primary">
+  <span class="mat-caption">&copy; 2023 Dispersion Systems</span>
+  <span class="spacer"></span>
+  <a id="logo-link" [routerLink]="['/home']">
+    <img id="logo" alt="logo" src="assets/images/logo.png" />
+  </a>
+  <span class="spacer"></span>
+  <div id="app-desc-container">
+    <span class="mat-caption"
+      >Current version:
+      <a
+        class="app-desc-link"
+        target="_blank"
+        href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+        >0.0.0</a
+      ></span
+    >
+    <span class="mat-caption"
+      >Powered by
+      <a
+        class="app-desc-link"
+        target="_blank"
+        href="https://github.com/pukanszkypeter"
+        >@pukanszkypeter</a
+      ></span
+    >
+  </div>
+</mat-toolbar>

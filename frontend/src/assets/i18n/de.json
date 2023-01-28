@@ -1,0 +1,18 @@
+{
+  "hu": "Ungarisch",
+  "de": "Deutsch",
+  "en": "Englisch",
+
+  "header": {
+    "home": "Startseite",
+    "simulator": "Simulator",
+    "mapSimulator": "Karten-Simulator",
+    "tester": "Tester",
+    "results": "Ergebnisse",
+    "changelog": "Changelog",
+    "pageNotFound": "Seite Nicht Gefunden (404)",
+    "languageChanged": "Die Sprache hat sich geändert.",
+    "lightMode": "Das helle Theme is aktiv.",
+    "darkMode": "Das dunkle Thema ist aktiv."
+  }
+}

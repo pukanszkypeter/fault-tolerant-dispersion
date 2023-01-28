@@ -1,0 +1,30 @@
+.mat-mdc-snack-bar-container {
+  margin: 1rem !important;
+  border-radius: 5px;
+  --mat-mdc-snack-bar-button-color: none;
+  --mdc-snackbar-container-color: none;
+}
+
+.light-snackbar {
+  background: rgb(255, 255, 255);
+}
+
+.dark-snackbar {
+  background: rgb(51, 51, 51);
+}
+
+.success-snackbar {
+  background: rgb(76, 175, 80);
+}
+
+.warning-snackbar {
+  background: rgb(255, 171, 64);
+}
+
+.error-snackbar {
+  background: rgb(211, 47, 47);
+}
+
+.info-snackbar {
+  background: rgb(33, 150, 243);
+}

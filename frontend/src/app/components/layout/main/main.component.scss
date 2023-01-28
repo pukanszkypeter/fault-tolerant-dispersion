@@ -1,0 +1,27 @@
+div#main-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  #lower-toolbar {
+    padding: 2.5rem 2rem;
+  }
+
+  #page-title {
+    font-weight: 300;
+  }
+
+  #page-icon {
+    font-size: 30px;
+    height: 30px;
+    width: 30px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  #page-container {
+    margin: 2rem;
+  }
+}

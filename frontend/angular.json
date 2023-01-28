@@ -31,7 +31,7 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["./node_modules/angular-dark-mode/angular-dark-mode.js"]
           },
           "configurations": {
             "production": {

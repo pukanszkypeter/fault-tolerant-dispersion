@@ -1,16 +1,36 @@
-#logo-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: white;
+#upper-toolbar {
+  min-height: 64px;
 
-  #logo {
-    width: 40px;
-    height: 40px;
+  #logo-link {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 0.75rem;
+    cursor: pointer;
+
+    #logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-bottom: 2.5px;
+      transition: box-shadow 0.3s, transform 0.5s ease-in-out;
+    }
+
+    #logo:hover {
+      transform: rotate(180deg);
+      box-shadow: 0 0 15px #ffd740;
+    }
   }
-}
 
-.spacer {
-  flex: 1 1 auto;
+  .page-button {
+    margin-right: 0.5rem;
+  }
+
+  .active {
+    background-color: rgb(255, 215, 64, 0.25);
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
 }

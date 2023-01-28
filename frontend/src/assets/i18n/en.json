@@ -1,0 +1,18 @@
+{
+  "hu": "Hungarian",
+  "de": "German",
+  "en": "English",
+
+  "header": {
+    "home": "Home",
+    "simulator": "Simulator",
+    "mapSimulator": "Map Simulator",
+    "tester": "Tester",
+    "results": "Results",
+    "changelog": "Changelog",
+    "pageNotFound": "Page Not Found (404)",
+    "languageChanged": "The language has changed.",
+    "lightMode": "The light theme is active.",
+    "darkMode": "The dark theme is active."
+  }
+}
