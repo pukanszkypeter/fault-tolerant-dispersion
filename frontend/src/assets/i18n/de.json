@@ -14,5 +14,16 @@
     "languageChanged": "Die Sprache hat sich geändert.",
     "lightMode": "Das helle Theme is aktiv.",
     "darkMode": "Das dunkle Thema ist aktiv."
+  },
+
+  "home": {
+    "hero": "Dispersion Systems ist eine Anwendung, mit der wir schnell und effizient verschiedene Dispersionsalgorithmen simulieren und testen können. Mit Hilfe verschiedener Technologien versuchen wir, die beste Erfahrung zu bieten und die von der Anwendung bereitgestellten Funktionen ständig zu verbessern.",
+    "features": "Funktionen",
+    "simulatorTitle": "Das Hauptfunktion ist der Simulator",
+    "simulatorDescription": "Durch die vielen Diagrammtopologien können wir den Betrieb des ausgewählten Dispersionsalgorithmus simulieren, während nützliche Informationen angezeigt werden.",
+    "testerDescription": "Wir können automatisierte Testfälle mit größeren Datenmengen durchführen.",
+    "resultsDescription": "Wir können die Ergebnisse der Algorithmen anhand spektakulärer Diagramme sehen.",
+    "mapDescription": "Wir können sogar auf realen Straßennetzen testen mit Hilfe von",
+    "changelogDescription": "Wir können die in der Anwendung vorgenommenen Änderungen nach Version lesen."
   }
 }

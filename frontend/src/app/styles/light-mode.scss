@@ -1,4 +1,8 @@
 body.light-mode {
   background-color: #f5f5f5;
   color: #000000;
+
+  .mat-divider {
+    border-top-color: rgb(0, 0, 0, 0.12);
+  }
 }
