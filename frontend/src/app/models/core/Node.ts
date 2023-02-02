@@ -1,4 +1,4 @@
-import { NodeState } from '../utils/NodeState';
+import { NodeState } from "../utils/NodeState";
 
 export class Node {
   id: number;

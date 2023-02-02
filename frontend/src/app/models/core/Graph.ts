@@ -1,5 +1,5 @@
-import { Node } from './Node';
-import { Edge } from './Edge';
+import { Node } from "./Node";
+import { Edge } from "./Edge";
 
 export class Graph<NodeType extends Node, EdgeType extends Edge> {
   nodeList: NodeType[];

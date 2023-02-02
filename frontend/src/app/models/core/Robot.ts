@@ -1,4 +1,4 @@
-import { RobotState } from '../utils/RobotState';
+import { RobotState } from "../utils/RobotState";
 
 export class Robot {
   id: number;
