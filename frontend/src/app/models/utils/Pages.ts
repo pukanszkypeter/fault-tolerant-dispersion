@@ -9,14 +9,14 @@ export const pages: readonly Page[] = [
   {
     key: "simulator",
     translateKey: "header.simulator",
-    iconKey: "rocket_launch",
+    iconKey: "hub",
   },
   {
     key: "map-simulator",
     translateKey: "header.mapSimulator",
     iconKey: "location_on",
   },
-  { key: "tester", translateKey: "header.tester", iconKey: "bug_report" },
+  { key: "tester", translateKey: "header.tester", iconKey: "science" },
   { key: "results", translateKey: "header.results", iconKey: "analytics" },
   { key: "changelog", translateKey: "header.changelog", iconKey: "history" },
   {

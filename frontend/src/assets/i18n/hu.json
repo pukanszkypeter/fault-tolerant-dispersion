@@ -3,6 +3,33 @@
   "de": "Német",
   "en": "Angol",
 
+  "graph": {
+    "BARABASI_ALBERT_FOREST": "Barabási Albert Erdő",
+    "BARABASI_ALBERT_GRAPH": "Barabási Albert Gráf",
+    "BARBELL": "Súlyzó",
+    "COMPLETE": "Teljes",
+    "GNM_RANDOM": "GNM Random",
+    "GNP_RANDOM": "GNP Random",
+    "GRID": "Rács",
+    "HYPER_CUBE": "Hiperkocka",
+    "LINEAR": "Lineáris",
+    "LOLLIPOP": "Nyalóka",
+    "RING": "Kör",
+    "RANDOM_REGULAR": "Random reguláris",
+    "STAR": "Csillag",
+    "WHEEL": "Kerék",
+    "WINDMILL": "Szélmalom"
+  },
+
+  "algorithm": {
+    "RANDOM_DISPERSION": "Véletlen diszperzió",
+    "RANDOM_WITH_LEADER_DISPERSION": "Véletlen - vezetővel diszperzió",
+    "ROTOR_ROUTER_DISPERSION": "Rotor router diszperzió",
+    "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router - vezetővel diszperzió",
+    "FAULTLESS_DFS_DISPERSION": "DFS diszperzió",
+    "FAULTY_DFS_DISPERSION": "Hibatűrő DFS diszperzió"
+  },
+
   "header": {
     "home": "Főoldal",
     "simulator": "Szimulátor",
@@ -25,5 +52,16 @@
     "resultsDescription": "Az algoritmusok eredményeit látványos diagramok segítségével láthatjuk.",
     "mapDescription": "Akár valós úthálózatokon is tesztelhetünk, amihez segítséget nyújt az",
     "changelogDescription": "Az alkalmazásban végrehajtott változtatásokat verziónként visszakövethetjük."
+  },
+
+  "simulator": {
+    "launch": "Indítás",
+    "algorithm": "Algoritmus",
+    "graph": "Gráf",
+    "notConfigured": "Nincs konfigurálva",
+    "ready": "Kész",
+    "loading": "Betöltés",
+    "configure": "Beállítás",
+    "reset": "Visszaállítás"
   }
 }

@@ -1,1 +1,497 @@
-<p>simulator works!</p>
+<div class="row gy-4">
+  <div class="col-xl-6 px-4">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon
+            fontSet="material-icons-outlined"
+            style="color: red; font-size: 40px; width: 40px; height: 40px"
+            >cancel</mat-icon
+          >
+        </div>
+        <mat-card-title>{{ "simulator.graph" | translate }}</mat-card-title>
+        <mat-card-subtitle>{{
+          "simulator.notConfigured" | translate
+        }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="row mt-4">
+          <div class="col-12 text-center">
+            <div style="width: 90%; margin: auto; text-align: left">
+              <h4 style="margin: 0 0 8px">Type*</h4>
+            </div>
+            <mat-form-field
+              appearance="outline"
+              style="width: 90%"
+              color="accent"
+            >
+              <mat-select [formControl]="graphTypeFormControl">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let type of graphTypes" [value]="type">
+                  {{ "graph." + type | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="graphTypeFormControl.hasError('required')"
+                >You must make a selection</mat-error
+              >
+              <mat-icon
+                matSuffix
+                fontSet="material-icons-outlined"
+                matTooltip="Info about the graphy type"
+                >info</mat-icon
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <div style="width: 90%; margin: auto; text-align: left">
+              <h4 style="margin: 0 0 8px">Settings*</h4>
+            </div>
+            <mat-accordion>
+              <mat-expansion-panel
+                style="width: 90%; margin: auto; box-shadow: none"
+                [disabled]="
+                  graphTypeFormControl.value === '' ||
+                  graphTypeFormControl.hasError('required')
+                "
+                (opened)="isGraphSettingsPanelOpen = true"
+                (closed)="isGraphSettingsPanelOpen = false"
+              >
+                <mat-expansion-panel-header style="height: 54px">
+                  <mat-panel-title>
+                    <mat-icon fontSet="material-icons-outlined">
+                      tune
+                    </mat-icon>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <mat-slide-toggle
+                      [formControl]="defaultSettings"
+                      color="accent"
+                      (toggleChange)="handleDefaultSettingsToggleChange()"
+                      >Default</mat-slide-toggle
+                    >
+                  </div>
+                </div>
+                <div [ngSwitch]="graphTypeFormControl.value">
+                  <div *ngSwitchCase="graphTypes[0]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="tree" class="form-label">Trees</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="tree"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Final nodes</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[1]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="init" class="form-label"
+                          >Inital nodes</label
+                        >
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="init"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="edge" class="form-label">Edge growth</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="edge"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Final nodes</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[2]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Nodes</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[3]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Nodes</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[4]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Nodes</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="edge" class="form-label">Edges</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="edge"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[5]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Nodes</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="propability" class="form-label"
+                          >Edge propability (<span id="propability-text"
+                            >100</span
+                          >%)</label
+                        >
+                        <input
+                          type="range"
+                          required
+                          min="0"
+                          max="1"
+                          value="0.5"
+                          step="0.01"
+                          (input)="setEdgePropabilityText()"
+                          class="form-range"
+                          id="propability"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[6]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="row" class="form-label">Rows</label>
+                        <input
+                          type="number"
+                          min="2"
+                          required
+                          class="form-control"
+                          id="row"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="column" class="form-label">Columns</label>
+                        <input
+                          type="number"
+                          min="2"
+                          required
+                          class="form-control"
+                          id="column"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[7]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="dimension" class="form-label"
+                          >Dimension</label
+                        >
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="dimension"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[8]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="size" class="form-label">Size</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="size"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[9]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="size" class="form-label">Size</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="size"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[10]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="size" class="form-label">Size</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="size"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[11]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="node" class="form-label">Node</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="node"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="degree" class="form-label">Degree</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="degree"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[12]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="order" class="form-label">Order</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="order"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[13]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="size" class="form-label">Size</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="size"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchCase="graphTypes[14]">
+                    <div class="row mt-2 gy-3">
+                      <div class="col-xl-6">
+                        <label for="mode" class="form-label">Mode</label>
+                        <select class="form-select" required id="mode">
+                          <option value="WINDMILL">{{ "Windmill" }}</option>
+                          <option value="DUTCHWINDMILL">
+                            {{ "Dutch Windmill" }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="copies" class="form-label">Copies</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="copies"
+                        />
+                      </div>
+                      <div class="col-xl-6">
+                        <label for="size" class="form-label">Size</label>
+                        <input
+                          type="number"
+                          min="1"
+                          required
+                          class="form-control"
+                          id="size"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-divider class="mt-4"></mat-divider>
+      <mat-card-actions>
+        <button mat-flat-button color="accent" (click)="configureGraph()">
+          {{ "simulator.configure" | translate }}
+        </button>
+      </mat-card-actions>
+      <mat-card-footer *ngIf="false">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  <div class="col-xl-6 px-4">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon
+            fontSet="material-icons-outlined"
+            style="color: red; font-size: 40px; width: 40px; height: 40px"
+            >cancel</mat-icon
+          >
+        </div>
+        <mat-card-title>{{ "simulator.algorithm" | translate }}</mat-card-title>
+        <mat-card-subtitle>{{
+          "simulator.notConfigured" | translate
+        }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="row mt-4">
+          <div class="col-12 text-center">
+            <div style="width: 90%; margin: auto; text-align: left">
+              <h4 style="margin: 0 0 8px">Type*</h4>
+            </div>
+            <mat-form-field
+              appearance="outline"
+              style="width: 90%"
+              color="accent"
+            >
+              <mat-select [formControl]="algorithmTypeFormControl">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let type of algorithmTypes" [value]="type">
+                  {{ "algorithm." + type | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-icon
+                matSuffix
+                fontSet="material-icons-outlined"
+                matTooltip="Info about the algorithm type"
+                >info</mat-icon
+              >
+              <mat-error *ngIf="algorithmTypeFormControl.hasError('required')"
+                >You must make a selection</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <div style="width: 90%; margin: auto; text-align: left">
+              <h4 style="margin: 0 0 8px">Start nodes*</h4>
+            </div>
+            <mat-form-field
+              appearance="outline"
+              style="width: 90%"
+              color="accent"
+            >
+              <mat-select>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let type of graphTypes" [value]="type">
+                  {{ "graph." + type | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error>You must make a selection</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button mat-flat-button color="accent" [disabled]="true">
+          {{ "simulator.configure" | translate }}
+        </button>
+      </mat-card-actions>
+      <mat-card-footer *ngIf="false">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+<div class="row mt-4 justify-content-center">
+  <div class="col-xl-6 px-4 text-center">
+    <button
+      [disabled]="true"
+      mat-raised-button
+      color="primary"
+      style="height: 45px; width: 100px; font-size: 1rem"
+    >
+      {{ "simulator.launch" | translate }}
+    </button>
+  </div>
+</div>

@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+// Boostrap used only for layout design
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 // Global
 @import "./app/styles/global.scss";
 

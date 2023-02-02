@@ -4,7 +4,9 @@
       ($activePage | async)?.translateKey || "" | translate
     }}</span>
     <span class="spacer"></span>
-    <mat-icon id="page-icon">{{ ($activePage | async)?.iconKey }}</mat-icon>
+    <mat-icon id="page-icon" fontSet="material-icons-outlined">{{
+      ($activePage | async)?.iconKey
+    }}</mat-icon>
   </mat-toolbar>
   <div id="page-container">
     <ng-content></ng-content>

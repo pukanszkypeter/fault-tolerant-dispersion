@@ -3,6 +3,33 @@
   "de": "German",
   "en": "English",
 
+  "graph": {
+    "BARABASI_ALBERT_FOREST": "Barabasi Albert Forest",
+    "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
+    "BARBELL": "Barbell",
+    "COMPLETE": "Complete",
+    "GNM_RANDOM": "GNM Random",
+    "GNP_RANDOM": "GNP Random",
+    "GRID": "Grid",
+    "HYPER_CUBE": "Hyper cube",
+    "LINEAR": "Linear",
+    "LOLLIPOP": "Lollipop",
+    "RING": "Ring",
+    "RANDOM_REGULAR": "Random regular",
+    "STAR": "Star",
+    "WHEEL": "Wheel",
+    "WINDMILL": "Windmill"
+  },
+
+  "algorithm": {
+    "RANDOM_DISPERSION": "Random dispersion",
+    "RANDOM_WITH_LEADER_DISPERSION": "Random with leader dispersion",
+    "ROTOR_ROUTER_DISPERSION": "Rotor router dispersion",
+    "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router with leader dispersion",
+    "FAULTLESS_DFS_DISPERSION": "DFS dispersion",
+    "FAULTY_DFS_DISPERSION": "Fault tolerant DFS dispersion"
+  },
+
   "header": {
     "home": "Home",
     "simulator": "Simulator",
@@ -25,5 +52,16 @@
     "resultsDescription": "We can see the results of the algorithms with the help of spectacular diagrams.",
     "mapDescription": "We can even test on real road networks using",
     "changelogDescription": "We can read the changes made in the application by version."
+  },
+
+  "simulator": {
+    "launch": "Launch",
+    "algorithm": "Algorithm",
+    "graph": "Graph",
+    "notConfigured": "Not configured",
+    "ready": "Ready",
+    "loading": "Loading",
+    "configure": "Configure",
+    "reset": "Reset"
   }
 }

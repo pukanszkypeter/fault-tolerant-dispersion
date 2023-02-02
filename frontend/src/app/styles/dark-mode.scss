@@ -5,4 +5,54 @@ body.dark-mode {
   .mat-divider {
     border-top-color: rgb(255, 255, 255, 0.25);
   }
+
+  .mat-mdc-card {
+    box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%),
+      0px 8px 10px 1px rgb(0 0 0 / 14%),
+      0px 3px 14px 2px rgb(0 0 0 / 12%);
+    background-color: #424242;
+  }
+
+  .mat-mdc-card-subtitle {
+    color: rgba(173, 181, 189, 0.75);
+  }
+
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: white;
+  }
+
+  .mdc-text-field:not(.mdc-text-field--focused):not(.mdc-text-field--invalid) {
+    outline: 1px solid white;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .mat-mdc-select-value-text {
+    color: white;
+  }
+
+  .mat-mdc-select-arrow {
+    color: white;
+  }
+
+  .mat-mdc-slide-toggle .mdc-form-field {
+    color: white;
+    gap: 5px;
+  }
+
+  .mat-expansion-panel {
+    background: #303030;
+    color: white;
+
+    .mat-expansion-panel-header-title {
+      color: white;
+    }
+    .mat-expansion-panel-header-description {
+      color: rgba(173, 181, 189, 0.75);
+    }
+    .mat-expansion-indicator::after {
+      color: white;
+    }
+  }
+  
 }

@@ -3,6 +3,33 @@
   "de": "Deutsch",
   "en": "Englisch",
 
+  "graph": {
+    "BARABASI_ALBERT_FOREST": "Barabasi Albert Wald",
+    "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
+    "BARBELL": "Hantel",
+    "COMPLETE": "Komplett",
+    "GNM_RANDOM": "GNM Random",
+    "GNP_RANDOM": "GNP Random",
+    "GRID": "Netz",
+    "HYPER_CUBE": "Hyperwürfel",
+    "LINEAR": "Linear",
+    "LOLLIPOP": "Lolly",
+    "RING": "Ring",
+    "RANDOM_REGULAR": "Random regular",
+    "STAR": "Stern",
+    "WHEEL": "Rad",
+    "WINDMILL": "Windmühle"
+  },
+
+  "algorithm": {
+    "RANDOM_DISPERSION": "Zufällig Dispersion",
+    "RANDOM_WITH_LEADER_DISPERSION": "Zufällig mit Anführer Dispersion",
+    "ROTOR_ROUTER_DISPERSION": "Roto-Rooter Dispersion",
+    "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Roto-Rooter mit Anführer Dispersion",
+    "FAULTLESS_DFS_DISPERSION": "DFS Dispersion",
+    "FAULTY_DFS_DISPERSION": "Fehlertolerantes DFS Dispersion"
+  },
+
   "header": {
     "home": "Startseite",
     "simulator": "Simulator",
@@ -25,5 +52,16 @@
     "resultsDescription": "Wir können die Ergebnisse der Algorithmen anhand spektakulärer Diagramme sehen.",
     "mapDescription": "Wir können sogar auf realen Straßennetzen testen mit Hilfe von",
     "changelogDescription": "Wir können die in der Anwendung vorgenommenen Änderungen nach Version lesen."
+  },
+
+  "simulator": {
+    "launch": "Starten",
+    "algorithm": "Algorithmus",
+    "graph": "Graph",
+    "notConfigured": "Nicht konfiguriert",
+    "ready": "Bereit",
+    "loading": "Laden",
+    "configure": "Konfigurieren",
+    "reset": "Zurücksetzen"
   }
 }

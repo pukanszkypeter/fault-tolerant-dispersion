@@ -6,6 +6,14 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatCardModule } from "@angular/material/card";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatSelectModule } from "@angular/material/select";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @NgModule({
   exports: [
@@ -16,6 +24,14 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatSnackBarModule,
     MatDividerModule,
     MatGridListModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatSlideToggleModule,
   ],
 })
 export class MaterialModule {}

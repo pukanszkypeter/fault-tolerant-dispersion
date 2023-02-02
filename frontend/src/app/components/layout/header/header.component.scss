@@ -18,7 +18,7 @@
 
     #logo:hover {
       transform: rotate(180deg);
-      box-shadow: 0 0 15px #FFD740;
+      box-shadow: 0 0 15px #ffd740;
     }
   }
 
@@ -32,5 +32,13 @@
 
   .spacer {
     flex: 1 1 auto;
+  }
+
+  a#github-link {
+    display: flex;
+    align-items: center;
+    img {
+      margin-bottom: 4px;
+    }
   }
 }
