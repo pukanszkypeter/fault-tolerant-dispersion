@@ -2,19 +2,21 @@
   <a id="logo-link" [routerLink]="['/home']">
     <img id="logo" alt="logo" src="assets/images/logo.png" />
   </a>
-  <ng-container *ngFor="let page of pages">
-    <ng-container *ngIf="page.key !== 'page-not-found'">
-      <button
-        class="page-button"
-        mat-button
-        color="accent"
-        routerLinkActive="active"
-        [routerLink]="['/' + page.key]"
-      >
-        {{ page.translateKey | translate }}
-      </button>
+  <div>
+    <ng-container *ngFor="let page of pages">
+      <ng-container *ngIf="page.key !== 'page-not-found'">
+        <button
+          class="page-button"
+          mat-button
+          color="accent"
+          routerLinkActive="active"
+          [routerLink]="['/' + page.key]"
+        >
+          {{ page.translateKey | translate }}
+        </button>
+      </ng-container>
     </ng-container>
-  </ng-container>
+  </div>
   <span class="spacer"></span>
   <button mat-icon-button (click)="toggleDarkMode()">
     <mat-icon *ngIf="!(darkMode$ | async)">dark_mode</mat-icon>

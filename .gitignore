@@ -7,3 +7,7 @@
 
 # Mac Finder
 **/.DS_Store
+
+# Temp
+/java-engine
+/dispersion-app

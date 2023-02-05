@@ -1,19 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Boostrap used only for layout design
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
-
 // Global
-@import "./app/styles/global.scss";
+@import "./styles/global.scss";
 
 // Light - Dark mode
-@import "./app/styles/light-mode.scss";
-@import "./app/styles/dark-mode.scss";
+@import "./styles/light-mode.scss";
+@import "./styles/dark-mode.scss";
+
+// Snackbar
+@import "./styles/snack-bar.scss";
+
+// Boostrap used only for layout design
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 // Outlined, filled, two-tone material icons
 @import "../node_modules/material-icons/iconfont/outlined.scss";
 @import "../node_modules/material-icons/iconfont/filled.scss";
 @import "../node_modules/material-icons/iconfont/two-tone.scss";
 
-// Snackbar
-@import "./app/styles/snack-bar.scss";

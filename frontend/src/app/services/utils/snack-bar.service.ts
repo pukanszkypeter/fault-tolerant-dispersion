@@ -1,26 +1,11 @@
 import { Component, Inject, Injectable } from "@angular/core";
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MAT_SNACK_BAR_DATA,
-} from "@angular/material/snack-bar";
+import { MatSnackBar, MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 import { TranslateService } from "@ngx-translate/core";
 import { firstValueFrom } from "rxjs";
-
-export enum SnackBarType {
-  LIGHT = "light-snackbar",
-  DARK = "dark-snackbar",
-  SUCCESS = "success-snackbar",
-  WARNING = "warning-snackbar",
-  ERROR = "error-snackbar",
-  INFO = "info-snackbar",
-}
-
-const defaultSnackBarConfig: MatSnackBarConfig<any> = {
-  duration: 2500,
-  horizontalPosition: "end",
-  verticalPosition: "bottom",
-};
+import {
+  defaultSnackBarConfig,
+  SnackBarType,
+} from "src/app/models/utils/SnackBar";
 
 @Injectable({
   providedIn: "root",
@@ -45,24 +30,26 @@ export class SnackBarService {
   selector: "custom-snack-bar",
   template: `
     <span class="message-container" matSnackBarLabel>
-      <mat-icon
-        fontSet="material-icons-two-tone"
-        *ngIf="data.type === snackBarType.LIGHT"
-        >notifications</mat-icon
+      <ng-container [ngSwitch]="data.type" ]>
+        <mat-icon
+          *ngSwitchCase="snackBarType.LIGHT"
+          fontSet="material-icons-two-tone"
+          >notifications</mat-icon
+        >
+        <mat-icon *ngSwitchCase="snackBarType.DARK">notifications</mat-icon>
+        <mat-icon *ngSwitchCase="snackBarType.SUCCESS">check_circle</mat-icon>
+        <mat-icon *ngSwitchCase="snackBarType.WARNING">warning</mat-icon>
+        <mat-icon *ngSwitchCase="snackBarType.ERROR">error</mat-icon>
+        <mat-icon *ngSwitchCase="snackBarType.INFO">info</mat-icon>
+        <mat-icon *ngSwitchDefault>notifications</mat-icon>
+      </ng-container>
+      <span
+        [ngClass]="{
+          'message-dark': data.type === snackBarType.LIGHT,
+          'message-light': data.type !== snackBarType.LIGHT
+        }"
+        >{{ data.message }}</span
       >
-      <mat-icon *ngIf="data.type === snackBarType.DARK">notifications</mat-icon>
-      <mat-icon *ngIf="data.type === snackBarType.SUCCESS"
-        >check_circle</mat-icon
-      >
-      <mat-icon *ngIf="data.type === snackBarType.WARNING">warning</mat-icon>
-      <mat-icon *ngIf="data.type === snackBarType.ERROR">error</mat-icon>
-      <mat-icon *ngIf="data.type === snackBarType.INFO">info</mat-icon>
-      <span *ngIf="data.type === snackBarType.LIGHT" class="message-dark">{{
-        data.message
-      }}</span>
-      <span *ngIf="data.type !== snackBarType.LIGHT" class="message-light">{{
-        data.message
-      }}</span>
     </span>
   `,
   styles: [

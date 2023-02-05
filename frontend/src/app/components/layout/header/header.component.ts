@@ -2,12 +2,10 @@ import { Component, Input } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Language, languages } from "src/app/models/utils/Languages";
 import { Page } from "src/app/models/utils/Pages";
-import {
-  SnackBarService,
-  SnackBarType,
-} from "src/app/services/utils/snack-bar.service";
+import { SnackBarService } from "src/app/services/utils/snack-bar.service";
 import { DarkModeService } from "angular-dark-mode";
 import { firstValueFrom, Observable } from "rxjs";
+import { SnackBarType } from "src/app/models/utils/SnackBar";
 
 @Component({
   selector: "app-header",

@@ -11,11 +11,6 @@ export const pages: readonly Page[] = [
     translateKey: "header.simulator",
     iconKey: "hub",
   },
-  {
-    key: "map-simulator",
-    translateKey: "header.mapSimulator",
-    iconKey: "location_on",
-  },
   { key: "tester", translateKey: "header.tester", iconKey: "science" },
   { key: "results", translateKey: "header.results", iconKey: "analytics" },
   { key: "changelog", translateKey: "header.changelog", iconKey: "history" },

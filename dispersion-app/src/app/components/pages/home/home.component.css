@@ -1,7 +1,0 @@
-img#icon {
-  transition: transform 0.5s ease-in-out;
-}
-
-img#icon:hover {
-  transform: rotate(360deg);
-}
