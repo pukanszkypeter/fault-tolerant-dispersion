@@ -33,14 +33,16 @@
   "header": {
     "home": "Startseite",
     "simulator": "Simulator",
-    "mapSimulator": "Karten-Simulator",
     "tester": "Tester",
     "results": "Ergebnisse",
     "changelog": "Changelog",
     "pageNotFound": "Seite Nicht Gefunden (404)",
+    "language": "Sprache",
     "languageChanged": "Die Sprache hat sich geändert.",
-    "lightMode": "Das helle Theme is aktiv.",
-    "darkMode": "Das dunkle Thema ist aktiv."
+    "lightMode": "Heller Modus",
+    "lightModeNotification": "Das helle Theme is aktiv.",
+    "darkMode": "Dunkler Modus",
+    "darkModeNotification": "Das dunkle Thema ist aktiv."
   },
 
   "home": {

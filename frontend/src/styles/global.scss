@@ -7,6 +7,26 @@ body {
   margin: 0;
 }
 
+.app-logo {
+  border-radius: 50%;
+  transition: box-shadow 0.3s, transform 0.5s ease-in-out;
+}
+
+.app-logo:hover {
+  transform: rotate(180deg);
+  box-shadow: 0 0 15px #ffd740;
+}
+
+.app-link {
+  text-decoration: none;
+  color: white;
+}
+
+.app-link:hover {
+  text-decoration: underline;
+  color: #ffd740;
+}
+
 .mdc-card__actions {
   padding: 16px !important;
 }

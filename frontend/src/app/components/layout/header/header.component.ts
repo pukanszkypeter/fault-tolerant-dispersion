@@ -4,8 +4,9 @@ import { Language, languages } from "src/app/models/utils/Languages";
 import { Page } from "src/app/models/utils/Pages";
 import { SnackBarService } from "src/app/services/utils/snack-bar.service";
 import { DarkModeService } from "angular-dark-mode";
-import { firstValueFrom, Observable } from "rxjs";
+import { firstValueFrom, map, Observable } from "rxjs";
 import { SnackBarType } from "src/app/models/utils/SnackBar";
+import { BreakpointService } from "src/app/services/utils/breakpoint.service";
 
 @Component({
   selector: "app-header",
@@ -16,18 +17,20 @@ export class HeaderComponent {
   @Input() pages: readonly Page[] = [];
   languages: readonly Language[] = languages;
   darkMode$: Observable<boolean> = this.darkMode.darkMode$;
+  breakpoint$: Observable<string> = this.breakpoint.breakpoint$;
 
   constructor(
     private darkMode: DarkModeService,
     private translate: TranslateService,
-    private snackBar: SnackBarService
+    private snackBar: SnackBarService,
+    private breakpoint: BreakpointService
   ) {}
 
   async toggleDarkMode(): Promise<void> {
     this.darkMode.toggle();
     const darkMode = await firstValueFrom(this.darkMode$);
     await this.snackBar.openSnackBar(
-      darkMode ? "header.darkMode" : "header.lightMode",
+      darkMode ? "header.darkModeNotification" : "header.lightModeNotification",
       darkMode ? SnackBarType.LIGHT : SnackBarType.DARK
     );
   }
@@ -37,6 +40,14 @@ export class HeaderComponent {
     await this.snackBar.openSnackBar(
       "header.languageChanged",
       SnackBarType.SUCCESS
+    );
+  }
+
+  get isSmallScreen$(): Observable<boolean> {
+    return this.breakpoint$.pipe(
+      map((breakpoint) => {
+        return breakpoint === "XS" || breakpoint === "S" || breakpoint === "M";
+      })
     );
   }
 }

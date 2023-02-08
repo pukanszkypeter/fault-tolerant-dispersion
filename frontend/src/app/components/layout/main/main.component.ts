@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { firstValueFrom, map, Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { Page } from "src/app/models/utils/Pages";
 
 @Component({

@@ -33,14 +33,16 @@
   "header": {
     "home": "Főoldal",
     "simulator": "Szimulátor",
-    "mapSimulator": "Térkép Szimulátor",
     "tester": "Tesztelő",
     "results": "Eredmények",
     "changelog": "Változási Napló",
     "pageNotFound": "Nem Található Oldal (404)",
+    "language": "Nyelv",
     "languageChanged": "A nyelv megváltozott.",
-    "lightMode": "A világos téma aktív.",
-    "darkMode": "A sötét téma aktív."
+    "lightMode": "Világos mód",
+    "lightModeNotification": "A világos téma aktív.",
+    "darkMode": "Sötét mód",
+    "darkModeNotification": "A sötét téma aktív."
   },
 
   "home": {

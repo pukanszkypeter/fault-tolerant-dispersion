@@ -33,14 +33,16 @@
   "header": {
     "home": "Home",
     "simulator": "Simulator",
-    "mapSimulator": "Map Simulator",
     "tester": "Tester",
     "results": "Results",
     "changelog": "Changelog",
     "pageNotFound": "Page Not Found (404)",
+    "language": "Language",
     "languageChanged": "The language has changed.",
-    "lightMode": "The light theme is active.",
-    "darkMode": "The dark theme is active."
+    "lightMode": "Light mode",
+    "lightModeNotification": "The light theme is active.",
+    "darkMode": "Dark mode",
+    "darkModeNotification": "The dark theme is active."
   },
 
   "home": {

@@ -1,3 +1,12 @@
+// Breakpoints are based on Bootstrap containers
+// https://getbootstrap.com/docs/5.3/layout/containers/
+// XS: < 576px
+// S: ≥ 576px
+// M: ≥ 768px
+// L: ≥ 992px
+// XL: ≥ 1200px
+// XXL: ≥ 1400px
+
 export enum Breakpoints {
   XS = "(min-width: 0px)",
   S = "(min-width: 576px)",

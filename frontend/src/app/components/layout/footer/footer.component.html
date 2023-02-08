@@ -1,30 +1,86 @@
 <mat-toolbar id="footer-container" color="primary">
-  <span class="mat-caption" style="width: 200px"
-    >&copy; 2023 Dispersion Systems</span
+  <div *ngIf="!(isSmallScreen$ | async)" class="row w-100 m-0">
+    <div class="col-4 p-0 d-flex align-items-center">
+      <span class="mat-caption">&copy; 2023 Dispersion Systems</span>
+    </div>
+    <div class="col-4 p-0 d-flex justify-content-center align-items-center">
+      <a style="cursor: pointer; border-radius: 50%" [routerLink]="['/home']">
+        <img
+          class="app-logo"
+          alt="logo"
+          width="40px"
+          height="40px"
+          src="assets/images/logo.png"
+        />
+      </a>
+    </div>
+    <div class="col-4 p-0">
+      <div class="row w-100 m-0">
+        <div class="col-12 p-0 d-flex justify-content-end">
+          <span class="mat-caption"
+            >Current version:
+            <a
+              class="app-link"
+              target="_blank"
+              href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+              >0.0.0</a
+            ></span
+          >
+        </div>
+        <div class="col-12 p-0 d-flex justify-content-end">
+          <span class="mat-caption"
+            >Powered by
+            <a
+              class="app-link"
+              target="_blank"
+              href="https://github.com/pukanszkypeter"
+              >@pukanszkypeter</a
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="isSmallScreen$ | async"
+    class="row w-100"
+    style="margin: 0.75rem 0"
   >
-  <span class="spacer"></span>
-  <a id="logo-link" [routerLink]="['/home']">
-    <img id="logo" alt="logo" src="assets/images/logo.png" />
-  </a>
-  <span class="spacer"></span>
-  <div id="app-desc-container" style="width: 200px">
-    <span class="mat-caption"
-      >Current version:
-      <a
-        class="app-desc-link"
-        target="_blank"
-        href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
-        >0.0.0</a
-      ></span
-    >
-    <span class="mat-caption"
-      >Powered by
-      <a
-        class="app-desc-link"
-        target="_blank"
-        href="https://github.com/pukanszkypeter"
-        >@pukanszkypeter</a
-      ></span
-    >
+    <div class="col-12 text-center p-0">
+      <a style="cursor: pointer; border-radius: 50%" [routerLink]="['/home']">
+        <img
+          class="app-logo"
+          alt="logo"
+          width="40px"
+          height="40px"
+          src="assets/images/logo.png"
+        />
+      </a>
+    </div>
+    <div class="col-12 text-center p-0">
+      <span class="mat-caption">&copy; 2023 Dispersion Systems</span>
+    </div>
+    <div class="col-12 text-center p-0">
+      <span class="mat-caption"
+        >Current version:
+        <a
+          class="app-link"
+          target="_blank"
+          href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+          >0.0.0</a
+        ></span
+      >
+    </div>
+    <div class="col-12 text-center p-0">
+      <span class="mat-caption"
+        >Powered by
+        <a
+          class="app-link"
+          target="_blank"
+          href="https://github.com/pukanszkypeter"
+          >@pukanszkypeter</a
+        ></span
+      >
+    </div>
   </div>
 </mat-toolbar>

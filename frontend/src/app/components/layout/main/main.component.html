@@ -1,12 +1,15 @@
 <div id="main-container">
   <mat-toolbar id="lower-toolbar" color="{{ $color | async }}">
-    <span id="page-title">{{
-      ($activePage | async)?.translateKey || "" | translate
-    }}</span>
-    <span class="spacer"></span>
-    <mat-icon id="page-icon" fontSet="material-icons-outlined">{{
-      ($activePage | async)?.iconKey
-    }}</mat-icon>
+    <div class="row w-100 m-0">
+      <div class="col-6 p-0">
+        <span id="page-title">{{
+          ($activePage | async)?.translateKey || "" | translate
+        }}</span>
+      </div>
+      <div class="col-6 p-0 d-flex align-items-center justify-content-end">
+        <mat-icon id="page-icon">{{ ($activePage | async)?.iconKey }}</mat-icon>
+      </div>
+    </div>
   </mat-toolbar>
   <div id="page-container">
     <ng-content></ng-content>

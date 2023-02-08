@@ -1,43 +1,144 @@
 <mat-toolbar id="upper-toolbar" color="primary" [class.mat-elevation-z8]="true">
-  <a id="logo-link" [routerLink]="['/home']">
-    <img id="logo" alt="logo" src="assets/images/logo.png" />
-  </a>
-  <div>
-    <ng-container *ngFor="let page of pages">
-      <ng-container *ngIf="page.key !== 'page-not-found'">
-        <button
-          class="page-button"
-          mat-button
-          color="accent"
-          routerLinkActive="active"
-          [routerLink]="['/' + page.key]"
-        >
-          {{ page.translateKey | translate }}
+  <div class="row w-100 m-0">
+    <div class="col-4 col-lg-6 p-0">
+      <div *ngIf="isSmallScreen$ | async">
+        <button mat-icon-button [matMenuTriggerFor]="pagesMenu">
+          <mat-icon>menu</mat-icon>
         </button>
-      </ng-container>
-    </ng-container>
+        <mat-menu #pagesMenu="matMenu" xPosition="after" yPosition="below">
+          <ng-container *ngFor="let page of pages">
+            <ng-container *ngIf="page.key !== 'page-not-found'">
+              <button mat-menu-item [routerLink]="['/' + page.key]">
+                <mat-icon>{{ page.iconKey }}</mat-icon>
+                <span>{{ page.translateKey | translate }}</span>
+              </button>
+            </ng-container>
+          </ng-container>
+        </mat-menu>
+      </div>
+      <div
+        class="h-100 d-flex align-items-center"
+        *ngIf="!(isSmallScreen$ | async)"
+      >
+        <a
+          style="cursor: pointer; border-radius: 50%"
+          class="me-3"
+          [routerLink]="['/home']"
+        >
+          <img
+            class="app-logo"
+            alt="logo"
+            width="40px"
+            height="40px"
+            src="assets/images/logo.png"
+          />
+        </a>
+        <ng-container *ngFor="let page of pages">
+          <ng-container *ngIf="page.key !== 'page-not-found'">
+            <button
+              class="me-2"
+              mat-button
+              color="accent"
+              routerLinkActive="active"
+              [routerLink]="['/' + page.key]"
+            >
+              {{ page.translateKey | translate }}
+            </button>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div
+      *ngIf="isSmallScreen$ | async"
+      class="col-4 p-0 d-flex justify-content-center align-items-center"
+    >
+      <a style="cursor: pointer; border-radius: 50%" [routerLink]="['/home']">
+        <img
+          class="app-logo"
+          alt="logo"
+          width="40px"
+          height="40px"
+          src="assets/images/logo.png"
+        />
+      </a>
+    </div>
+    <div class="col-4 col-lg-6 p-0 text-end">
+      <div *ngIf="isSmallScreen$ | async">
+        <button mat-icon-button [matMenuTriggerFor]="settingsMenu">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+          <button mat-menu-item (click)="toggleDarkMode()">
+            <mat-icon *ngIf="!(darkMode$ | async)">dark_mode</mat-icon>
+            <mat-icon *ngIf="darkMode$ | async">light_mode</mat-icon>
+            <span *ngIf="!(darkMode$ | async)">{{
+              "header.darkMode" | translate
+            }}</span>
+            <span *ngIf="darkMode$ | async">{{
+              "header.lightMode" | translate
+            }}</span>
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="nestedTranslateMenu">
+            <mat-icon>translate</mat-icon>
+            <span>{{ "header.language" | translate }}</span>
+          </button>
+          <mat-menu
+            #nestedTranslateMenu="matMenu"
+            xPosition="before"
+            yPosition="below"
+          >
+            <ng-container *ngFor="let language of languages">
+              <button mat-menu-item (click)="changeLanguage(language.key)">
+                {{ language.key | translate }}
+              </button>
+            </ng-container>
+          </mat-menu>
+          <a
+            mat-menu-item
+            target="_blank"
+            href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+          >
+            <mat-icon>
+              <img
+                alt="github"
+                height="24px"
+                width="24px"
+                style="margin-top: -12.5px"
+                src="assets/images/github-dark.png"
+              />
+            </mat-icon>
+            <span>GitHub</span>
+          </a>
+        </mat-menu>
+      </div>
+      <div *ngIf="!(isSmallScreen$ | async)">
+        <button mat-icon-button (click)="toggleDarkMode()">
+          <mat-icon *ngIf="!(darkMode$ | async)">dark_mode</mat-icon>
+          <mat-icon *ngIf="darkMode$ | async">light_mode</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="translateMenu">
+          <mat-icon>translate</mat-icon>
+        </button>
+        <mat-menu #translateMenu="matMenu" xPosition="before" yPosition="below">
+          <ng-container *ngFor="let language of languages">
+            <button mat-menu-item (click)="changeLanguage(language.key)">
+              {{ language.key | translate }}
+            </button>
+          </ng-container>
+        </mat-menu>
+        <a
+          id="github-link"
+          mat-icon-button
+          target="_blank"
+          href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
+        >
+          <img
+            alt="github"
+            style="margin-top: -12.5px"
+            src="assets/images/github.png"
+          />
+        </a>
+      </div>
+    </div>
   </div>
-  <span class="spacer"></span>
-  <button mat-icon-button (click)="toggleDarkMode()">
-    <mat-icon *ngIf="!(darkMode$ | async)">dark_mode</mat-icon>
-    <mat-icon *ngIf="darkMode$ | async">light_mode</mat-icon>
-  </button>
-  <button mat-icon-button [matMenuTriggerFor]="translateMenu">
-    <mat-icon>translate</mat-icon>
-  </button>
-  <mat-menu #translateMenu="matMenu" xPosition="before" yPosition="below">
-    <ng-container *ngFor="let language of languages">
-      <button mat-menu-item (click)="changeLanguage(language.key)">
-        {{ language.key | translate }}
-      </button>
-    </ng-container>
-  </mat-menu>
-  <a
-    id="github-link"
-    mat-icon-button
-    target="_blank"
-    href="https://github.com/pukanszkypeter/fault-tolerant-dispersion"
-  >
-    <img alt="github" src="assets/images/github.png" />
-  </a>
 </mat-toolbar>

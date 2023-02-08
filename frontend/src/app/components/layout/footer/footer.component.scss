@@ -1,44 +1,6 @@
 #footer-container {
   box-shadow: 0 -5px 10px -5px rgb(20, 20, 20, 0.5);
   padding: 0 2rem;
+  height: auto;
   min-height: 64px;
-
-  .spacer {
-    flex: 1 1 auto;
-  }
-
-  #logo-link {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
-    #logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      transition: box-shadow 0.3s, transform 0.5s ease-in-out;
-    }
-
-    #logo:hover {
-      transform: rotate(180deg);
-      box-shadow: 0 0 15px #ffd740;
-    }
-  }
-
-  div#app-desc-container {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-
-    .app-desc-link {
-      text-decoration: none;
-      color: white;
-    }
-
-    .app-desc-link:hover {
-      text-decoration: underline;
-      color: #ffd740;
-    }
-  }
 }

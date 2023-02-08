@@ -1,5 +1,7 @@
 import { Component, Input } from "@angular/core";
+import { map, Observable } from "rxjs";
 import { Page } from "src/app/models/utils/Pages";
+import { BreakpointService } from "src/app/services/utils/breakpoint.service";
 
 @Component({
   selector: "app-footer",
@@ -8,4 +10,15 @@ import { Page } from "src/app/models/utils/Pages";
 })
 export class FooterComponent {
   @Input() pages: readonly Page[] = [];
+  breakpoint$: Observable<string> = this.breakpoint.breakpoint$;
+
+  constructor(private breakpoint: BreakpointService) {}
+
+  get isSmallScreen$(): Observable<boolean> {
+    return this.breakpoint$.pipe(
+      map((breakpoint) => {
+        return breakpoint === "XS" || breakpoint === "S";
+      })
+    );
+  }
 }

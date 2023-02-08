@@ -4,21 +4,19 @@ div#main-container {
   flex-grow: 1;
 
   #lower-toolbar {
-    padding: 2.5rem 2rem;
-  }
+    padding: 0 2rem;
+    min-height: 80px;
 
-  #page-title {
-    font-weight: 300;
-  }
-
-  #page-icon {
-    font-size: 30px;
-    height: 30px;
-    width: 30px;
-  }
-
-  .spacer {
-    flex: 1 1 auto;
+    #page-title {
+      font-weight: 300;
+    }
+    
+    #page-icon {
+      font-size: 30px;
+      height: 30px;
+      width: 30px;
+    }
+  
   }
 
   #page-container {
