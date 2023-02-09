@@ -12,6 +12,21 @@ body.dark-mode {
     background-color: #424242;
   }
 
+  .mat-expansion-panel {
+    background: #303030;
+    color: white;
+
+    .mat-expansion-panel-header-title {
+      color: white;
+    }
+    .mat-expansion-panel-header-description {
+      color: rgba(173, 181, 189, 0.75);
+    }
+    .mat-expansion-indicator::after {
+      color: white;
+    }
+  }
+
   .mat-mdc-card-subtitle {
     color: rgba(173, 181, 189, 0.75);
   }
@@ -38,19 +53,5 @@ body.dark-mode {
     color: white;
     gap: 5px;
   }
-
-  .mat-expansion-panel {
-    background: #303030;
-    color: white;
-
-    .mat-expansion-panel-header-title {
-      color: white;
-    }
-    .mat-expansion-panel-header-description {
-      color: rgba(173, 181, 189, 0.75);
-    }
-    .mat-expansion-indicator::after {
-      color: white;
-    }
-  }
+  
 }

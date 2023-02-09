@@ -1,84 +1,88 @@
-<div id="hero-container">
+<div class="px-4 py-2 my-2 text-center">
   <img id="logo" alt="logo" src="assets/images/logo.png" />
-  <h1 id="hero-title">Dispersion Systems</h1>
-  <div id="hero-desc-container">
-    <span id="hero-desc" class="mat-body-2">{{ "home.hero" | translate }}</span>
+  <h1 class="fw-bold" style="font-size: 3rem; line-height: 3rem">
+    Dispersion Systems
+  </h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4 mt-4" style="line-height: 1.75rem">
+      {{ "home.hero" | translate }}
+    </p>
   </div>
 </div>
-<div id="feature-container">
-  <h1 id="feature-title">{{ "home.features" | translate }}</h1>
+<div class="container px-4 py-5">
+  <h2 class="mb-2" style="font-size: 2rem">
+    {{ "home.features" | translate }}
+  </h2>
   <mat-divider></mat-divider>
-  <mat-grid-list cols="7" rowHeight="1:1" style="margin-bottom: 2rem">
-    <mat-grid-tile colspan="3" rowspan="2">
-      <h1 id="main-feature">{{ "home.simulatorTitle" | translate }}</h1>
-      <span class="feature-description" style="margin-bottom: 1rem">{{
-        "home.simulatorDescription" | translate
-      }}</span>
-      <button mat-raised-button color="accent" [routerLink]="['/simulator']">
-        {{ "header.simulator" | translate }}
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="1">
+  <div class="row g-5 py-5 row-cols-1 row-cols-lg-3">
+    <div class="col d-flex align-items-start">
       <button
+        [routerLink]="['/simulator']"
+        class="me-3"
+        style="margin-top: -15px"
         mat-fab
         color="accent"
-        class="feature-button"
-        [routerLink]="['/tester']"
       >
-        <mat-icon>bug_report</mat-icon>
+        <mat-icon>hub</mat-icon>
       </button>
-      <h1 class="feature-title">{{ "header.tester" | translate }}</h1>
-      <span class="feature-description">{{
-        "home.testerDescription" | translate
-      }}</span>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="1">
+      <div class="h-100 d-flex flex-column">
+        <h3 class="fs-2">{{ "header.simulator" | translate }}</h3>
+        <p class="my-2" style="font-size: 1rem; font-weight: 300; flex-grow: 1">
+          {{ "home.simulatorDescription" | translate }}
+        </p>
+        <a
+          class="d-inline-flex align-items-center try-out-link"
+          [routerLink]="['/simulator']"
+          ><span>{{ "home.tryOut" | translate }}</span>
+          <mat-icon>navigate_next</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="col d-flex align-items-start">
       <button
+        [routerLink]="['/tester']"
+        class="me-3"
+        style="margin-top: -15px"
         mat-fab
         color="accent"
-        class="feature-button"
+      >
+        <mat-icon>science</mat-icon>
+      </button>
+      <div class="h-100 d-flex flex-column">
+        <h3 class="fs-2">{{ "header.tester" | translate }}</h3>
+        <p class="my-2" style="font-size: 1rem; font-weight: 300; flex-grow: 1">
+          {{ "home.testerDescription" | translate }}
+        </p>
+        <a
+          class="d-inline-flex align-items-center try-out-link"
+          [routerLink]="['/tester']"
+          ><span>{{ "home.tryOut" | translate }}</span>
+          <mat-icon>navigate_next</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="col d-flex align-items-start">
+      <button
         [routerLink]="['/results']"
+        class="me-3"
+        style="margin-top: -15px"
+        mat-fab
+        color="accent"
       >
         <mat-icon>analytics</mat-icon>
       </button>
-      <h1 class="feature-title">{{ "header.results" | translate }}</h1>
-      <span class="feature-description">{{
-        "home.resultsDescription" | translate
-      }}</span>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="1">
-      <button
-        mat-fab
-        color="accent"
-        class="feature-button"
-        [routerLink]="['/map-simulator']"
-      >
-        <mat-icon>location_on</mat-icon>
-      </button>
-      <h1 class="feature-title">{{ "header.mapSimulator" | translate }}</h1>
-      <span class="feature-description"
-        >{{ "home.mapDescription" | translate }}
+      <div class="h-100 d-flex flex-column">
+        <h3 class="fs-2">{{ "header.results" | translate }}</h3>
+        <p class="my-2" style="font-size: 1rem; font-weight: 300; flex-grow: 1">
+          {{ "home.resultsDescription" | translate }}
+        </p>
         <a
-          class="feature-desc-link"
-          href="https://www.openstreetmap.org/"
-          target="_blank"
-          >Open Street Map</a
-        >.</span
-      >
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="1">
-      <button
-        mat-fab
-        color="accent"
-        class="feature-button"
-        [routerLink]="['/changelog']"
-      >
-        <mat-icon>history</mat-icon>
-      </button>
-      <h1 class="feature-title">{{ "header.changelog" | translate }}</h1>
-      <span class="feature-description">{{
-        "home.changelogDescription" | translate
-      }}</span>
-    </mat-grid-tile>
-  </mat-grid-list>
+          class="d-inline-flex align-items-center try-out-link"
+          [routerLink]="['/results']"
+          ><span>{{ "home.tryOut" | translate }}</span>
+          <mat-icon>navigate_next</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

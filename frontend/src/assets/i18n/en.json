@@ -48,12 +48,10 @@
   "home": {
     "hero": "Dispersion Systems is an application where we can quickly and efficiently simulate and test different dispersion algorithms. With the help of different technologies, we try to provide the best experience and constantly improve the features provided by the application.",
     "features": "Features",
-    "simulatorTitle": "The main feature is the simulator",
+    "tryOut": "Try out",
     "simulatorDescription": "Through the many graph topologies, we can simulate the operation of the selected dispersion algorithm, while useful information is displayed.",
-    "testerDescription": "We can run automated test cases on larger amounts of data.",
-    "resultsDescription": "We can see the results of the algorithms with the help of spectacular diagrams.",
-    "mapDescription": "We can even test on real road networks using",
-    "changelogDescription": "We can read the changes made in the application by version."
+    "testerDescription": "We can easily run several tests one after the other on large graphs, the results of which are stored in the application's database.",
+    "resultsDescription": "The results page is a summary of the performance of the algorithms, where we can draw the consequences through spectacular diagrams."
   },
 
   "simulator": {

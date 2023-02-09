@@ -48,12 +48,10 @@
   "home": {
     "hero": "A Dispersion Systems egy olyan alkalmazás, ahol gyorsan és hatékonyan szimulálhatunk és tesztelhetünk különböző diszperziós algoritmusokat. Különböző technológiák segítségével igyekszünk a legjobb élményt nyújtani és folyamatosan fejleszteni az alkalmazás által nyújtott funkciókat.",
     "features": "Funkciók",
-    "simulatorTitle": "A fő funkció a szimulátor",
+    "tryOut": "Kipróbál",
     "simulatorDescription": "A sok gráf topológián keresztül szimulálhatjuk a kiválasztott diszperziós algoritmus működését, miközben hasznos információk jelennek meg.",
-    "testerDescription": "Nagyobb adatmennyiségen tudunk automatizált teszteseteket futtatni.",
-    "resultsDescription": "Az algoritmusok eredményeit látványos diagramok segítségével láthatjuk.",
-    "mapDescription": "Akár valós úthálózatokon is tesztelhetünk, amihez segítséget nyújt az",
-    "changelogDescription": "Az alkalmazásban végrehajtott változtatásokat verziónként visszakövethetjük."
+    "testerDescription": "Egymás után könnyedén tudunk több tesztet is futtatni nagyméretű gráfokon, aminek eredményei az alkalmazás adatbázisában tárolódnak.",
+    "resultsDescription": "Az eredmények oldal egy összefoglaló az algoritmusok teljesítményéről, ahol látványos diagrammokon keresztül vonhatjuk le a következményeket."
   },
 
   "simulator": {
