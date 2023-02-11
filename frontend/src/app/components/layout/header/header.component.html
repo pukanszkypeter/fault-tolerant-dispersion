@@ -100,11 +100,20 @@
           >
             <mat-icon>
               <img
+                *ngIf="!(darkMode$ | async)"
                 alt="github"
                 height="24px"
                 width="24px"
                 style="margin-top: -12.5px"
                 src="assets/images/github-dark.png"
+              />
+              <img
+                *ngIf="darkMode$ | async"
+                alt="github"
+                height="24px"
+                width="24px"
+                style="margin-top: -12.5px"
+                src="assets/images/github.png"
               />
             </mat-icon>
             <span>GitHub</span>

@@ -3,6 +3,13 @@
   "de": "German",
   "en": "English",
 
+  "app": {
+    "responsiveWarning": "No support for screens below 575px.",
+    "requiredField": "This field is required",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+
   "graph": {
     "BARABASI_ALBERT_FOREST": "Barabasi Albert Forest",
     "BARABASI_ALBERT_GRAPH": "Barabasi Albert Graph",
@@ -18,7 +25,11 @@
     "RANDOM_REGULAR": "Random regular",
     "STAR": "Star",
     "WHEEL": "Wheel",
-    "WINDMILL": "Windmill"
+    "WINDMILL": "Windmill",
+    "windmillMode": {
+      "WINDMILL": "Windmill",
+      "DUTCHWINDMILL": "Dutch Windmill"
+    }
   },
 
   "algorithm": {
@@ -55,13 +66,12 @@
   },
 
   "simulator": {
-    "launch": "Launch",
-    "algorithm": "Algorithm",
-    "graph": "Graph",
-    "notConfigured": "Not configured",
-    "ready": "Ready",
-    "loading": "Loading",
-    "configure": "Configure",
-    "reset": "Reset"
+    "simulator": "Simulator",
+    "operators": "Operators",
+    "graphConfig": {
+      "title": "Graph configuration",
+      "topology": "Topology",
+      "defaultSetting": "Default setting"
+    }
   }
 }

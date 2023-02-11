@@ -6,6 +6,8 @@ import {
   BreakpointSettings,
   getBreakpointKey,
 } from "src/app/models/utils/Breakpoints";
+import { SnackBarType } from "src/app/models/utils/SnackBar";
+import { SnackBarService } from "./snack-bar.service";
 
 @Injectable({
   providedIn: "root",
@@ -13,19 +15,26 @@ import {
 export class BreakpointService implements OnDestroy {
   destroyed = new Subject<void>();
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private snackBar: SnackBarService
+  ) {
     this.breakpointObserver
       .observe(Object.values(Breakpoints))
       .pipe(takeUntil(this.destroyed))
-      .subscribe((result) => {
-        localStorage.setItem(
-          "breakpoint",
-          getBreakpointKey(
-            Object.keys(result.breakpoints as BreakpointSettings)
-              .reverse()
-              .filter((key) => result.breakpoints[key])[0] as Breakpoints
-          )
+      .subscribe(async (result) => {
+        const key = getBreakpointKey(
+          Object.keys(result.breakpoints as BreakpointSettings)
+            .reverse()
+            .filter((key) => result.breakpoints[key])[0] as Breakpoints
         );
+        if (key === "XS") {
+          await this.snackBar.openSnackBar(
+            "app.responsiveWarning",
+            SnackBarType.WARNING
+          );
+        }
+        localStorage.setItem("breakpoint", key);
       });
   }
 

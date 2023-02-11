@@ -1,116 +1,121 @@
 import { Injectable } from "@angular/core";
-// import * as vis from "vis-network";
-// import { DataSet } from "vis-data/peer/esm/vis-data";
-// import { VisNode } from "src/app/models/vis/VisNode";
-// import { VisEdge } from "src/app/models/vis/VisEdge";
-// import { getNodeStateColor } from "src/app/models/utils/NodeState";
-// import { Node } from "src/app/models/core/Node";
-// import { GraphType } from "src/app/models/core/GraphType";
-// import { InputProps } from "src/app/models/core/GraphSettings";
-// import { delay } from "rxjs/operators";
-
-export function getVisOptions(fontColor: string): any {
-  return {
-    nodes: {
-      shape: "dot",
-      borderWidth: 1,
-      shadow: true,
-      font: {
-        size: 32,
-        color: fontColor,
-      },
-    },
-    edges: {
-      width: 1,
-    },
-    // physics: false,
-    interaction: {
-      hideEdgesOnDrag: true,
-      hideEdgesOnZoom: true,
-    },
-  };
-}
+import * as vis from "vis-network";
+import { VisNode } from "src/app/models/vis/VisNode";
+import { VisEdge } from "src/app/models/vis/VisEdge";
+import { delay, map } from "rxjs/operators";
+import { GraphService } from "../server/graph.service";
+import { DarkModeService } from "angular-dark-mode";
+import { GraphType } from "src/app/models/graph/GraphType";
+import { Observable, zip } from "rxjs";
+import { getNodeStateColor } from "src/app/models/graph/NodeState";
+import { DataSet } from "vis-data/peer/esm/vis-data";
+import { Node } from "src/app/models/graph/Node";
+import { Edge } from "src/app/models/graph/Edge";
 
 @Injectable({
   providedIn: "root",
 })
 export class VisService {
-  /*
-  network: vis.Network;
+  network: vis.Network | undefined;
 
-  nodes: VisNode[];
-  edges: VisEdge[];
+  nodes: Node[] = [];
+  visNodes: DataSet<VisNode, "id"> | undefined;
+  edges: Edge[] = [];
+  visEdges: DataSet<VisEdge, "id"> | undefined;
 
-  constructor(
-    private generatorService: GeneratorService,
-    private themeService: ThemeService
-  ) {}
+  options: vis.Options | undefined;
 
-  async initGraph(
+  constructor(private graph: GraphService, private darkMode: DarkModeService) {}
+
+  public drawGraph(
     type: GraphType,
-    graphSettings: InputProps,
+    props: { key: string; value: any }[],
     container: HTMLElement
-  ): Promise<any> {
-    return new Promise((resolve, reject) => {
-      let network: vis.Network;
+  ): Observable<void> {
+    return zip(this.graph.generate(type, props), this.darkMode.darkMode$).pipe(
+      delay(500),
+      map((response) => {
+        const graph = response[0];
+        const darkMode = response[1];
 
-      this.initData(type, graphSettings)
-        .then((data) => {
-          this.themeService.theme$.subscribe((theme) => {
-            network = new vis.Network(
-              container,
-              data,
-              getVisOptions(theme === "dark" ? "white" : "black")
-            );
-            resolve(true);
-          });
-        })
-        .catch((error) => {
-          reject(error);
-        })
-        .finally(() => {
-          this.network = network;
-        });
-    });
-  }
-
-  async initData(type: GraphType, graphSettings: InputProps): Promise<any> {
-    return new Promise((resolve, reject) => {
-      let nodes: VisNode[] = [];
-      let edges: VisEdge[] = [];
-
-      this.generatorService
-        .generateGraph(type, graphSettings)
-        .pipe(delay(500))
-        .subscribe(
-          (res) => {
-            for (let node of res.nodeList) {
-              nodes.push(
-                new VisNode(
-                  node.id,
-                  node.id.toString(),
-                  getNodeStateColor(node.state)
-                )
-              );
-            }
-            for (let edge of res.edgeList) {
-              edges.push(
-                new VisEdge(edge.id, edge.fromID, edge.toID, "#B0B0B0")
-              );
-            }
-
-            this.nodes = nodes;
-            this.edges = edges;
-
-            resolve({ nodes: new DataSet(nodes), edges: new DataSet(edges) });
-          },
-          (err) => {
-            reject(err);
-          }
+        this.visNodes = new DataSet(
+          graph.nodes.map((node) => {
+            this.nodes.push(node);
+            return {
+              id: node.id,
+              label: node.id.toString(),
+              color: getNodeStateColor(node.state, darkMode),
+            } as VisNode;
+          })
         );
+
+        this.visEdges = new DataSet(
+          graph.edges.map((edge) => {
+            this.edges.push(edge);
+            return {
+              id: edge.id,
+              from: edge.fromId,
+              to: edge.toId,
+              color: darkMode ? "#ffffff" : "#000000",
+            } as VisEdge;
+          })
+        );
+
+        this.options = {
+          nodes: {
+            shape: "dot",
+            borderWidth: 1,
+            shadow: true,
+            font: {
+              size: 32,
+              color: darkMode ? "#ffffff" : "#000000",
+            },
+          },
+          edges: {
+            width: 1,
+          },
+          // physics: false,
+          interaction: {
+            hideEdgesOnDrag: true,
+            hideEdgesOnZoom: true,
+          },
+        };
+
+        this.network = new vis.Network(
+          container,
+          {
+            nodes: this.visNodes,
+            edges: this.visEdges,
+          },
+          this.options
+        );
+      })
+    );
+  }
+
+  public changeColorMode(darkMode: boolean): void {
+    this.nodes.forEach((node) => {
+      this.visNodes?.update({
+        id: node.id,
+        label: node.id.toString(),
+        color: getNodeStateColor(node.state, darkMode),
+      });
+    });
+    this.edges.forEach((edge) => {
+      this.visEdges?.update({
+        id: edge.id,
+        from: edge.fromId,
+        to: edge.toId,
+        color: darkMode ? "#ffffff" : "#000000",
+      });
+    });
+    this.network?.setOptions({
+      ...this.options,
+      nodes: { font: { color: darkMode ? "#ffffff" : "#000000" } },
     });
   }
 
+  /*
   destoryGraph(): void {
     this.network.destroy();
   }

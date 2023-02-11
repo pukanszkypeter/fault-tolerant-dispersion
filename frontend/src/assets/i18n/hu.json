@@ -3,6 +3,13 @@
   "de": "Német",
   "en": "Angol",
 
+  "app": {
+    "responsiveWarning": "Az 575px alatti képernyők nem támogatottak.",
+    "requiredField": "Ez a mező kötelező",
+    "cancel": "Vissza",
+    "save": "Mentés"
+  },
+
   "graph": {
     "BARABASI_ALBERT_FOREST": "Barabási Albert Erdő",
     "BARABASI_ALBERT_GRAPH": "Barabási Albert Gráf",
@@ -18,7 +25,11 @@
     "RANDOM_REGULAR": "Random reguláris",
     "STAR": "Csillag",
     "WHEEL": "Kerék",
-    "WINDMILL": "Szélmalom"
+    "WINDMILL": "Szélmalom",
+    "windmillMode": {
+      "WINDMILL": "Szélmalom",
+      "DUTCHWINDMILL": "Holland Szélmalom"
+    }
   },
 
   "algorithm": {
@@ -55,13 +66,12 @@
   },
 
   "simulator": {
-    "launch": "Indítás",
-    "algorithm": "Algoritmus",
-    "graph": "Gráf",
-    "notConfigured": "Nincs konfigurálva",
-    "ready": "Kész",
-    "loading": "Betöltés",
-    "configure": "Beállítás",
-    "reset": "Visszaállítás"
+    "simulator": "Szimulátor",
+    "operators": "Operátorok",
+    "graphConfig": {
+      "title": "Gráf konfiguráció",
+      "topology": "Topológia",
+      "defaultSetting": "Alapbeállítás"
+    }
   }
 }

@@ -1,0 +1,194 @@
+<h2 mat-dialog-title>{{ "simulator.graphConfig.title" | translate }}</h2>
+<mat-dialog-content [formGroup]="graphConfigForm">
+  <h4 style="margin: 0 0 8px">
+    {{ "simulator.graphConfig.topology" | translate }}
+  </h4>
+  <mat-form-field appearance="outline" color="accent" style="width: 100%">
+    <mat-select [formControl]="topology" (selectionChange)="topologySelect()">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let type of graphTypes" [value]="type">
+        {{ "graph." + type | translate }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="topology.hasError('required')">{{
+      "app.requiredField" | translate
+    }}</mat-error>
+    <mat-icon
+      matSuffix
+      fontSet="material-icons-outlined"
+      matTooltip="Info about the graphy type"
+      >info</mat-icon
+    >
+  </mat-form-field>
+  <div
+    *ngIf="topology.value"
+    class="d-flex align-items-center"
+    style="width: 100%; gap: 1rem; margin: 0.5rem 0 1.5rem 0"
+  >
+    <h4 style="width: fit-content; margin: 0">
+      {{ "simulator.graphConfig.defaultSetting" | translate }}
+    </h4>
+    <mat-slide-toggle
+      [formControl]="defaultSetting"
+      color="accent"
+      (toggleChange)="defaultSettingToggle()"
+    ></mat-slide-toggle>
+  </div>
+  <div style="width: 100%" [ngSwitch]="topology.value">
+    <div *ngSwitchCase="graphTypes[0]">
+      <h4 style="margin: 0 0 8px">Trees</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Final nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(1)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[1]">
+      <h4 style="margin: 0 0 8px">Inital nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Edge growth</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(1)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Final nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(2)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[2]">
+      <h4 style="margin: 0 0 8px">Nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[3]">
+      <h4 style="margin: 0 0 8px">Nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[4]">
+      <h4 style="margin: 0 0 8px">Nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Edges</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(1)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[5]">
+      <h4 style="margin: 0 0 8px">Nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+      <div
+        style="margin-bottom: 8px"
+        class="d-flex align-items-center justify-content-between"
+      >
+        <h4>Edge propability</h4>
+        <h4>{{ getGraphTypeControl(1).value }}%</h4>
+      </div>
+      <mat-slider
+        style="width: 98%; margin-left: 1%"
+        color="accent"
+        [max]="100"
+        [min]="1"
+        [step]="1"
+        [discrete]="true"
+      >
+        <input matSliderThumb [formControl]="getGraphTypeControl(1)" />
+      </mat-slider>
+    </div>
+    <div *ngSwitchCase="graphTypes[6]">
+      <h4 style="margin: 0 0 8px">Rows</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Columns</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(1)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[7]">
+      <h4 style="margin: 0 0 8px">Dimension</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[8]">
+      <h4 style="margin: 0 0 8px">Size</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[9]">
+      <h4 style="margin: 0 0 8px">Size</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[10]">
+      <h4 style="margin: 0 0 8px">Size</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[11]">
+      <h4 style="margin: 0 0 8px">Nodes</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Degree</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[12]">
+      <h4 style="margin: 0 0 8px">Order</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[13]">
+      <h4 style="margin: 0 0 8px">Size</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[14]">
+      <h4 style="margin: 0 0 8px">Mode</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <mat-select [formControl]="getGraphTypeControl(0)">
+          <mat-option *ngFor="let mode of windmillModes" [value]="mode">
+            {{ "graph.windmillMode." + mode | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Copies</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(1)" matInput type="number" />
+      </mat-form-field>
+      <h4 style="margin: 0 0 8px">Size</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(2)" matInput type="number" />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="px-4 py-3" align="end">
+  <button
+    mat-button
+    mat-dialog-close
+    [ngStyle]="{ color: (darkMode$ | async) ? '#ffffff' : '#000000' }"
+  >
+    {{ "app.cancel" | translate }}
+  </button>
+  <button mat-flat-button color="accent" (click)="saveGraphConfig()">
+    {{ "app.save" | translate }}
+  </button>
+</mat-dialog-actions>

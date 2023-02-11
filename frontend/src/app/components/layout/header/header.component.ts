@@ -7,6 +7,7 @@ import { DarkModeService } from "angular-dark-mode";
 import { firstValueFrom, map, Observable } from "rxjs";
 import { SnackBarType } from "src/app/models/utils/SnackBar";
 import { BreakpointService } from "src/app/services/utils/breakpoint.service";
+import { VisService } from "src/app/services/client/vis.service";
 
 @Component({
   selector: "app-header",
@@ -23,12 +24,14 @@ export class HeaderComponent {
     private darkMode: DarkModeService,
     private translate: TranslateService,
     private snackBar: SnackBarService,
-    private breakpoint: BreakpointService
+    private breakpoint: BreakpointService,
+    private vis: VisService
   ) {}
 
   async toggleDarkMode(): Promise<void> {
     this.darkMode.toggle();
     const darkMode = await firstValueFrom(this.darkMode$);
+    this.vis.changeColorMode(darkMode);
     await this.snackBar.openSnackBar(
       darkMode ? "header.darkModeNotification" : "header.lightModeNotification",
       darkMode ? SnackBarType.LIGHT : SnackBarType.DARK

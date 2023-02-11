@@ -1,0 +1,29 @@
+.drag-box {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.config-box {
+    justify-content: space-evenly;
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.drag-element {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    cursor: grab;
+}
+
+.cdk-drag-preview .drag-element {
+    cursor: grabbing;
+    pointer-events: auto;
+}

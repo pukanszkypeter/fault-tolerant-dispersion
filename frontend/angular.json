@@ -32,7 +32,10 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
-            "scripts": ["./node_modules/angular-dark-mode/angular-dark-mode.js"]
+            "scripts": [
+              "./node_modules/angular-dark-mode/angular-dark-mode.js"
+            ],
+            "allowedCommonJsDependencies": ["vis-network"]
           },
           "configurations": {
             "production": {

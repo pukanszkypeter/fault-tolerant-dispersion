@@ -14,6 +14,10 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatInputModule } from "@angular/material/input";
+import { MatSliderModule } from "@angular/material/slider";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 @NgModule({
   exports: [
@@ -32,6 +36,10 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     MatExpansionModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSliderModule,
+    DragDropModule,
   ],
 })
 export class MaterialModule {}
