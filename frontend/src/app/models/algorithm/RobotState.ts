@@ -1,0 +1,7 @@
+export enum RobotState {
+  START = "START",
+  EXPLORE = "EXPLORE",
+  LEADER = "LEADER",
+  TERMINATED = "TERMINATED",
+  CRASHED = "CRASHED",
+}

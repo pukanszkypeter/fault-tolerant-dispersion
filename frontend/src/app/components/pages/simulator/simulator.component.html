@@ -1,5 +1,5 @@
 <div class="container-fluid" style="margin-bottom: 2rem">
-  <div class="row gy-4">
+  <div class="row gy-5">
     <div class="col-12 col-xl-8">
       <h3 class="fs-2">{{ "simulator.simulator" | translate }}</h3>
       <mat-card
@@ -7,113 +7,223 @@
         [ngStyle]="{ height: (isSmallScreen$ | async) ? '400px' : '600px' }"
       ></mat-card>
     </div>
-    <div
-      class="col-12 col-xl-4"
-      [ngStyle]="{
-        height:
-          (isSmallScreen$ | async)
-            ? (isExtraSmallScreen$ | async)
-              ? '500px'
-              : '300px'
-            : '600px'
-      }"
-    >
+    <div class="col-12 col-xl-4">
       <h3 class="fs-2">{{ "simulator.operators" | translate }}</h3>
       <div
         cdkDropList
         [cdkDropListData]="operator"
         (cdkDropListDropped)="drop($event)"
-        class="row h-100"
+        class="row"
         [ngClass]="{ 'gy-4': (isSmallScreen$ | async) }"
-        [ngStyle]="{ gap: (isSmallScreen$ | async) ? '0' : '2rem' }"
+        [ngStyle]="{
+          gap: (isSmallScreen$ | async) ? '0' : '2rem',
+          height:
+            (isSmallScreen$ | async)
+              ? (isExtraSmallScreen$ | async)
+                ? '600px'
+                : '300px'
+              : '600px'
+        }"
       >
-        <div
-          class="col-12 col-md-6 col-xl-12"
-          [ngStyle]="{
-            height:
-              (isSmallScreen$ | async)
-                ? (isExtraSmallScreen$ | async)
-                  ? '101px'
-                  : '126px'
-                : '126px'
-          }"
-        >
-          <mat-card class="drag-box" cdkDrag>
-            1
-            <mat-icon class="drag-element" cdkDragHandle>drag_handle</mat-icon>
+        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
+          <mat-card
+            class="drag-box"
+            style="justify-content: space-evenly"
+            cdkDrag
+          >
+            <mat-icon class="drag-element" cdkDragHandle
+              >drag_indicator</mat-icon
+            >
+            <div
+              [matTooltip]="
+                !graphConfigured || !algorithmConfigured
+                  ? ('app.notAvailable' | translate)
+                  : ''
+              "
+            >
+              <button
+                mat-fab
+                [disabled]="
+                  !graphConfigured || !algorithmConfigured || isRunning()
+                "
+                (click)="play()"
+                color="accent"
+                [matTooltip]="'simulator.start' | translate"
+              >
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            </div>
+            <div
+              [matTooltip]="
+                !graphConfigured || !algorithmConfigured
+                  ? ('app.notAvailable' | translate)
+                  : ''
+              "
+            >
+              <button
+                mat-fab
+                [disabled]="
+                  !graphConfigured || !algorithmConfigured || isRunning()
+                "
+                (click)="next(true)"
+                color="accent"
+                [matTooltip]="'simulator.next' | translate"
+              >
+                <mat-icon>skip_next</mat-icon>
+              </button>
+            </div>
+            <div
+              [matTooltip]="
+                !graphConfigured || !algorithmConfigured || !isRunning()
+                  ? ('app.notAvailable' | translate)
+                  : ''
+              "
+            >
+              <button
+                mat-fab
+                [disabled]="!graphConfigured || !algorithmConfigured"
+                (click)="stop()"
+                color="accent"
+                [matTooltip]="'simulator.stop' | translate"
+              >
+                <mat-icon>pause</mat-icon>
+              </button>
+            </div>
           </mat-card>
         </div>
-        <div
-          class="col-12 col-md-6 col-xl-12"
-          [ngStyle]="{
-            height:
-              (isSmallScreen$ | async)
-                ? (isExtraSmallScreen$ | async)
-                  ? '101px'
-                  : '126px'
-                : '126px'
-          }"
-        >
-          <mat-card class="drag-box config-box" cdkDrag>
-            <mat-icon class="drag-element" cdkDragHandle>drag_handle</mat-icon>
+        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
+          <mat-card
+            class="drag-box"
+            style="justify-content: space-evenly"
+            cdkDrag
+          >
+            <mat-icon class="drag-element" cdkDragHandle
+              >drag_indicator</mat-icon
+            >
             <button
-              mat-flat-button
+              mat-raised-button
               color="accent"
-              style="width: 150px"
+              style="height: 50px"
+              [ngStyle]="{
+                width: (isSmallScreen$ | async) ? '125px' : '150px'
+              }"
               (click)="openGraphConfigDialog()"
             >
               <span>Graph</span>
-              <mat-icon style="color: red">close</mat-icon>
-            </button>
-            <button
-              mat-flat-button
-              color="accent"
-              style="width: 150px"
-              [disabled]="true"
-            >
-              <span>Algorithm</span>
-              <mat-icon
-                [ngStyle]="{
-                  color: true ? 'inherit' : 'red'
-                }"
+              <mat-icon *ngIf="!graphConfigured" style="color: red"
                 >close</mat-icon
               >
+              <mat-icon *ngIf="graphConfigured" style="color: green"
+                >done</mat-icon
+              >
             </button>
+            <div
+              [matTooltip]="
+                !graphConfigured ? ('app.notAvailable' | translate) : ''
+              "
+            >
+              <button
+                mat-raised-button
+                color="accent"
+                style="height: 50px"
+                [ngStyle]="{
+                  width: (isSmallScreen$ | async) ? '125px' : '150px'
+                }"
+                [disabled]="!graphConfigured"
+                (click)="openAlgorithmConfigDialog()"
+              >
+                <span>Algorithm</span>
+                <mat-icon
+                  *ngIf="!algorithmConfigured"
+                  [ngStyle]="{
+                    color: !graphConfigured ? 'inherit' : 'red'
+                  }"
+                  >close</mat-icon
+                >
+                <mat-icon *ngIf="algorithmConfigured" style="color: green"
+                  >done</mat-icon
+                >
+              </button>
+            </div>
           </mat-card>
         </div>
-        <div
-          class="col-12 col-md-6 col-xl-12"
-          [ngStyle]="{
-            height:
-              (isSmallScreen$ | async)
-                ? (isExtraSmallScreen$ | async)
-                  ? '101px'
-                  : '126px'
-                : '126px'
-          }"
-        >
+        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
           <mat-card class="drag-box" cdkDrag>
             3
-            <mat-icon class="drag-element" cdkDragHandle>drag_handle</mat-icon>
+            <mat-icon class="drag-element" cdkDragHandle
+              >drag_indicator</mat-icon
+            >
           </mat-card>
         </div>
-        <div
-          class="col-12 col-md-6 col-xl-12"
-          [ngStyle]="{
-            height:
-              (isSmallScreen$ | async)
-                ? (isExtraSmallScreen$ | async)
-                  ? '101px'
-                  : '126px'
-                : '126px'
-          }"
-        >
+        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
           <mat-card class="drag-box" cdkDrag>
             4
-            <mat-icon class="drag-element" cdkDragHandle>drag_handle</mat-icon>
+            <mat-icon class="drag-element" cdkDragHandle
+              >drag_indicator</mat-icon
+            >
           </mat-card>
         </div>
       </div>
+    </div>
+    <div class="col-12 col-xl-8">
+      <h3 class="fs-2">{{ "simulator.robots" | translate }}</h3>
+      <mat-card>
+        <table mat-table [dataSource]="(robotData$ | async)!">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>Robot ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="onId">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "simulator.onId" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.onId }}</td>
+          </ng-container>
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "simulator.state" | translate }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="
+                height: 52px;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              "
+            >
+              {{ "robot." + element.state | translate }}
+              <mat-icon *ngIf="element.state === 'START'">smart_toy</mat-icon>
+              <mat-icon *ngIf="element.state === 'EXPLORE'">explore</mat-icon>
+              <mat-icon *ngIf="element.state === 'LEADER'">star</mat-icon>
+              <mat-icon *ngIf="element.state === 'TERMINATED'">
+                local_parking
+              </mat-icon>
+              <mat-icon *ngIf="element.state === 'CRASHED'"
+                >crisis_alert</mat-icon
+              >
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="robotColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: robotColumns"></tr>
+        </table>
+        <div
+          *ngIf="(robotData$ | async)!.data.length === 0"
+          style="
+            height: 76px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: red;
+          "
+        >
+          {{ "simulator.noRobotFound" | translate }}
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+        </mat-paginator>
+      </mat-card>
     </div>
   </div>
 </div>

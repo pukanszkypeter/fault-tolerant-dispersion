@@ -1,1 +1,99 @@
-<p>algorithm-config-dialog works!</p>
+<h2 mat-dialog-title>{{ "simulator.algorithmConfig.title" | translate }}</h2>
+<mat-dialog-content [formGroup]="algorithmConfigForm">
+  <h4 style="margin: 0 0 8px">
+    {{ "simulator.algorithmConfig.type" | translate }}
+  </h4>
+  <mat-form-field appearance="outline" color="accent" style="width: 100%">
+    <mat-select [formControl]="type">
+      <mat-option
+        [disabled]="isAvailableType(type)"
+        *ngFor="let type of algorithmTypes"
+        [value]="type"
+      >
+        {{ "algorithm." + type | translate }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="type.hasError('required')">{{
+      "app.requiredField" | translate
+    }}</mat-error>
+  </mat-form-field>
+  <h4
+    class="d-flex align-item-center justify-content-between"
+    style="margin: 0 0 8px"
+  >
+    <span>{{ "simulator.algorithmConfig.startNodes" | translate }}</span>
+    <span class="mat-caption"
+      >({{ "simulator.algorithmConfig.redistribution" | translate }})</span
+    >
+  </h4>
+  <mat-form-field appearance="outline" color="accent" style="width: 100%">
+    <mat-select
+      [formControl]="startNodes"
+      multiple
+      (selectionChange)="startNodeSelected()"
+    >
+      <mat-option *ngFor="let node of nodes" [value]="node">
+        {{ node }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="startNodes.hasError('required')">{{
+      "app.requiredField" | translate
+    }}</mat-error>
+  </mat-form-field>
+  <div *ngIf="startNodes.value.length > 0">
+    <div
+      class="d-flex align-items-center"
+      style="width: 100%; gap: 1rem; margin: 0.5rem 0 1.5rem 0"
+    >
+      <h4 style="width: fit-content; margin: 0">
+        {{ "simulator.algorithmConfig.evenRobotDistribution" | translate }}
+      </h4>
+      <mat-slide-toggle
+        [formControl]="distribution"
+        color="accent"
+        (toggleChange)="distributionToggle()"
+      ></mat-slide-toggle>
+    </div>
+    <div id="error-container" *ngIf="moreRobotsThenNodes()">
+      <mat-icon style="margin-top: -3px">warning</mat-icon>
+      <h4 style="margin: 0">
+        {{ "simulator.algorithmConfig.moreRobotsThenNodes" | translate }}
+      </h4>
+    </div>
+    <div class="row">
+      <div class="col-6" *ngFor="let startNode of startNodes.value">
+        <h4 style="margin: 0 0 8px">
+          {{ "simulator.algorithmConfig.node" | translate }} -
+          <strong>{{ startNode }}</strong>
+        </h4>
+        <mat-form-field appearance="outline" color="accent" style="width: 100%">
+          <input
+            [formControl]="getNodeControl(startNode)"
+            matInput
+            type="number"
+          />
+          <mat-error *ngIf="getNodeControl(startNode).hasError('required')">{{
+            "app.requiredField" | translate
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="px-4 py-3" align="end">
+  <button
+    mat-button
+    mat-dialog-close
+    [ngStyle]="{ color: (darkMode$ | async) ? '#ffffff' : '#000000' }"
+  >
+    {{ "app.cancel" | translate }}
+  </button>
+  <button
+    [disabled]="!algorithmConfigForm.valid || moreRobotsThenNodes()"
+    mat-flat-button
+    color="accent"
+    (click)="saveAlgorithmConfig()"
+  >
+    {{ "app.save" | translate }}
+  </button>
+</mat-dialog-actions>

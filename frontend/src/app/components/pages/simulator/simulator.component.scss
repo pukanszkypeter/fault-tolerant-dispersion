@@ -8,10 +8,6 @@
   justify-content: center;
 }
 
-.config-box {
-  justify-content: space-evenly;
-}
-
 .cdk-drag-placeholder {
   opacity: 0;
 }
@@ -19,7 +15,7 @@
 .drag-element {
   position: absolute;
   top: 0.5rem;
-  left: 0.5rem;
+  right: 0.5rem;
   cursor: grab;
 }
 

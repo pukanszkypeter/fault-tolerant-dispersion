@@ -7,7 +7,8 @@
     "responsiveWarning": "No support for screens below 575px.",
     "requiredField": "This field is required",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "notAvailable": "Not available"
   },
 
   "graph": {
@@ -33,12 +34,20 @@
   },
 
   "algorithm": {
-    "RANDOM_DISPERSION": "Random dispersion",
-    "RANDOM_WITH_LEADER_DISPERSION": "Random with leader dispersion",
-    "ROTOR_ROUTER_DISPERSION": "Rotor router dispersion",
-    "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router with leader dispersion",
-    "FAULTLESS_DFS_DISPERSION": "DFS dispersion",
-    "FAULTY_DFS_DISPERSION": "Fault tolerant DFS dispersion"
+    "RANDOM": "Random dispersion",
+    "RANDOM_LEADER": "Random with leader dispersion",
+    "ROTOR_ROUTER": "Rotor router dispersion",
+    "ROTOR_ROUTER_LEADER": "Rotor router with leader dispersion",
+    "FAULTLESS_DFS": "DFS dispersion",
+    "FAULTY_DFS": "Fault tolerant DFS dispersion"
+  },
+
+  "robot": {
+    "START": "Start",
+    "EXPLORE": "Explore",
+    "LEADER": "Leader",
+    "TERMINATED": "Terminated",
+    "CRASHED": "Crashed"
   },
 
   "header": {
@@ -68,10 +77,29 @@
   "simulator": {
     "simulator": "Simulator",
     "operators": "Operators",
+    "robots": "Robots",
+    "onId": "Node ID",
+    "state": "State",
+    "noRobotFound": "No robot found.",
+    "start": "Start",
+    "next": "Next",
+    "stop": "Stop",
     "graphConfig": {
       "title": "Graph configuration",
       "topology": "Topology",
-      "defaultSetting": "Default setting"
+      "defaultSetting": "Default setting",
+      "successfulGraph": "Successful graph configuration",
+      "unsuccessfulGraph": "Failed graph configuration"
+    },
+    "algorithmConfig": {
+      "title": "Algorithm configuration",
+      "type": "Type",
+      "startNodes": "Start nodes",
+      "node": "Node",
+      "moreRobotsThenNodes": "Can't have more robots then nodes!",
+      "redistribution": "Redistribution by change",
+      "evenRobotDistribution": "Even robot distribution",
+      "successfulAlgorithm": "Successful algorithm configuration"
     }
   }
 }

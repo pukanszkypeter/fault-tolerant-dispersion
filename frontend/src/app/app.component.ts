@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { BreakpointService } from "./services/utils/breakpoint.service";
+import { BreakpointService } from "./services/client/breakpoint.service";
 
 @Component({
   selector: "app-root",

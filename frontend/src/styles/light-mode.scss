@@ -60,4 +60,18 @@ body.light-mode {
   .mat-mdc-select-arrow {
     color: #000000;
   }
+
+  .mat-mdc-fab[disabled][disabled],
+  .mat-mdc-mini-fab[disabled][disabled] {
+    --mdc-fab-container-color: rgba(0, 0, 0, 0.12);
+    --mdc-fab-icon-color: rgba(0, 0, 0, 0.38);
+    --mat-mdc-fab-color: rgba(0, 0, 0, 0.38);
+  }
+
+  .mat-mdc-raised-button[disabled][disabled] {
+    --mdc-protected-button-disabled-container-color: rgba(0, 0, 0, 0.12);
+    --mdc-protected-button-disabled-label-text-color: rgba(0, 0, 0, 0.38);
+    --mdc-protected-button-container-color: rgba(0, 0, 0, 0.12);
+    --mdc-protected-button-label-text-color: rgba(0, 0, 0, 0.38);
+  }
 }

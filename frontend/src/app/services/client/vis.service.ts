@@ -11,6 +11,7 @@ import { getNodeStateColor } from "src/app/models/graph/NodeState";
 import { DataSet } from "vis-data/peer/esm/vis-data";
 import { Node } from "src/app/models/graph/Node";
 import { Edge } from "src/app/models/graph/Edge";
+import { SimulatorService } from "./simulator.service";
 
 @Injectable({
   providedIn: "root",
@@ -18,14 +19,16 @@ import { Edge } from "src/app/models/graph/Edge";
 export class VisService {
   network: vis.Network | undefined;
 
-  nodes: Node[] = [];
   visNodes: DataSet<VisNode, "id"> | undefined;
-  edges: Edge[] = [];
   visEdges: DataSet<VisEdge, "id"> | undefined;
 
   options: vis.Options | undefined;
 
-  constructor(private graph: GraphService, private darkMode: DarkModeService) {}
+  constructor(
+    private graph: GraphService,
+    private darkMode: DarkModeService,
+    private simulator: SimulatorService
+  ) {}
 
   public drawGraph(
     type: GraphType,
@@ -33,14 +36,16 @@ export class VisService {
     container: HTMLElement
   ): Observable<void> {
     return zip(this.graph.generate(type, props), this.darkMode.darkMode$).pipe(
-      delay(500),
+      delay(1000),
       map((response) => {
         const graph = response[0];
         const darkMode = response[1];
+        this.simulator.graph.nodes = [];
+        this.simulator.graph.edges = [];
 
         this.visNodes = new DataSet(
-          graph.nodes.map((node) => {
-            this.nodes.push(node);
+          graph.nodes.map((node: Node) => {
+            this.simulator.graph.nodes.push(node);
             return {
               id: node.id,
               label: node.id.toString(),
@@ -50,8 +55,8 @@ export class VisService {
         );
 
         this.visEdges = new DataSet(
-          graph.edges.map((edge) => {
-            this.edges.push(edge);
+          graph.edges.map((edge: Edge) => {
+            this.simulator.graph.edges.push(edge);
             return {
               id: edge.id,
               from: edge.fromId,
@@ -93,61 +98,33 @@ export class VisService {
     );
   }
 
-  public changeColorMode(darkMode: boolean): void {
-    this.nodes.forEach((node) => {
-      this.visNodes?.update({
-        id: node.id,
-        label: node.id.toString(),
-        color: getNodeStateColor(node.state, darkMode),
-      });
-    });
-    this.edges.forEach((edge) => {
-      this.visEdges?.update({
-        id: edge.id,
-        from: edge.fromId,
-        to: edge.toId,
-        color: darkMode ? "#ffffff" : "#000000",
-      });
-    });
-    this.network?.setOptions({
-      ...this.options,
-      nodes: { font: { color: darkMode ? "#ffffff" : "#000000" } },
-    });
+  public updateGraph(): Observable<void> {
+    return this.darkMode.darkMode$.pipe(
+      map((darkMode) => {
+        this.simulator.graph.nodes.forEach((node: Node) => {
+          this.visNodes?.update({
+            id: node.id,
+            label: node.id.toString(),
+            color: getNodeStateColor(node.state, darkMode),
+          });
+        });
+        this.simulator.graph.edges.forEach((edge: Edge) => {
+          this.visEdges?.update({
+            id: edge.id,
+            from: edge.fromId,
+            to: edge.toId,
+            color: darkMode ? "#ffffff" : "#000000",
+          });
+        });
+        this.network?.setOptions({
+          ...this.options,
+          nodes: { font: { color: darkMode ? "#ffffff" : "#000000" } },
+        });
+      })
+    );
   }
 
-  /*
-  destoryGraph(): void {
-    this.network.destroy();
+  public destoryGraph(): void {
+    this.network?.destroy();
   }
-
-  update(nodes: Node[]): void {
-    let visNodes = (this.network as any).nodesHandler.body.data.nodes;
-    for (let i = 0; i < nodes.length; i++) {
-      visNodes.update({
-        id: nodes[i].id,
-        label: nodes[i].id.toString(),
-        color: getNodeStateColor(nodes[i].state),
-      });
-    }
-  }
-
-  balance(x: number, y: number): number[] {
-    let mod = x % y;
-    const balance = (x - mod) / y;
-
-    let list = [];
-    for (let i = 0; i < y; i++) {
-      mod === 0 ? list.push(balance) : list.push(balance + 1);
-      if (mod > 0) {
-        mod--;
-      }
-    }
-
-    return list;
-  }
-
-  getStartNodes(): number[] {
-    return this.nodes.map((node) => node.id);
-  }
-  */
 }

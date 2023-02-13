@@ -7,7 +7,8 @@
     "responsiveWarning": "Az 575px alatti képernyők nem támogatottak.",
     "requiredField": "Ez a mező kötelező",
     "cancel": "Vissza",
-    "save": "Mentés"
+    "save": "Mentés",
+    "notAvailable": "Nem elérhető"
   },
 
   "graph": {
@@ -33,12 +34,20 @@
   },
 
   "algorithm": {
-    "RANDOM_DISPERSION": "Véletlen diszperzió",
-    "RANDOM_WITH_LEADER_DISPERSION": "Véletlen - vezetővel diszperzió",
-    "ROTOR_ROUTER_DISPERSION": "Rotor router diszperzió",
-    "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Rotor router - vezetővel diszperzió",
-    "FAULTLESS_DFS_DISPERSION": "DFS diszperzió",
-    "FAULTY_DFS_DISPERSION": "Hibatűrő DFS diszperzió"
+    "RANDOM": "Véletlen diszperzió",
+    "RANDOM_LEADER": "Véletlen - vezetővel diszperzió",
+    "ROTOR_ROUTER": "Rotor router diszperzió",
+    "ROTOR_ROUTER_LEADER": "Rotor router - vezetővel diszperzió",
+    "FAULTLESS_DFS": "DFS diszperzió",
+    "FAULTY_DFS": "Hibatűrő DFS diszperzió"
+  },
+
+  "robot": {
+    "START": "Kezdő",
+    "EXPLORE": "Felderítő",
+    "LEADER": "Vezető",
+    "TERMINATED": "Terminált",
+    "CRASHED": "Eltört"
   },
 
   "header": {
@@ -68,10 +77,29 @@
   "simulator": {
     "simulator": "Szimulátor",
     "operators": "Operátorok",
+    "robots": "Robotok",
+    "onId": "Csúcs ID",
+    "state": "Állapot",
+    "noRobotFound": "Nem található robot.",
+    "start": "Start",
+    "next": "Következő",
+    "stop": "Stop",
     "graphConfig": {
       "title": "Gráf konfiguráció",
       "topology": "Topológia",
-      "defaultSetting": "Alapbeállítás"
+      "defaultSetting": "Alapbeállítás",
+      "successfulGraph": "Sikeres gráf konfiguráció",
+      "unsuccessfulGraph": "Sikertelen gráf konfiguráció"
+    },
+    "algorithmConfig": {
+      "title": "Algoritmus konfiguráció",
+      "type": "Típus",
+      "startNodes": "Kezdő csúcsok",
+      "node": "Csúcs",
+      "moreRobotsThenNodes": "Nem lehet több robot, mint csomópont!",
+      "redistribution": "Újraelosztás változtatásnál",
+      "evenRobotDistribution": "Egyenletes robot szétosztás",
+      "successfulAlgorithm": "Sikeres algoritmus konfiguráció"
     }
   }
 }

@@ -7,7 +7,8 @@
     "responsiveWarning": "Keine Unterstützung für Bildschirme unter 575px.",
     "requiredField": "Dieses Feld ist erforderlich",
     "cancel": "Zurück",
-    "save": "Speichern"
+    "save": "Speichern",
+    "notAvailable": "Nicht verfügbar"
   },
 
   "graph": {
@@ -33,12 +34,20 @@
   },
 
   "algorithm": {
-    "RANDOM_DISPERSION": "Zufällig Dispersion",
-    "RANDOM_WITH_LEADER_DISPERSION": "Zufällig mit Anführer Dispersion",
-    "ROTOR_ROUTER_DISPERSION": "Roto-Rooter Dispersion",
-    "ROTOR_ROUTER_WITH_LEADER_DISPERSION": "Roto-Rooter mit Anführer Dispersion",
-    "FAULTLESS_DFS_DISPERSION": "DFS Dispersion",
-    "FAULTY_DFS_DISPERSION": "Fehlertolerantes DFS Dispersion"
+    "RANDOM": "Zufällig Dispersion",
+    "RANDOM_LEADER": "Zufällig mit Anführer Dispersion",
+    "ROTOR_ROUTER": "Roto-Rooter Dispersion",
+    "ROTOR_ROUTER_LEADER": "Roto-Rooter mit Anführer Dispersion",
+    "FAULTLESS_DFS": "DFS Dispersion",
+    "FAULTY_DFS": "Fehlertolerantes DFS Dispersion"
+  },
+
+  "robot": {
+    "START": "Start",
+    "EXPLORE": "Explorieren",
+    "LEADER": "Leiter",
+    "TERMINATED": "Beendet",
+    "CRASHED": "Absturz"
   },
 
   "header": {
@@ -68,10 +77,29 @@
   "simulator": {
     "simulator": "Simulator",
     "operators": "Betreibers",
+    "robots": "Roboter",
+    "onId": "Knoten-ID",
+    "state": "Zustand",
+    "noRobotFound": "Kein Roboter gefunden.",
+    "start": "Start",
+    "next": "Nächste",
+    "stop": "Stop",
     "graphConfig": {
       "title": "Graphkonfiguration",
       "topology": "Topologie",
-      "defaultSetting": "Standardeinstellung"
+      "defaultSetting": "Standardeinstellung",
+      "successfulGraph": "Erfolgreiche Graphkonfiguration",
+      "unsuccessfulGraph": "Graphkonfiguration fehlgeschlagen"
+    },
+    "algorithmConfig": {
+      "title": "Algorithmuskonfiguration",
+      "type": "Typ",
+      "startNodes": "Start Knoten",
+      "startNode": "Knoten",
+      "moreRobotsThenNodes": "Kann nicht mehr Roboter als Knoten haben!",
+      "redistribution": "Umverteilung durch Änderung",
+      "evenRobotDistribution": "Sogar Roboterverteilung",
+      "successfulAlgorithm": "Erfolgreiche Algorithmuskonfiguration"
     }
   }
 }

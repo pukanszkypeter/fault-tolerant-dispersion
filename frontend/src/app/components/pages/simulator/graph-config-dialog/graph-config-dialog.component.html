@@ -5,7 +5,6 @@
   </h4>
   <mat-form-field appearance="outline" color="accent" style="width: 100%">
     <mat-select [formControl]="topology" (selectionChange)="topologySelect()">
-      <mat-option>--</mat-option>
       <mat-option *ngFor="let type of graphTypes" [value]="type">
         {{ "graph." + type | translate }}
       </mat-option>
@@ -13,12 +12,6 @@
     <mat-error *ngIf="topology.hasError('required')">{{
       "app.requiredField" | translate
     }}</mat-error>
-    <mat-icon
-      matSuffix
-      fontSet="material-icons-outlined"
-      matTooltip="Info about the graphy type"
-      >info</mat-icon
-    >
   </mat-form-field>
   <div
     *ngIf="topology.value"
@@ -188,7 +181,12 @@
   >
     {{ "app.cancel" | translate }}
   </button>
-  <button mat-flat-button color="accent" (click)="saveGraphConfig()">
+  <button
+    [disabled]="!graphConfigForm.valid"
+    mat-flat-button
+    color="accent"
+    (click)="saveGraphConfig()"
+  >
     {{ "app.save" | translate }}
   </button>
 </mat-dialog-actions>

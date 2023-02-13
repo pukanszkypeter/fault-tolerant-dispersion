@@ -17,6 +17,8 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatSliderModule } from "@angular/material/slider";
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 
 @NgModule({
@@ -39,6 +41,8 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     MatDialogModule,
     MatInputModule,
     MatSliderModule,
+    MatTableModule,
+    MatPaginatorModule,
     DragDropModule,
   ],
 })

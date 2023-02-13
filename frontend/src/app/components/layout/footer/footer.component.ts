@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Page } from "src/app/models/utils/Pages";
-import { BreakpointService } from "src/app/services/utils/breakpoint.service";
+import { BreakpointService } from "src/app/services/client/breakpoint.service";
 
 @Component({
   selector: "app-footer",
