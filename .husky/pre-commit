@@ -6,7 +6,7 @@ echo 🐶 Husky pre-commit hook running...
 cd frontend
 npm run format:frontend -- --loglevel silent
 npm run format:backend -- --loglevel silent
-npm version `cat .version` --allow-same-version --silent
+npm version $(cat ../.version) --allow-same-version --silent
 cd ..
 
 git add .
