@@ -5,10 +5,10 @@ echo -e "\n🐶 Husky pre-commit hook running...\n"
 
 cd frontend
 
-echo -e "✏️\sFrontend formating..."
+echo -e "✏️  Frontend formating..."
 npm run format:frontend -- --loglevel silent
 
-echo -e "✏️\sBackend formating..."
+echo -e "✏️  Backend formating..."
 npm run format:backend -- --loglevel silent
 
 echo -e "📜 Version:\n"
