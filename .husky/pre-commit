@@ -8,8 +8,9 @@ cat .version > version
 cd frontend
 npm run format:frontend -- --loglevel silent
 npm run format:backend -- --loglevel silent
-npm version $version --allow-same-version
+npm version $version --allow-same-version --silent
 cd ..
 
 git add .
+
 echo ✅ Hook was successful.
