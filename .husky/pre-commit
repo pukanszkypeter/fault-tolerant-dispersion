@@ -6,7 +6,8 @@ echo 🐶 Husky pre-commit hook running...
 cat .version > version
 
 cd frontend
-npm run format:fix -- --loglevel silent
+npm run format:frontend -- --loglevel silent
+npm run format:backend -- --loglevel silent
 npm version $version --allow-same-version
 cd ..
 
