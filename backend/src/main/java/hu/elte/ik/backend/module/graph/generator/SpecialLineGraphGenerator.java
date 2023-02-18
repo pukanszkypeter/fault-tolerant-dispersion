@@ -1,11 +1,11 @@
 package hu.elte.ik.backend.module.graph.generator;
 
 import java.util.Map;
-
 import org.jgrapht.Graph;
 import org.jgrapht.generate.GraphGenerator;
 
-public class SpecialLineGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
+public class SpecialLineGraphGenerator<V, E>
+  implements GraphGenerator<V, E, V> {
 
   private int size;
 
@@ -27,7 +27,6 @@ public class SpecialLineGraphGenerator<V, E> implements GraphGenerator<V, E, V> 
   @Override
   @SuppressWarnings(value = "unchecked")
   public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-
     for (int i = 0; i < size; i++) {
       target.addVertex();
     }
@@ -35,16 +34,20 @@ public class SpecialLineGraphGenerator<V, E> implements GraphGenerator<V, E, V> 
     for (int i = 0; i < size; ++i) {
       if (i % 2 == 0) {
         if (i > 0) {
-          target.addEdge((V) Long.valueOf(i + 1), (V) Long.valueOf((i - 2) + 1));
+          target.addEdge(
+            (V) Long.valueOf(i + 1),
+            (V) Long.valueOf((i - 2) + 1)
+          );
         }
         if (i > 0 && i < size - 1) {
-          target.addEdge((V) Long.valueOf(i + 1), (V) Long.valueOf((i + 1) + 1));
+          target.addEdge(
+            (V) Long.valueOf(i + 1),
+            (V) Long.valueOf((i + 1) + 1)
+          );
         }
       } else {
         target.addEdge((V) Long.valueOf(i + 1), (V) Long.valueOf((i - 1) + 1));
       }
     }
-
   }
-
 }

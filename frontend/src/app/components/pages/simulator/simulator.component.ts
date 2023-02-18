@@ -16,7 +16,6 @@ import { SnackBarService } from "src/app/services/client/snack-bar.service";
 import { SnackBarType } from "src/app/models/utils/SnackBar";
 import { AlgorithmConfigDialogComponent } from "./algorithm-config-dialog/algorithm-config-dialog.component";
 import { SimulatorService } from "src/app/services/client/simulator.service";
-import { SimulationState } from "src/app/models/simulation/SimulationState";
 import { MatTableDataSource } from "@angular/material/table";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { MatPaginator } from "@angular/material/paginator";
@@ -183,17 +182,11 @@ export class SimulatorComponent {
   }
 
   async play(): Promise<void> {
-    while (
-      !this.simulator.running ||
-      this.simulator.state === SimulationState.FINISHED
-    ) {
-      await this.next(false);
-    }
+    return this.simulator.play([() => firstValueFrom(this.vis.updateGraph())]);
   }
 
-  async next(stopable: boolean): Promise<void> {
-    await firstValueFrom(this.simulator.next(stopable));
-    await firstValueFrom(this.vis.updateGraph());
+  async next(): Promise<void> {
+    return this.simulator.next([() => firstValueFrom(this.vis.updateGraph())]);
   }
 
   stop(): void {

@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RotorRouterNode extends Node {
 
-    private Long rotorRouter;
-
+  private Long rotorRouter;
 }

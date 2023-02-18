@@ -6,6 +6,4 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RotorRouterEdge extends Edge {
-
-}
+public class RotorRouterEdge extends Edge {}

@@ -6,6 +6,4 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RandomEdge extends Edge {
-
-}
+public class RandomEdge extends Edge {}

@@ -6,6 +6,4 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class FaultlessDfsNode extends Node {
-
-}
+public class FaultlessDfsNode extends Node {}

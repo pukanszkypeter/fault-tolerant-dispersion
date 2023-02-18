@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Robot {
 
-    private Long id;
-    private Long onId;
-    private RobotState state;
-
+  private Long id;
+  private Long onId;
+  private RobotState state;
 }

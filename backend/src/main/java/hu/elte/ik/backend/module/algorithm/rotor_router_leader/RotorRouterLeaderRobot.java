@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RotorRouterLeaderRobot extends Robot {
 
-    private Long destinationId;
-    private Long lastUsedEdgeId;
-
+  private Long destinationId;
+  private Long lastUsedEdgeId;
 }

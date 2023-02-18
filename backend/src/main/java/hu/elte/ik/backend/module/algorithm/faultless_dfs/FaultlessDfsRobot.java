@@ -8,8 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class FaultlessDfsRobot extends Robot {
 
-    private int parent;
-    private int child;
-    private int lastUsedPort;
-
+  private int parent;
+  private int child;
+  private int lastUsedPort;
 }

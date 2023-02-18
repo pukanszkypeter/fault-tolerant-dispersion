@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo 🐶 Husky pre-commit hook running...
+
+cat .version > version
+
+cd frontend
+npm run format:fix -- --loglevel silent
+npm version $version --allow-same-version
+cd ..
+
+git add .
+echo ✅ Hook was successful.

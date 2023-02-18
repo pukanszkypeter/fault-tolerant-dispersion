@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RandomRobot extends Robot {
 
-    private Long destinationId;
-
+  private Long destinationId;
 }

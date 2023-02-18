@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, delay, finalize, map, Observable } from "rxjs";
+import { BehaviorSubject, delay, firstValueFrom, map } from "rxjs";
 import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { RobotState } from "src/app/models/algorithm/RobotState";
@@ -28,30 +28,35 @@ export class SimulatorService {
 
   constructor(private algorithm: AlgorithmService) {}
 
-  next(stopable: boolean): Observable<void> {
+  async play(callbackFns: (() => Promise<any>)[]): Promise<void> {
     this.running = true;
-    return this.algorithm
-      .step(this.algorithmType!, {
-        step: this.step,
-        state: this.state,
-        graph: this.graph,
-        robots: this.robots.getValue(),
-      })
-      .pipe(
-        delay(this.delay),
-        finalize(() => {
-          if (stopable) {
-            this.stop();
-          }
-        }),
-        map((simulation) => {
-          console.log(simulation);
-          this.step = simulation.step;
-          this.state = simulation.state;
-          this.graph = simulation.graph;
-          this.robots.next(simulation.robots);
+    while (this.running && this.state !== SimulationState.FINISHED) {
+      await this.next(callbackFns);
+    }
+  }
+
+  async next(callbackFns: (() => Promise<any>)[]): Promise<void> {
+    await firstValueFrom(
+      this.algorithm
+        .step(this.algorithmType!, {
+          step: this.step,
+          state: this.state,
+          graph: this.graph,
+          robots: this.robots.getValue(),
         })
-      );
+        .pipe(
+          delay(this.delay),
+          map((simulation) => {
+            this.step = simulation.step;
+            this.state = simulation.state;
+            this.graph = simulation.graph;
+            this.robots.next(simulation.robots);
+          })
+        )
+    );
+    for (let fn of callbackFns) {
+      await fn();
+    }
   }
 
   stop(): void {

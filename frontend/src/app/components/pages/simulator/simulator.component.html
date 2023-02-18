@@ -36,7 +36,7 @@
             >
             <div
               [matTooltip]="
-                !graphConfigured || !algorithmConfigured
+                !graphConfigured || !algorithmConfigured || isRunning()
                   ? ('app.notAvailable' | translate)
                   : ''
               "
@@ -48,14 +48,18 @@
                 "
                 (click)="play()"
                 color="accent"
-                [matTooltip]="'simulator.start' | translate"
+                [matTooltip]="
+                  graphConfigured && algorithmConfigured && !isRunning()
+                    ? ('simulator.start' | translate)
+                    : ''
+                "
               >
                 <mat-icon>play_arrow</mat-icon>
               </button>
             </div>
             <div
               [matTooltip]="
-                !graphConfigured || !algorithmConfigured
+                !graphConfigured || !algorithmConfigured || isRunning()
                   ? ('app.notAvailable' | translate)
                   : ''
               "
@@ -65,9 +69,13 @@
                 [disabled]="
                   !graphConfigured || !algorithmConfigured || isRunning()
                 "
-                (click)="next(true)"
+                (click)="next()"
                 color="accent"
-                [matTooltip]="'simulator.next' | translate"
+                [matTooltip]="
+                  graphConfigured && algorithmConfigured && !isRunning()
+                    ? ('simulator.next' | translate)
+                    : ''
+                "
               >
                 <mat-icon>skip_next</mat-icon>
               </button>
@@ -81,10 +89,16 @@
             >
               <button
                 mat-fab
-                [disabled]="!graphConfigured || !algorithmConfigured"
+                [disabled]="
+                  !graphConfigured || !algorithmConfigured || !isRunning()
+                "
                 (click)="stop()"
                 color="accent"
-                [matTooltip]="'simulator.stop' | translate"
+                [matTooltip]="
+                  graphConfigured && algorithmConfigured && isRunning()
+                    ? ('simulator.stop' | translate)
+                    : ''
+                "
               >
                 <mat-icon>pause</mat-icon>
               </button>
@@ -193,7 +207,6 @@
                 gap: 0.5rem;
               "
             >
-              {{ "robot." + element.state | translate }}
               <mat-icon *ngIf="element.state === 'START'">smart_toy</mat-icon>
               <mat-icon *ngIf="element.state === 'EXPLORE'">explore</mat-icon>
               <mat-icon *ngIf="element.state === 'LEADER'">star</mat-icon>
@@ -203,6 +216,7 @@
               <mat-icon *ngIf="element.state === 'CRASHED'"
                 >crisis_alert</mat-icon
               >
+              {{ "robot." + element.state | translate }}
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="robotColumns"></tr>

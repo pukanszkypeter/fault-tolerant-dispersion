@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Edge {
 
-    private Long id;
-    private Long fromId;
-    private Long toId;
-
+  private Long id;
+  private Long fromId;
+  private Long toId;
 }

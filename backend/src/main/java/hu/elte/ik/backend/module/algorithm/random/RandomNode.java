@@ -6,6 +6,4 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RandomNode extends Node {
-
-}
+public class RandomNode extends Node {}

@@ -74,4 +74,17 @@ body.dark-mode {
     --mdc-protected-button-container-color: rgba(255, 255, 255, 0.12);
     --mdc-protected-button-label-text-color: rgba(255, 255, 255, 0.38);
   }
+
+  .mat-mdc-table {
+    background-color: #424242;
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      color: #ffffff;
+    }
+  }
+
+  .mat-mdc-paginator {
+    background-color: #424242;
+    color: #ffffff;
+  }
 }

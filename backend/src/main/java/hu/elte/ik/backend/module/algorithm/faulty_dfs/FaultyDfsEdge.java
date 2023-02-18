@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class FaultyDfsEdge extends Edge {
 
-    private int fromPort;
-    private int toPort;
-
+  private int fromPort;
+  private int toPort;
 }
