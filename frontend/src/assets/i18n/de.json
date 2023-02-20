@@ -42,6 +42,12 @@
     "FAULTY_DFS": "Fehlertolerantes DFS Dispersion"
   },
 
+  "simulation": {
+    "DEFAULT": "Initial",
+    "IN_PROGRESS": "Im Gange",
+    "FINISHED": "Fertig"
+  },
+
   "robot": {
     "START": "Start",
     "EXPLORE": "Explorieren",
@@ -78,12 +84,18 @@
     "simulator": "Simulator",
     "operators": "Betreibers",
     "robots": "Roboter",
+    "informations": "Informationen",
     "onId": "Knoten-ID",
     "state": "Zustand",
     "noRobotFound": "Kein Roboter gefunden.",
     "start": "Start",
     "next": "Nächste",
     "stop": "Stop",
+    "graph": "Graph",
+    "algorithm": "Algorithmus",
+    "reset": "Zurücksetzen",
+    "waitingForApi": "Warten auf letzte API-Antwort...",
+    "resetSucceeded": "Das Zurücksetzen war erfolgreich.",
     "graphConfig": {
       "title": "Graphkonfiguration",
       "topology": "Topologie",

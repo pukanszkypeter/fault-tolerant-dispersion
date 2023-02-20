@@ -36,7 +36,7 @@
             >
             <div
               [matTooltip]="
-                !graphConfigured || !algorithmConfigured || isRunning()
+                !graphConfigured || !algorithmConfigured || isRunning
                   ? ('app.notAvailable' | translate)
                   : ''
               "
@@ -44,12 +44,12 @@
               <button
                 mat-fab
                 [disabled]="
-                  !graphConfigured || !algorithmConfigured || isRunning()
+                  !graphConfigured || !algorithmConfigured || isRunning
                 "
                 (click)="play()"
                 color="accent"
                 [matTooltip]="
-                  graphConfigured && algorithmConfigured && !isRunning()
+                  graphConfigured && algorithmConfigured && !isRunning
                     ? ('simulator.start' | translate)
                     : ''
                 "
@@ -59,7 +59,7 @@
             </div>
             <div
               [matTooltip]="
-                !graphConfigured || !algorithmConfigured || isRunning()
+                !graphConfigured || !algorithmConfigured || isRunning
                   ? ('app.notAvailable' | translate)
                   : ''
               "
@@ -67,12 +67,12 @@
               <button
                 mat-fab
                 [disabled]="
-                  !graphConfigured || !algorithmConfigured || isRunning()
+                  !graphConfigured || !algorithmConfigured || isRunning
                 "
                 (click)="next()"
                 color="accent"
                 [matTooltip]="
-                  graphConfigured && algorithmConfigured && !isRunning()
+                  graphConfigured && algorithmConfigured && !isRunning
                     ? ('simulator.next' | translate)
                     : ''
                 "
@@ -82,7 +82,7 @@
             </div>
             <div
               [matTooltip]="
-                !graphConfigured || !algorithmConfigured || !isRunning()
+                !graphConfigured || !algorithmConfigured || !isRunning
                   ? ('app.notAvailable' | translate)
                   : ''
               "
@@ -90,12 +90,12 @@
               <button
                 mat-fab
                 [disabled]="
-                  !graphConfigured || !algorithmConfigured || !isRunning()
+                  !graphConfigured || !algorithmConfigured || !isRunning
                 "
                 (click)="stop()"
                 color="accent"
                 [matTooltip]="
-                  graphConfigured && algorithmConfigured && isRunning()
+                  graphConfigured && algorithmConfigured && isRunning
                     ? ('simulator.stop' | translate)
                     : ''
                 "
@@ -123,11 +123,25 @@
               }"
               (click)="openGraphConfigDialog()"
             >
-              <span>Graph</span>
-              <mat-icon *ngIf="!graphConfigured" style="color: red"
+              <span
+                [ngStyle]="{
+                  color:
+                    (isSmallScreen$ | async)
+                      ? !graphConfigured
+                        ? 'red'
+                        : 'green'
+                      : 'inherit'
+                }"
+                >{{ "simulator.graph" | translate }}</span
+              >
+              <mat-icon
+                *ngIf="!graphConfigured && !(isSmallScreen$ | async)"
+                style="color: red"
                 >close</mat-icon
               >
-              <mat-icon *ngIf="graphConfigured" style="color: green"
+              <mat-icon
+                *ngIf="graphConfigured && !(isSmallScreen$ | async)"
+                style="color: green"
                 >done</mat-icon
               >
             </button>
@@ -146,15 +160,27 @@
                 [disabled]="!graphConfigured"
                 (click)="openAlgorithmConfigDialog()"
               >
-                <span>Algorithm</span>
+                <span
+                  [ngStyle]="{
+                    color:
+                      (isSmallScreen$ | async) && graphConfigured
+                        ? !algorithmConfigured
+                          ? 'red'
+                          : 'green'
+                        : 'inherit'
+                  }"
+                  >{{ "simulator.algorithm" | translate }}</span
+                >
                 <mat-icon
-                  *ngIf="!algorithmConfigured"
+                  *ngIf="!algorithmConfigured && !(isSmallScreen$ | async)"
                   [ngStyle]="{
                     color: !graphConfigured ? 'inherit' : 'red'
                   }"
                   >close</mat-icon
                 >
-                <mat-icon *ngIf="algorithmConfigured" style="color: green"
+                <mat-icon
+                  *ngIf="algorithmConfigured && !(isSmallScreen$ | async)"
+                  style="color: green"
                   >done</mat-icon
                 >
               </button>
@@ -162,16 +188,43 @@
           </mat-card>
         </div>
         <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
-          <mat-card class="drag-box" cdkDrag>
-            3
+          <mat-card class="drag-box" style="gap: 0.5rem" cdkDrag>
+            <button mat-icon-button color="accent" (click)="increaseDelay()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <p
+              class="lead m-0"
+              style="line-height: 48px; width: 80px; text-align: center"
+            >
+              {{ delay }} ms
+            </p>
+            <button mat-icon-button color="accent" (click)="decreaseDelay()">
+              <mat-icon>remove</mat-icon>
+            </button>
             <mat-icon class="drag-element" cdkDragHandle
               >drag_indicator</mat-icon
             >
           </mat-card>
         </div>
         <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
-          <mat-card class="drag-box" cdkDrag>
-            4
+          <mat-card
+            class="drag-box"
+            style="justify-content: space-evenly"
+            cdkDrag
+          >
+            <button
+              mat-raised-button
+              color="accent"
+              style="height: 50px"
+              [disabled]="!graphConfigured || !algorithmConfigured"
+              [ngStyle]="{
+                width: (isSmallScreen$ | async) ? '125px' : '150px'
+              }"
+              (click)="reset()"
+            >
+              <mat-icon *ngIf="!(isSmallScreen$ | async)">refresh</mat-icon>
+              <span>{{ "simulator.reset" | translate }}</span>
+            </button>
             <mat-icon class="drag-element" cdkDragHandle
               >drag_indicator</mat-icon
             >
@@ -237,6 +290,40 @@
         </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
         </mat-paginator>
+      </mat-card>
+    </div>
+    <div class="col-12 col-xl-4">
+      <h3 class="fs-2">{{ "simulator.informations" | translate }}</h3>
+      <mat-card>
+        <mat-card-header>
+          <mat-icon
+            *ngIf="simulationState === 'DEFAULT'"
+            mat-card-avatar
+            style="font-size: 40px"
+            >flag</mat-icon
+          >
+          <mat-icon
+            *ngIf="simulationState === 'IN_PROGRESS'"
+            mat-card-avatar
+            style="font-size: 40px"
+            >hourglass_top</mat-icon
+          >
+          <mat-icon
+            *ngIf="simulationState === 'FINISHED'"
+            mat-card-avatar
+            style="font-size: 40px"
+            >verified</mat-icon
+          >
+          <mat-card-title>{{
+            "simulation." + simulationState | translate
+          }}</mat-card-title>
+          <mat-card-subtitle>{{ getOccupancy }}%</mat-card-subtitle>
+        </mat-card-header>
+        <mat-progress-bar
+          [color]="'accent'"
+          [mode]="'determinate'"
+          [value]="getOccupancy"
+        ></mat-progress-bar>
       </mat-card>
     </div>
   </div>

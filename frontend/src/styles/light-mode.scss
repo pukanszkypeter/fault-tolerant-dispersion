@@ -12,6 +12,10 @@ body.light-mode {
     background-color: #ffffff;
   }
 
+  .mat-mdc-card-subtitle {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
   .mat-mdc-dialog-container .mdc-dialog__surface {
     background-color: #ffffff;
     .mdc-dialog__title {

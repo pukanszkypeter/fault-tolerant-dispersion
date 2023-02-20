@@ -19,6 +19,7 @@ import { SimulatorService } from "src/app/services/client/simulator.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { MatPaginator } from "@angular/material/paginator";
+import { NodeState } from "src/app/models/graph/NodeState";
 
 @Component({
   selector: "app-simulator",
@@ -193,7 +194,52 @@ export class SimulatorComponent {
     this.simulator.stop();
   }
 
-  isRunning(): boolean {
+  get isRunning(): boolean {
     return this.simulator.running;
+  }
+
+  get simulationState(): string {
+    return this.simulator.state;
+  }
+
+  get delay(): number {
+    return this.simulator.delay;
+  }
+
+  get getOccupancy(): string {
+    return this.graphConfigured && this.algorithmConfigured
+      ? Math.round(
+          (this.simulator.graph.nodes.filter(
+            (node) => node.state === NodeState.OCCUPIED
+          ).length /
+            this.simulator.graph.nodes.length) *
+            100
+        ).toFixed(2)
+      : "0.00";
+  }
+
+  increaseDelay(): void {
+    this.simulator.increaseDelay();
+  }
+
+  decreaseDelay(): void {
+    this.simulator.decreaseDelay();
+  }
+
+  async reset(): Promise<void> {
+    this.loading.toggle();
+    this.simulator.stop();
+    this.snackBar.openSnackBar("simulator.waitingForApi", SnackBarType.INFO);
+    setTimeout(() => {
+      this.simulator.reset();
+      this.vis.destoryGraph();
+      this.algorithmConfigured = false;
+      this.graphConfigured = false;
+      this.snackBar.openSnackBar(
+        "simulator.resetSucceeded",
+        SnackBarType.SUCCESS
+      );
+      this.loading.toggle();
+    }, 5000);
   }
 }

@@ -63,6 +63,27 @@ export class SimulatorService {
     this.running = false;
   }
 
+  reset(): void {
+    this.step = 0;
+    this.state = SimulationState.DEFAULT;
+    this.graphType = undefined;
+    this.algorithmType = undefined;
+    this.graph = { nodes: [], edges: [] };
+    this.robots.next([]);
+  }
+
+  increaseDelay(): void {
+    if (this.delay !== 1000) {
+      this.delay += 100;
+    }
+  }
+
+  decreaseDelay(): void {
+    if (this.delay !== 0) {
+      this.delay -= 100;
+    }
+  }
+
   populate(distribution: { node: number; robots: number }[]): void {
     let id = 1;
     this.robots.next([]);

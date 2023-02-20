@@ -42,6 +42,12 @@
     "FAULTY_DFS": "Hibatűrő DFS diszperzió"
   },
 
+  "simulation": {
+    "DEFAULT": "Kezdeti",
+    "IN_PROGRESS": "Folyamatban",
+    "FINISHED": "Befejezett"
+  },
+
   "robot": {
     "START": "Kezdő",
     "EXPLORE": "Felderítő",
@@ -78,12 +84,18 @@
     "simulator": "Szimulátor",
     "operators": "Operátorok",
     "robots": "Robotok",
+    "informations": "Információk",
     "onId": "Csúcs ID",
     "state": "Állapot",
     "noRobotFound": "Nem található robot.",
     "start": "Start",
     "next": "Következő",
     "stop": "Stop",
+    "graph": "Gráf",
+    "algorithm": "Algoritmus",
+    "reset": "Visszaállítás",
+    "waitingForApi": "Várakozás az utolsó API-válaszra...",
+    "resetSucceeded": "A visszaállítás sikeres volt.",
     "graphConfig": {
       "title": "Gráf konfiguráció",
       "topology": "Topológia",
