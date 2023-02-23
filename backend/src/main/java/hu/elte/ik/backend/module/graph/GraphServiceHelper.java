@@ -1,7 +1,6 @@
 package hu.elte.ik.backend.module.graph;
 
 import hu.elte.ik.backend.model.graph.*;
-import hu.elte.ik.backend.model.utils.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

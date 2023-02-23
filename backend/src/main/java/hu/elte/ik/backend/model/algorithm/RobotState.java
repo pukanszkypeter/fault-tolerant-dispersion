@@ -1,4 +1,4 @@
-package hu.elte.ik.backend.model.utils;
+package hu.elte.ik.backend.model.algorithm;
 
 public enum RobotState {
   START,

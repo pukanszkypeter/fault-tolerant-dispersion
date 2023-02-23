@@ -1,8 +1,8 @@
 package hu.elte.ik.backend.module.algorithm;
 
+import hu.elte.ik.backend.model.algorithm.RobotState;
 import hu.elte.ik.backend.model.graph.Graph;
-import hu.elte.ik.backend.model.utils.NodeState;
-import hu.elte.ik.backend.model.utils.RobotState;
+import hu.elte.ik.backend.model.graph.NodeState;
 import hu.elte.ik.backend.module.algorithm.faulty_dfs.*;
 import hu.elte.ik.backend.module.algorithm.utils.Stepper;
 import java.util.List;

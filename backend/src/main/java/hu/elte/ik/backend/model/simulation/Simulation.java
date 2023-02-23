@@ -4,7 +4,6 @@ import hu.elte.ik.backend.model.algorithm.Robot;
 import hu.elte.ik.backend.model.graph.Edge;
 import hu.elte.ik.backend.model.graph.Graph;
 import hu.elte.ik.backend.model.graph.Node;
-import hu.elte.ik.backend.model.utils.SimulationState;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;

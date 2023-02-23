@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+   image: mysql
+   command: --default-authentication-plugin=mysql_native_password
+   restart: always
+   environment:
+     MYSQL_DATABASE: 'backend'
+     MYSQL_USER: 'backend'
+     MYSQL_PASSWORD: 'backend'
+     MYSQL_ROOT_PASSWORD: 'root'
+   healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p", "root"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+   ports:
+     - "3306:3306"
+   expose:
+     - "3306"
+   volumes:
+     - my-db:/var/lib/mysql
+     - ./docker/MySQL:/docker-entrypoint-initdb.d
+  
+  # Database Manager
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9000:8080
+  
+volumes:
+  my-db: {}

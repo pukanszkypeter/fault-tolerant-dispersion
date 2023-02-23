@@ -1,4 +1,4 @@
-package hu.elte.ik.backend.model.utils;
+package hu.elte.ik.backend.model.graph;
 
 public enum NodeState {
   DEFAULT,

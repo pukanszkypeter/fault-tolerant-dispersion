@@ -1,11 +1,11 @@
 package hu.elte.ik.backend.logic;
 
 import hu.elte.ik.backend.model.algorithm.Robot;
+import hu.elte.ik.backend.model.algorithm.RobotState;
 import hu.elte.ik.backend.model.graph.Node;
+import hu.elte.ik.backend.model.graph.NodeState;
 import hu.elte.ik.backend.model.simulation.Simulation;
-import hu.elte.ik.backend.model.utils.NodeState;
-import hu.elte.ik.backend.model.utils.RobotState;
-import hu.elte.ik.backend.model.utils.SimulationState;
+import hu.elte.ik.backend.model.simulation.SimulationState;
 import hu.elte.ik.backend.module.algorithm.FaultlessDfsHelper;
 import hu.elte.ik.backend.module.algorithm.FaultyDfsHelper;
 import hu.elte.ik.backend.module.algorithm.RandomHelper;

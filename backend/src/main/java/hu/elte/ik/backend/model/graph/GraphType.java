@@ -1,0 +1,19 @@
+package hu.elte.ik.backend.model.graph;
+
+public enum GraphType {
+  BARABASI_ALBERT_FOREST,
+  BARABASI_ALBERT_GRAPH,
+  BARBELL,
+  COMPLETE,
+  GNM_RANDOM,
+  GNP_RANDOM,
+  GRID,
+  HYPER_CUBE,
+  LINEAR,
+  LOLLIPOP,
+  RING,
+  RANDOM_REGULAR,
+  STAR,
+  WHEEL,
+  WINDMILL,
+}
