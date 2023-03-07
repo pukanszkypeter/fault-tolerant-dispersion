@@ -12,4 +12,8 @@ public class Edge {
   private Long id;
   private Long fromId;
   private Long toId;
+
+  public Edge(Edge that) {
+    this(that.getId(), that.getFromId(), that.getToId());
+  }
 }

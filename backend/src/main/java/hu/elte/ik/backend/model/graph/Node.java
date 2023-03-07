@@ -11,4 +11,8 @@ public class Node {
 
   private Long id;
   private NodeState state;
+
+  public Node(Node that) {
+    this(that.getId(), that.getState());
+  }
 }

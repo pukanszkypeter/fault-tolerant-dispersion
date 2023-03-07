@@ -19,7 +19,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   exports: [
@@ -43,7 +45,9 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     MatSliderModule,
     MatTableModule,
     MatPaginatorModule,
+    MatCheckboxModule,
     DragDropModule,
+    FormsModule,
   ],
 })
 export class MaterialModule {}

@@ -4,6 +4,7 @@
   "en": "English",
 
   "app": {
+    "serverError": "Server error!",
     "responsiveWarning": "No support for screens below 575px.",
     "requiredField": "This field is required",
     "cancel": "Cancel",
@@ -96,6 +97,9 @@
     "reset": "Reset",
     "waitingForApi": "Waiting for last API response...",
     "resetSucceeded": "The reset was successful.",
+    "saveResults": "Save results",
+    "successfulSaving": "Successful saving!",
+    "failedToSave": "Failed to save!",
     "graphConfig": {
       "title": "Graph configuration",
       "topology": "Topology",
@@ -113,5 +117,14 @@
       "evenRobotDistribution": "Even robot distribution",
       "successfulAlgorithm": "Successful algorithm configuration"
     }
+  },
+
+  "tester": {
+    "settings": "Settings",
+    "results": "Results",
+    "numberOfTests": "Number of tests",
+    "minField": "Minimum 1",
+    "batchInProgress": "Batch testing in progress...",
+    "batchFinished": "Batch testing finished!"
   }
 }

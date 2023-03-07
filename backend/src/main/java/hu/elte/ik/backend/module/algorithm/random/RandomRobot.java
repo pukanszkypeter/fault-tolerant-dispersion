@@ -13,4 +13,9 @@ import lombok.NoArgsConstructor;
 public class RandomRobot extends Robot {
 
   private Long destinationId;
+
+  public RandomRobot(RandomRobot that) {
+    super(that);
+    this.destinationId = that.getDestinationId();
+  }
 }

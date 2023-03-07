@@ -19,6 +19,10 @@ public class SecurityConfiguration {
         registry
           .addMapping("/graph/**")
           .allowedOrigins("http://localhost:4200");
+        registry
+          .addMapping("/result/**")
+          .allowedOrigins("http://localhost:4200");
+        registry.addMapping("/test/**").allowedOrigins("http://localhost:4200");
       }
     };
   }

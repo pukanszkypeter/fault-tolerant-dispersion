@@ -91,4 +91,16 @@ body.light-mode {
     background-color: #ffffff;
     color: #000000;
   }
+
+  .mat-mdc-checkbox .mdc-form-field {
+    color: #000000;
+  }
+
+  .mat-mdc-input-element::placeholder {
+    color: #000000 !important;
+  }
+
+  .mat-focused .mat-mdc-input-element::placeholder {
+    color: #000000;
+  }
 }

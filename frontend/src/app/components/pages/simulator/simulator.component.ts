@@ -20,6 +20,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { MatPaginator } from "@angular/material/paginator";
 import { NodeState } from "src/app/models/graph/NodeState";
+import { MatCheckboxChange } from "@angular/material/checkbox";
 
 @Component({
   selector: "app-simulator",
@@ -121,6 +122,16 @@ export class SimulatorComponent {
     }
   }
 
+  get saveResults(): boolean {
+    return this.simulator.saveResults;
+  }
+
+  toggleSaveResults(event: MatCheckboxChange) {
+    this.simulator.toggleSaveResults(event.checked);
+  }
+
+  // Dialogs
+
   openGraphConfigDialog(): void {
     const dialogRef = this.dialog.open(GraphConfigDialogComponent, {
       minWidth: "500px",
@@ -181,6 +192,8 @@ export class SimulatorComponent {
         }
       });
   }
+
+  // Simulator
 
   async play(): Promise<void> {
     return this.simulator.play([() => firstValueFrom(this.vis.updateGraph())]);

@@ -22,8 +22,10 @@ import hu.elte.ik.backend.module.algorithm.utils.Stepper;
 import hu.elte.ik.backend.service.AlgorithmService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
+@Getter
 @AllArgsConstructor
 public class AlgorithmServiceImpl implements AlgorithmService {
 
@@ -76,7 +78,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     return step(faultyDfsHelper, simulation);
   }
 
-  private static Simulation step(Stepper stepper, Simulation simulation) {
+  public Simulation step(Stepper stepper, Simulation simulation) {
     if (simulation.getState().equals(SimulationState.DEFAULT)) {
       simulation.setState(SimulationState.IN_PROGRESS);
     }
@@ -91,7 +93,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     return simulation;
   }
 
-  private static boolean isFinished(Simulation simulation) {
+  public boolean isFinished(Simulation simulation) {
     boolean graphFinished =
       simulation
         .getGraph()

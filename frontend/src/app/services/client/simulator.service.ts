@@ -7,7 +7,10 @@ import { Graph } from "src/app/models/graph/Graph";
 import { GraphType } from "src/app/models/graph/GraphType";
 import { NodeState } from "src/app/models/graph/NodeState";
 import { SimulationState } from "src/app/models/simulation/SimulationState";
+import { SnackBarType } from "src/app/models/utils/SnackBar";
 import { AlgorithmService } from "../server/algorithm.service";
+import { ResultService } from "../server/result.service";
+import { SnackBarService } from "./snack-bar.service";
 
 @Injectable({
   providedIn: "root",
@@ -15,6 +18,7 @@ import { AlgorithmService } from "../server/algorithm.service";
 export class SimulatorService {
   running: boolean = false;
   delay: number = 500;
+  saveResults: boolean = true;
 
   // Meta
   step: number = 0;
@@ -26,7 +30,11 @@ export class SimulatorService {
   graph: Graph = { nodes: [], edges: [] };
   robots: BehaviorSubject<Robot[]> = new BehaviorSubject<Robot[]>([]);
 
-  constructor(private algorithm: AlgorithmService) {}
+  constructor(
+    private algorithm: AlgorithmService,
+    private result: ResultService,
+    private snackBar: SnackBarService
+  ) {}
 
   async play(callbackFns: (() => Promise<any>)[]): Promise<void> {
     this.running = true;
@@ -57,6 +65,47 @@ export class SimulatorService {
     for (let fn of callbackFns) {
       await fn();
     }
+    if (
+      (this.state === SimulationState.FINISHED ||
+        this.robots
+          .getValue()
+          .map(
+            (robot) =>
+              robot.state === RobotState.TERMINATED ||
+              robot.state === RobotState.CRASHED
+          )
+          .every((finishedState) => finishedState === true)) &&
+      this.saveResults
+    ) {
+      this.result
+        .save({
+          id: null,
+          algorithmType: this.algorithmType,
+          graphType: this.graphType,
+          nodes: this.graph.nodes.length,
+          robots: this.robots
+            .getValue()
+            .filter((robot) => robot.state === RobotState.TERMINATED).length,
+          steps: this.step,
+          robotsCrashed: this.robots
+            .getValue()
+            .filter((robot) => robot.state === RobotState.CRASHED).length,
+        })
+        .subscribe({
+          next: async () => {
+            await this.snackBar.openSnackBar(
+              "simulator.successfulSaving",
+              SnackBarType.SUCCESS
+            );
+          },
+          error: async () => {
+            await this.snackBar.openSnackBar(
+              "simulator.failedToSave",
+              SnackBarType.ERROR
+            );
+          },
+        });
+    }
   }
 
   stop(): void {
@@ -82,6 +131,10 @@ export class SimulatorService {
     if (this.delay !== 0) {
       this.delay -= 100;
     }
+  }
+
+  toggleSaveResults(value: boolean): void {
+    this.saveResults = value;
   }
 
   populate(distribution: { node: number; robots: number }[]): void {

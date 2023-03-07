@@ -225,6 +225,11 @@
               <mat-icon *ngIf="!(isSmallScreen$ | async)">refresh</mat-icon>
               <span>{{ "simulator.reset" | translate }}</span>
             </button>
+            <mat-checkbox
+              [checked]="saveResults"
+              (change)="toggleSaveResults($event)"
+              >{{ "simulator.saveResults" | translate }}</mat-checkbox
+            >
             <mat-icon class="drag-element" cdkDragHandle
               >drag_indicator</mat-icon
             >

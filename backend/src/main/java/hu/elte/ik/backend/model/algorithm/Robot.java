@@ -12,4 +12,8 @@ public class Robot {
   private Long id;
   private Long onId;
   private RobotState state;
+
+  public Robot(Robot that) {
+    this(that.getId(), that.getOnId(), that.getState());
+  }
 }

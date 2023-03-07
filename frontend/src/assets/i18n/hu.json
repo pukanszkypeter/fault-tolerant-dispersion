@@ -4,6 +4,7 @@
   "en": "Angol",
 
   "app": {
+    "serverError": "Szerver hiba!",
     "responsiveWarning": "Az 575px alatti képernyők nem támogatottak.",
     "requiredField": "Ez a mező kötelező",
     "cancel": "Vissza",
@@ -96,6 +97,9 @@
     "reset": "Visszaállítás",
     "waitingForApi": "Várakozás az utolsó API-válaszra...",
     "resetSucceeded": "A visszaállítás sikeres volt.",
+    "saveResults": "Eredmények mentése",
+    "successfulSaving": "Sikeres mentés!",
+    "failedToSave": "Sikertelen mentés!",
     "graphConfig": {
       "title": "Gráf konfiguráció",
       "topology": "Topológia",
@@ -113,5 +117,14 @@
       "evenRobotDistribution": "Egyenletes robot szétosztás",
       "successfulAlgorithm": "Sikeres algoritmus konfiguráció"
     }
+  },
+
+  "tester": {
+    "settings": "Beállítások",
+    "results": "Eredmények",
+    "numberOfTests": "Tesztek száma",
+    "minField": "Minimum 1",
+    "batchInProgress": "A batch tesztelés folyamatban...",
+    "batchFinished": "A batch tesztelés befejeződött!"
   }
 }

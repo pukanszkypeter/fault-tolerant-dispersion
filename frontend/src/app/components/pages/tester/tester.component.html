@@ -1,0 +1,103 @@
+<div class="container-fluid" style="margin-bottom: 2rem">
+  <div class="row gy-5">
+    <div class="col-12">
+      <h3 class="fs-2">{{ "tester.settings" | translate }}</h3>
+      <mat-card style="padding: 4rem 1rem">
+        <div class="row gy-4">
+          <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <button
+              mat-raised-button
+              color="accent"
+              style="height: 56px; width: 200px"
+              (click)="openGraphConfigDialog()"
+            >
+              <span
+                [ngStyle]="{
+                  color: !graphConfigured ? 'red' : 'green'
+                }"
+                >{{ "simulator.graph" | translate }}</span
+              >
+              <mat-icon *ngIf="!graphConfigured" style="color: red"
+                >close</mat-icon
+              >
+              <mat-icon *ngIf="graphConfigured" style="color: green"
+                >done</mat-icon
+              >
+            </button>
+          </div>
+          <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <div
+              [matTooltip]="
+                !graphConfigured ? ('app.notAvailable' | translate) : ''
+              "
+            >
+              <button
+                mat-raised-button
+                color="accent"
+                style="height: 56px; width: 200px"
+                [disabled]="!graphConfigured"
+                (click)="openAlgorithmConfigDialog()"
+              >
+                <span
+                  [ngStyle]="{
+                    color: !graphConfigured
+                      ? 'inherit'
+                      : !algorithmConfigured
+                      ? 'red'
+                      : 'green'
+                  }"
+                  >{{ "simulator.algorithm" | translate }}</span
+                >
+                <mat-icon
+                  *ngIf="!algorithmConfigured"
+                  [ngStyle]="{
+                    color: !graphConfigured ? 'inherit' : 'red'
+                  }"
+                  >close</mat-icon
+                >
+                <mat-icon *ngIf="algorithmConfigured" style="color: green"
+                  >done</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <mat-form-field appearance="outline" color="accent">
+              <input
+                matInput
+                type="number"
+                required
+                [formControl]="numOfTests"
+                [placeholder]="'tester.numberOfTests' | translate"
+              />
+              <mat-error *ngIf="numOfTests.hasError('required')">{{
+                "app.requiredField" | translate
+              }}</mat-error>
+              <mat-error *ngIf="numOfTests.hasError('min')">{{
+                "tester.minField" | translate
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <button
+              [disabled]="
+                !algorithmConfigured || !graphConfigured || numOfTests.invalid
+              "
+              mat-raised-button
+              color="primary"
+              style="height: 56px; width: 200px"
+              (click)="runTests()"
+            >
+              <span>Start</span>
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-12">
+      <h3 class="fs-2">{{ "tester.results" | translate }}</h3>
+      <mat-card>Alma</mat-card>
+    </div>
+  </div>
+</div>
