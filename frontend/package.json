@@ -37,7 +37,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.1.3",
     "@angular/cli": "~15.2.1",
-    "@angular/compiler-cli": "^15.2.2",
+    "@angular/compiler-cli": "^15.2.3",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-dark-mode": "^3.0.3",
