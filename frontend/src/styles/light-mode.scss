@@ -79,6 +79,13 @@ body.light-mode {
     --mdc-protected-button-label-text-color: rgba(0, 0, 0, 0.38);
   }
 
+  .mat-mdc-unelevated-button[disabled][disabled] {
+    --mdc-filled-button-disabled-container-color: rgba(0, 0, 0, 0.12);
+    --mdc-filled-button-disabled-label-text-color: rgba(0, 0, 0, 0.38);
+    --mdc-filled-button-container-color: rgba(0, 0, 0, 0.12);
+    --mdc-filled-button-label-text-color: rgba(0, 0, 0, 0.38);
+  }
+
   .mat-mdc-table {
     background-color: #ffffff;
     .mat-mdc-header-cell,
@@ -102,5 +109,17 @@ body.light-mode {
 
   .mat-focused .mat-mdc-input-element::placeholder {
     color: #000000;
+  }
+
+  .mat-mdc-radio-button .mdc-form-field {
+    color: #000000;
+  }
+
+  .mat-mdc-radio-button
+    .mdc-radio
+    .mdc-radio__native-control:enabled:not(:checked)
+    + .mdc-radio__background
+    .mdc-radio__outer-circle {
+    border-color: #000000;
   }
 }

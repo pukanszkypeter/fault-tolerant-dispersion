@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -35,40 +36,63 @@ export class AlgorithmConfigDialogComponent {
   ) {
     this.algorithmConfigForm = this.fb.group({
       type: new FormControl("", [Validators.required]),
-      startNodes: new FormControl([], [Validators.required]),
+      initalConfig: new FormControl("ROOTED", [Validators.required]),
+      startNodes: new FormControl([] || "", [Validators.required]),
       distribution: new FormControl(true, []),
+      startNodeCounters: new FormArray([]),
     });
     this.nodes = this.simulator.graph.nodes
       .map((node: Node) => node.id)
       .sort((a, b) => a - b);
   }
 
+  get initalConfig(): FormControl {
+    return this.algorithmConfigForm.get("initalConfig") as FormControl;
+  }
+
   get type(): FormControl {
     return this.algorithmConfigForm.get("type") as FormControl;
   }
 
+  get startNodeCounters(): FormArray {
+    return this.algorithmConfigForm.get("startNodeCounters") as FormArray;
+  }
+
+  get startNodeCounterControls(): FormControl[] {
+    return this.startNodeCounters.controls as FormControl[];
+  }
+
+  resetCounters(): void {
+    this.startNodes.setValue("" || []);
+    this.startNodeCounters.clear();
+  }
+
   startNodeSelected(): void {
     // Delete
-    Object.keys(this.algorithmConfigForm.controls)
-      .filter(
-        (key) => key !== "type" && key !== "startNodes" && key != "distribution"
-      )
-      .forEach((key) => this.algorithmConfigForm.removeControl(key));
+    this.startNodeCounters.clear();
     // Push
     const distribution = this.util.distributeAll(
       this.nodes.length,
-      this.startNodes.value.length
+      this.initalConfig.value === "ROOTED" ? 1 : this.startNodes.value.length
     );
     this.distribution.setValue(true);
-    this.startNodes.value.forEach((node: string, index: number) => {
-      this.algorithmConfigForm.addControl(
-        node,
+    if (this.initalConfig.value === "ROOTED") {
+      this.startNodeCounters.controls.push(
         new FormControl(
-          { value: distribution[index], disabled: true },
+          { value: distribution[0], disabled: true },
           { nonNullable: true, validators: [Validators.required] }
         )
       );
-    });
+    } else {
+      this.startNodes.value.forEach((_node: string, index: number) => {
+        this.startNodeCounters.controls.push(
+          new FormControl(
+            { value: distribution[index], disabled: true },
+            { nonNullable: true, validators: [Validators.required] }
+          )
+        );
+      });
+    }
   }
 
   get startNodes(): FormControl {
@@ -76,18 +100,14 @@ export class AlgorithmConfigDialogComponent {
   }
 
   distributionToggle(): void {
-    Object.keys(this.algorithmConfigForm.controls)
-      .filter(
-        (key) => key !== "type" && key !== "startNodes" && key != "distribution"
-      )
-      .forEach((key) => {
-        if (this.distribution.value) {
-          this.algorithmConfigForm.get(key)?.enable();
-        } else {
-          this.algorithmConfigForm.get(key)?.reset();
-          this.algorithmConfigForm.get(key)?.disable();
-        }
-      });
+    this.startNodeCounterControls.forEach((control) => {
+      if (this.distribution.value) {
+        control.enable();
+      } else {
+        control.reset();
+        control.disable();
+      }
+    });
   }
 
   get distribution(): FormControl {
@@ -98,42 +118,28 @@ export class AlgorithmConfigDialogComponent {
     return this.algorithmConfigForm.get(startNode.toString()) as FormControl;
   }
 
-  moreRobotsThenNodes(): boolean {
-    const robots = Object.keys(this.algorithmConfigForm.controls)
-      .filter(
-        (key) => key !== "type" && key !== "startNodes" && key != "distribution"
-      )
-      .map((key) => this.algorithmConfigForm.get(key)?.value)
+  invalidRobotSum(): boolean {
+    const robots = this.startNodeCounterControls
+      .map((control) => control.value)
       .reduce((sum, current) => sum + current, 0);
-    return this.nodes.length < robots;
+    return this.nodes.length !== robots;
   }
 
   saveAlgorithmConfig(): void {
     this.loading.toggle();
     const distribution: { node: number; robots: number }[] = [];
-    Object.keys(this.algorithmConfigForm.controls)
-      .filter(
-        (key) => key !== "type" && key !== "startNodes" && key != "distribution"
-      )
-      .forEach((key) =>
-        distribution.push({
-          node: Number(key),
-          robots: this.algorithmConfigForm.get(key)?.value,
-        })
-      );
+    this.startNodeCounterControls.forEach((control, index) =>
+      distribution.push({
+        node:
+          this.initalConfig.value === "ROOTED"
+            ? this.startNodes.value
+            : this.startNodes.value[index],
+        robots: control.value,
+      })
+    );
     this.dialogRef.close({
       type: this.type.value,
       distribution: distribution,
     });
-  }
-
-  isAvailableType(type: string): boolean {
-    return (
-      [
-        AlgorithmType.RANDOM,
-        AlgorithmType.ROTOR_ROUTER,
-        AlgorithmType.FAULTLESS_DFS,
-      ].indexOf(type as AlgorithmType) < 0
-    );
   }
 }

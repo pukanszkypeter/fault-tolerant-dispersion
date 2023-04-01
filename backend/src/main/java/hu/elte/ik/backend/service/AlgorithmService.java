@@ -1,12 +1,10 @@
 package hu.elte.ik.backend.service;
 
+import hu.elte.ik.backend.model.fault.SimulationFault;
 import hu.elte.ik.backend.model.simulation.Simulation;
-import hu.elte.ik.backend.module.algorithm.faultless_dfs.*;
-import hu.elte.ik.backend.module.algorithm.faulty_dfs.*;
+import hu.elte.ik.backend.module.algorithm.dfs.*;
 import hu.elte.ik.backend.module.algorithm.random.*;
-import hu.elte.ik.backend.module.algorithm.random_leader.*;
 import hu.elte.ik.backend.module.algorithm.rotor_router.*;
-import hu.elte.ik.backend.module.algorithm.rotor_router_leader.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -17,23 +15,19 @@ public interface AlgorithmService {
     Simulation<RandomNode, RandomEdge, RandomRobot> simulation
   );
 
-  Simulation<RandomLeaderNode, RandomLeaderEdge, RandomLeaderRobot> randomLeaderDispersion(
-    Simulation<RandomLeaderNode, RandomLeaderEdge, RandomLeaderRobot> simulation
+  SimulationFault<RandomNode, RandomEdge, RandomRobot> randomFaultDispersion(
+    SimulationFault<RandomNode, RandomEdge, RandomRobot> simulationFault
   );
 
   Simulation<RotorRouterNode, RotorRouterEdge, RotorRouterRobot> rotorRouterDispersion(
     Simulation<RotorRouterNode, RotorRouterEdge, RotorRouterRobot> simulation
   );
 
-  Simulation<RotorRouterLeaderNode, RotorRouterLeaderEdge, RotorRouterLeaderRobot> rotorRouterLeaderDispersion(
-    Simulation<RotorRouterLeaderNode, RotorRouterLeaderEdge, RotorRouterLeaderRobot> simulation
+  SimulationFault<RotorRouterNode, RotorRouterEdge, RotorRouterRobot> rotorRouterFaultDispersion(
+    SimulationFault<RotorRouterNode, RotorRouterEdge, RotorRouterRobot> simulationFault
   );
 
-  Simulation<FaultlessDfsNode, FaultlessDfsEdge, FaultlessDfsRobot> faultlessDfsDispersion(
-    Simulation<FaultlessDfsNode, FaultlessDfsEdge, FaultlessDfsRobot> simulation
-  );
-
-  Simulation<FaultyDfsNode, FaultyDfsEdge, FaultyDfsRobot> faultyDfsDispersion(
-    Simulation<FaultyDfsNode, FaultyDfsEdge, FaultyDfsRobot> simulation
+  Simulation<DfsNode, DfsEdge, DfsRobot> dfsDispersion(
+    Simulation<DfsNode, DfsEdge, DfsRobot> simulation
   );
 }

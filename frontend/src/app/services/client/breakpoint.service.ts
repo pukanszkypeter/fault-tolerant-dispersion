@@ -1,5 +1,6 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { Injectable, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
 import { Observable, Subject, takeUntil } from "rxjs";
 import {
   Breakpoints,
@@ -17,7 +18,8 @@ export class BreakpointService implements OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private snackBar: SnackBarService
+    private snackBar: SnackBarService,
+    private router: Router
   ) {
     this.breakpointObserver
       .observe(Object.values(Breakpoints))
@@ -29,6 +31,7 @@ export class BreakpointService implements OnDestroy {
             .filter((key) => result.breakpoints[key])[0] as Breakpoints
         );
         if (key === "XS") {
+          this.router.navigateByUrl("/page-not-supported");
           await this.snackBar.openSnackBar(
             "app.responsiveWarning",
             SnackBarType.WARNING

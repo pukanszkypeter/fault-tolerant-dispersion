@@ -79,7 +79,7 @@ export class VisService {
           edges: {
             width: 1,
           },
-          // physics: false,
+          physics: true,
           interaction: {
             hideEdgesOnDrag: true,
             hideEdgesOnZoom: true,

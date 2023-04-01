@@ -1,6 +1,6 @@
 package hu.elte.ik.backend.controller;
 
-import hu.elte.ik.backend.model.simulation.SimulationResult;
+import hu.elte.ik.backend.model.result.SimulationResult;
 import hu.elte.ik.backend.service.ResultService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;

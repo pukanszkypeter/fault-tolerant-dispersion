@@ -8,6 +8,9 @@ import { SimulatorComponent } from "./simulator/simulator.component";
 import { TesterComponent } from "./tester/tester.component";
 import { GraphConfigDialogComponent } from "./simulator/graph-config-dialog/graph-config-dialog.component";
 import { AlgorithmConfigDialogComponent } from "./simulator/algorithm-config-dialog/algorithm-config-dialog.component";
+import { PageNotSupportedComponent } from "./page-not-supported/page-not-supported.component";
+import { SettingsConfigDialogComponent } from "./simulator/settings-config-dialog/settings-config-dialog.component";
+import { FaultsConfigDialogComponent } from "./simulator/faults-config-dialog/faults-config-dialog.component";
 
 @NgModule({
   imports: [SharedModule],
@@ -20,11 +23,15 @@ import { AlgorithmConfigDialogComponent } from "./simulator/algorithm-config-dia
     TesterComponent,
     GraphConfigDialogComponent,
     AlgorithmConfigDialogComponent,
+    PageNotSupportedComponent,
+    SettingsConfigDialogComponent,
+    FaultsConfigDialogComponent,
   ],
   exports: [
     ChangelogComponent,
     HomeComponent,
     PageNotFoundComponent,
+    PageNotSupportedComponent,
     ResultsComponent,
     SimulatorComponent,
     TesterComponent,

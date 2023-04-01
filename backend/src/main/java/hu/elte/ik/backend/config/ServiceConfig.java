@@ -4,12 +4,9 @@ import hu.elte.ik.backend.logic.AlgorithmServiceImpl;
 import hu.elte.ik.backend.logic.GraphServiceImpl;
 import hu.elte.ik.backend.logic.ResultServiceImpl;
 import hu.elte.ik.backend.logic.TestServiceImpl;
-import hu.elte.ik.backend.module.algorithm.FaultlessDfsHelper;
-import hu.elte.ik.backend.module.algorithm.FaultyDfsHelper;
+import hu.elte.ik.backend.module.algorithm.DfsHelper;
 import hu.elte.ik.backend.module.algorithm.RandomHelper;
-import hu.elte.ik.backend.module.algorithm.RandomLeaderHelper;
 import hu.elte.ik.backend.module.algorithm.RotorRouterHelper;
-import hu.elte.ik.backend.module.algorithm.RotorRouterLeaderHelper;
 import hu.elte.ik.backend.module.graph.GraphServiceHelper;
 import hu.elte.ik.backend.repository.BatchRepository;
 import hu.elte.ik.backend.repository.ResultRepository;
@@ -36,20 +33,10 @@ public class ServiceConfig {
   @Bean
   public AlgorithmService algorithmService(
     RandomHelper randomHelper,
-    RandomLeaderHelper randomLeaderHelper,
     RotorRouterHelper rotorRouterHelper,
-    RotorRouterLeaderHelper rotorRouterLeaderHelper,
-    FaultlessDfsHelper faultlessDfsHelper,
-    FaultyDfsHelper faultyDfsHelper
+    DfsHelper dfsHelper
   ) {
-    return new AlgorithmServiceImpl(
-      randomHelper,
-      randomLeaderHelper,
-      rotorRouterHelper,
-      rotorRouterLeaderHelper,
-      faultlessDfsHelper,
-      faultyDfsHelper
-    );
+    return new AlgorithmServiceImpl(randomHelper, rotorRouterHelper, dfsHelper);
   }
 
   @Bean

@@ -6,10 +6,14 @@
   "app": {
     "serverError": "Serverfehler!",
     "responsiveWarning": "Keine Unterstützung für Bildschirme unter 575px.",
+    "pageNotFoundWarning": "Die angeforderte Seite wurde nicht gefunden.",
     "requiredField": "Dieses Feld ist erforderlich",
+    "requiredMin": "Der erforderliche Mindestwert ist",
+    "requiredMax": "Der erforderliche Höchstwert ist",
     "cancel": "Zurück",
     "save": "Speichern",
-    "notAvailable": "Nicht verfügbar"
+    "notAvailable": "Nicht verfügbar.",
+    "comingSoon": "Demnächst"
   },
 
   "graph": {
@@ -36,15 +40,13 @@
 
   "algorithm": {
     "RANDOM": "Zufällig Dispersion",
-    "RANDOM_LEADER": "Zufällig mit Anführer Dispersion",
     "ROTOR_ROUTER": "Roto-Rooter Dispersion",
-    "ROTOR_ROUTER_LEADER": "Roto-Rooter mit Anführer Dispersion",
-    "FAULTLESS_DFS": "DFS Dispersion",
-    "FAULTY_DFS": "Fehlertolerantes DFS Dispersion"
+    "DFS": "DFS Dispersion"
   },
 
   "simulation": {
-    "DEFAULT": "Initial",
+    "NOT_CONFIGURED": "Nicht konfiguriert",
+    "DEFAULT": "Start",
     "IN_PROGRESS": "Im Gange",
     "FINISHED": "Fertig"
   },
@@ -57,12 +59,18 @@
     "CRASHED": "Absturz"
   },
 
+  "dispersionType": {
+    "COMPLETE": "Vollständig",
+    "PARTIAL": "Teilweise"
+  },
+
   "header": {
     "home": "Startseite",
     "simulator": "Simulator",
     "tester": "Tester",
     "results": "Ergebnisse",
     "changelog": "Changelog",
+    "pageNotSupported": "Seite Nicht Unterstüzt",
     "pageNotFound": "Seite Nicht Gefunden (404)",
     "language": "Sprache",
     "languageChanged": "Die Sprache hat sich geändert.",
@@ -82,10 +90,8 @@
   },
 
   "simulator": {
-    "simulator": "Simulator",
-    "operators": "Betreibers",
-    "robots": "Roboter",
-    "informations": "Informationen",
+    "settings": "Einstellungen",
+    "faults": "Fehler",
     "onId": "Knoten-ID",
     "state": "Zustand",
     "noRobotFound": "Kein Roboter gefunden.",
@@ -95,9 +101,13 @@
     "graph": "Graph",
     "algorithm": "Algorithmus",
     "reset": "Zurücksetzen",
+    "nodes": "Knoten",
+    "robots": "Roboter",
+    "steps": "Schritte",
+    "placement": "Platzierung",
+    "dispersion": "Dispersion",
     "waitingForApi": "Warten auf letzte API-Antwort...",
     "resetSucceeded": "Das Zurücksetzen war erfolgreich.",
-    "saveResults": "Ergebnisse speichern",
     "successfulSaving": "Erfolgreiches Speichern!",
     "failedToSave": "Speichern fehlgeschlagen!",
     "graphConfig": {
@@ -110,20 +120,44 @@
     "algorithmConfig": {
       "title": "Algorithmuskonfiguration",
       "type": "Typ",
-      "startNodes": "Start Knoten",
+      "initalRobotsPlacement": "Anfängliche Roboterplatzierung",
+      "rooted": "Ein Startpunkt",
+      "arbitrary": "Mehrere Startpunkte",
+      "startNodes": "Start Knote(n)",
       "startNode": "Knoten",
-      "moreRobotsThenNodes": "Kann nicht mehr Roboter als Knoten haben!",
+      "invalidRobotSum": "Sie können nicht mehr oder weniger Roboter als Knoten haben!",
       "redistribution": "Umverteilung durch Änderung",
       "evenRobotDistribution": "Sogar Roboterverteilung",
       "successfulAlgorithm": "Erfolgreiche Algorithmuskonfiguration"
+    },
+    "faultsConfig": {
+      "title": "Fehlerkonfiguration",
+      "faultLimit": "Fehlergrenze",
+      "currentlyAvailableRobots": "Derzeit verfügbare Roboter",
+      "purposeOfDispersion": "Zweck der Dispersion",
+      "complete": "Volle Inklusion",
+      "partial": "Teilweise Inklusion",
+      "faultProbability": "Fehlerwahrscheinlichkeit",
+      "successfulFaults": "Erfolgreiche Fehlerkonfiguration",
+      "redistributionRequired": "Da Sie mehr als einen Startknoten haben, ist eine Umverteilung erforderlich."
+    },
+    "settingsConfig": {
+      "title": "Einstellungen",
+      "simulationDelay": "Verzögerung der Simulation",
+      "saveResults": "Ergebnisse speichern",
+      "showInformation": "Informationen anzeigen",
+      "simulateFaults": "Fehler simulieren"
     }
   },
 
   "tester": {
-    "settings": "Einstellungen",
-    "results": "Ergebnisse",
     "numberOfTests": "Anzahl der Tests",
     "minField": "Mindestens 1",
+    "status": "Status",
+    "progress": "Progress",
+    "avgCrash": "Avg. Absturz",
+    "avgStep": "Avg. Schritt",
+    "size": "Größe",
     "batchInProgress": "Chargentest läuft...",
     "batchFinished": "Chargentest beendet!"
   }

@@ -1,4 +1,4 @@
-package hu.elte.ik.backend.model.simulation;
+package hu.elte.ik.backend.model.result;
 
 import hu.elte.ik.backend.model.algorithm.AlgorithmType;
 import hu.elte.ik.backend.model.graph.GraphType;
@@ -34,15 +34,24 @@ public class SimulationResult {
   @Column(name = "graph_type")
   private GraphType graphType;
 
+  @Column(name = "steps")
+  private Integer steps;
+
   @Column(name = "nodes")
   private Integer nodes;
+
+  @Column(name = "teams")
+  private Integer teams;
 
   @Column(name = "robots")
   private Integer robots;
 
-  @Column(name = "steps")
-  private Integer steps;
+  @Column(name = "crashes")
+  private Integer crashes;
 
-  @Column(name = "robots_crashed")
-  private Integer robotsCrashed;
+  @Column(name = "faults")
+  private Integer faults;
+
+  @Column(name = "probability")
+  private Double probability;
 }

@@ -56,9 +56,9 @@ public class GraphServiceImpl implements GraphService {
   }
 
   @Override
-  public Graph<Node, Edge> gnpRandomGraph(int node, double propability) {
+  public Graph<Node, Edge> gnpRandomGraph(int node, double probability) {
     return helper.generateGraph(
-      new GnpRandomGraphGenerator<>(node, propability)
+      new GnpRandomGraphGenerator<>(node, (probability / 100))
     );
   }
 

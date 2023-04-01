@@ -6,10 +6,14 @@
   "app": {
     "serverError": "Server error!",
     "responsiveWarning": "No support for screens below 575px.",
+    "pageNotFoundWarning": "The page you requested is not found.",
     "requiredField": "This field is required",
+    "requiredMin": "The min value required is",
+    "requiredMax": "The max value required is",
     "cancel": "Cancel",
     "save": "Save",
-    "notAvailable": "Not available"
+    "notAvailable": "Not available.",
+    "comingSoon": "Coming soon"
   },
 
   "graph": {
@@ -36,15 +40,13 @@
 
   "algorithm": {
     "RANDOM": "Random dispersion",
-    "RANDOM_LEADER": "Random with leader dispersion",
     "ROTOR_ROUTER": "Rotor router dispersion",
-    "ROTOR_ROUTER_LEADER": "Rotor router with leader dispersion",
-    "FAULTLESS_DFS": "DFS dispersion",
-    "FAULTY_DFS": "Fault tolerant DFS dispersion"
+    "DFS": "DFS dispersion"
   },
 
   "simulation": {
-    "DEFAULT": "Initial",
+    "NOT_CONFIGURED": "Not configured",
+    "DEFAULT": "Start",
     "IN_PROGRESS": "In Progress",
     "FINISHED": "Finished"
   },
@@ -57,12 +59,18 @@
     "CRASHED": "Crashed"
   },
 
+  "dispersionType": {
+    "COMPLETE": "Complete",
+    "PARTIAL": "Partial"
+  },
+
   "header": {
     "home": "Home",
     "simulator": "Simulator",
     "tester": "Tester",
     "results": "Results",
     "changelog": "Changelog",
+    "pageNotSupported": "Page Not Supported",
     "pageNotFound": "Page Not Found (404)",
     "language": "Language",
     "languageChanged": "The language has changed.",
@@ -82,10 +90,8 @@
   },
 
   "simulator": {
-    "simulator": "Simulator",
-    "operators": "Operators",
-    "robots": "Robots",
-    "informations": "Informations",
+    "settings": "Settings",
+    "faults": "Faults",
     "onId": "Node ID",
     "state": "State",
     "noRobotFound": "No robot found.",
@@ -95,9 +101,13 @@
     "graph": "Graph",
     "algorithm": "Algorithm",
     "reset": "Reset",
+    "nodes": "Nodes",
+    "robots": "Robots",
+    "steps": "Steps",
+    "placement": "Placement",
+    "dispersion": "Dispersion",
     "waitingForApi": "Waiting for last API response...",
     "resetSucceeded": "The reset was successful.",
-    "saveResults": "Save results",
     "successfulSaving": "Successful saving!",
     "failedToSave": "Failed to save!",
     "graphConfig": {
@@ -110,20 +120,44 @@
     "algorithmConfig": {
       "title": "Algorithm configuration",
       "type": "Type",
-      "startNodes": "Start nodes",
+      "initalRobotsPlacement": "Initial robots placement",
+      "rooted": "Rooted",
+      "arbitrary": "Arbitrary",
+      "startNodes": "Start node(s)",
       "node": "Node",
-      "moreRobotsThenNodes": "Can't have more robots then nodes!",
+      "invalidRobotSum": "You can't have more or less robots than nodes!",
       "redistribution": "Redistribution by change",
       "evenRobotDistribution": "Even robot distribution",
       "successfulAlgorithm": "Successful algorithm configuration"
+    },
+    "faultsConfig": {
+      "title": "Faults configuration",
+      "faultLimit": "Fault limit",
+      "currentlyAvailableRobots": "Currently available robots",
+      "purposeOfDispersion": "Purpose of dispersion",
+      "complete": "Complete inclusion",
+      "partial": "Partial inclusion",
+      "faultProbability": "Fault probability",
+      "successfulFaults": "Successful faults configuration",
+      "redistributionRequired": "Since you have more than one start node, redistribution is required."
+    },
+    "settingsConfig": {
+      "title": "Settings",
+      "simulationDelay": "Delay of simulation",
+      "saveResults": "Save results",
+      "showInformation": "Show informations",
+      "simulateFaults": "Simulate faults"
     }
   },
 
   "tester": {
-    "settings": "Settings",
-    "results": "Results",
     "numberOfTests": "Number of tests",
     "minField": "Minimum 1",
+    "status": "Status",
+    "progress": "Progress",
+    "avgCrash": "Avg. Crash",
+    "avgStep": "Avg. Step",
+    "size": "Size",
     "batchInProgress": "Batch testing in progress...",
     "batchFinished": "Batch testing finished!"
   }

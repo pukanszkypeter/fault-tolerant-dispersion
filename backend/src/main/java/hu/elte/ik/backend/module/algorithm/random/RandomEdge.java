@@ -10,6 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RandomEdge extends Edge {
 
+  public RandomEdge(Long id, Long fromId, Long toId) {
+    super(id, fromId, toId);
+  }
+
+  /**
+   * See
+   * hu.elte.ik.backend.logic.TestServiceImpl.java
+   * createSimulation()
+   */
   public RandomEdge(RandomEdge that) {
     super(that);
   }

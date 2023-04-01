@@ -1,4 +1,4 @@
-package hu.elte.ik.backend.model.simulation;
+package hu.elte.ik.backend.model.test;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

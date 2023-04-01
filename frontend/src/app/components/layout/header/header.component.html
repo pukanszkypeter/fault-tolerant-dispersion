@@ -7,7 +7,11 @@
         </button>
         <mat-menu #pagesMenu="matMenu" xPosition="after" yPosition="below">
           <ng-container *ngFor="let page of pages">
-            <ng-container *ngIf="page.key !== 'page-not-found'">
+            <ng-container
+              *ngIf="
+                !['page-not-found', 'page-not-supported'].includes(page.key)
+              "
+            >
               <button mat-menu-item [routerLink]="['/' + page.key]">
                 <mat-icon>{{ page.iconKey }}</mat-icon>
                 <span>{{ page.translateKey | translate }}</span>
@@ -34,7 +38,9 @@
           />
         </a>
         <ng-container *ngFor="let page of pages">
-          <ng-container *ngIf="page.key !== 'page-not-found'">
+          <ng-container
+            *ngIf="!['page-not-found', 'page-not-supported'].includes(page.key)"
+          >
             <button
               class="me-2"
               mat-button

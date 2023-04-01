@@ -1,334 +1,431 @@
-<div class="container-fluid" style="margin-bottom: 2rem">
-  <div class="row gy-5">
-    <div class="col-12 col-xl-8">
-      <h3 class="fs-2">{{ "simulator.simulator" | translate }}</h3>
+<div class="container-fluid">
+  <div class="row g-4">
+    <div class="col-12">
+      <mat-card>
+        <div class="row">
+          <div
+            class="col-12 col-lg-6 p-4 d-flex"
+            [ngStyle]="{
+              justifyContent: (isSmallScreen$ | async) ? 'center' : 'left'
+            }"
+          >
+            <div style="padding: 0rem 1rem; display: flex; gap: 1.5rem">
+              <button
+                *ngIf="!isRunning"
+                mat-flat-button
+                color="accent"
+                (click)="play()"
+              >
+                <mat-icon>play_arrow</mat-icon>
+                {{ "simulator.start" | translate }}
+              </button>
+
+              <button
+                *ngIf="isRunning"
+                mat-flat-button
+                color="accent"
+                (click)="stop()"
+              >
+                <mat-icon>pause</mat-icon>
+                {{ "simulator.stop" | translate }}
+              </button>
+
+              <button mat-flat-button color="accent" (click)="next()">
+                <mat-icon>skip_next</mat-icon>
+                {{ "simulator.next" | translate }}
+              </button>
+
+              <button mat-flat-button color="accent" (click)="reset()">
+                <mat-icon>refresh</mat-icon>
+                {{ "simulator.reset" | translate }}
+              </button>
+            </div>
+          </div>
+          <div
+            class="col-12 col-lg-6 p-4 d-flex"
+            [ngStyle]="{
+              justifyContent: (isSmallScreen$ | async) ? 'center' : 'right'
+            }"
+          >
+            <div style="padding: 0rem 1rem; display: flex; gap: 1.5rem">
+              <button
+                mat-flat-button
+                [ngStyle]="{
+                  'background-color': !graphConfigured
+                    ? 'rgb(211, 47, 47)'
+                    : 'rgb(76, 175, 80)',
+                  color: 'white'
+                }"
+                (click)="openGraphConfigDialog()"
+              >
+                {{ "simulator.graph" | translate }}
+              </button>
+
+              <button
+                mat-flat-button
+                [ngStyle]="{
+                  'background-color': !algorithmConfigured
+                    ? 'rgb(211, 47, 47)'
+                    : 'rgb(76, 175, 80)',
+                  color: 'white'
+                }"
+                (click)="openAlgorithmConfigDialog()"
+              >
+                {{ "simulator.algorithm" | translate }}
+              </button>
+              <button
+                *ngIf="simulateFaults"
+                mat-flat-button
+                [ngStyle]="{
+                  'background-color': !faultsConfigured
+                    ? 'rgb(211, 47, 47)'
+                    : 'rgb(76, 175, 80)',
+                  color: 'white'
+                }"
+                (click)="openFaultsConfigDialog()"
+              >
+                {{ "simulator.faults" | translate }}
+              </button>
+              <button
+                mat-flat-button
+                color="accent"
+                (click)="openSettingsConfigDialog()"
+              >
+                <mat-icon>settings</mat-icon>
+                {{ "simulator.settings" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div [ngClass]="{ 'col-lg-8': showInformations }" class="col-12">
       <mat-card
         id="visContainer"
         [ngStyle]="{ height: (isSmallScreen$ | async) ? '400px' : '600px' }"
       ></mat-card>
     </div>
-    <div class="col-12 col-xl-4">
-      <h3 class="fs-2">{{ "simulator.operators" | translate }}</h3>
-      <div
-        cdkDropList
-        [cdkDropListData]="operator"
-        (cdkDropListDropped)="drop($event)"
-        class="row"
-        [ngClass]="{ 'gy-4': (isSmallScreen$ | async) }"
-        [ngStyle]="{
-          gap: (isSmallScreen$ | async) ? '0' : '2rem',
-          height:
-            (isSmallScreen$ | async)
-              ? (isExtraSmallScreen$ | async)
-                ? '600px'
-                : '300px'
-              : '600px'
-        }"
+    <div *ngIf="showInformations" class="col-12 col-lg-4">
+      <mat-card
+        [ngStyle]="{ height: (isSmallScreen$ | async) ? '400px' : '600px' }"
       >
-        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
-          <mat-card
-            class="drag-box"
-            style="justify-content: space-evenly"
-            cdkDrag
-          >
-            <mat-icon class="drag-element" cdkDragHandle
-              >drag_indicator</mat-icon
-            >
-            <div
-              [matTooltip]="
-                !graphConfigured || !algorithmConfigured || isRunning
-                  ? ('app.notAvailable' | translate)
-                  : ''
-              "
-            >
-              <button
-                mat-fab
-                [disabled]="
-                  !graphConfigured || !algorithmConfigured || isRunning
-                "
-                (click)="play()"
-                color="accent"
-                [matTooltip]="
-                  graphConfigured && algorithmConfigured && !isRunning
-                    ? ('simulator.start' | translate)
-                    : ''
-                "
-              >
-                <mat-icon>play_arrow</mat-icon>
-              </button>
-            </div>
-            <div
-              [matTooltip]="
-                !graphConfigured || !algorithmConfigured || isRunning
-                  ? ('app.notAvailable' | translate)
-                  : ''
-              "
-            >
-              <button
-                mat-fab
-                [disabled]="
-                  !graphConfigured || !algorithmConfigured || isRunning
-                "
-                (click)="next()"
-                color="accent"
-                [matTooltip]="
-                  graphConfigured && algorithmConfigured && !isRunning
-                    ? ('simulator.next' | translate)
-                    : ''
-                "
-              >
-                <mat-icon>skip_next</mat-icon>
-              </button>
-            </div>
-            <div
-              [matTooltip]="
-                !graphConfigured || !algorithmConfigured || !isRunning
-                  ? ('app.notAvailable' | translate)
-                  : ''
-              "
-            >
-              <button
-                mat-fab
-                [disabled]="
-                  !graphConfigured || !algorithmConfigured || !isRunning
-                "
-                (click)="stop()"
-                color="accent"
-                [matTooltip]="
-                  graphConfigured && algorithmConfigured && isRunning
-                    ? ('simulator.stop' | translate)
-                    : ''
-                "
-              >
-                <mat-icon>pause</mat-icon>
-              </button>
-            </div>
-          </mat-card>
-        </div>
-        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
-          <mat-card
-            class="drag-box"
-            style="justify-content: space-evenly"
-            cdkDrag
-          >
-            <mat-icon class="drag-element" cdkDragHandle
-              >drag_indicator</mat-icon
-            >
-            <button
-              mat-raised-button
-              color="accent"
-              style="height: 50px"
-              [ngStyle]="{
-                width: (isSmallScreen$ | async) ? '125px' : '150px'
-              }"
-              (click)="openGraphConfigDialog()"
-            >
-              <span
-                [ngStyle]="{
-                  color:
-                    (isSmallScreen$ | async)
-                      ? !graphConfigured
-                        ? 'red'
-                        : 'green'
-                      : 'inherit'
-                }"
-                >{{ "simulator.graph" | translate }}</span
-              >
-              <mat-icon
-                *ngIf="!graphConfigured && !(isSmallScreen$ | async)"
-                style="color: red"
-                >close</mat-icon
-              >
-              <mat-icon
-                *ngIf="graphConfigured && !(isSmallScreen$ | async)"
-                style="color: green"
-                >done</mat-icon
-              >
-            </button>
-            <div
-              [matTooltip]="
-                !graphConfigured ? ('app.notAvailable' | translate) : ''
-              "
-            >
-              <button
-                mat-raised-button
-                color="accent"
-                style="height: 50px"
-                [ngStyle]="{
-                  width: (isSmallScreen$ | async) ? '125px' : '150px'
-                }"
-                [disabled]="!graphConfigured"
-                (click)="openAlgorithmConfigDialog()"
-              >
-                <span
-                  [ngStyle]="{
-                    color:
-                      (isSmallScreen$ | async) && graphConfigured
-                        ? !algorithmConfigured
-                          ? 'red'
-                          : 'green'
-                        : 'inherit'
-                  }"
-                  >{{ "simulator.algorithm" | translate }}</span
-                >
-                <mat-icon
-                  *ngIf="!algorithmConfigured && !(isSmallScreen$ | async)"
-                  [ngStyle]="{
-                    color: !graphConfigured ? 'inherit' : 'red'
-                  }"
-                  >close</mat-icon
-                >
-                <mat-icon
-                  *ngIf="algorithmConfigured && !(isSmallScreen$ | async)"
-                  style="color: green"
-                  >done</mat-icon
-                >
-              </button>
-            </div>
-          </mat-card>
-        </div>
-        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
-          <mat-card class="drag-box" style="gap: 0.5rem" cdkDrag>
-            <button mat-icon-button color="accent" (click)="increaseDelay()">
-              <mat-icon>add</mat-icon>
-            </button>
-            <p
-              class="lead m-0"
-              style="line-height: 48px; width: 80px; text-align: center"
-            >
-              {{ delay }} ms
-            </p>
-            <button mat-icon-button color="accent" (click)="decreaseDelay()">
-              <mat-icon>remove</mat-icon>
-            </button>
-            <mat-icon class="drag-element" cdkDragHandle
-              >drag_indicator</mat-icon
-            >
-          </mat-card>
-        </div>
-        <div class="col-12 col-md-6 col-xl-12" style="height: 126px">
-          <mat-card
-            class="drag-box"
-            style="justify-content: space-evenly"
-            cdkDrag
-          >
-            <button
-              mat-raised-button
-              color="accent"
-              style="height: 50px"
-              [disabled]="!graphConfigured || !algorithmConfigured"
-              [ngStyle]="{
-                width: (isSmallScreen$ | async) ? '125px' : '150px'
-              }"
-              (click)="reset()"
-            >
-              <mat-icon *ngIf="!(isSmallScreen$ | async)">refresh</mat-icon>
-              <span>{{ "simulator.reset" | translate }}</span>
-            </button>
-            <mat-checkbox
-              [checked]="saveResults"
-              (change)="toggleSaveResults($event)"
-              >{{ "simulator.saveResults" | translate }}</mat-checkbox
-            >
-            <mat-icon class="drag-element" cdkDragHandle
-              >drag_indicator</mat-icon
-            >
-          </mat-card>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-xl-8">
-      <h3 class="fs-2">{{ "simulator.robots" | translate }}</h3>
-      <mat-card>
-        <table mat-table [dataSource]="(robotData$ | async)!">
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>Robot ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-          <ng-container matColumnDef="onId">
-            <th mat-header-cell *matHeaderCellDef>
-              {{ "simulator.onId" | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element">{{ element.onId }}</td>
-          </ng-container>
-          <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef>
-              {{ "simulator.state" | translate }}
-            </th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-              style="
-                height: 52px;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-              "
-            >
-              <mat-icon *ngIf="element.state === 'START'">smart_toy</mat-icon>
-              <mat-icon *ngIf="element.state === 'EXPLORE'">explore</mat-icon>
-              <mat-icon *ngIf="element.state === 'LEADER'">star</mat-icon>
-              <mat-icon *ngIf="element.state === 'TERMINATED'">
-                local_parking
-              </mat-icon>
-              <mat-icon *ngIf="element.state === 'CRASHED'"
-                >crisis_alert</mat-icon
-              >
-              {{ "robot." + element.state | translate }}
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="robotColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: robotColumns"></tr>
-        </table>
-        <div
-          *ngIf="(robotData$ | async)!.data.length === 0"
-          style="
-            height: 76px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: red;
-          "
-        >
-          {{ "simulator.noRobotFound" | translate }}
-        </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-        </mat-paginator>
-      </mat-card>
-    </div>
-    <div class="col-12 col-xl-4">
-      <h3 class="fs-2">{{ "simulator.informations" | translate }}</h3>
-      <mat-card>
-        <mat-card-header>
+        <mat-card-header style="padding: 8px 8px 0">
           <mat-icon
-            *ngIf="simulationState === 'DEFAULT'"
+            *ngIf="
+              !algorithmConfigured ||
+              !graphConfigured ||
+              (simulateFaults ? !faultsConfigured : false)
+            "
             mat-card-avatar
             style="font-size: 40px"
-            >flag</mat-icon
+            >report</mat-icon
+          >
+          <mat-card-title
+            *ngIf="
+              !algorithmConfigured ||
+              !graphConfigured ||
+              (simulateFaults ? !faultsConfigured : false)
+            "
+            >{{ "simulation.NOT_CONFIGURED" | translate }}</mat-card-title
           >
           <mat-icon
-            *ngIf="simulationState === 'IN_PROGRESS'"
+            *ngIf="
+              algorithmConfigured &&
+              graphConfigured &&
+              (simulateFaults ? faultsConfigured : true) &&
+              simulationState === 'DEFAULT'
+            "
+            mat-card-avatar
+            style="font-size: 40px"
+            >play_arrow</mat-icon
+          >
+          <mat-icon
+            *ngIf="
+              algorithmConfigured &&
+              graphConfigured &&
+              (simulateFaults ? faultsConfigured : true) &&
+              simulationState === 'IN_PROGRESS'
+            "
             mat-card-avatar
             style="font-size: 40px"
             >hourglass_top</mat-icon
           >
           <mat-icon
-            *ngIf="simulationState === 'FINISHED'"
+            *ngIf="
+              algorithmConfigured &&
+              graphConfigured &&
+              (simulateFaults ? faultsConfigured : true) &&
+              simulationState === 'FINISHED'
+            "
             mat-card-avatar
             style="font-size: 40px"
             >verified</mat-icon
           >
-          <mat-card-title>{{
-            "simulation." + simulationState | translate
-          }}</mat-card-title>
+          <mat-card-title
+            *ngIf="
+              algorithmConfigured &&
+              graphConfigured &&
+              (simulateFaults ? faultsConfigured : true)
+            "
+            >{{ "simulation." + simulationState | translate }}</mat-card-title
+          >
+
           <mat-card-subtitle>{{ getOccupancy }}%</mat-card-subtitle>
+          <div
+            class="d-flex align-items-center"
+            style="margin-left: auto; padding-bottom: 8px; margin-right: 1rem"
+          >
+            <h4 style="margin: 0; display: flex; gap: 1rem">
+              {{ "simulator.steps" | translate }}: <strong>{{ steps }}</strong>
+            </h4>
+          </div>
         </mat-card-header>
         <mat-progress-bar
           [color]="'accent'"
           [mode]="'determinate'"
           [value]="getOccupancy"
         ></mat-progress-bar>
+        <mat-card-content
+          style="
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 0;
+          "
+        >
+          <div style="display: flex; flex-direction: column; flex-grow: 1">
+            <div class="row h-100 p-2">
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.graph" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="!simulatorProps.graphType"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.graphType"
+                  style="width: 100%; text-align: center"
+                  >{{ "graph." + simulatorProps.graphType | translate }}</span
+                >
+              </div>
+              <div
+                class="col-6 col-lg-12 d-flex align-items-center"
+                style="justify-content: space-between"
+              >
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.algorithm" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="!simulatorProps.algorithmType"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.algorithmType"
+                  style="width: 100%; text-align: center"
+                  >{{
+                    "algorithm." + simulatorProps.algorithmType | translate
+                  }}</span
+                >
+              </div>
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.nodes" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="simulatorProps.graph.nodes.length === 0"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.graph.nodes.length !== 0"
+                  style="width: 100%; text-align: center"
+                  >{{ simulatorProps.graph.nodes.length }}</span
+                >
+              </div>
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.robots" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="simulatorProps.robots.getValue().length === 0"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.robots.getValue().length !== 0"
+                  style="width: 100%; text-align: center"
+                  >{{ simulatorProps.robots.getValue().length }}</span
+                >
+              </div>
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.placement" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="simulatorProps.teams === 0"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.teams !== 0"
+                  style="width: 100%; text-align: center"
+                  >{{
+                    simulatorProps.teams === 1
+                      ? ("simulator.algorithmConfig.rooted" | translate)
+                      : ("simulator.algorithmConfig.arbitrary" | translate)
+                  }}</span
+                >
+              </div>
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.dispersion" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="!simulatorProps.dispersionType"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.dispersionType"
+                  style="width: 100%; text-align: center"
+                  >{{
+                    "dispersionType." + simulatorProps.dispersionType
+                      | translate
+                  }}</span
+                >
+              </div>
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.faultsConfig.faultLimit" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="!simulatorProps.faultLimit"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.faultLimit"
+                  style="width: 100%; text-align: center"
+                  >{{ simulatorProps.faultLimit }}</span
+                >
+              </div>
+              <div class="col-6 col-lg-12 d-flex align-items-center">
+                <span style="width: 100%; text-align: center">{{
+                  "simulator.faultsConfig.faultProbability" | translate
+                }}</span>
+                <span style="width: 100%; text-align: center">-</span>
+                <div
+                  *ngIf="!simulatorProps.faultProbability"
+                  style="width: 100%; text-align: center; height: 20px"
+                >
+                  <mat-icon style="font-size: 20px; width: 20px; height: 20px"
+                    >close</mat-icon
+                  >
+                </div>
+                <span
+                  *ngIf="simulatorProps.faultProbability"
+                  style="width: 100%; text-align: center"
+                  >{{ simulatorProps.faultProbability }}%</span
+                >
+              </div>
+            </div>
+          </div>
+          <table mat-table [dataSource]="(robotData$ | async)!">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>Robot ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            </ng-container>
+            <ng-container matColumnDef="onId">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ "simulator.onId" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">{{ element.onId }}</td>
+            </ng-container>
+            <ng-container matColumnDef="state">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ "simulator.state" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon
+                  style="margin-bottom: -8px"
+                  *ngIf="element.state === 'START'"
+                  >smart_toy</mat-icon
+                >
+                <mat-icon
+                  style="margin-bottom: -8px"
+                  *ngIf="element.state === 'EXPLORE'"
+                  >explore</mat-icon
+                >
+                <mat-icon
+                  style="margin-bottom: -8px"
+                  *ngIf="element.state === 'TERMINATED'"
+                >
+                  local_parking
+                </mat-icon>
+                <mat-icon
+                  style="margin-bottom: -8px"
+                  *ngIf="element.state === 'CRASHED'"
+                  >crisis_alert</mat-icon
+                >
+              </td>
+            </ng-container>
+            <tr
+              mat-header-row
+              *matHeaderRowDef="robotColumns"
+              style="height: 32px"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: robotColumns"
+              style="height: 32px"
+            ></tr>
+          </table>
+          <div
+            *ngIf="(robotData$ | async)!.data.length === 0"
+            style="
+              height: 160px;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: red;
+            "
+          >
+            {{ "simulator.noRobotFound" | translate }}
+          </div>
+          <mat-paginator hidePageSize [pageSize]="5"> </mat-paginator>
+        </mat-card-content>
       </mat-card>
     </div>
   </div>

@@ -6,42 +6,81 @@
   <mat-form-field appearance="outline" color="accent" style="width: 100%">
     <mat-select [formControl]="type">
       <mat-option
-        [disabled]="isAvailableType(type)"
         *ngFor="let type of algorithmTypes"
         [value]="type"
+        [disabled]="type === 'DFS'"
       >
         {{ "algorithm." + type | translate }}
+        <span *ngIf="type === 'DFS'"
+          >({{ "app.comingSoon" | translate }}...)</span
+        >
       </mat-option>
     </mat-select>
     <mat-error *ngIf="type.hasError('required')">{{
       "app.requiredField" | translate
     }}</mat-error>
   </mat-form-field>
-  <h4
-    class="d-flex align-item-center justify-content-between"
-    style="margin: 0 0 8px"
-  >
-    <span>{{ "simulator.algorithmConfig.startNodes" | translate }}</span>
-    <span class="mat-caption"
-      >({{ "simulator.algorithmConfig.redistribution" | translate }})</span
-    >
+  <h4 style="margin: 0 0 8px">
+    {{ "simulator.algorithmConfig.initalRobotsPlacement" | translate }}:
   </h4>
-  <mat-form-field appearance="outline" color="accent" style="width: 100%">
-    <mat-select
-      [formControl]="startNodes"
-      multiple
-      (selectionChange)="startNodeSelected()"
+  <mat-radio-group
+    [formControl]="initalConfig"
+    (change)="resetCounters()"
+    style="display: flex; margin-bottom: 1rem"
+  >
+    <mat-radio-button value="ROOTED" style="width: 50%">{{
+      "simulator.algorithmConfig.rooted" | translate
+    }}</mat-radio-button>
+    <mat-radio-button value="ARBITRARY" style="width: 50%">{{
+      "simulator.algorithmConfig.arbitrary" | translate
+    }}</mat-radio-button>
+  </mat-radio-group>
+  <div *ngIf="initalConfig.value === 'ROOTED'">
+    <h4 style="margin: 0 0 8px">
+      {{ "simulator.algorithmConfig.startNodes" | translate }}
+    </h4>
+    <mat-form-field appearance="outline" color="accent" style="width: 100%">
+      <mat-select
+        [formControl]="startNodes"
+        (selectionChange)="startNodeSelected()"
+      >
+        <mat-option *ngFor="let node of nodes" [value]="node">
+          {{ node }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="startNodes.hasError('required')">{{
+        "app.requiredField" | translate
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div *ngIf="initalConfig.value === 'ARBITRARY'">
+    <h4
+      class="d-flex align-item-center justify-content-between"
+      style="margin: 0 0 8px"
     >
-      <mat-option *ngFor="let node of nodes" [value]="node">
-        {{ node }}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="startNodes.hasError('required')">{{
-      "app.requiredField" | translate
-    }}</mat-error>
-  </mat-form-field>
-  <div *ngIf="startNodes.value.length > 0">
+      <span>{{ "simulator.algorithmConfig.startNodes" | translate }}</span>
+      <span class="mat-caption"
+        >({{ "simulator.algorithmConfig.redistribution" | translate }})</span
+      >
+    </h4>
+    <mat-form-field appearance="outline" color="accent" style="width: 100%">
+      <mat-select
+        [formControl]="startNodes"
+        multiple
+        (selectionChange)="startNodeSelected()"
+      >
+        <mat-option *ngFor="let node of nodes" [value]="node">
+          {{ node }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="startNodes.hasError('required')">{{
+        "app.requiredField" | translate
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div *ngIf="startNodeCounters.controls.length > 0">
     <div
+      *ngIf="initalConfig.value === 'ARBITRARY'"
       class="d-flex align-items-center"
       style="width: 100%; gap: 1rem; margin: 0.5rem 0 1.5rem 0"
     >
@@ -54,25 +93,28 @@
         (toggleChange)="distributionToggle()"
       ></mat-slide-toggle>
     </div>
-    <div id="error-container" *ngIf="moreRobotsThenNodes()">
+    <div id="error-container" *ngIf="invalidRobotSum()">
       <mat-icon style="margin-top: -3px">warning</mat-icon>
       <h4 style="margin: 0">
-        {{ "simulator.algorithmConfig.moreRobotsThenNodes" | translate }}
+        {{ "simulator.algorithmConfig.invalidRobotSum" | translate }}
       </h4>
     </div>
     <div class="row">
-      <div class="col-6" *ngFor="let startNode of startNodes.value">
+      <div
+        class="col-6"
+        *ngFor="let startNodeCounter of startNodeCounterControls; let i = index"
+      >
         <h4 style="margin: 0 0 8px">
           {{ "simulator.algorithmConfig.node" | translate }} -
-          <strong>{{ startNode }}</strong>
+          <strong>{{
+            initalConfig.value === "ARBITRARY"
+              ? startNodes.value[i]
+              : startNodes.value
+          }}</strong>
         </h4>
         <mat-form-field appearance="outline" color="accent" style="width: 100%">
-          <input
-            [formControl]="getNodeControl(startNode)"
-            matInput
-            type="number"
-          />
-          <mat-error *ngIf="getNodeControl(startNode).hasError('required')">{{
+          <input [formControl]="startNodeCounter" matInput type="number" />
+          <mat-error *ngIf="startNodeCounter.hasError('required')">{{
             "app.requiredField" | translate
           }}</mat-error>
         </mat-form-field>
@@ -89,7 +131,7 @@
     {{ "app.cancel" | translate }}
   </button>
   <button
-    [disabled]="!algorithmConfigForm.valid || moreRobotsThenNodes()"
+    [disabled]="!algorithmConfigForm.valid || invalidRobotSum()"
     mat-flat-button
     color="accent"
     (click)="saveAlgorithmConfig()"

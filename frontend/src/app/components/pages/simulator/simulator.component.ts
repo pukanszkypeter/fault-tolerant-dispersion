@@ -1,11 +1,4 @@
-import { CdkDrag, CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import {
-  ChangeDetectorRef,
-  Component,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { delay, firstValueFrom, map, Observable } from "rxjs";
 import { VisService } from "src/app/services/client/vis.service";
@@ -20,7 +13,10 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { MatPaginator } from "@angular/material/paginator";
 import { NodeState } from "src/app/models/graph/NodeState";
-import { MatCheckboxChange } from "@angular/material/checkbox";
+import { SettingsConfigDialogComponent } from "./settings-config-dialog/settings-config-dialog.component";
+import { FaultsConfigDialogComponent } from "./faults-config-dialog/faults-config-dialog.component";
+import { DispersionType } from "src/app/models/fault/DispersionType";
+import { UtilService } from "src/app/services/client/util.service";
 
 @Component({
   selector: "app-simulator",
@@ -29,14 +25,10 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
 })
 export class SimulatorComponent {
   breakpoint$: Observable<string> = this.breakpoint.breakpoint$;
+
   graphConfigured: boolean = false;
   algorithmConfigured: boolean = false;
-
-  // Operators
-
-  operator: CdkDrag[] = [];
-  @ViewChildren(CdkDrag)
-  operators!: QueryList<CdkDrag>;
+  faultsConfigured: boolean = false;
 
   robotColumns: string[] = ["id", "onId", "state"];
   private robotData = new MatTableDataSource<Robot>();
@@ -52,82 +44,15 @@ export class SimulatorComponent {
   constructor(
     public dialog: MatDialog,
     private breakpoint: BreakpointService,
-    private cdr: ChangeDetectorRef,
     private vis: VisService,
     private loading: LoadingService,
     private snackBar: SnackBarService,
-    private simulator: SimulatorService
+    private simulator: SimulatorService,
+    private util: UtilService
   ) {}
 
-  get isSmallScreen$(): Observable<boolean> {
-    return this.breakpoint$.pipe(
-      map((breakpoint) => {
-        return (
-          breakpoint === "XS" ||
-          breakpoint === "S" ||
-          breakpoint === "M" ||
-          breakpoint === "L"
-        );
-      })
-    );
-  }
-
-  get isExtraSmallScreen$(): Observable<boolean> {
-    return this.breakpoint$.pipe(
-      map((breakpoint) => {
-        return breakpoint === "XS" || breakpoint === "S";
-      })
-    );
-  }
-
-  // Operators
-
   ngAfterViewInit() {
-    const arr = this.operators.toArray();
-    this.operator = [arr[0], arr[1], arr[2], arr[3]];
     this.robotData.paginator = this.paginator;
-  }
-
-  ngAfterViewChecked() {
-    this.cdr.detectChanges();
-  }
-
-  drop(event: CdkDragDrop<any[]>) {
-    const { container, previousIndex, currentIndex } = event;
-
-    moveItemInArray(container.data, previousIndex, currentIndex);
-    this.moveWithinContainer(
-      container.element.nativeElement,
-      previousIndex,
-      currentIndex
-    );
-  }
-
-  moveWithinContainer(
-    container: any,
-    fromIndex: number,
-    toIndex: number
-  ): void {
-    if (fromIndex === toIndex) {
-      return;
-    }
-
-    const nodeToMove = container.children[fromIndex];
-    const targetNode = container.children[toIndex];
-
-    if (fromIndex < toIndex) {
-      targetNode.parentNode.insertBefore(nodeToMove, targetNode.nextSibling);
-    } else {
-      targetNode.parentNode.insertBefore(nodeToMove, targetNode);
-    }
-  }
-
-  get saveResults(): boolean {
-    return this.simulator.saveResults;
-  }
-
-  toggleSaveResults(event: MatCheckboxChange) {
-    this.simulator.toggleSaveResults(event.checked);
   }
 
   // Dialogs
@@ -137,6 +62,7 @@ export class SimulatorComponent {
       minWidth: "500px",
       width: "600px",
       disableClose: true,
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -169,42 +95,145 @@ export class SimulatorComponent {
   }
 
   openAlgorithmConfigDialog(): void {
-    const dialogRef = this.dialog.open(AlgorithmConfigDialogComponent, {
-      minWidth: "500px",
-      width: "600px",
-      disableClose: true,
-    });
-
-    dialogRef
-      .afterClosed()
-      .pipe(delay(1000))
-      .subscribe((result) => {
-        if (result) {
-          this.algorithmConfigured = true;
-          this.simulator.algorithmType = result.type;
-          this.simulator.populate(result.distribution);
-          this.vis.updateGraph().subscribe();
-          this.snackBar.openSnackBar(
-            "simulator.algorithmConfig.successfulAlgorithm",
-            SnackBarType.SUCCESS
-          );
-          this.loading.toggle();
-        }
+    if (this.graphConfigured) {
+      const dialogRef = this.dialog.open(AlgorithmConfigDialogComponent, {
+        minWidth: "500px",
+        width: "600px",
+        disableClose: true,
+        autoFocus: false,
       });
+
+      dialogRef
+        .afterClosed()
+        .pipe(delay(1000))
+        .subscribe((result) => {
+          if (result) {
+            this.algorithmConfigured = true;
+            this.simulator.teams = result.distribution.length;
+            this.simulator.algorithmType = result.type;
+            this.simulator.populate(result.distribution);
+            this.vis.updateGraph().subscribe();
+            this.snackBar.openSnackBar(
+              "simulator.algorithmConfig.successfulAlgorithm",
+              SnackBarType.SUCCESS
+            );
+            this.loading.toggle();
+          }
+        });
+    } else {
+      this.snackBar.openSnackBar("app.notAvailable", SnackBarType.WARNING);
+    }
+  }
+
+  openSettingsConfigDialog(): void {
+    if (!this.isRunning) {
+      this.dialog.open(SettingsConfigDialogComponent, {
+        data: { faultsConfigured: this.faultsConfigured },
+        width: "500px",
+        disableClose: true,
+        autoFocus: false,
+      });
+    }
+  }
+
+  openFaultsConfigDialog(): void {
+    if (this.graphConfigured && this.algorithmConfigured) {
+      const dialogRef = this.dialog.open(FaultsConfigDialogComponent, {
+        minWidth: "500px",
+        width: "600px",
+        disableClose: true,
+        autoFocus: false,
+      });
+
+      dialogRef
+        .afterClosed()
+        .pipe(delay(1000))
+        .subscribe((result) => {
+          if (result) {
+            this.faultsConfigured = true;
+            this.simulator.faultLimit = result.faultLimit;
+            this.simulator.faultProbability = result.faultProbability;
+            this.simulator.dispersionType = result.dispersionType;
+            if (result.dispersionType === DispersionType.COMPLETE) {
+              const startNodes = this.simulator.graph.nodes.filter(
+                (node) => node.state === NodeState.PENDING
+              );
+              const distribution = this.util.distributeAll(
+                this.simulator.robots.getValue().length + result.faultLimit,
+                startNodes.length
+              );
+              if (startNodes.length === distribution.length) {
+                this.simulator.populate(
+                  startNodes.map((value, index) => {
+                    return { node: value.id, robots: distribution[index] };
+                  }) as any
+                );
+              }
+            }
+            this.snackBar.openSnackBar(
+              "simulator.faultsConfig.successfulFaults",
+              SnackBarType.SUCCESS
+            );
+            this.loading.toggle();
+          }
+        });
+    } else {
+      this.snackBar.openSnackBar("app.notAvailable", SnackBarType.WARNING);
+    }
   }
 
   // Simulator
 
   async play(): Promise<void> {
-    return this.simulator.play([() => firstValueFrom(this.vis.updateGraph())]);
+    if (
+      this.graphConfigured &&
+      this.algorithmConfigured &&
+      (this.simulateFaults ? this.faultsConfigured : true)
+    ) {
+      this.simulator.play([() => firstValueFrom(this.vis.updateGraph())]);
+    } else {
+      this.snackBar.openSnackBar("app.notAvailable", SnackBarType.WARNING);
+    }
   }
 
   async next(): Promise<void> {
-    return this.simulator.next([() => firstValueFrom(this.vis.updateGraph())]);
+    if (
+      this.graphConfigured &&
+      this.algorithmConfigured &&
+      !this.isRunning &&
+      (this.simulateFaults ? this.faultsConfigured : true)
+    ) {
+      this.simulator.next([() => firstValueFrom(this.vis.updateGraph())]);
+    } else {
+      this.snackBar.openSnackBar("app.notAvailable", SnackBarType.WARNING);
+    }
   }
 
   stop(): void {
     this.simulator.stop();
+  }
+
+  async reset(): Promise<void> {
+    const loading = await firstValueFrom(this.loading.loading$);
+    if (this.graphConfigured && !this.isRunning && !loading) {
+      this.simulator.reset();
+      this.vis.destoryGraph();
+      this.algorithmConfigured = false;
+      this.graphConfigured = false;
+      this.faultsConfigured = false;
+      this.snackBar.openSnackBar(
+        "simulator.resetSucceeded",
+        SnackBarType.SUCCESS
+      );
+    } else {
+      this.snackBar.openSnackBar("app.notAvailable", SnackBarType.WARNING);
+    }
+  }
+
+  // Getters
+
+  get simulatorProps(): SimulatorService {
+    return this.simulator;
   }
 
   get isRunning(): boolean {
@@ -215,8 +244,8 @@ export class SimulatorComponent {
     return this.simulator.state;
   }
 
-  get delay(): number {
-    return this.simulator.delay;
+  get steps(): number {
+    return this.simulator.step;
   }
 
   get getOccupancy(): string {
@@ -231,28 +260,19 @@ export class SimulatorComponent {
       : "0.00";
   }
 
-  increaseDelay(): void {
-    this.simulator.increaseDelay();
+  get showInformations(): boolean {
+    return this.simulator.showInformations;
   }
 
-  decreaseDelay(): void {
-    this.simulator.decreaseDelay();
+  get simulateFaults(): boolean {
+    return this.simulator.simulateFaults;
   }
 
-  async reset(): Promise<void> {
-    this.loading.toggle();
-    this.simulator.stop();
-    this.snackBar.openSnackBar("simulator.waitingForApi", SnackBarType.INFO);
-    setTimeout(() => {
-      this.simulator.reset();
-      this.vis.destoryGraph();
-      this.algorithmConfigured = false;
-      this.graphConfigured = false;
-      this.snackBar.openSnackBar(
-        "simulator.resetSucceeded",
-        SnackBarType.SUCCESS
-      );
-      this.loading.toggle();
-    }, 5000);
+  get isSmallScreen$(): Observable<boolean> {
+    return this.breakpoint$.pipe(
+      map((breakpoint) => {
+        return breakpoint === "XS" || breakpoint === "S" || breakpoint === "M";
+      })
+    );
   }
 }

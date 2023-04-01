@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, delay, firstValueFrom, map } from "rxjs";
+import { BehaviorSubject, delay, firstValueFrom, map, Observable } from "rxjs";
 import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { RobotState } from "src/app/models/algorithm/RobotState";
+import { DispersionType } from "src/app/models/fault/DispersionType";
 import { Graph } from "src/app/models/graph/Graph";
 import { GraphType } from "src/app/models/graph/GraphType";
 import { NodeState } from "src/app/models/graph/NodeState";
@@ -17,8 +18,11 @@ import { SnackBarService } from "./snack-bar.service";
 })
 export class SimulatorService {
   running: boolean = false;
-  delay: number = 500;
   saveResults: boolean = true;
+  showInformations: boolean = true;
+  simulateFaults: boolean = true;
+
+  delay: number = 500;
 
   // Meta
   step: number = 0;
@@ -26,8 +30,14 @@ export class SimulatorService {
   graphType: GraphType | undefined;
   algorithmType: AlgorithmType | undefined;
 
+  // Faults
+  faultLimit: number | undefined = undefined;
+  faultProbability: number | undefined = undefined;
+  dispersionType: DispersionType | undefined = undefined;
+
   // Core
   graph: Graph = { nodes: [], edges: [] };
+  teams: number = 0;
   robots: BehaviorSubject<Robot[]> = new BehaviorSubject<Robot[]>([]);
 
   constructor(
@@ -41,26 +51,35 @@ export class SimulatorService {
     while (this.running && this.state !== SimulationState.FINISHED) {
       await this.next(callbackFns);
     }
+    this.running = false;
   }
 
   async next(callbackFns: (() => Promise<any>)[]): Promise<void> {
-    await firstValueFrom(
-      this.algorithm
-        .step(this.algorithmType!, {
+    const stepFn: Observable<any> = !this.simulateFaults
+      ? this.algorithm.step(this.algorithmType!, {
           step: this.step,
           state: this.state,
           graph: this.graph,
           robots: this.robots.getValue(),
         })
-        .pipe(
-          delay(this.delay),
-          map((simulation) => {
-            this.step = simulation.step;
-            this.state = simulation.state;
-            this.graph = simulation.graph;
-            this.robots.next(simulation.robots);
-          })
-        )
+      : this.algorithm.stepFault(this.algorithmType!, {
+          step: this.step,
+          state: this.state,
+          graph: this.graph,
+          robots: this.robots.getValue(),
+          faults: this.faultLimit!,
+          probability: this.faultProbability!,
+        });
+    await firstValueFrom(
+      stepFn.pipe(
+        delay(this.delay),
+        map((simulation) => {
+          this.step = simulation.step;
+          this.state = simulation.state;
+          this.graph = simulation.graph;
+          this.robots.next(simulation.robots);
+        })
+      )
     );
     for (let fn of callbackFns) {
       await fn();
@@ -82,14 +101,15 @@ export class SimulatorService {
           id: null,
           algorithmType: this.algorithmType,
           graphType: this.graphType,
-          nodes: this.graph.nodes.length,
-          robots: this.robots
-            .getValue()
-            .filter((robot) => robot.state === RobotState.TERMINATED).length,
           steps: this.step,
-          robotsCrashed: this.robots
+          nodes: this.graph.nodes.length,
+          teams: this.teams,
+          robots: this.robots.getValue().length,
+          crashes: this.robots
             .getValue()
             .filter((robot) => robot.state === RobotState.CRASHED).length,
+          faults: this.faultLimit ? this.faultLimit : 0,
+          probability: this.faultProbability ? this.faultProbability : 0,
         })
         .subscribe({
           next: async () => {
@@ -114,11 +134,15 @@ export class SimulatorService {
 
   reset(): void {
     this.step = 0;
+    this.teams = 0;
     this.state = SimulationState.DEFAULT;
     this.graphType = undefined;
     this.algorithmType = undefined;
+    this.dispersionType = undefined;
     this.graph = { nodes: [], edges: [] };
     this.robots.next([]);
+    this.faultLimit = undefined;
+    this.faultProbability = undefined;
   }
 
   increaseDelay(): void {
@@ -135,6 +159,14 @@ export class SimulatorService {
 
   toggleSaveResults(value: boolean): void {
     this.saveResults = value;
+  }
+
+  toggleShowInformations(value: boolean): void {
+    this.showInformations = value;
+  }
+
+  toggleSimulateFaults(value: boolean): void {
+    this.simulateFaults = value;
   }
 
   populate(distribution: { node: number; robots: number }[]): void {

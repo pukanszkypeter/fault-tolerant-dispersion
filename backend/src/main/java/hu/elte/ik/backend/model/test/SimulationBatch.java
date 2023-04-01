@@ -1,4 +1,4 @@
-package hu.elte.ik.backend.model.simulation;
+package hu.elte.ik.backend.model.test;
 
 import hu.elte.ik.backend.model.algorithm.AlgorithmType;
 import hu.elte.ik.backend.model.algorithm.Robot;
@@ -23,6 +23,8 @@ public class SimulationBatch<
   private Graph<NodeType, EdgeType> graph;
 
   private AlgorithmType algorithmType;
+
+  private Integer teams;
 
   private List<RobotType> robots;
 

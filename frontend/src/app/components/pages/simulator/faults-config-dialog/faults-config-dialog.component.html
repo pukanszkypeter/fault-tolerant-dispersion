@@ -1,0 +1,89 @@
+<h2 mat-dialog-title>{{ "simulator.faultsConfig.title" | translate }}</h2>
+<mat-dialog-content [formGroup]="faultsConfigForm">
+  <div
+    id="info-container"
+    *ngIf="isArbitraryConfig && dispersionPurpose.value === 'COMPLETE'"
+  >
+    <mat-icon style="margin-top: -3px">info</mat-icon>
+    <h4 style="margin: 0">
+      {{ "simulator.faultsConfig.redistributionRequired" | translate }} (Beta)
+    </h4>
+  </div>
+  <h4 style="margin: 0 0 8px">
+    {{ "simulator.faultsConfig.faultLimit" | translate }}
+  </h4>
+  <mat-form-field
+    appearance="outline"
+    color="accent"
+    style="width: 100%; margin-bottom: 16px"
+  >
+    <input [formControl]="faultLimit" matInput type="number" />
+    <mat-hint
+      >{{ "simulator.faultsConfig.currentlyAvailableRobots" | translate }}:
+      {{ robotsLength }}</mat-hint
+    >
+    <mat-error *ngIf="faultLimit.hasError('required')">{{
+      "app.requiredField" | translate
+    }}</mat-error>
+    <mat-error *ngIf="faultLimit.hasError('min')"
+      >{{ "app.requiredMin" | translate }}: 0</mat-error
+    >
+    <mat-error *ngIf="faultLimit.hasError('max')"
+      >{{ "app.requiredMax" | translate }}: {{ robotsLength }}</mat-error
+    >
+  </mat-form-field>
+  <div
+    class="d-flex align-items-center"
+    style="width: 100%; justify-content: space-between"
+  >
+    <label>{{ "simulator.faultsConfig.faultProbability" | translate }}</label>
+    <label style="display: flex; align-items: center; gap: 0.5rem">
+      <button mat-icon-button (click)="increaseProbability()">+</button>
+      <span style="width: 45px; text-align: center"
+        >{{ faultProbability.value }}%</span
+      >
+      <button mat-icon-button (click)="decreaseProbability()">-</button>
+    </label>
+  </div>
+  <mat-slider
+    [max]="100"
+    [min]="0"
+    [step]="0.1"
+    color="accent"
+    [discrete]="true"
+    style="width: 98%; margin-bottom: 16px"
+  >
+    <input matSliderThumb [formControl]="faultProbability" />
+  </mat-slider>
+  <h4 style="margin: 0 0 8px">
+    {{ "simulator.faultsConfig.purposeOfDispersion" | translate }}:
+  </h4>
+  <mat-radio-group
+    [formControl]="dispersionPurpose"
+    style="display: flex; margin-bottom: 1rem"
+  >
+    <mat-radio-button value="COMPLETE" style="width: 50%">{{
+      "simulator.faultsConfig.complete" | translate
+    }}</mat-radio-button>
+    <mat-radio-button value="PARTIAL" style="width: 50%">{{
+      "simulator.faultsConfig.partial" | translate
+    }}</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions class="px-4 py-3" align="end">
+  <button
+    mat-button
+    mat-dialog-close
+    [ngStyle]="{ color: (darkMode$ | async) ? '#ffffff' : '#000000' }"
+  >
+    {{ "app.cancel" | translate }}
+  </button>
+  <button
+    [disabled]="!faultsConfigForm.valid"
+    mat-flat-button
+    color="accent"
+    (click)="saveFaultsConfig()"
+  >
+    {{ "app.save" | translate }}
+  </button>
+</mat-dialog-actions>

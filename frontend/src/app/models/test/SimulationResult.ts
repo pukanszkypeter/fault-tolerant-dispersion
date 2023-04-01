@@ -5,8 +5,11 @@ export interface SimulationResult {
   id: number | null;
   algorithmType: AlgorithmType | undefined;
   graphType: GraphType | undefined;
-  nodes: number;
-  robots: number;
   steps: number;
-  robotsCrashed: number;
+  nodes: number;
+  teams: number;
+  robots: number;
+  crashes: number;
+  faults: number;
+  probability: number;
 }

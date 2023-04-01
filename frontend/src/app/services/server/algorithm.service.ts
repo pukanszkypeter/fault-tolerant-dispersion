@@ -2,8 +2,13 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
+import { SimulationFault } from "src/app/models/fault/SimulationFault";
 import { Simulation } from "src/app/models/simulation/Simulation";
 import { API, ApiServiceRoutes } from "./Routes";
+
+enum AlgorithmRoutes {
+  FAULT = "/fault",
+}
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +22,18 @@ export class AlgorithmService {
     return this.http.post<Simulation>(
       `${API}${ApiServiceRoutes.ALGORITHM}/${TypeRoute}`,
       simulation
+    );
+  }
+
+  stepFault(
+    type: AlgorithmType,
+    simulationFault: SimulationFault
+  ): Observable<SimulationFault> {
+    const TypeRoute: string = type.toLocaleLowerCase().replace(/_/g, "-");
+
+    return this.http.post<SimulationFault>(
+      `${API}${ApiServiceRoutes.ALGORITHM}/${TypeRoute}${AlgorithmRoutes.FAULT}`,
+      simulationFault
     );
   }
 }

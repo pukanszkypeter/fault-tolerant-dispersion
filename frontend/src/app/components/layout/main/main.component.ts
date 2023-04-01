@@ -25,7 +25,11 @@ export class MainComponent {
 
   get $color(): Observable<string> {
     return this.$activePage.pipe(
-      map((page) => (page.key !== "page-not-found" ? "primary" : "warn"))
+      map((page) =>
+        !["page-not-found", "page-not-supported"].includes(page.key)
+          ? "primary"
+          : "warn"
+      )
     );
   }
 }

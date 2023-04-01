@@ -1,12 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Batch } from "src/app/models/simulation/Batch";
-import { SimulationBatch } from "src/app/models/simulation/SimulationBatch";
+import { Batch } from "src/app/models/test/Batch";
+import { SimulationBatch } from "src/app/models/test/SimulationBatch";
+import { SimulationFaultBatch } from "src/app/models/test/SimulationFaultBatch";
 import { API, ApiServiceRoutes } from "./Routes";
 
 enum TestRoutes {
   BATCH = "/batch",
+  FAULT = "/fault",
 }
 
 @Injectable({
@@ -29,6 +31,17 @@ export class TestService {
     return this.http.post<boolean>(
       `${API}${ApiServiceRoutes.TEST}/${TypeRoute}`,
       simulationBatch
+    );
+  }
+
+  testFault(simulationFaultBatch: SimulationFaultBatch): Observable<boolean> {
+    const TypeRoute: string = simulationFaultBatch.algorithmType
+      .toLocaleLowerCase()
+      .replace(/_/g, "-");
+
+    return this.http.post<boolean>(
+      `${API}${ApiServiceRoutes.TEST}/${TypeRoute}${TestRoutes.FAULT}`,
+      simulationFaultBatch
     );
   }
 }

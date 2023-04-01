@@ -18,11 +18,13 @@ export class SnackBarService {
 
   async openSnackBar(key: string, type: SnackBarType): Promise<void> {
     const translation = await firstValueFrom(this.translate.get(key));
-    this._snackBar.openFromComponent(CustomSnackBarComponent, {
-      ...defaultSnackBarConfig,
-      data: { message: translation, type: type },
-      panelClass: [type],
-    });
+    if (translation !== key) {
+      this._snackBar.openFromComponent(CustomSnackBarComponent, {
+        ...defaultSnackBarConfig,
+        data: { message: translation, type: type },
+        panelClass: [type],
+      });
+    }
   }
 }
 

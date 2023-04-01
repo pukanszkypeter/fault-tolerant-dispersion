@@ -1,6 +1,6 @@
 package hu.elte.ik.backend.logic;
 
-import hu.elte.ik.backend.model.simulation.SimulationResult;
+import hu.elte.ik.backend.model.result.SimulationResult;
 import hu.elte.ik.backend.repository.ResultRepository;
 import hu.elte.ik.backend.service.ResultService;
 import java.util.List;

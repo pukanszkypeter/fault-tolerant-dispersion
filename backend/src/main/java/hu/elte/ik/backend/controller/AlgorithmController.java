@@ -1,12 +1,10 @@
 package hu.elte.ik.backend.controller;
 
+import hu.elte.ik.backend.model.fault.SimulationFault;
 import hu.elte.ik.backend.model.simulation.Simulation;
-import hu.elte.ik.backend.module.algorithm.faultless_dfs.*;
-import hu.elte.ik.backend.module.algorithm.faulty_dfs.*;
+import hu.elte.ik.backend.module.algorithm.dfs.*;
 import hu.elte.ik.backend.module.algorithm.random.*;
-import hu.elte.ik.backend.module.algorithm.random_leader.*;
 import hu.elte.ik.backend.module.algorithm.rotor_router.*;
-import hu.elte.ik.backend.module.algorithm.rotor_router_leader.*;
 import hu.elte.ik.backend.service.AlgorithmService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +29,12 @@ public class AlgorithmController {
     return ResponseEntity.ok(algorithmService.randomDispersion(simulation));
   }
 
-  @PostMapping("/random-leader")
-  public ResponseEntity<Simulation<RandomLeaderNode, RandomLeaderEdge, RandomLeaderRobot>> randomLeaderDispersion(
-    @RequestBody Simulation<RandomLeaderNode, RandomLeaderEdge, RandomLeaderRobot> simulation
+  @PostMapping("/random/fault")
+  public ResponseEntity<SimulationFault<RandomNode, RandomEdge, RandomRobot>> randomFaultDispersion(
+    @RequestBody SimulationFault<RandomNode, RandomEdge, RandomRobot> simulationFault
   ) {
     return ResponseEntity.ok(
-      algorithmService.randomLeaderDispersion(simulation)
+      algorithmService.randomFaultDispersion(simulationFault)
     );
   }
 
@@ -49,28 +47,19 @@ public class AlgorithmController {
     );
   }
 
-  @PostMapping("/rotor-router-leader")
-  public ResponseEntity<Simulation<RotorRouterLeaderNode, RotorRouterLeaderEdge, RotorRouterLeaderRobot>> rotorRouterLeaderDispersion(
-    @RequestBody Simulation<RotorRouterLeaderNode, RotorRouterLeaderEdge, RotorRouterLeaderRobot> simulation
+  @PostMapping("/rotor-router/fault")
+  public ResponseEntity<SimulationFault<RotorRouterNode, RotorRouterEdge, RotorRouterRobot>> rotorRouterFaultDispersion(
+    @RequestBody SimulationFault<RotorRouterNode, RotorRouterEdge, RotorRouterRobot> simulationFault
   ) {
     return ResponseEntity.ok(
-      algorithmService.rotorRouterLeaderDispersion(simulation)
+      algorithmService.rotorRouterFaultDispersion(simulationFault)
     );
   }
 
-  @PostMapping("/faultless-dfs")
-  public ResponseEntity<Simulation<FaultlessDfsNode, FaultlessDfsEdge, FaultlessDfsRobot>> faultlessDfsDispersion(
-    @RequestBody Simulation<FaultlessDfsNode, FaultlessDfsEdge, FaultlessDfsRobot> simulation
+  @PostMapping("/dfs")
+  public ResponseEntity<Simulation<DfsNode, DfsEdge, DfsRobot>> dfsDispersion(
+    @RequestBody Simulation<DfsNode, DfsEdge, DfsRobot> simulation
   ) {
-    return ResponseEntity.ok(
-      algorithmService.faultlessDfsDispersion(simulation)
-    );
-  }
-
-  @PostMapping("/faulty-dfs")
-  public ResponseEntity<Simulation<FaultyDfsNode, FaultyDfsEdge, FaultyDfsRobot>> faultyDfsDispersion(
-    @RequestBody Simulation<FaultyDfsNode, FaultyDfsEdge, FaultyDfsRobot> simulation
-  ) {
-    return ResponseEntity.ok(algorithmService.faultyDfsDispersion(simulation));
+    return ResponseEntity.ok(algorithmService.dfsDispersion(simulation));
   }
 }

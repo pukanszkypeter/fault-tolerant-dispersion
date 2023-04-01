@@ -18,7 +18,7 @@ public interface GraphService {
 
   Graph<Node, Edge> gnmRandomGraph(int node, int edge);
 
-  Graph<Node, Edge> gnpRandomGraph(int node, double propability);
+  Graph<Node, Edge> gnpRandomGraph(int node, double probability);
 
   Graph<Node, Edge> gridGraph(int row, int column);
 

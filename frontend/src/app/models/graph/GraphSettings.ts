@@ -66,7 +66,7 @@ export const graphSettings: GraphSettings = {
       { value: 10, disabled: true },
       { nonNullable: true, validators: [] }
     ),
-    propability: new FormControl(
+    probability: new FormControl(
       { value: 50, disabled: true },
       { nonNullable: true, validators: [] }
     ),

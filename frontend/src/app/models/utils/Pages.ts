@@ -15,6 +15,11 @@ export const pages: readonly Page[] = [
   { key: "results", translateKey: "header.results", iconKey: "analytics" },
   { key: "changelog", translateKey: "header.changelog", iconKey: "history" },
   {
+    key: "page-not-supported",
+    translateKey: "header.pageNotSupported",
+    iconKey: "warning",
+  },
+  {
     key: "page-not-found",
     translateKey: "header.pageNotFound",
     iconKey: "warning",

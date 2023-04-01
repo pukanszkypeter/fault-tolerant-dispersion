@@ -6,10 +6,14 @@
   "app": {
     "serverError": "Szerver hiba!",
     "responsiveWarning": "Az 575px alatti képernyők nem támogatottak.",
+    "pageNotFoundWarning": "A keresett oldal nem található.",
     "requiredField": "Ez a mező kötelező",
+    "requiredMin": "A szükséges min érték",
+    "requiredMax": "A szükséges max érték",
     "cancel": "Vissza",
     "save": "Mentés",
-    "notAvailable": "Nem elérhető"
+    "notAvailable": "Nem elérhető.",
+    "comingSoon": "Hamarosan"
   },
 
   "graph": {
@@ -36,15 +40,13 @@
 
   "algorithm": {
     "RANDOM": "Véletlen diszperzió",
-    "RANDOM_LEADER": "Véletlen - vezetővel diszperzió",
     "ROTOR_ROUTER": "Rotor router diszperzió",
-    "ROTOR_ROUTER_LEADER": "Rotor router - vezetővel diszperzió",
-    "FAULTLESS_DFS": "DFS diszperzió",
-    "FAULTY_DFS": "Hibatűrő DFS diszperzió"
+    "DFS": "DFS diszperzió"
   },
 
   "simulation": {
-    "DEFAULT": "Kezdeti",
+    "NOT_CONFIGURED": "Nincs beállítva",
+    "DEFAULT": "Start",
     "IN_PROGRESS": "Folyamatban",
     "FINISHED": "Befejezett"
   },
@@ -57,12 +59,18 @@
     "CRASHED": "Eltört"
   },
 
+  "dispersionType": {
+    "COMPLETE": "Teljes",
+    "PARTIAL": "Részleges"
+  },
+
   "header": {
     "home": "Főoldal",
     "simulator": "Szimulátor",
     "tester": "Tesztelő",
     "results": "Eredmények",
     "changelog": "Változási Napló",
+    "pageNotSupported": "Nem Támogatott Oldal",
     "pageNotFound": "Nem Található Oldal (404)",
     "language": "Nyelv",
     "languageChanged": "A nyelv megváltozott.",
@@ -82,10 +90,8 @@
   },
 
   "simulator": {
-    "simulator": "Szimulátor",
-    "operators": "Operátorok",
-    "robots": "Robotok",
-    "informations": "Információk",
+    "settings": "Beállítások",
+    "faults": "Hibák",
     "onId": "Csúcs ID",
     "state": "Állapot",
     "noRobotFound": "Nem található robot.",
@@ -95,9 +101,13 @@
     "graph": "Gráf",
     "algorithm": "Algoritmus",
     "reset": "Visszaállítás",
+    "nodes": "Csúcsok",
+    "robots": "Robotok",
+    "steps": "Lépések",
+    "placement": "Elhelyezkedés",
+    "dispersion": "Diszperzió",
     "waitingForApi": "Várakozás az utolsó API-válaszra...",
     "resetSucceeded": "A visszaállítás sikeres volt.",
-    "saveResults": "Eredmények mentése",
     "successfulSaving": "Sikeres mentés!",
     "failedToSave": "Sikertelen mentés!",
     "graphConfig": {
@@ -110,20 +120,44 @@
     "algorithmConfig": {
       "title": "Algoritmus konfiguráció",
       "type": "Típus",
-      "startNodes": "Kezdő csúcsok",
+      "initalRobotsPlacement": "Robotok kezdeti elhelyezése",
+      "rooted": "Egy kiindulópont",
+      "arbitrary": "Több kiindulópont",
+      "startNodes": "Kezdő csúcs(ok)",
       "node": "Csúcs",
-      "moreRobotsThenNodes": "Nem lehet több robot, mint csomópont!",
+      "invalidRobotSum": "Nem lehet több vagy kevesebb robot, mint csomópont!",
       "redistribution": "Újraelosztás változtatásnál",
       "evenRobotDistribution": "Egyenletes robot szétosztás",
       "successfulAlgorithm": "Sikeres algoritmus konfiguráció"
+    },
+    "faultsConfig": {
+      "title": "Hiba konfiguráció",
+      "faultLimit": "Hibahatár",
+      "currentlyAvailableRobots": "Jelenleg elérhető robotok",
+      "purposeOfDispersion": "Diszperzió célja",
+      "complete": "Teljes befoglalás",
+      "partial": "Részleges befoglalás",
+      "faultProbability": "Hiba valószínűsége",
+      "successfulFaults": "Sikeres hiba konfiguráció",
+      "redistributionRequired": "Mivel egynél több kezdőcsúcsod van, ezért újraelosztás szükséges."
+    },
+    "settingsConfig": {
+      "title": "Beállítások",
+      "simulationDelay": "Szimuláció késése",
+      "saveResults": "Eredmények mentése",
+      "showInformation": "Információk megjelenítése",
+      "simulateFaults": "Hibák szimulálása"
     }
   },
 
   "tester": {
-    "settings": "Beállítások",
-    "results": "Eredmények",
     "numberOfTests": "Tesztek száma",
     "minField": "Minimum 1",
+    "status": "Állapot",
+    "progress": "Kész",
+    "avgCrash": "Avg. Törés",
+    "avgStep": "Avg. Lépés",
+    "size": "Méret",
     "batchInProgress": "A batch tesztelés folyamatban...",
     "batchFinished": "A batch tesztelés befejeződött!"
   }

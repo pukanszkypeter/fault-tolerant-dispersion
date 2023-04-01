@@ -63,9 +63,9 @@ public class GraphController {
   @GetMapping("/gnp-random")
   public ResponseEntity<Graph<Node, Edge>> gnpRandomGraph(
     @RequestParam int node,
-    @RequestParam double propability
+    @RequestParam double probability
   ) {
-    return ResponseEntity.ok(graphService.gnpRandomGraph(node, propability));
+    return ResponseEntity.ok(graphService.gnpRandomGraph(node, probability));
   }
 
   @GetMapping("/grid")

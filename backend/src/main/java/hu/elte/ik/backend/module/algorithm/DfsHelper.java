@@ -3,40 +3,45 @@ package hu.elte.ik.backend.module.algorithm;
 import hu.elte.ik.backend.model.algorithm.RobotState;
 import hu.elte.ik.backend.model.graph.Graph;
 import hu.elte.ik.backend.model.graph.NodeState;
-import hu.elte.ik.backend.module.algorithm.faultless_dfs.*;
+import hu.elte.ik.backend.module.algorithm.dfs.*;
 import hu.elte.ik.backend.module.algorithm.utils.Stepper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FaultlessDfsHelper
-  implements Stepper<FaultlessDfsNode, FaultlessDfsEdge, FaultlessDfsRobot> {
+public class DfsHelper implements Stepper<DfsNode, DfsEdge, DfsRobot> {
 
   @Override
-  public void step(
-    Graph<FaultlessDfsNode, FaultlessDfsEdge> graph,
-    List<FaultlessDfsRobot> robotList
-  ) {
+  public void step(Graph<DfsNode, DfsEdge> graph, List<DfsRobot> robotList) {
+    /*
+     * initalize(graph, robotList);
+     * look(graph, robotList);
+     * compute(graph, robotList);
+     * move(graph, robotList);
+     */
+
+    this.initalizePorts(graph);
+
     // Active-, Inactive- Robots
-    List<FaultlessDfsRobot> activeRobots = robotList
+    List<DfsRobot> activeRobots = robotList
       .stream()
       .filter(robot -> !robot.getState().equals(RobotState.TERMINATED))
       .collect(Collectors.toList());
     activeRobots.forEach(robot -> robot.setState(RobotState.EXPLORE));
-    List<FaultlessDfsRobot> inactiveRobots = robotList
+    List<DfsRobot> inactiveRobots = robotList
       .stream()
       .filter(robot -> robot.getState().equals(RobotState.TERMINATED))
       .collect(Collectors.toList());
 
     // Current node and edges
-    FaultlessDfsNode currentNode = graph
+    DfsNode currentNode = graph
       .getNodes()
       .stream()
       .filter(node -> node.getId().equals(activeRobots.get(0).getOnId()))
       .findAny()
       .orElse(null);
-    List<FaultlessDfsEdge> currentEdges = graph
+    List<DfsEdge> currentEdges = graph
       .getEdges()
       .stream()
       .filter(edge ->
@@ -54,7 +59,7 @@ public class FaultlessDfsHelper
     int nodeDegree = (int) currentEdges.stream().count();
 
     // COMMUNICATE
-    FaultlessDfsRobot router;
+    DfsRobot router;
 
     if (!isCurrentNodeOccupied) {
       router = activeRobots.get(activeRobots.size() - 1);
@@ -62,7 +67,7 @@ public class FaultlessDfsHelper
       router.setParent(router.getLastUsedPort());
       currentNode.setState(NodeState.OCCUPIED);
     } else {
-      FaultlessDfsRobot occupier = inactiveRobots
+      DfsRobot occupier = inactiveRobots
         .stream()
         .filter(robot -> robot.getOnId() == currentNode.getId())
         .findAny()
@@ -81,7 +86,7 @@ public class FaultlessDfsHelper
       }
     }
 
-    FaultlessDfsEdge travelEdge = currentEdges
+    DfsEdge travelEdge = currentEdges
       .stream()
       .filter(edge ->
         edge.getFromId().equals(currentNode.getId())
@@ -102,12 +107,12 @@ public class FaultlessDfsHelper
       });
 
     // MOVE
-    List<FaultlessDfsRobot> travelers = robotList
+    List<DfsRobot> travelers = robotList
       .stream()
       .filter(robot -> !robot.getState().equals(RobotState.TERMINATED))
       .collect(Collectors.toList());
 
-    FaultlessDfsNode travelDestination = graph
+    DfsNode travelDestination = graph
       .getNodes()
       .stream()
       .filter(node ->
@@ -141,6 +146,21 @@ public class FaultlessDfsHelper
             ? travelEdge.getToPort()
             : travelEdge.getFromPort()
         );
+    }
+  }
+
+  private void initalizePorts(Graph<DfsNode, DfsEdge> graph) {
+    for (DfsNode node : graph.getNodes()) {
+      int index = 1;
+      for (DfsEdge edge : graph.getEdges()) {
+        if (edge.getFromId() == node.getId()) {
+          edge.setFromPort(index);
+          index++;
+        } else if (edge.getToId() == node.getId()) {
+          edge.setToPort(index);
+          index++;
+        }
+      }
     }
   }
 }
