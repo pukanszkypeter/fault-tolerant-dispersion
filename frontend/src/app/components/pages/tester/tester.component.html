@@ -87,13 +87,17 @@
         >
           <h1 style="margin: 0">Batches</h1>
           <div style="display: flex; gap: 2rem">
-            <button mat-flat-button color="primary">
+            <button mat-flat-button color="primary" (click)="runTests()">
               <mat-icon>play_arrow</mat-icon>
-              Play
+              {{ "tester.start" | translate }}
             </button>
-            <button mat-flat-button color="primary">
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="deleteBatchTests()"
+            >
               <mat-icon>delete</mat-icon>
-              Delete
+              {{ "tester.delete" | translate }}
             </button>
           </div>
         </div>
@@ -108,7 +112,19 @@
             <th mat-header-cell *matHeaderCellDef>
               {{ "tester.status" | translate }}
             </th>
-            <td mat-cell *matCellDef="let element">{{ "--" }}</td>
+            <td mat-cell *matCellDef="let element">
+              <mat-chip
+                [ngStyle]="{
+                  'background-color':
+                    element.status === 'FINISHED'
+                      ? 'rgb(76, 175, 80)'
+                      : element.status === 'IN_PROGRESS'
+                      ? 'rgb(211, 47, 47)'
+                      : 'rgb(255, 171, 64)'
+                }"
+                >{{ "batchProgress." + element.status | translate }}</mat-chip
+              >
+            </td>
           </ng-container>
           <!-- Graph -->
           <ng-container matColumnDef="graph">
@@ -200,13 +216,6 @@
               {{ "tester.avgStep" | translate }}
             </th>
             <td mat-cell *matCellDef="let element">{{ element.avgStep }}</td>
-          </ng-container>
-          <!-- Progress -->
-          <ng-container matColumnDef="progress">
-            <th mat-header-cell *matHeaderCellDef>
-              {{ "tester.progress" | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element">{{ element.progress }}%</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatTable } from "@angular/material/table";
-import { delay, firstValueFrom } from "rxjs";
+import { firstValueFrom } from "rxjs";
 import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
 import { Robot } from "src/app/models/algorithm/Robot";
 import { DispersionType } from "src/app/models/fault/DispersionType";
@@ -11,7 +11,6 @@ import { Graph } from "src/app/models/graph/Graph";
 import { GraphType } from "src/app/models/graph/GraphType";
 import { Node } from "src/app/models/graph/Node";
 import { NodeState } from "src/app/models/graph/NodeState";
-import { Batch } from "src/app/models/test/Batch";
 import { SnackBarType } from "src/app/models/utils/SnackBar";
 import { LoadingService } from "src/app/services/client/loading.service";
 import { SimulatorService } from "src/app/services/client/simulator.service";
@@ -24,8 +23,15 @@ import { AlgorithmConfigDialogComponent } from "../simulator/algorithm-config-di
 import { FaultsConfigDialogComponent } from "../simulator/faults-config-dialog/faults-config-dialog.component";
 import { GraphConfigDialogComponent } from "../simulator/graph-config-dialog/graph-config-dialog.component";
 
+export enum BatchProgress {
+  QUEUED = "QUEUED",
+  IN_PROGRESS = "IN_PROGRESS",
+  FINISHED = "FINISHED",
+}
+
 export interface BatchTableRow {
   no: number;
+  status: BatchProgress;
   graphType: GraphType;
   algorithmType: AlgorithmType;
   dispersionType: DispersionType;
@@ -37,7 +43,6 @@ export interface BatchTableRow {
   numOfTests: number;
   avgCrashes: number;
   avgStep: number;
-  progress: number;
 }
 
 @Component({
@@ -72,7 +77,6 @@ export class TesterComponent {
     "numOfTests",
     "avgCrash",
     "avgStep",
-    "progress",
   ];
 
   constructor(
@@ -93,9 +97,9 @@ export class TesterComponent {
   }
 
   addBatchTest(): void {
-    console.log(this.simulator.teams);
     this.batches.push({
       no: this.batches.length + 1,
+      status: BatchProgress.QUEUED,
       graphType: this.simulator.graphType!,
       algorithmType: this.simulator.algorithmType!,
       dispersionType: this.simulator.dispersionType!,
@@ -107,8 +111,14 @@ export class TesterComponent {
       numOfTests: this.numOfTests.value,
       avgCrashes: 0,
       avgStep: 0,
-      progress: 0,
     });
+    if (this.table) {
+      this.table.renderRows();
+    }
+  }
+
+  deleteBatchTests(): void {
+    this.batches = [];
     if (this.table) {
       this.table.renderRows();
     }
@@ -120,47 +130,71 @@ export class TesterComponent {
     this.loading.toggle();
     this.testingFinished = false;
     const batch = await firstValueFrom(
-      this.test.getBatch(this.numOfTests.value)
+      this.test.getBatch(
+        this.batches
+          .map((test) => test.numOfTests)
+          .reduce((sum, curr) => sum + curr, 0)
+      )
     );
     this.snackBar.openSnackBar("tester.batchInProgress", SnackBarType.INFO);
-    this.getLatestResults(batch);
-    this.test
-      .test({
-        graphType: this.simulator.graphType!,
-        graph: this.simulator.graph,
-        algorithmType: this.simulator.algorithmType!,
-        robots: this.simulator.robots.getValue(),
-        numOfTests: this.numOfTests.value,
-      })
-      .pipe(delay(5000))
-      .subscribe({
-        next: (_response) => {
-          this.snackBar.openSnackBar(
-            "tester.batchFinished",
-            SnackBarType.SUCCESS
+    try {
+      let resultId = batch.startId - 1;
+      for (let test of this.batches) {
+        test.status = BatchProgress.IN_PROGRESS;
+        if (this.table) {
+          this.table.renderRows();
+        }
+        if (test.faultProbability > 0) {
+          await firstValueFrom(
+            this.test.testFault({
+              graphType: test.graphType,
+              graph: test.graph,
+              algorithmType: test.algorithmType,
+              teams: test.teams,
+              robots: test.robots,
+              numOfTests: test.numOfTests,
+              faults: test.faultLimit,
+              probability: test.faultProbability,
+            })
           );
-          this.testingFinished = true;
-        },
-        error: (error) => {
-          console.log(error);
-          this.snackBar.openSnackBar("app.serverError", SnackBarType.ERROR);
-          this.testingFinished = true;
-        },
-      });
-  }
-
-  async getLatestResults(batch: Batch): Promise<void> {
-    let currentId = batch.startId - 1;
-    let endId = batch.endId;
-    while (!this.testingFinished || currentId !== endId) {
-      const results = await firstValueFrom(this.result.getLatests(currentId));
-      if (results.length > 0) {
-        currentId = results[results.length - 1].id!;
-        console.log(results);
+        } else {
+          await firstValueFrom(
+            this.test.test({
+              graphType: test.graphType,
+              graph: test.graph,
+              algorithmType: test.algorithmType,
+              teams: test.teams,
+              robots: test.robots,
+              numOfTests: test.numOfTests,
+            })
+          );
+        }
+        const results = await firstValueFrom(this.result.getLatests(resultId));
+        if (results.length > 0) {
+          resultId = results[results.length - 1].id!;
+          const stepSum = results
+            .map((result) => result.steps)
+            .reduce((sum, curr) => sum + curr, 0);
+          test.avgStep = Number((stepSum / results.length).toFixed(2));
+          const crashSum = results
+            .map((result) => result.crashes)
+            .reduce((sum, curr) => sum + curr, 0);
+          test.avgCrashes = Number((crashSum / results.length).toFixed(2));
+        }
+        test.status = BatchProgress.FINISHED;
+        if (this.table) {
+          this.table.renderRows();
+        }
       }
-      await this.sleep(5000);
+    } catch (error) {
+      console.log(error);
+      this.snackBar.openSnackBar("app.serverError", SnackBarType.ERROR);
+      this.testingFinished = true;
+    } finally {
+      this.snackBar.openSnackBar("tester.batchFinished", SnackBarType.SUCCESS);
+      this.testingFinished = true;
+      this.loading.toggle();
     }
-    this.loading.toggle();
   }
 
   sleep(ms: number): Promise<void> {

@@ -64,6 +64,12 @@
     "PARTIAL": "Teilweise"
   },
 
+  "batchProgress": {
+    "QUEUED": "In Warteschlange",
+    "IN_PROGRESS": "Im Gange",
+    "FINISHED": "Fertig"
+  },
+
   "header": {
     "home": "Startseite",
     "simulator": "Simulator",
@@ -159,6 +165,8 @@
     "avgStep": "Avg. Schritt",
     "size": "Größe",
     "batchInProgress": "Chargentest läuft...",
-    "batchFinished": "Chargentest beendet!"
+    "batchFinished": "Chargentest beendet!",
+    "start": "Start",
+    "delete": "Löschen"
   }
 }

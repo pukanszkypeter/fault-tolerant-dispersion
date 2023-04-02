@@ -64,6 +64,12 @@
     "PARTIAL": "Partial"
   },
 
+  "batchProgress": {
+    "QUEUED": "Queued",
+    "IN_PROGRESS": "In Progress",
+    "FINISHED": "Finished"
+  },
+
   "header": {
     "home": "Home",
     "simulator": "Simulator",
@@ -159,6 +165,8 @@
     "avgStep": "Avg. Step",
     "size": "Size",
     "batchInProgress": "Batch testing in progress...",
-    "batchFinished": "Batch testing finished!"
+    "batchFinished": "Batch testing finished!",
+    "start": "Start",
+    "delete": "Delete"
   }
 }

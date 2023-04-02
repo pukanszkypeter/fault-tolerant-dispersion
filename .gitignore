@@ -7,3 +7,7 @@
 
 # Mac Finder
 **/.DS_Store
+
+# MySQL Data
+docker/my-db/*
+!docker/my-db/backend

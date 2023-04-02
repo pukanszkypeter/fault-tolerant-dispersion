@@ -64,6 +64,12 @@
     "PARTIAL": "Részleges"
   },
 
+  "batchProgress": {
+    "QUEUED": "Várakozik",
+    "IN_PROGRESS": "Folyamatban",
+    "FINISHED": "Befejezett"
+  },
+
   "header": {
     "home": "Főoldal",
     "simulator": "Szimulátor",
@@ -159,6 +165,8 @@
     "avgStep": "Avg. Lépés",
     "size": "Méret",
     "batchInProgress": "A batch tesztelés folyamatban...",
-    "batchFinished": "A batch tesztelés befejeződött!"
+    "batchFinished": "A batch tesztelés befejeződött!",
+    "start": "Indítás",
+    "delete": "Törlés"
   }
 }

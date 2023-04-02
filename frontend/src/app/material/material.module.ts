@@ -21,6 +21,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatChipsModule } from "@angular/material/chips";
 import { MatRadioModule } from "@angular/material/radio";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { FormsModule } from "@angular/forms";
@@ -50,6 +51,7 @@ import { FormsModule } from "@angular/forms";
     MatCheckboxModule,
     MatButtonToggleModule,
     MatRadioModule,
+    MatChipsModule,
     DragDropModule,
     FormsModule,
   ],

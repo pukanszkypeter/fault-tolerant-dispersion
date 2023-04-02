@@ -7,6 +7,7 @@ export interface SimulationFaultBatch {
   graphType: GraphType;
   graph: Graph;
   algorithmType: AlgorithmType;
+  teams: number;
   robots: Robot[];
   numOfTests: number;
 
