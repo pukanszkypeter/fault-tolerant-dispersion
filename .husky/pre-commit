@@ -14,7 +14,7 @@ echo -e "✏️  Formatting backend code..."
 npm run format:backend -- --loglevel silent
 
 echo -e "📜 Setting version...\n"
-echo -e "> $(npm version $(cat ../.version) --allow-same-version)"
+echo -e "> $(npm version $(cat ../version.txt) --allow-same-version)"
 
 cd ..
 

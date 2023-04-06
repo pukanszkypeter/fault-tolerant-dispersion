@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'hu.elte.ik'
-version = file("../.version").text
+version = file("../version.txt").text
 sourceCompatibility = '17'
 
 configurations {
