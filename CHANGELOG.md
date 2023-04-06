@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.3](https://github.com/pukanszkypeter/fault-tolerant-dispersion/compare/v0.0.2...v0.0.3) (2023-04-06)
+
+
+### Bug Fixes
+
+* auto release process ([c632d97](https://github.com/pukanszkypeter/fault-tolerant-dispersion/commit/c632d97270c158dd4be214e8855cd93bb865533e))
+* **master:** auto release hotfix ([b854c34](https://github.com/pukanszkypeter/fault-tolerant-dispersion/commit/b854c34b5ced9fa98a6f785cc77b407712d1a549))
+
 ## [0.0.2](https://github.com/pukanszkypeter/fault-tolerant-dispersion/compare/v0.0.1...v0.0.2) (2023-04-06)
 
 
