@@ -4,27 +4,25 @@ on: [push, pull_request]
 
 jobs:
   commitlint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Install required dependencies
         run: |
           sudo apt update
           sudo apt install -y git curl
           curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
           sudo DEBIAN_FRONTEND=noninteractive apt install -y nodejs
-      - name: Print versions
-        run: |
-          git --version
-          node --version
-          npm --version
-          npx commitlint --version
+
       - name: Install commitlint
         run: |
-          npm install conventional-changelog-conventionalcommits
-          npm install commitlint@latest
+          npm install @commitlint/config-conventional @commitlint/cli
+          echo "module.exports = { extends: ['@commitlint/config-conventional'], rules: { type-enum: [2, 'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert', 'deps']] } };" > commitlint.config.js
+
 
       - name: Validate current commit (last commit) with commitlint
         if: github.event_name == 'push'
