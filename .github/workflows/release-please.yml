@@ -1,9 +1,9 @@
 name: Auto Releases
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - master
 
 permissions:
   contents: write
