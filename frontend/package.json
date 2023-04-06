@@ -59,7 +59,7 @@
     "bracketSpacing": true
   },
   "validate-branch-name": {
-    "pattern": "/^(master|develop){1}$|^(feature|fix|hotfix|docs|refactor|performance|test|operation|){1}/FTD-\\d+-[a-z-]+$|^(release){1}/v\\d\\.\\d\\.\\d$",
+    "pattern": "^(master|develop){1}$|^(feature|fix|hotfix|docs|refactor|performance|test|operation|){1}/FTD-\\d+-[a-z-]+$|^(release){1}/v\\d\\.\\d\\.\\d$",
     "errorMsg": "Please follow standard branch name conventions, rename branch using: git branch -m <oldname> <newname>"
   },
   "commitlint": {
