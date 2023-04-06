@@ -6,7 +6,7 @@ updates:
       interval: "weekly"
       time: "06:00"
     open-pull-requests-limit: 5
-    target-branch: "master"
+    target-branch: "develop"
     commit-message:
       prefix: "deps(frontend)"
     labels: ["dependencies"]
@@ -19,7 +19,7 @@ updates:
       interval: "weekly"
       time: "06:00"
     open-pull-requests-limit: 5
-    target-branch: "master"
+    target-branch: "develop"
     commit-message:
       prefix: "deps(backend)"
     labels: ["dependencies"]
