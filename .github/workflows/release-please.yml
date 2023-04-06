@@ -20,5 +20,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: simple
-          package-name: release-please-action
+          package-name: fault-tolerant-dispersion
+          skip-labeling: true
           
