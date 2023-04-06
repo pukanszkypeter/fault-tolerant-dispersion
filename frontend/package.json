@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.0.1",
   "scripts": {
-    "commit": "commit",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -40,7 +39,6 @@
     "@angular/compiler-cli": "^15.2.3",
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
-    "@commitlint/prompt-cli": "^17.5.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-dark-mode": "^3.0.3",
