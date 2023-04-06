@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo -e "|-----COMMIT-MESSAGE-----|\n"
+
+echo -e "🐶 Husky commit-message hook running...\n"
+
+cd frontend
+
+echo -e "🔍 Validating branch name...\n"
+
+npx validate-branch-name
+
+echo -e "🔍 Validating commit message...\n"
+
+npx --no -- commitlint --edit ${1} --verbose
+
+echo -e "\n✅ Commit-Message hook was successful.\n"

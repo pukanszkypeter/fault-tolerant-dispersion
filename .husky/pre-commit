@@ -1,17 +1,19 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo -e "\n🐶 Husky pre-commit hook running...\n"
+echo -e "\n|-----PRE-COMMIT-----|\n"
+
+echo -e "🐶 Husky pre-commit hook running...\n"
 
 cd frontend
 
-echo -e "✏️  Frontend formating..."
+echo -e "✏️  Formatting frontend code..."
 npm run format:frontend -- --loglevel silent
 
-echo -e "✏️  Backend formating..."
+echo -e "✏️  Formatting backend code..."
 npm run format:backend -- --loglevel silent
 
-echo -e "📜 Version:\n"
+echo -e "📜 Setting version...\n"
 npm version $(cat ../.version) --allow-same-version
 
 cd ..
@@ -19,4 +21,4 @@ cd ..
 echo -e "\n💾 Git saved changes.\n"
 git add .
 
-echo -e "\n✅ Hook was successful.\n"
+echo -e "\n✅ Pre-Commit hook was successful.\n"

@@ -21,7 +21,7 @@ services:
    expose:
      - "3306"
    volumes:
-     - ./docker/my-db:/var/lib/mysql
+     - my-db:/var/lib/mysql
   
   # Database Manager
   adminer:
@@ -32,5 +32,4 @@ services:
       - 9000:8080
   
 volumes:
-  my-db:
-    external: true
+  my-db: {}
