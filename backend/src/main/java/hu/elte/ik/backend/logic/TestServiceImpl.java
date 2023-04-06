@@ -32,7 +32,8 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public Batch saveBatch(Integer numOfTests) {
-    Optional<SimulationResult> lastResult = resultRepository.findTopByOrderByIdDesc();
+    Optional<SimulationResult> lastResult =
+      resultRepository.findTopByOrderByIdDesc();
     if (lastResult.isPresent()) {
       return batchRepository.save(
         new Batch(

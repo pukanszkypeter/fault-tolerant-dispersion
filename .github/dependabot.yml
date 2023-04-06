@@ -7,6 +7,11 @@ updates:
       time: "06:00"
     open-pull-requests-limit: 5
     target-branch: "develop"
+    commit-message:
+      prefix: "deps(frontend)"
+    labels: ["dependencies"]
+    reviewers: 
+      - "pukanszkypeter"
 
   - package-ecosystem: "gradle"
     directory: "backend/"
@@ -15,3 +20,8 @@ updates:
       time: "06:00"
     open-pull-requests-limit: 5
     target-branch: "develop"
+    commit-message:
+      prefix: "deps(backend)"
+    labels: ["dependencies"]
+    reviewers: 
+      - "pukanszkypeter"
