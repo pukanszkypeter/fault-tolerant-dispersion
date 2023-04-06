@@ -21,7 +21,7 @@ jobs:
       - name: Install commitlint
         run: |
           npm install @commitlint/config-conventional @commitlint/cli
-          echo "module.exports = { extends: ['@commitlint/config-conventional'], rules: { 'type-enum': [2, 'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert', 'deps']] } };" > commitlint.config.js
+          echo "module.exports = { extends: ['@commitlint/config-conventional'], rules: { 'type-enum': [2, 'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert', 'deps']], 'body-max-line-length': [2, 'always', 256] } };" > commitlint.config.js
 
 
       - name: Validate current commit (last commit) with commitlint
