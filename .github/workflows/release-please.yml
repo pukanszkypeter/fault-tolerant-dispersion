@@ -1,7 +1,9 @@
 name: Auto Releases
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - master
 
@@ -11,10 +13,13 @@ permissions:
 
 jobs:
   release-please:
+    if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
+
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: simple
-          package-name: release-please-action
+          package-name: fault-tolerant-dispersion
+          skip-labeling: true
           
