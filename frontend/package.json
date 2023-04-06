@@ -36,7 +36,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.4",
     "@angular/cli": "~15.2.4",
-    "@angular/compiler-cli": "^15.2.3",
+    "@angular/compiler-cli": "^15.2.6",
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
     "@ngx-translate/core": "^14.0.0",
