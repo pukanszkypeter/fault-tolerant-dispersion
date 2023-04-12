@@ -10,6 +10,7 @@ export enum GraphType {
   LINEAR = "LINEAR",
   LOLLIPOP = "LOLLIPOP",
   RING = "RING",
+  RANDOM = "RANDOM",
   RANDOM_REGULAR = "RANDOM_REGULAR",
   STAR = "STAR",
   WHEEL = "WHEEL",

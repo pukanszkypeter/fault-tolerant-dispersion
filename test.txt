@@ -1,0 +1,31 @@
+408.024
+
+- Barbell: 30 ✅
+- Complete: 25 ✅
+- Grid: 100 ✅
+- Hypercube: 8 (<256) 
+- Linear: 1000, 10.000
+- Lollipop: 100, 500
+- Ring: 1000, 10.000
+- Random: 100, 1000
+- Star: 1000, 10.000
+- Wheel: 1000, 10.000
+- Windmill: 10 x 10, 100 x 10
+- Dutch Windmill: 10 x 100, 1000 x 10
+
+- Random Walk
+- Rotor Router
+
+- Rooted
+- Arbitrary
+
+- Faultless
+- Faulty
+
+- Complete
+- Partial
+
+- 0.001
+- 0.010
+- 0.100
+- 1.000
