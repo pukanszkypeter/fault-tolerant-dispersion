@@ -36,7 +36,7 @@ export class FaultsConfigDialogComponent {
       ]),
       faultProbability: new FormControl(0, [
         Validators.required,
-        Validators.min(0.1),
+        Validators.min(0.001),
         Validators.max(100),
       ]),
       dispersionPurpose: new FormControl("COMPLETE", [Validators.required]),
@@ -68,12 +68,12 @@ export class FaultsConfigDialogComponent {
   }
 
   increaseProbability(): void {
-    const p = (Number(this.faultProbability.value) + 0.1).toFixed(1);
+    const p = (Number(this.faultProbability.value) + 0.001).toFixed(3);
     this.faultProbability.setValue(p);
   }
 
   decreaseProbability(): void {
-    const p = (Number(this.faultProbability.value) - 0.1).toFixed(1);
+    const p = (Number(this.faultProbability.value) - 0.001).toFixed(3);
     this.faultProbability.setValue(p);
   }
 

@@ -132,6 +132,12 @@
       </mat-form-field>
     </div>
     <div *ngSwitchCase="graphTypes[11]">
+      <h4 style="margin: 0 0 8px">Size</h4>
+      <mat-form-field appearance="outline" color="accent" style="width: 100%">
+        <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="graphTypes[12]">
       <h4 style="margin: 0 0 8px">Nodes</h4>
       <mat-form-field appearance="outline" color="accent" style="width: 100%">
         <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
@@ -141,19 +147,19 @@
         <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
       </mat-form-field>
     </div>
-    <div *ngSwitchCase="graphTypes[12]">
+    <div *ngSwitchCase="graphTypes[13]">
       <h4 style="margin: 0 0 8px">Order</h4>
       <mat-form-field appearance="outline" color="accent" style="width: 100%">
         <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
       </mat-form-field>
     </div>
-    <div *ngSwitchCase="graphTypes[13]">
+    <div *ngSwitchCase="graphTypes[14]">
       <h4 style="margin: 0 0 8px">Size</h4>
       <mat-form-field appearance="outline" color="accent" style="width: 100%">
         <input [formControl]="getGraphTypeControl(0)" matInput type="number" />
       </mat-form-field>
     </div>
-    <div *ngSwitchCase="graphTypes[14]">
+    <div *ngSwitchCase="graphTypes[15]">
       <h4 style="margin: 0 0 8px">Mode</h4>
       <mat-form-field appearance="outline" color="accent" style="width: 100%">
         <mat-select [formControl]="getGraphTypeControl(0)">

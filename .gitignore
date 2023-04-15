@@ -1,13 +1,6 @@
-# Materials
-/materials
-
 # IDEs and editors
 /.idea
 /.vscode
 
 # Mac Finder
 **/.DS_Store
-
-# MySQL Data
-docker/my-db/*
-!docker/my-db/backend
