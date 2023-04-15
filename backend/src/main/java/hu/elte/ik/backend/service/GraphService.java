@@ -30,6 +30,8 @@ public interface GraphService {
 
   Graph<Node, Edge> ringGraph(int size);
 
+  Graph<Node, Edge> randomGraph(int size);
+
   Graph<Node, Edge> randomRegularGraph(int node, int degree);
 
   Graph<Node, Edge> starGraph(int order);

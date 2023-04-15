@@ -143,7 +143,8 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 
   public boolean draw(Double probability) {
     SplittableRandom random = new SplittableRandom();
-    return random.nextInt(1, 101) <= probability;
+    Double chance = (random.nextInt(1, 100001) / 1000.000);
+    return chance <= probability;
   }
 
   public boolean isFinished(Simulation simulation) {

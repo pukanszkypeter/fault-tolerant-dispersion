@@ -100,6 +100,11 @@ public class GraphController {
     return ResponseEntity.ok(graphService.ringGraph(size));
   }
 
+  @GetMapping("/random")
+  public ResponseEntity<Graph<Node, Edge>> randomGraph(@RequestParam int size) {
+    return ResponseEntity.ok(graphService.randomGraph(size));
+  }
+
   @GetMapping("/random-regular")
   public ResponseEntity<Graph<Node, Edge>> randomRegularGraph(
     @RequestParam int node,

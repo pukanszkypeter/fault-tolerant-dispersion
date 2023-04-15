@@ -105,6 +105,12 @@ export const graphSettings: GraphSettings = {
       { nonNullable: true, validators: [] }
     ),
   },
+  RANDOM: {
+    size: new FormControl(
+      { value: 20, disabled: true },
+      { nonNullable: true, validators: [] }
+    ),
+  },
   RANDOM_REGULAR: {
     node: new FormControl(
       { value: 5, disabled: true },

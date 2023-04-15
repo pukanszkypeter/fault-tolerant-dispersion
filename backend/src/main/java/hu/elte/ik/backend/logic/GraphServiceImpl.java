@@ -4,6 +4,7 @@ import hu.elte.ik.backend.model.graph.*;
 import hu.elte.ik.backend.module.graph.GraphServiceHelper;
 import hu.elte.ik.backend.module.graph.generator.BarbellGraphGenerator;
 import hu.elte.ik.backend.module.graph.generator.LollipopGraphGenerator;
+import hu.elte.ik.backend.module.graph.generator.RandomGraphGenerator;
 import hu.elte.ik.backend.service.GraphService;
 import lombok.AllArgsConstructor;
 import org.jgrapht.generate.BarabasiAlbertForestGenerator;
@@ -85,6 +86,11 @@ public class GraphServiceImpl implements GraphService {
   @Override
   public Graph<Node, Edge> ringGraph(int size) {
     return helper.generateGraph(new RingGraphGenerator<>(size));
+  }
+
+  @Override
+  public Graph<Node, Edge> randomGraph(int size) {
+    return helper.generateGraph(new RandomGraphGenerator<>(size));
   }
 
   @Override
