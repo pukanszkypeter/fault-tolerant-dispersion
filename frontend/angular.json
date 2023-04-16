@@ -33,7 +33,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "./node_modules/angular-dark-mode/angular-dark-mode.js"
+              "./node_modules/angular-dark-mode/angular-dark-mode.js",
+              "./node_modules/marked/marked.min.js"
             ],
             "allowedCommonJsDependencies": ["vis-network"]
           },

@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { LayoutModule } from "./components/layout/layout.module";
 import { PagesModule } from "./components/pages/pages.module";
 import { SharedModule } from "./shared.module";
+import { MarkdownModule } from "ngx-markdown";
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { SharedModule } from "./shared.module";
     LayoutModule,
     PagesModule,
     SharedModule,
+    MarkdownModule.forRoot({ loader: HttpClient }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

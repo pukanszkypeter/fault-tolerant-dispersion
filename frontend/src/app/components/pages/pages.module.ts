@@ -11,6 +11,7 @@ import { AlgorithmConfigDialogComponent } from "./simulator/algorithm-config-dia
 import { PageNotSupportedComponent } from "./page-not-supported/page-not-supported.component";
 import { SettingsConfigDialogComponent } from "./simulator/settings-config-dialog/settings-config-dialog.component";
 import { FaultsConfigDialogComponent } from "./simulator/faults-config-dialog/faults-config-dialog.component";
+import { DiagramsComponent } from "./results/diagrams.component";
 
 @NgModule({
   imports: [SharedModule],
@@ -26,6 +27,7 @@ import { FaultsConfigDialogComponent } from "./simulator/faults-config-dialog/fa
     PageNotSupportedComponent,
     SettingsConfigDialogComponent,
     FaultsConfigDialogComponent,
+    DiagramsComponent,
   ],
   exports: [
     ChangelogComponent,
