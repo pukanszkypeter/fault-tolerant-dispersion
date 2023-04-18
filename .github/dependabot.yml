@@ -8,7 +8,7 @@ updates:
     open-pull-requests-limit: 5
     target-branch: "develop"
     commit-message:
-      prefix: "deps(frontend)"
+      prefix: "FTD-BOT"
     labels: ["dependencies"]
     reviewers: 
       - "pukanszkypeter"
@@ -21,7 +21,7 @@ updates:
     open-pull-requests-limit: 5
     target-branch: "develop"
     commit-message:
-      prefix: "deps(backend)"
+      prefix: "FTD-BOT"
     labels: ["dependencies"]
     reviewers: 
       - "pukanszkypeter"

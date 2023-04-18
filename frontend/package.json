@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -38,12 +38,13 @@
     "@angular/cli": "~15.2.5",
     "@angular/compiler-cli": "^15.2.6",
     "@commitlint/cli": "^17.5.1",
-    "@commitlint/config-conventional": "^17.6.1",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@types/marked": "^4.0.8",
     "angular-dark-mode": "^3.1.0",
     "bootstrap": "^5.2.3",
+    "commitlint-config-jira": "^1.6.4",
+    "commitlint-plugin-jira-rules": "^1.6.4",
     "husky": "^8.0.3",
     "marked": "^4.3.0",
     "material-icons": "^1.13.4",
@@ -62,12 +63,24 @@
     "bracketSpacing": true
   },
   "validate-branch-name": {
-    "pattern": "^(master|develop){1}$|^(feature|fix|hotfix|docs|refactor|performance|test|operation|){1}/FTD-\\d+-[a-z-]+$|^(release){1}/v\\d\\.\\d\\.\\d$",
+    "pattern": "^(master|develop){1}$|^(feature|bugfix|hotfix|docs|refactor|performance|test|operation|){1}/FTD-\\d+-[a-z-]+$|^(release){1}/v\\d\\.\\d\\.\\d$",
     "errorMsg": "Please follow standard branch name conventions, rename branch using: git branch -m <oldname> <newname>"
   },
   "commitlint": {
+    "plugins": [
+      "commitlint-plugin-jira-rules"
+    ],
     "extends": [
-      "@commitlint/config-conventional"
-    ]
+      "jira"
+    ],
+    "rules": {
+      "jira-task-id-project-key": [
+        2,
+        "always",
+        [
+          "FTD"
+        ]
+      ]
+    }
   }
 }
