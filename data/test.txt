@@ -1,15 +1,15 @@
 360.000
 
-- Barbell: 30 ✅
-- Complete: 25 ✅
-- Grid: 100 ✅
-- Linear: 25 ✅
-- Lollipop: 30 ✅
-- Ring: 100 ✅
-- Random: 100 ✅
-- Star: 100 ✅
-- Wheel: 100 ✅
-- Windmill: 10 x 10 ✅
+- Barbell: 30,  
+- Complete: 25, 
+- Grid: 100, 
+- Linear: 25, 
+- Lollipop: 30, 
+- Ring: 100, 
+- Random: 100, 
+- Star: 100, 
+- Wheel: 100, 
+- Windmill: 10 x 10, 
 
 - Random Walk
 - Rotor Router
