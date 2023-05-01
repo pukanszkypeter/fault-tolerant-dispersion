@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.6",
-    "@angular/cli": "~15.2.5",
+    "@angular/cli": "~15.2.7",
     "@angular/compiler-cli": "^15.2.6",
     "@commitlint/cli": "^17.5.1",
     "@ngx-translate/core": "^14.0.0",
