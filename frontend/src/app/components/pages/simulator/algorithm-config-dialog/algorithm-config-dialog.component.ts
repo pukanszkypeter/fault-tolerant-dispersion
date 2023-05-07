@@ -79,7 +79,7 @@ export class AlgorithmConfigDialogComponent {
     if (this.initalConfig.value === "ROOTED") {
       this.startNodeCounters.controls.push(
         new FormControl(
-          { value: distribution[0], disabled: true },
+          { value: distribution[0], disabled: false },
           { nonNullable: true, validators: [Validators.required] }
         )
       );
@@ -87,7 +87,7 @@ export class AlgorithmConfigDialogComponent {
       this.startNodes.value.forEach((_node: string, index: number) => {
         this.startNodeCounters.controls.push(
           new FormControl(
-            { value: distribution[index], disabled: true },
+            { value: distribution[index], disabled: false },
             { nonNullable: true, validators: [Validators.required] }
           )
         );
@@ -105,7 +105,7 @@ export class AlgorithmConfigDialogComponent {
         control.enable();
       } else {
         control.reset();
-        control.disable();
+        // control.disable();
       }
     });
   }
