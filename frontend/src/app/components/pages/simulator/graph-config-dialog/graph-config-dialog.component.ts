@@ -8,8 +8,8 @@ import {
 import { MatDialogRef } from "@angular/material/dialog";
 import { DarkModeService } from "angular-dark-mode";
 import { Observable } from "rxjs";
-import { graphSettings } from "src/app/models/graph/GraphSettings";
-import { GraphType, WindmillMode } from "src/app/models/graph/GraphType";
+import { graphSettings } from "app/models/graph/GraphSettings";
+import { GraphType, WindmillMode } from "app/models/graph/GraphType";
 
 @Component({
   selector: "app-graph-config-dialog",

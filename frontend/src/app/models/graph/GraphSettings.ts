@@ -41,13 +41,13 @@ export const graphSettings: GraphSettings = {
   },
   BARBELL: {
     node: new FormControl(
-      { value: 18, disabled: true },
+      { value: 30, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
   COMPLETE: {
     node: new FormControl(
-      { value: 5, disabled: true },
+      { value: 25, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
@@ -73,7 +73,7 @@ export const graphSettings: GraphSettings = {
   },
   GRID: {
     row: new FormControl(
-      { value: 5, disabled: true },
+      { value: 100, disabled: true },
       { nonNullable: true, validators: [] }
     ),
     column: new FormControl(
@@ -89,25 +89,25 @@ export const graphSettings: GraphSettings = {
   },
   LINEAR: {
     size: new FormControl(
-      { value: 10, disabled: true },
+      { value: 25, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
   LOLLIPOP: {
     size: new FormControl(
-      { value: 10, disabled: true },
+      { value: 30, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
   RING: {
     size: new FormControl(
-      { value: 10, disabled: true },
+      { value: 100, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
   RANDOM: {
     size: new FormControl(
-      { value: 20, disabled: true },
+      { value: 100, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
@@ -123,13 +123,13 @@ export const graphSettings: GraphSettings = {
   },
   STAR: {
     order: new FormControl(
-      { value: 5, disabled: true },
+      { value: 100, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
   WHEEL: {
     size: new FormControl(
-      { value: 10, disabled: true },
+      { value: 100, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },
@@ -139,11 +139,11 @@ export const graphSettings: GraphSettings = {
       { nonNullable: true, validators: [] }
     ),
     copies: new FormControl(
-      { value: 2, disabled: true },
+      { value: 10, disabled: true },
       { nonNullable: true, validators: [] }
     ),
     size: new FormControl(
-      { value: 5, disabled: true },
+      { value: 10, disabled: true },
       { nonNullable: true, validators: [] }
     ),
   },

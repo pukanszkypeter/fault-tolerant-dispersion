@@ -93,12 +93,14 @@
         (toggleChange)="distributionToggle()"
       ></mat-slide-toggle>
     </div>
+    <!--
     <div id="error-container" *ngIf="invalidRobotSum()">
       <mat-icon style="margin-top: -3px">warning</mat-icon>
       <h4 style="margin: 0">
         {{ "simulator.algorithmConfig.invalidRobotSum" | translate }}
       </h4>
     </div>
+    -->
     <div class="row">
       <div
         class="col-6"
@@ -131,7 +133,7 @@
     {{ "app.cancel" | translate }}
   </button>
   <button
-    [disabled]="!algorithmConfigForm.valid || invalidRobotSum()"
+    [disabled]="!algorithmConfigForm.valid"
     mat-flat-button
     color="accent"
     (click)="saveAlgorithmConfig()"

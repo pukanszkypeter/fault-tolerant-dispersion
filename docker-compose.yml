@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # MySQL Database
+  # MySQL DB
   db:
    image: mysql
    command: --default-authentication-plugin=mysql_native_password
@@ -23,11 +23,11 @@ services:
    volumes:
      - my-db:/var/lib/mysql
   
-  # Database Manager
+  # Adminer DB Manager
   adminer:
     image: adminer
     environment:
-      ADMINER_DESIGN: 'dracula'
+      ADMINER_DESIGN: 'hydra'
     ports:
       - 9000:8080
   

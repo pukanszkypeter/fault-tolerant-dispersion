@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
 import * as vis from "vis-network";
-import { VisNode } from "src/app/models/vis/VisNode";
-import { VisEdge } from "src/app/models/vis/VisEdge";
+import { VisNode } from "app/models/vis/VisNode";
+import { VisEdge } from "app/models/vis/VisEdge";
 import { delay, map } from "rxjs/operators";
 import { GraphService } from "../server/graph.service";
 import { DarkModeService } from "angular-dark-mode";
-import { GraphType } from "src/app/models/graph/GraphType";
+import { GraphType } from "app/models/graph/GraphType";
 import { Observable, zip } from "rxjs";
-import { getNodeStateColor } from "src/app/models/graph/NodeState";
+import { getNodeStateColor } from "app/models/graph/NodeState";
 import { DataSet } from "vis-data/peer/esm/vis-data";
-import { Node } from "src/app/models/graph/Node";
-import { Edge } from "src/app/models/graph/Edge";
+import { Node } from "app/models/graph/Node";
+import { Edge } from "app/models/graph/Edge";
 import { SimulatorService } from "./simulator.service";
 
 @Injectable({

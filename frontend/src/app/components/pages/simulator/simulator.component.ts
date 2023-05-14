@@ -1,22 +1,22 @@
 import { Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { delay, firstValueFrom, map, Observable } from "rxjs";
-import { VisService } from "src/app/services/client/vis.service";
-import { BreakpointService } from "src/app/services/client/breakpoint.service";
+import { VisService } from "app/services/client/vis.service";
+import { BreakpointService } from "app/services/client/breakpoint.service";
 import { GraphConfigDialogComponent } from "./graph-config-dialog/graph-config-dialog.component";
-import { LoadingService } from "src/app/services/client/loading.service";
-import { SnackBarService } from "src/app/services/client/snack-bar.service";
-import { SnackBarType } from "src/app/models/utils/SnackBar";
+import { LoadingService } from "app/services/client/loading.service";
+import { SnackBarService } from "app/services/client/snack-bar.service";
+import { SnackBarType } from "app/models/utils/SnackBar";
 import { AlgorithmConfigDialogComponent } from "./algorithm-config-dialog/algorithm-config-dialog.component";
-import { SimulatorService } from "src/app/services/client/simulator.service";
+import { SimulatorService } from "app/services/client/simulator.service";
 import { MatTableDataSource } from "@angular/material/table";
-import { Robot } from "src/app/models/algorithm/Robot";
+import { Robot } from "app/models/algorithm/Robot";
 import { MatPaginator } from "@angular/material/paginator";
-import { NodeState } from "src/app/models/graph/NodeState";
+import { NodeState } from "app/models/graph/NodeState";
 import { SettingsConfigDialogComponent } from "./settings-config-dialog/settings-config-dialog.component";
 import { FaultsConfigDialogComponent } from "./faults-config-dialog/faults-config-dialog.component";
-import { DispersionType } from "src/app/models/fault/DispersionType";
-import { UtilService } from "src/app/services/client/util.service";
+import { DispersionType } from "app/models/fault/DispersionType";
+import { UtilService } from "app/services/client/util.service";
 
 @Component({
   selector: "app-simulator",

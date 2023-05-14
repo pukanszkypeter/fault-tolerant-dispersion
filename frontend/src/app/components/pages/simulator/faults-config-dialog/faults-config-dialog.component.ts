@@ -8,9 +8,9 @@ import {
 import { MatDialogRef } from "@angular/material/dialog";
 import { DarkModeService } from "angular-dark-mode";
 import { Observable } from "rxjs";
-import { NodeState } from "src/app/models/graph/NodeState";
-import { LoadingService } from "src/app/services/client/loading.service";
-import { SimulatorService } from "src/app/services/client/simulator.service";
+import { NodeState } from "app/models/graph/NodeState";
+import { LoadingService } from "app/services/client/loading.service";
+import { SimulatorService } from "app/services/client/simulator.service";
 
 @Component({
   selector: "app-faults-config-dialog",

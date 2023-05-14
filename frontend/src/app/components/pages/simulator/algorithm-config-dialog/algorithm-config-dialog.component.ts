@@ -9,11 +9,11 @@ import {
 import { MatDialogRef } from "@angular/material/dialog";
 import { DarkModeService } from "angular-dark-mode";
 import { Observable } from "rxjs";
-import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
-import { Node } from "src/app/models/graph/Node";
-import { LoadingService } from "src/app/services/client/loading.service";
-import { SimulatorService } from "src/app/services/client/simulator.service";
-import { UtilService } from "src/app/services/client/util.service";
+import { AlgorithmType } from "app/models/algorithm/AlgorithmType";
+import { Node } from "app/models/graph/Node";
+import { LoadingService } from "app/services/client/loading.service";
+import { SimulatorService } from "app/services/client/simulator.service";
+import { UtilService } from "app/services/client/util.service";
 
 @Component({
   selector: "app-algorithm-config-dialog",
@@ -79,7 +79,7 @@ export class AlgorithmConfigDialogComponent {
     if (this.initalConfig.value === "ROOTED") {
       this.startNodeCounters.controls.push(
         new FormControl(
-          { value: distribution[0], disabled: true },
+          { value: distribution[0], disabled: false },
           { nonNullable: true, validators: [Validators.required] }
         )
       );
@@ -87,7 +87,7 @@ export class AlgorithmConfigDialogComponent {
       this.startNodes.value.forEach((_node: string, index: number) => {
         this.startNodeCounters.controls.push(
           new FormControl(
-            { value: distribution[index], disabled: true },
+            { value: distribution[index], disabled: false },
             { nonNullable: true, validators: [Validators.required] }
           )
         );
@@ -105,7 +105,7 @@ export class AlgorithmConfigDialogComponent {
         control.enable();
       } else {
         control.reset();
-        control.disable();
+        // control.disable();
       }
     });
   }

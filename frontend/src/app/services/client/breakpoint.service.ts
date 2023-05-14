@@ -6,8 +6,8 @@ import {
   Breakpoints,
   BreakpointSettings,
   getBreakpointKey,
-} from "src/app/models/utils/Breakpoints";
-import { SnackBarType } from "src/app/models/utils/SnackBar";
+} from "app/models/utils/Breakpoints";
+import { SnackBarType } from "app/models/utils/SnackBar";
 import { SnackBarService } from "./snack-bar.service";
 
 @Injectable({
