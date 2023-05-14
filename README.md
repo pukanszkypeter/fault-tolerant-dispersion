@@ -3,4 +3,8 @@
     <h1 align="center">Fault Tolerant Dispersion</h1>
 </p>
 
-[![Commit Lint](https://github.com/pukanszkypeter/fault-tolerant-dispersion/actions/workflows/commit-lint.yml/badge.svg)](https://github.com/pukanszkypeter/fault-tolerant-dispersion/actions/workflows/commit-lint.yml)
+This is a web simulation framework for testing fault-tolerant robot dispersion, for the ELTE-IK (MSc) thesis. The software includes the following three main components:
+
+- [API](https://github.com/pukanszkypeter/fault-tolerant-dispersion/tree/master/backend)
+- [UI](https://github.com/pukanszkypeter/fault-tolerant-dispersion/tree/master/frontend)
+- [Data Layer](https://github.com/pukanszkypeter/fault-tolerant-dispersion/tree/master/data)

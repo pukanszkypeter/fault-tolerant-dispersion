@@ -2,7 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Observable } from "rxjs";
 import { DarkModeService } from "angular-dark-mode";
-import { SimulatorService } from "src/app/services/client/simulator.service";
+import { SimulatorService } from "app/services/client/simulator.service";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 @Component({

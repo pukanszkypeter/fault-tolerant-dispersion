@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { GraphType } from "src/app/models/graph/GraphType";
-import { Graph } from "src/app/models/graph/Graph";
+import { GraphType } from "app/models/graph/GraphType";
+import { Graph } from "app/models/graph/Graph";
 import { API, ApiServiceRoutes } from "./Routes";
 
 @Injectable({

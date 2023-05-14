@@ -9,11 +9,11 @@ import {
 import { MatDialogRef } from "@angular/material/dialog";
 import { DarkModeService } from "angular-dark-mode";
 import { Observable } from "rxjs";
-import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
-import { Node } from "src/app/models/graph/Node";
-import { LoadingService } from "src/app/services/client/loading.service";
-import { SimulatorService } from "src/app/services/client/simulator.service";
-import { UtilService } from "src/app/services/client/util.service";
+import { AlgorithmType } from "app/models/algorithm/AlgorithmType";
+import { Node } from "app/models/graph/Node";
+import { LoadingService } from "app/services/client/loading.service";
+import { SimulatorService } from "app/services/client/simulator.service";
+import { UtilService } from "app/services/client/util.service";
 
 @Component({
   selector: "app-algorithm-config-dialog",

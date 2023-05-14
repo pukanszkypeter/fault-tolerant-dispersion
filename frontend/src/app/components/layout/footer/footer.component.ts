@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { Page } from "src/app/models/utils/Pages";
-import { BreakpointService } from "src/app/services/client/breakpoint.service";
+import { Page } from "app/models/utils/Pages";
+import { BreakpointService } from "app/services/client/breakpoint.service";
 import packageJson from "../../../../../package.json";
 
 @Component({

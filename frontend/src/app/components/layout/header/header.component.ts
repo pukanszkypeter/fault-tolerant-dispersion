@@ -1,14 +1,14 @@
 import { Component, Input } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Language, languages } from "src/app/models/utils/Languages";
-import { Page } from "src/app/models/utils/Pages";
-import { SnackBarService } from "src/app/services/client/snack-bar.service";
+import { Language, languages } from "app/models/utils/Languages";
+import { Page } from "app/models/utils/Pages";
+import { SnackBarService } from "app/services/client/snack-bar.service";
 import { DarkModeService } from "angular-dark-mode";
 import { firstValueFrom, map, Observable } from "rxjs";
-import { SnackBarType } from "src/app/models/utils/SnackBar";
-import { BreakpointService } from "src/app/services/client/breakpoint.service";
-import { VisService } from "src/app/services/client/vis.service";
-import { LoadingService } from "src/app/services/client/loading.service";
+import { SnackBarType } from "app/models/utils/SnackBar";
+import { BreakpointService } from "app/services/client/breakpoint.service";
+import { VisService } from "app/services/client/vis.service";
+import { LoadingService } from "app/services/client/loading.service";
 
 @Component({
   selector: "app-header",

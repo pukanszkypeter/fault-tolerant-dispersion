@@ -2,10 +2,7 @@ import { Component, Inject, Injectable } from "@angular/core";
 import { MatSnackBar, MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 import { TranslateService } from "@ngx-translate/core";
 import { firstValueFrom } from "rxjs";
-import {
-  defaultSnackBarConfig,
-  SnackBarType,
-} from "src/app/models/utils/SnackBar";
+import { defaultSnackBarConfig, SnackBarType } from "app/models/utils/SnackBar";
 
 @Injectable({
   providedIn: "root",

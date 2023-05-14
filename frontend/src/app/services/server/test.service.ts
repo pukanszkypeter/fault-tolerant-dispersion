@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Batch } from "src/app/models/test/Batch";
-import { SimulationBatch } from "src/app/models/test/SimulationBatch";
-import { SimulationFaultBatch } from "src/app/models/test/SimulationFaultBatch";
+import { Batch } from "app/models/test/Batch";
+import { SimulationBatch } from "app/models/test/SimulationBatch";
+import { SimulationFaultBatch } from "app/models/test/SimulationFaultBatch";
 import { API, ApiServiceRoutes } from "./Routes";
 
 enum TestRoutes {
