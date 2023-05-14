@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The types of changes can be the following: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
 
-## [Unreleased]
-
 ## [1.0.0] - 2023-05-14
 
-[unreleased]: https://github.com/pukanszkypeter/fault-tolerant-dispersion/milestone/6
-[1.0.0]: https://github.com/pukanszkypeter/fault-tolerant-dispersion
+### Added
+
+- API for dispersion algorithms and model management
+- UI for displaying the operation of algorithms on graphs and for visualizing diagrams
+- Data layer for saving test results
+
+[1.0.0]: https://github.com/pukanszkypeter/fault-tolerant-dispersion/tree/master

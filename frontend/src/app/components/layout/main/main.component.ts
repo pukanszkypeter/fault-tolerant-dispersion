@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { map, Observable } from "rxjs";
-import { Page } from "src/app/models/utils/Pages";
+import { Page } from "app/models/utils/Pages";
 
 @Component({
   selector: "app-main",

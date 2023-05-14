@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Page, pages } from "src/app/models/utils/Pages";
+import { Page, pages } from "app/models/utils/Pages";
 
 @Component({
   selector: "app-layout",

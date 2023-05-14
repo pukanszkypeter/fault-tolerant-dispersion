@@ -12,6 +12,7 @@ public enum GraphType {
   LINEAR,
   LOLLIPOP,
   RING,
+  RANDOM,
   RANDOM_REGULAR,
   STAR,
   WHEEL,

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { SimulationResult } from "src/app/models/test/SimulationResult";
+import { SimulationResult } from "app/models/test/SimulationResult";
 import { API, ApiServiceRoutes } from "./Routes";
 
 enum ResultRoutes {

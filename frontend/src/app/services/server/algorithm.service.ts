@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { AlgorithmType } from "src/app/models/algorithm/AlgorithmType";
-import { SimulationFault } from "src/app/models/fault/SimulationFault";
-import { Simulation } from "src/app/models/simulation/Simulation";
+import { AlgorithmType } from "app/models/algorithm/AlgorithmType";
+import { SimulationFault } from "app/models/fault/SimulationFault";
+import { Simulation } from "app/models/simulation/Simulation";
 import { API, ApiServiceRoutes } from "./Routes";
 
 enum AlgorithmRoutes {
